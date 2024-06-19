@@ -6,8 +6,8 @@
  */
 package buildcraft.core.lib.commands;
 
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.src.ICommand;
+import net.minecraft.src.ICommandSender;
 
 import java.util.List;
 import java.util.SortedSet;

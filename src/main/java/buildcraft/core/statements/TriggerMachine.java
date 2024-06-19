@@ -11,7 +11,7 @@ import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.ITriggerExternal;
 import buildcraft.api.tiles.IHasWork;
 import buildcraft.core.lib.utils.StringUtils;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 

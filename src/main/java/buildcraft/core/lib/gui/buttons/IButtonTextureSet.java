@@ -6,7 +6,7 @@
  */
 package buildcraft.core.lib.gui.buttons;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 public interface IButtonTextureSet {
 

@@ -8,27 +8,28 @@ package buildcraft.core.lib.items;
 
 import buildcraft.core.BCCreativeTab;
 import buildcraft.core.lib.utils.ResourceUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.example.injected.ItemExtension;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
-public class ItemBuildCraft extends Item {
+public class ItemBuildCraft extends Item implements ItemExtension {
 
     public Icon[] icons;
     private String iconName;
     private boolean passSneakClick = false;
 
-    public ItemBuildCraft() {
-        this(BCCreativeTab.get("main"));
+    public ItemBuildCraft(int id) {
+        this(id, BCCreativeTab.get("main"));
     }
 
-    public ItemBuildCraft(CreativeTabs creativeTab) {
-        super();
+    public ItemBuildCraft(int id, CreativeTabs creativeTab) {
+        super(id);
 
         setCreativeTab(creativeTab);
     }
@@ -40,7 +41,7 @@ public class ItemBuildCraft extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIconFromDamage(int meta) {
         if (itemIcon != null) { // NBT lookup workaround?
             return itemIcon;
@@ -57,11 +58,12 @@ public class ItemBuildCraft extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
         String[] names = getIconNames();
-        String prefix = ResourceUtils.getObjectPrefix(Item.itemRegistry.getNameForObject(this));
-        prefix = prefix.substring(0, prefix.indexOf(":") + 1);
+//        String prefix = ResourceUtils.getObjectPrefix(Item.itemRegistry.getNameForObject(this));
+        String prefix = this.getUnlocalizedName();
+//        prefix = prefix.substring(0, prefix.indexOf(":") + 1);
         icons = new Icon[names.length];
 
         for (int i = 0; i < names.length; i++) {

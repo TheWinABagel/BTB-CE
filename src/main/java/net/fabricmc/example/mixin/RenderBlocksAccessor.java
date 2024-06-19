@@ -20,4 +20,10 @@ public interface RenderBlocksAccessor {
 
     @Accessor
     void setRenderMaxY(double renderMaxY);
+
+    @Accessor
+    void setUvRotateTop(int uvRotateTop);
+
+    @Accessor
+    void setUvRotateBottom(int uvRotateBottom);
 }

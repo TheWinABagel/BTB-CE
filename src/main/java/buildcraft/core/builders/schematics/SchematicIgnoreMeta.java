@@ -8,6 +8,7 @@ package buildcraft.core.builders.schematics;
 
 import buildcraft.api.blueprints.IBuilderContext;
 import buildcraft.api.blueprints.SchematicBlock;
+import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 
 import java.util.LinkedList;
@@ -24,6 +25,6 @@ public class SchematicIgnoreMeta extends SchematicBlock {
 
     @Override
     public boolean isAlreadyBuilt(IBuilderContext context, int x, int y, int z) {
-        return block == context.world().getBlock(x, y, z);
+        return block == Block.blocksList[context.world().getBlockId(x, y, z)];
     }
 }

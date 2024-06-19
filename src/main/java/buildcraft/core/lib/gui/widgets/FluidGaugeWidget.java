@@ -10,7 +10,7 @@ import buildcraft.core.lib.fluids.Tank;
 import buildcraft.core.lib.gui.GuiBuildCraft;
 import buildcraft.core.lib.gui.tooltips.ToolTip;
 import buildcraft.core.lib.render.FluidRenderer;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.TextureMap;
 import net.minecraft.src.Icon;
 import net.minecraftforge.fluids.FluidStack;
 

@@ -8,6 +8,7 @@ package buildcraft.core.builders;
 
 import buildcraft.api.blueprints.*;
 import buildcraft.api.core.Position;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
@@ -33,11 +34,11 @@ public class BuildingSlotEntity extends BuildingSlot {
 
     @Override
     public Position getDestination() {
-        NBTTagList nbttaglist = schematic.entityNBT.getTagList("Pos", 6);
+        NBTTagList nbttaglist = schematic.entityNBT.getTagList("Pos"/*, 6*/);
         Position pos = new Position(
-                nbttaglist.func_150309_d(0),
-                nbttaglist.func_150309_d(1),
-                nbttaglist.func_150309_d(2));
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(0),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(1),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(2));
 
         return pos;
     }

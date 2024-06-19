@@ -7,7 +7,6 @@
 package buildcraft.core.lib.inventory.filters;
 
 import net.minecraft.src.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Returns true if the stack matches any one one of the filter stacks.
@@ -22,21 +21,21 @@ public class OreStackFilter implements IStackFilter {
 
     @Override
     public boolean matches(ItemStack stack) {
-        int[] ids = OreDictionary.getOreIDs(stack);
-
-        if (ids.length == 0) {
-            return false;
-        }
-
-        for (String ore : ores) {
-            int expected = OreDictionary.getOreID(ore);
-
-            for (int id : ids) {
-                if (id == expected) {
-                    return true;
-                }
-            }
-        }
+//        int[] ids = OreDictionary.getOreIDs(stack);
+//
+//        if (ids.length == 0) {
+//            return false;
+//        }
+//
+//        for (String ore : ores) {
+//            int expected = OreDictionary.getOreID(ore);
+//
+//            for (int id : ids) {
+//                if (id == expected) {
+//                    return true;
+//                }
+//            }
+//        }
 
         return false;
     }

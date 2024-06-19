@@ -56,30 +56,12 @@ import buildcraft.core.tablet.PacketTabletMessage;
 import buildcraft.core.tablet.TabletProgramMenuFactory;
 import buildcraft.core.tablet.manager.TabletManagerClient;
 import buildcraft.core.tablet.manager.TabletManagerServer;
-import com.mojang.authlib.GameProfile;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.entity.EntityList;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
-import net.minecraft.src.Items;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemFood;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Achievement;
-import net.minecraft.src.Icon;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraft.src.BlockLiquid;
+import net.minecraft.src.EntityList;
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -142,19 +124,19 @@ public class BuildCraftCore extends BuildCraftMod {
     public static ItemList listItem;
     public static ItemTablet tabletItem;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static Icon redLaserTexture;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static Icon blueLaserTexture;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static Icon stripesLaserTexture;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static Icon transparentTexture;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public static IIconProvider iconProvider;
 
     public static int blockByEntityModel;
@@ -407,7 +389,7 @@ public class BuildCraftCore extends BuildCraftMod {
         OreDictionary.registerOre("chestWood", Blocks.chest);
         OreDictionary.registerOre("craftingTableWood", Blocks.crafting_table);
 
-        GTNH = Loader.isModLoaded("dreamcraft");
+        GTNH = FabricLoader.getInstance().isModLoaded("dreamcraft");
     }
 
     @Mod.EventHandler
@@ -542,7 +524,7 @@ public class BuildCraftCore extends BuildCraftMod {
         ListRegistry.registerHandler(new ListMatchHandlerArmor());
         ListRegistry.itemClassAsType.add(ItemFood.class);
 
-        if (Loader.isModLoaded("foamfix")) {
+        if (FabricLoader.getInstance().isModLoaded("foamfix")) {
             alphaPassBugPresent = false;
         }
     }
@@ -656,7 +638,7 @@ public class BuildCraftCore extends BuildCraftMod {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void textureHook(TextureStitchEvent.Pre event) {
         for (FillerPattern pattern : FillerPattern.patterns.values()) {
             pattern.registerIcons(event.map);
@@ -677,7 +659,7 @@ public class BuildCraftCore extends BuildCraftMod {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void textureHook(TextureStitchEvent.Post event) {
         FluidRenderer.onTextureReload();
         RenderLaser.onTextureReload();
@@ -834,7 +816,7 @@ public class BuildCraftCore extends BuildCraftMod {
         // Convert old lists to new lists
         BCRegistry.INSTANCE.addShapelessRecipe(new ItemStack(listItem, 1, 1), new ItemStack(listItem, 1, 0));
 
-        if (Loader.isModLoaded("BuildCraft|Silicon")) {
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Silicon")) {
             CoreSiliconRecipes.loadSiliconRecipes();
         } else {
             BCRegistry.INSTANCE.addCraftingRecipe(

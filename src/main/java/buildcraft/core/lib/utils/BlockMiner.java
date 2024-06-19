@@ -3,14 +3,12 @@ package buildcraft.core.lib.utils;
 import java.util.List;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.world.BlockEvent;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.core.proxy.CoreProxy;
@@ -69,7 +67,7 @@ public class BlockMiner {
                     owner.zCoord + f2,
                     stack);
 
-            entityitem.lifespan = BuildCraftCore.itemLifespan * 20;
+            entityitem.age = BuildCraftCore.itemLifespan * 20;
             entityitem.delayBeforeCanPickup = 10;
 
             float f3 = 0.05F;
@@ -100,24 +98,24 @@ public class BlockMiner {
 
             hasMined = true;
 
-            Block block = world.getBlock(x, y, z);
+            int block = world.getBlockId(x, y, z);
             int meta = world.getBlockMetadata(x, y, z);
 
-            BlockEvent.BreakEvent breakEvent = new BlockEvent.BreakEvent(
-                    x,
-                    y,
-                    z,
-                    world,
-                    block,
-                    meta,
-                    CoreProxy.proxy.getBuildCraftPlayer(
-                            (WorldServer) owner.getWorldObj(),
-                            owner.xCoord,
-                            owner.yCoord,
-                            owner.zCoord).get());
-            MinecraftForge.EVENT_BUS.post(breakEvent);
+//            BlockEvent.BreakEvent breakEvent = new BlockEvent.BreakEvent(
+//                    x,
+//                    y,
+//                    z,
+//                    world,
+//                    block,
+//                    meta,
+//                    CoreProxy.proxy.getBuildCraftPlayer(
+//                            (WorldServer) owner.getWorldObj(),
+//                            owner.xCoord,
+//                            owner.yCoord,
+//                            owner.zCoord).get());
+//            MinecraftForge.EVENT_BUS.post(breakEvent);
 
-            if (!breakEvent.isCanceled()) {
+//            if (!breakEvent.isCanceled()) {
                 List<ItemStack> stacks = BlockUtils.getItemStackFromBlock((WorldServer) world, x, y, z);
 
                 if (stacks != null) {
@@ -128,12 +126,12 @@ public class BlockMiner {
                     }
                 }
 
-                world.playAuxSFXAtEntity(null, 2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+                world.playAuxSFXAtEntity(null, 2001, x, y, z, block + (meta << 12));
 
                 world.setBlockToAir(x, y, z);
-            } else {
-                hasFailed = true;
-            }
+//            } else {
+//                hasFailed = true;
+//            }
         } else {
             world.destroyBlockInWorldPartially(
                     minerId,

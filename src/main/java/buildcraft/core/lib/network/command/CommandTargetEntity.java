@@ -22,7 +22,7 @@ public class CommandTargetEntity extends CommandTarget {
     @Override
     public void write(ByteBuf data, Object target) {
         Entity entity = (Entity) target;
-        data.writeInt(entity.getEntityId());
+        data.writeInt(entity.entityId);
     }
 
     @Override

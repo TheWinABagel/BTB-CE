@@ -27,7 +27,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
     public Iterator<IInvSlot> iterator() {
         return new Iterator<IInvSlot>() {
 
-            int[] slots = inv.getAccessibleSlotsFromSide(side);
+            int[] slots = inv.getSlotsForFace(side);
             int index = 0;
 
             @Override

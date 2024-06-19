@@ -9,7 +9,7 @@ package buildcraft.core.render;
 import buildcraft.core.EntityLaser;
 import buildcraft.core.LaserData;
 import buildcraft.core.builders.TileAbstractBuilder;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.src.TileEntityRenderer;
 import net.minecraft.src.TileEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -38,7 +38,7 @@ public class RenderBuilder extends RenderBoxProvider {
                 if (laser != null) {
                     GL11.glPushMatrix();
                     RenderLaser.doRenderLaser(
-                            TileEntityRendererDispatcher.instance.field_147553_e,
+                            TileEntityRenderer.instance.field_147553_e,
                             laser,
                             EntityLaser.LASER_TEXTURES[4]);
                     GL11.glPopMatrix();

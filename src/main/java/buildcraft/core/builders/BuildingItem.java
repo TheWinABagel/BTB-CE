@@ -10,12 +10,13 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.MathHelper;
 import net.minecraftforge.common.util.Constants;
 
 import buildcraft.BuildCraftCore;
@@ -171,7 +172,7 @@ public class BuildingItem implements IBuildingItem, ISerializable {
             int destX = (int) Math.floor(destination.x);
             int destY = (int) Math.floor(destination.y);
             int destZ = (int) Math.floor(destination.z);
-            Block oldBlock = context.world().getBlock(destX, destY, destZ);
+            int oldBlock = context.world().getBlockId(destX, destY, destZ);
             int oldMeta = context.world().getBlockMetadata(destX, destY, destZ);
 
             if (slotToBuild.writeToWorld(context)) {
@@ -181,11 +182,11 @@ public class BuildingItem implements IBuildingItem, ISerializable {
                         destX,
                         destY,
                         destZ,
-                        Block.getIdFromBlock(oldBlock) + (oldMeta << 12));
+                        oldBlock + (oldMeta << 12));
             } else if (slotToBuild.stackConsumed != null) {
                 for (ItemStack s : slotToBuild.stackConsumed) {
-                    if (s != null && !(s.getItem() instanceof ItemBlock
-                            && Block.getBlockFromItem(s.getItem()) instanceof BlockBuildTool)) {
+                    if (s != null && !(s.getItem() instanceof ItemBlock ib
+                            && Block.blocksList[ib.getBlockID()] instanceof BlockBuildTool)) {
                         InvUtils.dropItems(context.world(), s, destX, destY, destZ);
                     }
                 }
@@ -262,11 +263,11 @@ public class BuildingItem implements IBuildingItem, ISerializable {
         destination = new Position(nbt.getCompoundTag("destination"));
         lifetime = nbt.getFloat("lifetime");
 
-        NBTTagList items = nbt.getTagList("items", Constants.NBT.TAG_COMPOUND);
+        NBTTagList items = nbt.getTagList("items"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < items.tagCount(); ++i) {
             StackAtPosition sPos = new StackAtPosition();
-            sPos.stack = ItemStack.loadItemStackFromNBT(items.getCompoundTagAt(i));
+            sPos.stack = ItemStack.loadItemStackFromNBT(((INBTTagListExtension) items).getCompoundTagAt(i));
             stacksToDisplay.add(sPos);
         }
 

@@ -12,9 +12,9 @@ import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.tiles.IControllable;
 import buildcraft.api.tiles.IControllable.Mode;
 import buildcraft.core.lib.utils.StringUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -46,7 +46,7 @@ public class ActionMachineControl extends BCStatement implements IActionExternal
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister register) {
         icon = register.registerIcon("buildcraftcore:triggers/action_machinecontrol_" + mode.name().toLowerCase());
     }

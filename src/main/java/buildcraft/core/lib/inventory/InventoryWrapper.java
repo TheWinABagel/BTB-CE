@@ -46,8 +46,8 @@ public abstract class InventoryWrapper implements ISidedInventory {
     }
 
     @Override
-    public String getInventoryName() {
-        return inventory.getInventoryName();
+    public String getInvName() {
+        return inventory.getInvName();
     }
 
     @Override
@@ -56,8 +56,8 @@ public abstract class InventoryWrapper implements ISidedInventory {
     }
 
     @Override
-    public void markDirty() {
-        inventory.markDirty();
+    public void onInventoryChanged() {
+        inventory.onInventoryChanged();
     }
 
     @Override
@@ -66,13 +66,13 @@ public abstract class InventoryWrapper implements ISidedInventory {
     }
 
     @Override
-    public void openInventory() {
-        inventory.openInventory();
+    public void openChest() {
+        inventory.openChest();
     }
 
     @Override
-    public void closeInventory() {
-        inventory.closeInventory();
+    public void closeChest() {
+        inventory.closeChest();
     }
 
     @Override
@@ -81,8 +81,8 @@ public abstract class InventoryWrapper implements ISidedInventory {
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
-        return inventory.hasCustomInventoryName();
+    public boolean isInvNameLocalized() {
+        return inventory.isInvNameLocalized();
     }
 
     /* STATIC HELPER */

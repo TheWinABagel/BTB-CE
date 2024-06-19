@@ -8,16 +8,14 @@ package buildcraft.core.lib.block;
 
 import buildcraft.core.lib.render.EntityDropParticleFX;
 import buildcraft.core.lib.utils.ResourceUtils;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
-import net.minecraft.src.material.MapColor;
-import net.minecraft.src.material.Material;
-import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.MapColor;
+import net.minecraft.src.Material;
+import net.minecraft.src.EntityFX;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.Icon;
 import net.minecraft.src.Explosion;
 import net.minecraft.src.IBlockAccess;
@@ -34,7 +32,7 @@ public class BlockBuildCraftFluid extends BlockFluidClassic {
     protected float particleGreen;
     protected float particleBlue;
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     protected Icon[] theIcon;
 
     protected boolean flammable;
@@ -54,8 +52,8 @@ public class BlockBuildCraftFluid extends BlockFluidClassic {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IconRegister iconRegister) {
+    @Environment(EnvType.CLIENT)
+    public void registerIcons(IconRegister iconRegister) {
         String prefix = ResourceUtils.getObjectPrefix(Block.blockRegistry.getNameForObject(this));
         prefix = prefix.substring(0, prefix.indexOf(":") + 1) + "fluids/";
         this.theIcon = new Icon[] { iconRegister.registerIcon(prefix + fluidName + "_still"),
@@ -77,17 +75,17 @@ public class BlockBuildCraftFluid extends BlockFluidClassic {
     }
 
     @Override
-    public void onBlockExploded(World world, int x, int y, int z, Explosion explosion) {
-        world.setBlock(x, y, z, Blocks.air, 0, 2); // Do not cause block updates!
+    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion explosion) {
+        world.setBlock(x, y, z, 0, 0, 2); // Set to air, Do not cause block updates!
         for (ForgeDirection fd : ForgeDirection.VALID_DIRECTIONS) {
-            Block block = world.getBlock(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ);
+            Block block = Block.blocksList[world.getBlockId(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ)];
             if (block instanceof BlockBuildCraftFluid) {
-                world.scheduleBlockUpdate(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ, block, 2);
+                world.scheduleBlockUpdate(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ, block.blockID, 2);
             } else {
-                world.notifyBlockOfNeighborChange(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ, block);
+                world.notifyBlockOfNeighborChange(x + fd.offsetX, y + fd.offsetY, z + fd.offsetZ, block.blockID);
             }
         }
-        onBlockDestroyedByExplosion(world, x, y, z, explosion);
+//        onBlockDestroyedByExplosion(world, x, y, z, explosion);
     }
 
     @Override
@@ -150,7 +148,7 @@ public class BlockBuildCraftFluid extends BlockFluidClassic {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         super.randomDisplayTick(world, x, y, z, rand);
 

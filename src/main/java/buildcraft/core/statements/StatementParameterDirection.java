@@ -12,7 +12,7 @@ import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.StatementMouseClick;
 import buildcraft.api.transport.IPipeTile;
 import buildcraft.core.lib.utils.StringUtils;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;

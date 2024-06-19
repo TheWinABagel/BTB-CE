@@ -9,7 +9,7 @@ package buildcraft.core.render;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.lib.render.IInventoryRenderer;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.IBlockAccess;
 
 import java.util.HashMap;

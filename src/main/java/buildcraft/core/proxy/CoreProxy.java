@@ -15,8 +15,8 @@ import cpw.mods.fml.common.SidedProxy;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.src.NetHandler;
+import net.minecraft.src.NetHandlerPlayServer;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
@@ -114,7 +114,7 @@ public class CoreProxy implements ICoreProxy {
      * This function returns either the player from the handler if it's on the server, or directly from the minecraft
      * instance if it's the client.
      */
-    public EntityPlayer getPlayerFromNetHandler(INetHandler handler) {
+    public EntityPlayer getPlayerFromNetHandler(NetHandler handler) {
         if (handler instanceof NetHandlerPlayServer) {
             return ((NetHandlerPlayServer) handler).playerEntity;
         } else {

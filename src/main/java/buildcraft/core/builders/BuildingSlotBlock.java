@@ -6,12 +6,12 @@
  */
 package buildcraft.core.builders;
 
-import buildcraft.BuildCraftBuilders;
 import buildcraft.api.blueprints.*;
 import buildcraft.api.core.BCLog;
 import buildcraft.api.core.Position;
 import buildcraft.core.blueprints.IndexRequirementMap;
 import buildcraft.core.lib.utils.BlockUtils;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
@@ -58,9 +58,11 @@ public class BuildingSlotBlock extends BuildingSlot {
 
         if (mode == Mode.ClearIfInvalid) {
             if (!getSchematic().isAlreadyBuilt(context, x, y, z)) {
-                if (BuildCraftBuilders.dropBrokenBlocks) {
-                    return BlockUtils.breakBlock((WorldServer) context.world(), x, y, z);
-                } else {
+                //todobuilder reenable with builder
+//                if (BuildCraftBuilders.dropBrokenBlocks) {
+//                    return BlockUtils.breakBlock((WorldServer) context.world(), x, y, z);
+//                } else
+                {
                     context.world().setBlockToAir(x, y, z);
                     return true;
                 }
@@ -74,8 +76,8 @@ public class BuildingSlotBlock extends BuildingSlot {
                 if (!getSchematic().isAlreadyBuilt(context, x, y, z)) {
                     if (context.world().isAirBlock(x, y, z)) {
                         return false;
-                    } else if (!(getSchematic() instanceof SchematicBlock) || context.world().getBlock(x, y, z)
-                            .isAssociatedBlock(((SchematicBlock) getSchematic()).block)) {
+                    } else if (!(getSchematic() instanceof SchematicBlock) || Block.blocksList[context.world().getBlockId(x, y, z)]
+                            .isAssociatedBlockID(((SchematicBlock) getSchematic()).block.blockID)) {
                                 BCLog.logger.warn(
                                         "Placed block does not match expectations! Most likely a bug in BuildCraft or a supported mod. Removed mismatched block.");
                                 BCLog.logger.warn(
@@ -85,11 +87,10 @@ public class BuildingSlotBlock extends BuildingSlot {
                                                 + ", "
                                                 + z
                                                 + " - Block: "
-                                                + Block.blockRegistry
-                                                        .getNameForObject(context.world().getBlock(x, y, z))
+                                                + Block.blocksList[context.world().getBlockId(x, y, z)].getLocalizedName()
                                                 + "@"
                                                 + context.world().getBlockMetadata(x, y, z));
-                                context.world().removeTileEntity(x, y, z);
+                                context.world().removeBlockTileEntity(x, y, z);
                                 context.world().setBlockToAir(x, y, z);
                                 return true;
                             } else {
@@ -120,7 +121,7 @@ public class BuildingSlotBlock extends BuildingSlot {
                             BCLog.logger.warn(
                                     "Blueprint has MISMATCHING REQUIREMENTS! Potential corrupted/hacked blueprint! Removed mismatched block.");
                             BCLog.logger.warn("Location: " + x + ", " + y + ", " + z + " - ItemStack: " + s.toString());
-                            context.world().removeTileEntity(x, y, z);
+                            context.world().removeBlockTileEntity(x, y, z);
                             context.world().setBlockToAir(x, y, z);
                             return true;
                         }
@@ -136,7 +137,7 @@ public class BuildingSlotBlock extends BuildingSlot {
                 // the world, we're logging the problem and setting the block to
                 // air.
 
-                TileEntity e = context.world().getTileEntity(x, y, z);
+                TileEntity e = context.world().getBlockTileEntity(x, y, z);
 
                 if (e != null) {
                     e.updateEntity();
@@ -229,10 +230,10 @@ public class BuildingSlotBlock extends BuildingSlot {
 
         stackConsumed = new LinkedList<ItemStack>();
 
-        NBTTagList nbtStacks = nbt.getTagList("stackConsumed", Constants.NBT.TAG_COMPOUND);
+        NBTTagList nbtStacks = nbt.getTagList("stackConsumed"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < nbtStacks.tagCount(); ++i) {
-            stackConsumed.add(ItemStack.loadItemStackFromNBT(nbtStacks.getCompoundTagAt(i)));
+            stackConsumed.add(ItemStack.loadItemStackFromNBT(((INBTTagListExtension) nbtStacks).getCompoundTagAt(i)));
         }
     }
 

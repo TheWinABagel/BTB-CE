@@ -13,18 +13,7 @@ import buildcraft.core.lib.gui.tooltips.ToolTipLine;
 import buildcraft.core.lib.gui.widgets.Widget;
 import buildcraft.core.lib.render.RenderUtils;
 import buildcraft.core.lib.utils.SessionVars;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Slot;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
@@ -57,7 +46,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
     }
 
     public FontRenderer getFontRenderer() {
-        return fontRendererObj;
+        return fontRenderer;
     }
 
     protected void initLedgers(IInventory inventory) {}
@@ -199,10 +188,10 @@ public abstract class GuiBuildCraft extends GuiContainer {
     }
 
     public void drawCenteredString(String string, int xCenter, int yCenter, int textColor) {
-        fontRendererObj.drawString(
+        fontRenderer.drawString(
                 string,
-                xCenter - fontRendererObj.getStringWidth(string) / 2,
-                yCenter - fontRendererObj.FONT_HEIGHT / 2,
+                xCenter - fontRenderer.getStringWidth(string) / 2,
+                yCenter - fontRenderer.FONT_HEIGHT / 2,
                 textColor);
     }
 
@@ -211,7 +200,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
     }
 
     protected int getCenteredOffset(String string, int xWidth) {
-        return (xWidth - fontRendererObj.getStringWidth(string)) / 2;
+        return (xWidth - fontRenderer.getStringWidth(string)) / 2;
     }
 
     /**
@@ -303,7 +292,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
             int y;
 
             for (ToolTipLine tip : toolTips) {
-                y = this.fontRendererObj.getStringWidth(tip.text);
+                y = this.fontRenderer.getStringWidth(tip.text);
 
                 if (y > length) {
                     length = y;
@@ -319,7 +308,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
             }
 
             this.zLevel = 300.0F;
-            itemRender.zLevel = 300.0F;
+            itemRenderer.zLevel = 300.0F;
             int var15 = -267386864;
             this.drawGradientRect(x - 3, y - 4, x + length + 3, y - 3, var15, var15);
             this.drawGradientRect(x - 3, y + var14 + 3, x + length + 3, y + var14 + 4, var15, var15);
@@ -342,13 +331,13 @@ public abstract class GuiBuildCraft extends GuiContainer {
                     line = "\u00a7" + Integer.toHexString(tip.color) + line;
                 }
 
-                this.fontRendererObj.drawStringWithShadow(line, x, y, -1);
+                this.fontRenderer.drawStringWithShadow(line, x, y, -1);
 
                 y += 10 + tip.getSpacing();
             }
 
             this.zLevel = 0.0F;
-            itemRender.zLevel = 0.0F;
+            itemRenderer.zLevel = 0.0F;
         }
     }
 
@@ -418,7 +407,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
                 int startY = mouseY - ((gui.height - gui.ySize) / 2) - 12;
 
                 String tooltip = ledger.getTooltip();
-                int textWidth = fontRendererObj.getStringWidth(tooltip);
+                int textWidth = fontRenderer.getStringWidth(tooltip);
                 drawGradientRect(
                         startX - 3,
                         startY - 3,
@@ -426,7 +415,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
                         startY + 8 + 3,
                         0xc0000000,
                         0xc0000000);
-                fontRendererObj.drawStringWithShadow(tooltip, startX, startY, -1);
+                fontRenderer.drawStringWithShadow(tooltip, startX, startY, -1);
             }
         }
 

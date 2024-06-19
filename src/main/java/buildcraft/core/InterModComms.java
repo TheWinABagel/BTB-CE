@@ -10,8 +10,6 @@ import buildcraft.api.core.BCLog;
 import buildcraft.core.crops.CropHandlerPlantable;
 import buildcraft.core.recipes.AssemblyRecipeManager;
 import buildcraft.core.recipes.RefineryRecipeManager;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
@@ -24,12 +22,12 @@ import java.util.List;
 import java.util.Set;
 
 public final class InterModComms {
-
+/*
     private static final Set<IMCHandler> handlers = new HashSet<IMCHandler>();
 
-    /**
+    *//**
      * Deactivate constructor
-     */
+     *//*
     private InterModComms() {}
 
     public static void registerHandler(IMCHandler handler) {
@@ -108,7 +106,7 @@ public final class InterModComms {
                 NBTTagList list = (NBTTagList) recipe.getTag("input");
                 List<ItemStack> input = new ArrayList<ItemStack>();
                 for (int i = 0; i < list.tagCount(); i++) {
-                    ItemStack is = ItemStack.loadItemStackFromNBT(list.getCompoundTagAt(i));
+                    ItemStack is = ItemStack.loadItemStackFromNBT(((INBTTagListExtension) list).getCompoundTagAt(i));
                     if (is != null) {
                         input.add(is);
                     }
@@ -165,5 +163,5 @@ public final class InterModComms {
         if (failed) {
             BCLog.logger.warn("Received invalid refinery recipe IMC message from mod %s!", msg.getSender());
         }
-    }
+    }*/
 }

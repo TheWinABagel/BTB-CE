@@ -7,18 +7,16 @@
 package buildcraft.core.lib.render;
 
 import buildcraft.core.lib.render.RenderEntityBlock.RenderInfo;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.*;
 import net.minecraft.init.Blocks;
-import net.minecraft.src.Icon;
-import net.minecraft.src.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static net.minecraft.src.EnumSkyBlock.Block;
 
 public final class FluidRenderer {
 
@@ -96,7 +94,7 @@ public final class FluidRenderer {
             liquidBlock.baseBlock = fluid.getBlock();
             liquidBlock.texture = getFluidTexture(fluidStack, flowing);
         } else {
-            liquidBlock.baseBlock = Blocks.water;
+            liquidBlock.baseBlock = net.minecraft.src.Block.waterStill;
             liquidBlock.texture = getFluidTexture(fluidStack, flowing);
         }
 

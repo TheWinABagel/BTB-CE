@@ -7,15 +7,15 @@
 package buildcraft.core.lib.render;
 
 import buildcraft.api.core.render.ITextureStateManager;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Icon;
 
 /*
  * This class moves texture management from PipeRenderState to be filled while rendering as efficient as possible
  */
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public final class TextureStateManager implements ITextureStateManager {
 
     private Icon currentTexture;

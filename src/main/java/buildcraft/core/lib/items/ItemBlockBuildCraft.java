@@ -12,7 +12,7 @@ import net.minecraft.src.ItemBlock;
 public class ItemBlockBuildCraft extends ItemBlock {
 
     public ItemBlockBuildCraft(Block b) {
-        super(b);
+        super(b.blockID);
     }
 
     @Override

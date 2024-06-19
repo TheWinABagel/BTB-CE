@@ -6,6 +6,7 @@
  */
 package buildcraft.api.core;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -177,7 +178,7 @@ public class Position implements ISerializable {
     }
 
     @Override
-    public void readData(DataInput stream) throws IOException {
+    public void readData(ByteBuf stream){
         x = stream.readDouble();
         y = stream.readDouble();
         z = stream.readDouble();
@@ -185,7 +186,7 @@ public class Position implements ISerializable {
     }
 
     @Override
-    public void writeData(DataOutput stream) throws IOException {
+    public void writeData(ByteBuf stream){
         stream.writeDouble(x);
         stream.writeDouble(y);
         stream.writeDouble(z);

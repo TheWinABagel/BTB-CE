@@ -3,9 +3,9 @@ package buildcraft.core.config;
 import java.util.ArrayList;
 import java.util.Set;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.I18n;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -28,7 +28,7 @@ public class ConfigManager implements IModGuiFactory {
                     "config",
                     false,
                     false,
-                    I18n.format("config.buildcraft"));
+                    I18n.getStringParams("config.buildcraft"));
 
             for (String s : config.getCategoryNames()) {
                 if (!s.contains(".")) {

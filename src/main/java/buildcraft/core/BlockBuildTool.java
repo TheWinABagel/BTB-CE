@@ -7,8 +7,8 @@
 package buildcraft.core;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.Material;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
 import buildcraft.BuildCraftCore;

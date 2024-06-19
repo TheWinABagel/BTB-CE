@@ -6,16 +6,16 @@
  */
 package buildcraft.core.lib.render;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
-import net.minecraft.client.particle.EntityFX;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.Material;
+import net.minecraft.src.EntityFX;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 import net.minecraftforge.fluids.IFluidBlock;
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class EntityDropParticleFX extends EntityFX {
 
     /**
@@ -91,9 +91,9 @@ public class EntityDropParticleFX extends EntityFX {
         int x = MathHelper.floor_double(this.posX);
         int y = MathHelper.floor_double(this.posY);
         int z = MathHelper.floor_double(this.posZ);
-        Block block = worldObj.getBlock(x, y, z);
+        Block block = Block.blocksList[worldObj.getBlockId(x, y, z)];
 
-        Material material = block.getMaterial();
+        Material material = block.blockMaterial;
 
         if ((material.isLiquid() || material.isSolid()) && block instanceof IFluidBlock) {
             double d0 = MathHelper.floor_double(this.posY) + 1

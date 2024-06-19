@@ -6,14 +6,15 @@
  */
 package buildcraft.core;
 
+import btw.world.util.WorldUtils;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.items.IMapLocation;
 import buildcraft.core.lib.block.BlockBuildCraft;
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
+import net.minecraft.src.Material;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -23,15 +24,15 @@ public class BlockMarker extends BlockBuildCraft {
     public BlockMarker() {
         super(Material.circuits);
 
-        setLightLevel(0.5F);
+        setLightValue(0.5F);
         setHardness(0.0F);
         setCreativeTab(BCCreativeTab.get("main"));
     }
 
     public static boolean canPlaceTorch(World world, int x, int y, int z, ForgeDirection side) {
-        Block block = world.getBlock(x, y, z);
+        Block block = Block.blocksList[world.getBlockId(x, y, z)];
         return block != null
-                && (block.renderAsNormalBlock() && block.isOpaqueCube() || block.isSideSolid(world, x, y, z, side));
+                && (block.renderAsNormalBlock() && block.isOpaqueCube() || WorldUtils.doesBlockHaveCenterHardpointToFacing(world, x, y, z, side.ordinal()));
     }
 
     private AxisAlignedBB getBoundingBox(int meta) {
@@ -82,7 +83,7 @@ public class BlockMarker extends BlockBuildCraft {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata) {
+    public TileEntity createNewTileEntity(World world) {
         return new TileMarker();
     }
 
@@ -102,7 +103,7 @@ public class BlockMarker extends BlockBuildCraft {
             return false;
         }
 
-        TileEntity tile = world.getTileEntity(i, j, k);
+        TileEntity tile = world.getBlockTileEntity(i, j, k);
         if (tile instanceof TileMarker) {
             ((TileMarker) tile).tryConnection();
             return true;
@@ -126,8 +127,8 @@ public class BlockMarker extends BlockBuildCraft {
     }
 
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+    public void onNeighborBlockChange(World world, int x, int y, int z, int block) {
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
         if (tile instanceof TileMarker) {
             ((TileMarker) tile).updateSignals();
         }
@@ -153,7 +154,7 @@ public class BlockMarker extends BlockBuildCraft {
 
     private void dropTorchIfCantStay(World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
-        if (!canPlaceBlockOnSide(world, x, y, z, meta) && world.getBlock(x, y, z) == this) {
+        if (!canPlaceBlockOnSide(world, x, y, z, meta) && world.getBlockId(x, y, z) == this.blockID) {
             dropBlockAsItem(world, x, y, z, 0, 0);
             world.setBlockToAir(x, y, z);
         }

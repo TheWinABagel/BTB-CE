@@ -11,19 +11,18 @@ import buildcraft.api.events.BlockInteractionEvent;
 import buildcraft.api.transport.IItemPipe;
 import buildcraft.core.lib.block.BlockBuildCraft;
 import buildcraft.core.lib.render.ICustomHighlight;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.Material;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Icon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.src.MovingObjectPosition;
+import net.minecraft.src.Vec3;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -55,14 +54,14 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
     public abstract String getTexturePrefix(int meta, boolean addPrefix);
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIconAbsolute(int side, int metadata) {
         return icons[metadata] == null ? icons[0][0] : icons[metadata][0];
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IconRegister register) {
+    @Environment(EnvType.CLIENT)
+    public void registerIcons(IconRegister register) {
         icons = new Icon[16][];
         for (int meta = 0; meta < 16; meta++) {
             String prefix = getTexturePrefix(meta, false);
@@ -89,8 +88,13 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
     }
 
     @Override
+    public boolean hasCenterHardPointToFacing(IBlockAccess blockAccess, int i, int j, int k, int iFacing) {
+        return super.hasCenterHardPointToFacing(blockAccess, i, j, k, iFacing);
+    }
+
+    @Override
     public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile instanceof TileEngineBase) {
             return ((TileEngineBase) tile).orientation.getOpposite() == side;
@@ -101,7 +105,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
 
     @Override
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile instanceof TileEngineBase) {
             return ((TileEngineBase) tile).switchOrientation(false);
@@ -113,13 +117,13 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
     @Override
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int side, float par7,
             float par8, float par9) {
-        TileEntity tile = world.getTileEntity(i, j, k);
+        TileEntity tile = world.getBlockTileEntity(i, j, k);
 
-        BlockInteractionEvent event = new BlockInteractionEvent(player, this, world.getBlockMetadata(i, j, k));
-        FMLCommonHandler.instance().bus().post(event);
-        if (event.isCanceled()) {
-            return false;
-        }
+//        BlockInteractionEvent event = new BlockInteractionEvent(player, this, world.getBlockMetadata(i, j, k));
+//        FMLCommonHandler.instance().bus().post(event);
+//        if (event.isCanceled()) {
+//            return false;
+//        }
 
         // Do not open guis when having a pipe in hand
         if (player.getCurrentEquippedItem() != null) {
@@ -138,7 +142,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
     @Override
     @SuppressWarnings("unchecked")
     public void addCollisionBoxesToList(World wrd, int x, int y, int z, AxisAlignedBB mask, List list, Entity ent) {
-        TileEntity tile = wrd.getTileEntity(x, y, z);
+        TileEntity tile = wrd.getBlockTileEntity(x, y, z);
         if (tile instanceof TileEngineBase) {
             AxisAlignedBB[] aabbs = boxes[((TileEngineBase) tile).orientation.ordinal()];
             for (AxisAlignedBB aabb : aabbs) {
@@ -154,7 +158,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
 
     @Override
     public AxisAlignedBB[] getBoxes(World wrd, int x, int y, int z, EntityPlayer player) {
-        TileEntity tile = wrd.getTileEntity(x, y, z);
+        TileEntity tile = wrd.getBlockTileEntity(x, y, z);
         if (tile instanceof TileEngineBase) {
             return boxes[((TileEngineBase) tile).orientation.ordinal()];
         } else {
@@ -169,7 +173,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
 
     @Override
     public MovingObjectPosition collisionRayTrace(World wrd, int x, int y, int z, Vec3 origin, Vec3 direction) {
-        TileEntity tile = wrd.getTileEntity(x, y, z);
+        TileEntity tile = wrd.getBlockTileEntity(x, y, z);
         if (tile instanceof TileEngineBase) {
             AxisAlignedBB[] aabbs = boxes[((TileEngineBase) tile).orientation.ordinal()];
             MovingObjectPosition closest = null;
@@ -196,7 +200,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
 
     @Override
     public void onPostBlockPlaced(World world, int x, int y, int z, int par5) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
         if (tile instanceof TileEngineBase) {
             TileEngineBase engine = (TileEngineBase) tile;
             engine.orientation = ForgeDirection.UP;
@@ -214,7 +218,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
     @SuppressWarnings({ "all" })
     @Override
     public void randomDisplayTick(World world, int i, int j, int k, Random random) {
-        TileEntity tile = world.getTileEntity(i, j, k);
+        TileEntity tile = world.getBlockTileEntity(i, j, k);
 
         if (!(tile instanceof TileEngineBase)) {
             return;
@@ -247,7 +251,7 @@ public abstract class BlockEngineBase extends BlockBuildCraft implements ICustom
 
     @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (tile instanceof TileEngineBase) {
             ((TileEngineBase) tile).onNeighborUpdate();

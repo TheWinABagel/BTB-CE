@@ -11,6 +11,7 @@ import buildcraft.api.core.BCLog;
 import buildcraft.api.core.Position;
 import buildcraft.core.Box;
 import buildcraft.core.Version;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.*;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -215,7 +216,7 @@ public abstract class BlueprintBase {
             NBTTagList subBptList = nbt.getTagList("subBpt"/*, Constants.NBT.TAG_COMPOUND*/);
 
             for (int i = 0; i < subBptList.tagCount(); ++i) {
-                subBlueprintsNBT.add(subBptList.getCompoundTagAt(i));
+                subBlueprintsNBT.add(((INBTTagListExtension) subBptList).getCompoundTagAt(i));
             }
         }
     }

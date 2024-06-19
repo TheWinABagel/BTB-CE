@@ -1,7 +1,6 @@
 package buildcraft.core.builders;
 
 import buildcraft.api.blueprints.IBuilderContext;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
@@ -18,7 +17,7 @@ public class BuilderItemMetaPair {
             this.item = stack.getItem();
             this.meta = stack.getItemDamage();
         } else {
-            this.item = Item.getItemFromBlock(Blocks.air);
+            this.item = Item.itemsList[0];
             this.meta = 0;
         }
     }
@@ -44,6 +43,6 @@ public class BuilderItemMetaPair {
 
     @Override
     public int hashCode() {
-        return Item.getIdFromItem(item) * 17 + meta;
+        return item.itemID * 17 + meta;
     }
 }

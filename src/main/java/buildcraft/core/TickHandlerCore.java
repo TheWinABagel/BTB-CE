@@ -6,39 +6,35 @@
  */
 package buildcraft.core;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.util.ChatComponentTranslation;
 
 import buildcraft.core.proxy.CoreProxy;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class TickHandlerCore {
 
-    private boolean nagged;
+    private boolean nagged = true;
 
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void checkUpToDate(PlayerTickEvent evt) {
+    @Environment(EnvType.CLIENT)
+    public void checkUpToDate(/*PlayerTickEvent evt*/) {
         if (nagged) {
             return;
         }
 
-        EntityPlayer player = evt.player;
-
-        if (Version.needsUpdateNoticeAndMarkAsSeen()) {
-            player.addChatMessage(
-                    new ChatComponentTranslation(
-                            "bc_update.new_version",
-                            Version.getRecommendedVersion(),
-                            CoreProxy.proxy.getMinecraftVersion()));
-            player.addChatMessage(new ChatComponentTranslation("bc_update.download"));
-            player.addChatMessage(new ChatComponentTranslation("bc_update.once"));
-            player.addChatMessage(new ChatComponentTranslation("bc_update.again"));
-            player.addChatMessage(new ChatComponentTranslation("bc_update.changelog"));
-        }
+//        EntityPlayer player = evt.player;
+//
+//        if (Version.needsUpdateNoticeAndMarkAsSeen()) {
+//            player.addChatMessage(
+//                    new ChatComponentTranslation(
+//                            "bc_update.new_version",
+//                            Version.getRecommendedVersion(),
+//                            CoreProxy.proxy.getMinecraftVersion()));
+//            player.addChatMessage(new ChatComponentTranslation("bc_update.download"));
+//            player.addChatMessage(new ChatComponentTranslation("bc_update.once"));
+//            player.addChatMessage(new ChatComponentTranslation("bc_update.again"));
+//            player.addChatMessage(new ChatComponentTranslation("bc_update.changelog"));
+//        }
 
         nagged = true;
     }

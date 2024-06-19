@@ -8,14 +8,14 @@ package buildcraft.core.lib.gui.buttons;
 
 import buildcraft.core.lib.gui.tooltips.IToolTipProvider;
 import buildcraft.core.lib.gui.tooltips.ToolTip;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.FontRenderer;
+import net.minecraft.src.GuiButton;
 import org.lwjgl.opengl.GL11;
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class GuiBetterButton extends GuiButton implements IToolTipProvider {
 
     protected final IButtonTextureSet texture;
@@ -64,7 +64,7 @@ public class GuiBetterButton extends GuiButton implements IToolTipProvider {
 
     @Override
     public void drawButton(Minecraft minecraft, int mouseX, int mouseY) {
-        if (!visible) {
+        if (!drawButton) {
             return;
         }
 
@@ -106,7 +106,7 @@ public class GuiBetterButton extends GuiButton implements IToolTipProvider {
 
     @Override
     public boolean isToolTipVisible() {
-        return visible;
+        return drawButton;
     }
 
     @Override

@@ -3,17 +3,17 @@ package buildcraft.core;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.recipes.BuildcraftRecipeRegistry;
 import buildcraft.core.lib.utils.Utils;
-import cpw.mods.fml.common.Optional;
-import net.minecraft.init.Items;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
 public final class CoreSiliconRecipes {
 
     private CoreSiliconRecipes() {}
 
-    @Optional.Method(modid = "BuildCraft|Silicon")
     public static void loadSiliconRecipes() {
         // Lists
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Silicon"))
         if (Utils.isRegistered(BuildCraftCore.listItem)) {
             BuildcraftRecipeRegistry.assemblyTable.addRecipe(
                     "buildcraft:list",
@@ -21,7 +21,7 @@ public final class CoreSiliconRecipes {
                     new ItemStack(BuildCraftCore.listItem, 1, 1),
                     "dyeGreen",
                     "dustRedstone",
-                    new ItemStack(Items.paper, 8));
+                    new ItemStack(Item.paper, 8));
         }
     }
 }

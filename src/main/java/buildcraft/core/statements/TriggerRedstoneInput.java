@@ -12,7 +12,7 @@ import buildcraft.api.statements.ITriggerInternal;
 import buildcraft.api.statements.containers.IRedstoneStatementContainer;
 import buildcraft.api.statements.containers.ISidedStatementContainer;
 import buildcraft.core.lib.utils.StringUtils;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.IconRegister;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TriggerRedstoneInput extends BCStatement implements ITriggerInternal {

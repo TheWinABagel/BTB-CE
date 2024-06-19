@@ -50,7 +50,7 @@ public class TileMarker extends TileBuildCraft implements ITileAreaProvider {
             }
 
             if (marker == null) {
-                TileEntity tile = world.getTileEntity(x, y, z);
+                TileEntity tile = world.getBlockTileEntity(x, y, z);
                 if (tile instanceof TileMarker) {
                     marker = (TileMarker) tile;
                 }
@@ -206,7 +206,7 @@ public class TileMarker extends TileBuildCraft implements ITileAreaProvider {
                 if (initVect[i] != null) {
                     linkTo(
                             (TileMarker) worldObj
-                                    .getTileEntity((int) initVect[i].x, (int) initVect[i].y, (int) initVect[i].z),
+                                    .getBlockTileEntity((int) initVect[i].x, (int) initVect[i].y, (int) initVect[i].z),
                             i);
                 }
             }
@@ -238,10 +238,10 @@ public class TileMarker extends TileBuildCraft implements ITileAreaProvider {
             for (int j = 1; j < DefaultProps.MARKER_RANGE; ++j) {
                 coords[n] += j;
 
-                Block block = worldObj.getBlock(coords[0], coords[1], coords[2]);
+                int block = worldObj.getBlockId(coords[0], coords[1], coords[2]);
 
-                if (block == BuildCraftCore.markerBlock) {
-                    TileMarker marker = (TileMarker) worldObj.getTileEntity(coords[0], coords[1], coords[2]);
+                if (block == BuildCraftCore.markerBlock.blockID) {
+                    TileMarker marker = (TileMarker) worldObj.getBlockTileEntity(coords[0], coords[1], coords[2]);
 
                     if (linkTo(marker, n)) {
                         break;
@@ -251,10 +251,10 @@ public class TileMarker extends TileBuildCraft implements ITileAreaProvider {
                 coords[n] -= j;
                 coords[n] -= j;
 
-                block = worldObj.getBlock(coords[0], coords[1], coords[2]);
+                block = worldObj.getBlockId(coords[0], coords[1], coords[2]);
 
-                if (block == BuildCraftCore.markerBlock) {
-                    TileMarker marker = (TileMarker) worldObj.getTileEntity(coords[0], coords[1], coords[2]);
+                if (block == BuildCraftCore.markerBlock.blockID) {
+                    TileMarker marker = (TileMarker) worldObj.getBlockTileEntity(coords[0], coords[1], coords[2]);
 
                     if (linkTo(marker, n)) {
                         break;

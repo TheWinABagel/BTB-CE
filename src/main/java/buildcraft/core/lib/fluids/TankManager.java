@@ -7,8 +7,8 @@
 package buildcraft.core.lib.fluids;
 
 import com.google.common.collect.ForwardingList;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -116,7 +116,7 @@ public class TankManager<T extends Tank> extends ForwardingList<T> implements IF
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void readData(ByteBuf data) {
         for (Tank tank : tanks) {
             int fluidId = data.readShort();

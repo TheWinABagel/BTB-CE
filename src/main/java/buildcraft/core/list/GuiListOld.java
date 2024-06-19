@@ -6,10 +6,10 @@
  */
 package buildcraft.core.list;
 
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.src.GuiTextField;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.core.ItemList;
@@ -109,7 +109,7 @@ public class GuiListOld extends GuiAdvancedInterface {
     public void initGui() {
         super.initGui();
 
-        textField = new GuiTextField(this.fontRendererObj, 10, 10, 156, 12);
+        textField = new GuiTextField(this.fontRenderer, 10, 10, 156, 12);
         textField.setMaxStringLength(32);
         textField.setText(BuildCraftCore.listItem.getLabel(player.getCurrentEquippedItem()));
         textField.setFocused(false);

@@ -54,6 +54,6 @@ public class PacketTileUpdate extends PacketUpdate {
     }
 
     public TileEntity getTarget(World world) {
-        return world.getTileEntity(posX, posY, posZ);
+        return world.getBlockTileEntity(posX, posY, posZ);
     }
 }

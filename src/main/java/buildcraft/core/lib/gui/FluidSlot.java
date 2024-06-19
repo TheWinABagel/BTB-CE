@@ -8,9 +8,9 @@ package buildcraft.core.lib.gui;
 
 import buildcraft.core.lib.render.FluidRenderer;
 import buildcraft.core.lib.render.RenderUtils;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.TextureMap;
 import net.minecraft.src.Icon;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
 
 /**

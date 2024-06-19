@@ -12,24 +12,24 @@ import buildcraft.core.lib.items.ItemBuildCraft;
 import buildcraft.core.lib.utils.NBTUtils;
 import buildcraft.core.list.ListHandlerNew;
 import buildcraft.core.list.ListHandlerOld;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.src.EnumChatFormatting;
 import net.minecraft.src.Icon;
-import net.minecraft.util.StatCollector;
+import net.minecraft.src.StatCollector;
 import net.minecraft.src.World;
 
 import java.util.List;
 
 public class ItemList extends ItemBuildCraft implements IList {
 
-    public ItemList() {
-        super();
+    public ItemList(int id) {
+        super(id);
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
@@ -104,7 +104,7 @@ public class ItemList extends ItemBuildCraft implements IList {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List itemList) {
         itemList.add(new ItemStack(this, 1, 0)); // TODO: remove
         itemList.add(new ItemStack(this, 1, 1));

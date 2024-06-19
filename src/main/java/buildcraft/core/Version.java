@@ -8,15 +8,10 @@ package buildcraft.core;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.BCLog;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import net.minecraft.command.ICommandSender;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.src.ICommandSender;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.config.Property;
+import net.minecraft.src.EnumChatFormatting;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -57,16 +52,16 @@ public class Version implements Runnable {
             return false;
         }
 
-        Property property = BuildCraftCore.mainConfiguration.get("vars", "version.seen", VERSION);
-        property.comment = "indicates the last version the user has been informed about and will suppress further notices on it.";
-        String seenVersion = property.getString();
-
-        if (recommendedVersion == null || recommendedVersion.equals(seenVersion)) {
-            return false;
-        }
-
-        property.set(recommendedVersion);
-        BuildCraftCore.mainConfiguration.save();
+//        Property property = BuildCraftCore.mainConfiguration.get("vars", "version.seen", VERSION);
+//        property.comment = "indicates the last version the user has been informed about and will suppress further notices on it.";
+//        String seenVersion = property.getString();
+//
+//        if (recommendedVersion == null || recommendedVersion.equals(seenVersion)) {
+//            return false;
+//        }
+//
+//        property.set(recommendedVersion);
+//        BuildCraftCore.mainConfiguration.save();
         return true;
     }
 
@@ -137,7 +132,7 @@ public class Version implements Runnable {
      * This is an integration with Dynious Version Checker See http://www.minecraftforum.net/topic/2721902-
      */
     public static void sendIMCOutdatedMessage() {
-        if (Loader.isModLoaded("VersionChecker")) {
+        if (FabricLoader.getInstance().isModLoaded("VersionChecker")) {
             NBTTagCompound compound = new NBTTagCompound();
             compound.setString("modDisplayName", "BuildCraft");
             compound.setString("oldVersion", VERSION);
@@ -152,24 +147,24 @@ public class Version implements Runnable {
             }
             compound.setString("changeLog", stringBuilder.toString());
 
-            FMLInterModComms.sendRuntimeMessage("BuildCraft|Core", "VersionChecker", "addUpdate", compound);
+//            FMLInterModComms.sendRuntimeMessage("BuildCraft|Core", "VersionChecker", "addUpdate", compound);
             sentIMCOutdatedMessage = true;
         }
     }
 
     public static void displayChangelog(ICommandSender sender) {
-        sender.addChatMessage(
-                new ChatComponentTranslation("command.buildcraft.changelog_header", getRecommendedVersion())
-                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setBold(true)));
-        for (String updateLine : Version.getChangelog()) {
-            EnumChatFormatting format = EnumChatFormatting.BLUE;
-            if (updateLine.startsWith("*")) {
-                format = EnumChatFormatting.WHITE;
-            } else if (updateLine.trim().endsWith(":")) {
-                format = EnumChatFormatting.GOLD;
-            }
-            sender.addChatMessage(new ChatComponentText(updateLine).setChatStyle(new ChatStyle().setColor(format)));
-        }
+//        sender.addChatMessage(
+//                new ChatComponentTranslation("command.buildcraft.changelog_header", getRecommendedVersion())
+//                        .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY).setBold(true)));
+//        for (String updateLine : Version.getChangelog()) {
+//            EnumChatFormatting format = EnumChatFormatting.BLUE;
+//            if (updateLine.startsWith("*")) {
+//                format = EnumChatFormatting.WHITE;
+//            } else if (updateLine.trim().endsWith(":")) {
+//                format = EnumChatFormatting.GOLD;
+//            }
+//            sender.addChatMessage(new ChatComponentText(updateLine).setChatStyle(new ChatStyle().setColor(format)));
+//        }
     }
 
     public static void check() {

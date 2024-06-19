@@ -8,14 +8,13 @@ package buildcraft.core.lib.render;
 
 import buildcraft.core.lib.EntityBlock;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.Tessellator;
+import net.minecraft.src.Render;
+import net.minecraft.src.TextureMap;
 import net.minecraft.src.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.Icon;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.EnumSkyBlock;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
@@ -26,10 +25,8 @@ import java.util.Arrays;
 public final class RenderEntityBlock extends Render {
 
     public static RenderEntityBlock INSTANCE = new RenderEntityBlock();
-    protected RenderBlocks renderBlocks;
 
     private RenderEntityBlock() {
-        renderBlocks = field_147909_c;
     }
 
     @Override
@@ -45,7 +42,7 @@ public final class RenderEntityBlock extends Render {
         public double maxX = 1.0F;
         public double maxY = 1.0F;
         public double maxZ = 1.0F;
-        public Block baseBlock = Blocks.sand;
+        public Block baseBlock = Block.sand;
         public Icon texture = null;
         public Icon[] textureArray = null;
         public boolean[] renderSide = new boolean[] { true, true, true, true, true, true };

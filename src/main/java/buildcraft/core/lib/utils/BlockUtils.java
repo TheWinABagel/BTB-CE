@@ -9,30 +9,25 @@ package buildcraft.core.lib.utils;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.blueprints.BuilderAPI;
 import buildcraft.core.proxy.CoreProxy;
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.src.Block;
-import net.minecraft.src.BlockStaticLiquid;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.ItemStack;
-import net.minecraft.network.play.server.S27PacketExplosion;
+import net.minecraft.src.Packet60Explosion;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntityChest;
 import net.minecraft.src.ChunkPosition;
 import net.minecraft.src.Explosion;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
-import net.minecraft.src.chunk.Chunk;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.src.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fluids.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public final class BlockUtils {
 
@@ -44,33 +39,36 @@ public final class BlockUtils {
     public static List<ItemStack> getItemStackFromBlock(WorldServer world, int i, int j, int k) {
         Block block = world.getBlock(i, j, k);
 
-        if (block == null || block.isAir(world, i, j, k)) {
+        if (block == null || world.isAirBlock(i, j, k)) {
             return null;
         }
-
+        //todocore janky drop collection
         int meta = world.getBlockMetadata(i, j, k);
 
-        ArrayList<ItemStack> dropsList = block.getDrops(world, i, j, k, meta, 0);
-        float dropChance = ForgeEventFactory.fireBlockHarvesting(
-                dropsList,
-                world,
-                block,
-                i,
-                j,
-                k,
-                meta,
-                0,
-                1.0F,
-                false,
-                CoreProxy.proxy.getBuildCraftPlayer(world).get());
+//        ArrayList<ItemStack> dropsList = block.getDrops(world, i, j, k, meta, 0);
+        Random rand = new Random();
+       ItemStack stack = new ItemStack(block.idDropped(meta, rand, 0), block.damageDropped(meta), block.quantityDropped(rand));
+//        float dropChance = ForgeEventFactory.fireBlockHarvesting(
+//                dropsList,
+//                world,
+//                block,
+//                i,
+//                j,
+//                k,
+//                meta,
+//                0,
+//                1.0F,
+//                false,
+//                CoreProxy.proxy.getBuildCraftPlayer(world).get());
+        float dropChance = 1.0f;
 
         ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();
-        for (ItemStack s : dropsList) {
-            if (world.rand.nextFloat() <= dropChance) {
-                returnList.add(s);
-            }
-        }
-
+//        for (ItemStack s : dropsList) {
+//            if (world.rand.nextFloat() <= dropChance) {
+//                returnList.add(s);
+//            }
+//        }
+        returnList.add(stack);
         return returnList;
     }
 
@@ -112,7 +110,7 @@ public final class BlockUtils {
 
         EntityPlayer player = getFakePlayerWithTool(world, x, y, z, tool);
 
-        BreakEvent breakEvent = new BreakEvent(
+/*        BreakEvent breakEvent = new BreakEvent(
                 x,
                 y,
                 z,
@@ -132,7 +130,7 @@ public final class BlockUtils {
 
         if (tool != null && tool.getItem() != null && tool.getItem().onBlockStartBreak(tool, x, y, z, player)) {
             return false;
-        }
+        }*/
 
         block.onBlockHarvested(world, x, y, z, meta, player);
         block.harvestBlock(world, player, x, y, z, meta);
@@ -142,7 +140,7 @@ public final class BlockUtils {
     }
 
     public static boolean breakBlock(WorldServer world, int x, int y, int z, List<ItemStack> drops) {
-        BreakEvent breakEvent = new BreakEvent(
+/*        BreakEvent breakEvent = new BreakEvent(
                 x,
                 y,
                 z,
@@ -154,7 +152,7 @@ public final class BlockUtils {
 
         if (breakEvent.isCanceled()) {
             return false;
-        }
+        }*/
 
         if (!world.isAirBlock(x, y, z) && !world.isRemote
                 && world.getGameRules().getGameRuleBooleanValue("doTileDrops")) {
@@ -172,18 +170,18 @@ public final class BlockUtils {
         double dz = world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
         EntityItem entityitem = new EntityItem(world, x + dx, y + dy, z + dz, stack);
 
-        entityitem.lifespan = forcedLifespan;
+        entityitem.age = forcedLifespan;
         entityitem.delayBeforeCanPickup = 10;
 
         world.spawnEntityInWorld(entityitem);
     }
 
     public static boolean canChangeBlock(World world, int x, int y, int z) {
-        return canChangeBlock(world.getBlock(x, y, z), world, x, y, z);
+        return canChangeBlock(Block.blocksList[world.getBlockId(x, y, z)], world, x, y, z);
     }
 
     public static boolean canChangeBlock(Block block, World world, int x, int y, int z) {
-        if (block == null || block.isAir(world, x, y, z)) {
+        if (block == null || world.isAirBlock(x, y, z)) {
             return true;
         }
 
@@ -191,7 +189,7 @@ public final class BlockUtils {
             return false;
         }
 
-        if (block == Blocks.lava || block == Blocks.flowing_lava) {
+        if (block == Block.lavaStill || block == Block.lavaMoving) {
             return false;
         } else if (block instanceof IFluidBlock && ((IFluidBlock) block).getFluid() != null) {
             Fluid f = ((IFluidBlock) block).getFluid();
@@ -230,7 +228,7 @@ public final class BlockUtils {
     }
 
     public static boolean isUnbreakableBlock(World world, int x, int y, int z) {
-        return isUnbreakableBlock(world, x, y, z, world.getBlock(x, y, z));
+        return isUnbreakableBlock(world, x, y, z, Block.blocksList[world.getBlockId(x, y, z)]);
     }
 
     /**
@@ -312,7 +310,7 @@ public final class BlockUtils {
 
             if (player.getDistanceSq(x, y, z) < 4096) {
                 ((EntityPlayerMP) player).playerNetServerHandler.sendPacket(
-                        new S27PacketExplosion(x + .5, y + .5, z + .5, 3f, explosion.affectedBlockPositions, null));
+                        new Packet60Explosion(x + .5, y + .5, z + .5, 3f, explosion.affectedBlockPositions, null));
             }
         }
     }
@@ -338,7 +336,7 @@ public final class BlockUtils {
             Chunk chunk = ThreadSafeUtils.getChunk(world, x >> 4, z >> 4);
             return chunk != null ? chunk.getTileEntityUnsafe(x & 15, y, z & 15) : null;
         } else {
-            return world.getTileEntity(x, y, z);
+            return world.getBlockTileEntity(x, y, z);
         }
     }
 

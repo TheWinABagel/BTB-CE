@@ -2,8 +2,8 @@ package buildcraft.core.lib.gui.widgets;
 
 import buildcraft.core.lib.gui.GuiBuildCraft;
 import buildcraft.core.lib.utils.MathUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class ScrollbarWidget extends Widget {
 
@@ -16,7 +16,7 @@ public class ScrollbarWidget extends Widget {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void draw(GuiBuildCraft gui, int guiX, int guiY, int mouseX, int mouseY) {
         gui.drawTexturedModalRect(guiX + x, guiY + y, u, v, w, h);
         int posPx = pos * (h - HEIGHT + 2) / len;
@@ -28,7 +28,7 @@ public class ScrollbarWidget extends Widget {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean handleMouseClick(int mouseX, int mouseY, int mouseButton) {
         if (mouseButton == 0) {
             isClicking = true;
@@ -39,7 +39,7 @@ public class ScrollbarWidget extends Widget {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void handleMouseMove(int mouseX, int mouseY, int mouseButton, long time) {
         if (isClicking && mouseButton == 0) {
             updateLength(mouseY);
@@ -47,7 +47,7 @@ public class ScrollbarWidget extends Widget {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void handleMouseRelease(int mouseX, int mouseY, int eventType) {
         if (isClicking && eventType == 0) {
             updateLength(mouseY);

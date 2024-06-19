@@ -30,7 +30,7 @@ public class SchematicEngine extends SchematicTile {
     public void initializeFromObjectAt(IBuilderContext context, int x, int y, int z) {
         super.initializeFromObjectAt(context, x, y, z);
 
-        TileEngineBase engine = (TileEngineBase) context.world().getTileEntity(x, y, z);
+        TileEngineBase engine = (TileEngineBase) context.world().getBlockTileEntity(x, y, z);
 
         tileNBT.setInteger("orientation", engine.orientation.ordinal());
         tileNBT.removeTag("progress");
@@ -44,7 +44,7 @@ public class SchematicEngine extends SchematicTile {
     public void placeInWorld(IBuilderContext context, int x, int y, int z, LinkedList<ItemStack> stacks) {
         super.placeInWorld(context, x, y, z, stacks);
 
-        TileEngineBase engine = (TileEngineBase) context.world().getTileEntity(x, y, z);
+        TileEngineBase engine = (TileEngineBase) context.world().getBlockTileEntity(x, y, z);
 
         engine.orientation = ForgeDirection.getOrientation(tileNBT.getInteger("orientation"));
         engine.sendNetworkUpdate();
@@ -52,13 +52,13 @@ public class SchematicEngine extends SchematicTile {
 
     @Override
     public void postProcessing(IBuilderContext context, int x, int y, int z) {
-        TileEngineBase engine = (TileEngineBase) context.world().getTileEntity(x, y, z);
+        TileEngineBase engine = (TileEngineBase) context.world().getBlockTileEntity(x, y, z);
 
         if (engine != null) {
             engine.orientation = ForgeDirection.getOrientation(tileNBT.getInteger("orientation"));
             engine.sendNetworkUpdate();
             context.world().markBlockForUpdate(x, y, z);
-            context.world().notifyBlocksOfNeighborChange(x, y, z, block);
+            context.world().notifyBlocksOfNeighborChange(x, y, z, block.blockID);
         }
     }
 

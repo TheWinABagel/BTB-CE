@@ -8,12 +8,10 @@ package buildcraft.core.blueprints;
 
 import buildcraft.api.core.ISerializable;
 import buildcraft.core.lib.utils.NetworkUtils;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.src.NBTTagCompound;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -136,17 +134,16 @@ public final class LibraryId implements Comparable<LibraryId>, ISerializable {
     }
 
     @Override
-    public void writeData(DataOutput stream) throws IOException {
-        NetworkUtils.writeByteArray(stream, uniqueId);
-        NetworkUtils.writeUTF(stream, name);
-        NetworkUtils.writeUTF(stream, extension);
-    }
-
-    @Override
-    public void readData(DataInput stream) throws IOException {
+    public void readData(ByteBuf stream) {
         uniqueId = NetworkUtils.readByteArray(stream);
         name = NetworkUtils.readUTF(stream);
         extension = NetworkUtils.readUTF(stream);
     }
 
+    @Override
+    public void writeData(ByteBuf stream) {
+        NetworkUtils.writeByteArray(stream, uniqueId);
+        NetworkUtils.writeUTF(stream, name);
+        NetworkUtils.writeUTF(stream, extension);
+    }
 }

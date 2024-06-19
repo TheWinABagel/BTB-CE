@@ -7,11 +7,7 @@
 package buildcraft.core;
 
 import buildcraft.core.render.RenderLaser;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.src.TileEntity;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
 public class RenderPathMarker extends TileEntitySpecialRenderer {
@@ -46,7 +42,8 @@ public class RenderPathMarker extends TileEntitySpecialRenderer {
                 if (laser != null) {
                     GL11.glPushMatrix();
                     RenderLaser.doRenderLaser(
-                            TileEntityRendererDispatcher.instance.field_147553_e,
+                            Minecraft.getMinecraft().getTextureManager(),
+//                            TileEntityRenderer.instance.field_147553_e,
                             laser,
                             EntityLaser.LASER_TEXTURES[3]);
                     GL11.glPopMatrix();

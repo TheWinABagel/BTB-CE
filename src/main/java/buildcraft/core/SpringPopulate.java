@@ -58,22 +58,22 @@ public class SpringPopulate {
         int posZ = z + random.nextInt(16);
 
         for (int i = 0; i < 5; i++) {
-            Block candidate = world.getBlock(posX, i, posZ);
+            int candidate = world.getBlockId(posX, i, posZ);
 
-            if (candidate != Blocks.bedrock) {
+            if (candidate != Block.bedrock.blockID) {
                 continue;
             }
 
             // Handle flat bedrock maps
             int y = i > 0 ? i : i - 1;
 
-            world.setBlock(posX, y + 1, posZ, BuildCraftCore.springBlock);
+            world.setBlock(posX, y + 1, posZ, BuildCraftCore.springBlock.blockID);
 
             for (int j = y + 2; j < world.getHeight(); j++) {
                 if (world.isAirBlock(posX, j, posZ)) {
                     break;
                 } else {
-                    world.setBlock(posX, j, posZ, Blocks.water);
+                    world.setBlock(posX, j, posZ, Block.waterStill.blockID);
                 }
             }
 

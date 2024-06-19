@@ -3,7 +3,7 @@ package buildcraft.core.command;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.lib.commands.CommandHelpers;
 import buildcraft.core.lib.commands.SubCommand;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.src.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 
 public class SubCommandOp extends SubCommand {

@@ -26,7 +26,6 @@ import buildcraft.core.lib.gui.widgets.Widget;
 import buildcraft.core.lib.inventory.StackHelper;
 import buildcraft.core.lib.network.PacketGuiWidget;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
 
 public abstract class BuildCraftContainer extends Container {
 
@@ -67,8 +66,8 @@ public abstract class BuildCraftContainer extends Container {
     }
 
     @Override
-    public void addCraftingToCrafters(ICrafting player) {
-        super.addCraftingToCrafters(player);
+    public void onCraftGuiOpened(ICrafting player) {
+        super.onCraftGuiOpened(player);
         for (Widget widget : widgets) {
             widget.initWidget(player);
         }

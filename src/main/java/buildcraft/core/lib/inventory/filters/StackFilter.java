@@ -26,10 +26,17 @@ public enum StackFilter implements IStackFilter {
 
         @Override
         public boolean matches(ItemStack stack) {
-            return TileEntityFurnace.getItemBurnTime(stack) > 0;
+            return getItemBurnTime(stack) > 0;
         }
     };
 
     @Override
     public abstract boolean matches(ItemStack stack);
+
+    private static int getItemBurnTime(ItemStack stack) {
+        if (stack != null) {
+            return stack.getItem().getFurnaceBurnTime(stack.getItemDamage()) * 2;
+        }
+        return 0;
+    }
 }

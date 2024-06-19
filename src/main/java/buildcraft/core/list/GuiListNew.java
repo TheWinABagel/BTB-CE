@@ -15,11 +15,11 @@ import buildcraft.core.lib.gui.buttons.GuiImageButton;
 import buildcraft.core.lib.gui.buttons.IButtonClickEventListener;
 import buildcraft.core.lib.gui.buttons.IButtonClickEventTrigger;
 import buildcraft.core.lib.inventory.StackHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.GuiTextField;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 import java.util.*;
 
@@ -152,7 +152,7 @@ public class GuiListNew extends GuiAdvancedInterface implements IButtonClickEven
             b.registerListener(this);
         }
 
-        textField = new GuiTextField(this.fontRendererObj, 10, 10, 156, 12);
+        textField = new GuiTextField(this.fontRenderer, 10, 10, 156, 12);
         textField.setMaxStringLength(32);
         textField.setText(BuildCraftCore.listItem.getLabel(player.getCurrentEquippedItem()));
         textField.setFocused(false);

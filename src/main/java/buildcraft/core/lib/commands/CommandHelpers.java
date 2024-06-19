@@ -6,11 +6,11 @@
  */
 package buildcraft.core.lib.commands;
 
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.src.ICommandSender;
+import net.minecraft.src.WrongUsageException;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.*;
+import net.minecraft.src.*;
 import net.minecraft.src.World;
 
 public final class CommandHelpers {
@@ -46,7 +46,7 @@ public final class CommandHelpers {
     }
 
     public static void sendLocalizedChatMessage(ICommandSender sender, String locTag, Object... args) {
-        sender.addChatMessage(new ChatComponentTranslation(locTag, args));
+        sender.sendChatToPlayer(new ChatComponentTranslation(locTag, args));
     }
 
     public static void sendLocalizedChatMessage(ICommandSender sender, ChatStyle chatStyle, String locTag,
@@ -64,7 +64,7 @@ public final class CommandHelpers {
      * @param message
      */
     public static void sendChatMessage(ICommandSender sender, String message) {
-        sender.addChatMessage(new ChatComponentText(message));
+        sender.sendChatToPlayer(new ChatComponentText(message));
     }
 
     public static void throwWrongUsage(ICommandSender sender, IModCommand command) throws WrongUsageException {

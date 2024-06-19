@@ -4,10 +4,14 @@
   "package": "net.fabricmc.example.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BlockMixin",
+    "ItemMixin",
+    "ItemStackAccessor",
     "NBTTagCompoundAccessor",
     "NBTTagListAccessor",
     "NBTTagListMixin",
-    "RenderBlocksAccessor"
+    "RenderBlocksAccessor",
+    "TileEntityMixin"
   ],
   "client": [
     "ExampleMixin"

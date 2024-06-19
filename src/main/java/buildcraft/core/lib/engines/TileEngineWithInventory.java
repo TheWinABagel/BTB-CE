@@ -57,7 +57,7 @@ public abstract class TileEngineWithInventory extends TileEngineBase implements 
     }
 
     @Override
-    public String getInventoryName() {
+    public String getInvName() {
         return "Engine";
     }
 
@@ -68,14 +68,14 @@ public abstract class TileEngineWithInventory extends TileEngineBase implements 
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this;
+        return worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this;
     }
 
     @Override
-    public void openInventory() {}
+    public void openChest() {}
 
     @Override
-    public void closeInventory() {}
+    public void closeChest() {}
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
@@ -92,7 +92,7 @@ public abstract class TileEngineWithInventory extends TileEngineBase implements 
     // ISidedInventory
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int side) {
+    public int[] getSlotsForFace(int side) {
         if (side == orientation.ordinal()) {
             return new int[0];
         } else {

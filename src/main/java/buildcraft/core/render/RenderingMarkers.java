@@ -8,8 +8,8 @@ package buildcraft.core.render;
 
 import buildcraft.BuildCraftCore;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.Tessellator;
 import net.minecraft.src.Icon;
 import net.minecraft.src.IBlockAccess;
 

@@ -6,10 +6,10 @@
  */
 package buildcraft.core.lib.gui.buttons;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class GuiToggleButtonSmall extends GuiToggleButton {
 
     public GuiToggleButtonSmall(int i, int j, int k, String s, boolean active) {

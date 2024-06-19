@@ -6,8 +6,8 @@
  */
 package buildcraft.core.lib.commands;
 
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.src.CommandBase;
+import net.minecraft.src.ICommandSender;
 
 import java.util.*;
 

@@ -20,7 +20,7 @@ public class InventoryWrapperSimple extends InventoryWrapper {
     }
 
     @Override
-    public int[] getAccessibleSlotsFromSide(int var1) {
+    public int[] getSlotsForFace(int var1) {
         return slots;
     }
 

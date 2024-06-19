@@ -3,9 +3,10 @@ package buildcraft.core.lib.render;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.lib.block.BlockBuildCraft;
 import buildcraft.core.render.BCSimpleBlockRenderingHandler;
+import net.fabricmc.example.mixin.RenderBlocksAccessor;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.Tessellator;
 import net.minecraft.src.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
@@ -28,21 +29,21 @@ public class RenderBlockComplex extends BCSimpleBlockRenderingHandler {
 
     private void renderPassInventory(int pass, BlockBuildCraft block, int meta, RenderBlocks renderer) {
         if (block.isRotatable()) {
-            renderer.uvRotateTop = Y_ROTATE[block.getFrontSide(meta) - 2];
-            renderer.uvRotateBottom = Y_ROTATE[block.getFrontSide(meta) - 2];
+            ((RenderBlocksAccessor) renderer).setUvRotateTop(Y_ROTATE[block.getFrontSide(meta) - 2]);
+            ((RenderBlocksAccessor) renderer).setUvRotateBottom(Y_ROTATE[block.getFrontSide(meta) - 2]);
         }
 
         RenderUtils.drawBlockItem(renderer, Tessellator.instance, block, meta);
 
-        renderer.uvRotateTop = 0;
-        renderer.uvRotateBottom = 0;
+        ((RenderBlocksAccessor) renderer).setUvRotateTop(0);
+        ((RenderBlocksAccessor) renderer).setUvRotateBottom(0);
     }
 
     private void renderPassWorld(int pass, BlockBuildCraft block, int meta, RenderBlocks renderer, IBlockAccess world,
             int x, int y, int z) {
         if (block.isRotatable()) {
-            renderer.uvRotateTop = Y_ROTATE[block.getFrontSide(meta) - 2];
-            renderer.uvRotateBottom = Y_ROTATE[block.getFrontSide(meta) - 2];
+            ((RenderBlocksAccessor) renderer).setUvRotateTop(Y_ROTATE[block.getFrontSide(meta) - 2]);
+            ((RenderBlocksAccessor) renderer).setUvRotateBottom(Y_ROTATE[block.getFrontSide(meta) - 2]);
         }
 
         double pDouble = (pass > 0 ? 1 : 0) / 512.0;
@@ -56,8 +57,8 @@ public class RenderBlockComplex extends BCSimpleBlockRenderingHandler {
 
         renderer.renderStandardBlock(block, x, y, z);
 
-        renderer.uvRotateTop = 0;
-        renderer.uvRotateBottom = 0;
+        ((RenderBlocksAccessor) renderer).setUvRotateTop(0);
+        ((RenderBlocksAccessor) renderer).setUvRotateBottom(0);
     }
 
     @Override

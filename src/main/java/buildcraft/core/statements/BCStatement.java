@@ -9,9 +9,9 @@ package buildcraft.core.statements;
 import buildcraft.api.statements.IStatement;
 import buildcraft.api.statements.IStatementParameter;
 import buildcraft.api.statements.StatementManager;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
 public abstract class BCStatement implements IStatement {
@@ -39,13 +39,13 @@ public abstract class BCStatement implements IStatement {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIcon() {
         return icon;
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister iconRegister) {}
 
     @Override

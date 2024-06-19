@@ -16,14 +16,7 @@ import buildcraft.core.builders.BuildingSlotBlock.Mode;
 import buildcraft.core.lib.inventory.InventoryCopy;
 import buildcraft.core.lib.inventory.InventoryIterator;
 import buildcraft.core.lib.utils.BlockUtils;
-import net.minecraft.init.Blocks;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
-import net.minecraft.src.GameType;
+import net.minecraft.src.*;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -75,7 +68,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
                         if (slot == null) {
                             slot = new SchematicBlock();
                             slot.meta = 0;
-                            slot.block = Blocks.air;
+                            slot.block = Block.blocksList[0];
                         }
 
                         if (!SchematicRegistry.INSTANCE.isAllowedForBuilding(slot.block, slot.meta)) {
@@ -496,7 +489,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 
         LinkedList<ItemStack> stacksUsed = new LinkedList<ItemStack>();
 
-        if (context.world().getWorldInfo().getGameType() == GameType.CREATIVE) {
+        if (context.world().getWorldInfo().getGameType() == EnumGameType.CREATIVE) {
             for (ItemStack s : tmpReq) {
                 stacksUsed.add(s);
             }
@@ -508,7 +501,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 
         for (ItemStack reqStk : tmpReq) {
             boolean itemBlock = reqStk.getItem() instanceof ItemBlock;
-            Fluid fluid = itemBlock ? FluidRegistry.lookupFluidForBlock(((ItemBlock) reqStk.getItem()).field_150939_a)
+            Fluid fluid = itemBlock ? FluidRegistry.lookupFluidForBlock(Block.blocksList[((ItemBlock) reqStk.getItem()).getBlockID()])
                     : null;
 
             if (fluid != null
@@ -573,7 +566,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
             BCLog.logger.throwing(t);
         }
 
-        if (context.world().getWorldInfo().getGameType() == GameType.CREATIVE) {
+        if (context.world().getWorldInfo().getGameType() == EnumGameType.CREATIVE) {
             for (ItemStack s : tmpReq) {
                 slot.addStackConsumed(s);
             }
@@ -589,7 +582,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
             ItemStack usedStack = reqStk;
 
             boolean itemBlock = reqStk.getItem() instanceof ItemBlock;
-            Fluid fluid = itemBlock ? FluidRegistry.lookupFluidForBlock(((ItemBlock) reqStk.getItem()).field_150939_a)
+            Fluid fluid = itemBlock ? FluidRegistry.lookupFluidForBlock(Block.blocksList[((ItemBlock) reqStk.getItem()).getBlockID()])
                     : null;
 
             if (fluid != null && inv instanceof TileAbstractBuilder
@@ -700,9 +693,9 @@ public class BptBuilderBlueprint extends BptBuilderBase {
                 } else {
                     ItemStack os1 = o1.stack;
                     ItemStack os2 = o2.stack;
-                    if (Item.getIdFromItem(os1.getItem()) > Item.getIdFromItem(os2.getItem())) {
+                    if (os1.getItem().itemID > os2.getItem().itemID) {
                         return -1;
-                    } else if (Item.getIdFromItem(os1.getItem()) < Item.getIdFromItem(os2.getItem())) {
+                    } else if (os1.getItem().itemID < os2.getItem().itemID) {
                         return 1;
                     } else if (os1.getItemDamage() > os2.getItemDamage()) {
                         return -1;

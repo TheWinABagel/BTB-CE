@@ -7,13 +7,13 @@
 package buildcraft.core.lib.gui.buttons;
 
 import buildcraft.core.lib.gui.tooltips.ToolTip;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class GuiMultiButton extends GuiBetterButton {
 
     private final MultiButtonController<?> control;
@@ -30,7 +30,7 @@ public class GuiMultiButton extends GuiBetterButton {
 
     @Override
     public void drawButton(Minecraft minecraft, int x, int y) {
-        if (!visible) {
+        if (!drawButton) {
             return;
         }
 

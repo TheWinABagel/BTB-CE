@@ -69,8 +69,8 @@ public class InventoryCopy implements IInventory {
     }
 
     @Override
-    public String getInventoryName() {
-        return orignal.getInventoryName();
+    public String getInvName() {
+        return orignal.getInvName();
     }
 
     @Override
@@ -84,10 +84,10 @@ public class InventoryCopy implements IInventory {
     }
 
     @Override
-    public void openInventory() {}
+    public void openChest() {}
 
     @Override
-    public void closeInventory() {}
+    public void closeChest() {}
 
     @Override
     public ItemStack getStackInSlotOnClosing(int slot) {
@@ -104,10 +104,10 @@ public class InventoryCopy implements IInventory {
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
+    public boolean isInvNameLocalized() {
         return false;
     }
 
     @Override
-    public void markDirty() {}
+    public void onInventoryChanged() {}
 }

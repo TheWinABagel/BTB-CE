@@ -8,7 +8,6 @@ package buildcraft.core.lib.inventory;
 
 import buildcraft.api.items.IList;
 import net.minecraft.src.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class StackHelper {
 
@@ -95,36 +94,36 @@ public class StackHelper {
             return true;
         }
 
-        if (oreDictionary) {
-            int[] idBase = OreDictionary.getOreIDs(base);
-            if (idBase.length > 0) {
-                for (int id : idBase) {
-                    for (ItemStack itemstack : OreDictionary.getOres(OreDictionary.getOreName(id))) {
-                        if (comparison.getItem() == itemstack.getItem()
-                                && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
-                                        || comparison.getItemDamage() == itemstack.getItemDamage())) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
+//        if (oreDictionary) {
+//            int[] idBase = OreDictionary.getOreIDs(base);
+//            if (idBase.length > 0) {
+//                for (int id : idBase) {
+//                    for (ItemStack itemstack : OreDictionary.getOres(OreDictionary.getOreName(id))) {
+//                        if (comparison.getItem() == itemstack.getItem()
+//                                && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
+//                                        || comparison.getItemDamage() == itemstack.getItemDamage())) {
+//                            return true;
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         return false;
     }
 
     public static boolean isCraftingEquivalent(int[] oreIDs, ItemStack comparison) {
-        if (oreIDs.length > 0) {
-            for (int id : oreIDs) {
-                for (ItemStack itemstack : OreDictionary.getOres(OreDictionary.getOreName(id))) {
-                    if (comparison.getItem() == itemstack.getItem()
-                            && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
-                                    || comparison.getItemDamage() == itemstack.getItemDamage())) {
-                        return true;
-                    }
-                }
-            }
-        }
+//        if (oreIDs.length > 0) {
+//            for (int id : oreIDs) {
+//                for (ItemStack itemstack : OreDictionary.getOres(OreDictionary.getOreName(id))) {
+//                    if (comparison.getItem() == itemstack.getItem()
+//                            && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE
+//                                    || comparison.getItemDamage() == itemstack.getItemDamage())) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
 
         return false;
     }
@@ -211,6 +210,6 @@ public class StackHelper {
     }
 
     public static boolean isWildcard(int damage) {
-        return damage == -1 || damage == OreDictionary.WILDCARD_VALUE;
+        return damage == -1 || damage == Short.MAX_VALUE;
     }
 }

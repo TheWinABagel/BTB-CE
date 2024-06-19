@@ -17,19 +17,16 @@ import buildcraft.core.builders.*;
 import buildcraft.core.lib.utils.BitSetUtils;
 import buildcraft.core.lib.utils.BlockUtils;
 import buildcraft.core.proxy.CoreProxy;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.BlockSnapshot;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.event.world.BlockEvent;
 import org.apache.logging.log4j.Level;
 
 import java.util.BitSet;
@@ -217,13 +214,13 @@ public abstract class BptBuilderBase implements IAreaProvider {
             usedLocations = BitSetUtils.fromByteArray(nbt.getByteArray("usedLocationList"));
         }
 
-        NBTTagList buildingList = nbt.getTagList("buildersInAction", Constants.NBT.TAG_COMPOUND);
+        NBTTagList buildingList = nbt.getTagList("buildersInAction"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < buildingList.tagCount(); ++i) {
             BuildingItem item = new BuildingItem();
 
             try {
-                item.readFromNBT(buildingList.getCompoundTagAt(i));
+                item.readFromNBT(((INBTTagListExtension) buildingList).getCompoundTagAt(i));
                 item.context = getContext();
                 builder.getBuilders().add(item);
             } catch (MappingNotFoundException e) {
@@ -234,20 +231,20 @@ public abstract class BptBuilderBase implements IAreaProvider {
         // 6.4.6 and below migration
 
         if (nbt.hasKey("clearList")) {
-            NBTTagList clearList = nbt.getTagList("clearList", Constants.NBT.TAG_COMPOUND);
+            NBTTagList clearList = nbt.getTagList("clearList"/*, Constants.NBT.TAG_COMPOUND*/);
 
             for (int i = 0; i < clearList.tagCount(); ++i) {
-                NBTTagCompound cpt = clearList.getCompoundTagAt(i);
+                NBTTagCompound cpt = ((INBTTagListExtension) clearList).getCompoundTagAt(i);
                 BlockIndex o = new BlockIndex(cpt);
                 markLocationUsed(o.x, o.y, o.z);
             }
         }
 
         if (nbt.hasKey("builtList")) {
-            NBTTagList builtList = nbt.getTagList("builtList", Constants.NBT.TAG_COMPOUND);
+            NBTTagList builtList = nbt.getTagList("builtList"/*, Constants.NBT.TAG_COMPOUND*/);
 
             for (int i = 0; i < builtList.tagCount(); ++i) {
-                NBTTagCompound cpt = builtList.getCompoundTagAt(i);
+                NBTTagCompound cpt = ((INBTTagListExtension) builtList).getCompoundTagAt(i);
                 BlockIndex o = new BlockIndex(cpt);
                 markLocationUsed(o.x, o.y, o.z);
             }
@@ -255,31 +252,32 @@ public abstract class BptBuilderBase implements IAreaProvider {
     }
 
     protected boolean isBlockBreakCanceled(World world, int x, int y, int z) {
-        if (!world.isAirBlock(x, y, z)) {
-            BlockEvent.BreakEvent breakEvent = new BlockEvent.BreakEvent(
-                    x,
-                    y,
-                    z,
-                    world,
-                    world.getBlock(x, y, z),
-                    world.getBlockMetadata(x, y, z),
-                    CoreProxy.proxy.getBuildCraftPlayer((WorldServer) world, this.x, this.y, this.z).get());
-            MinecraftForge.EVENT_BUS.post(breakEvent);
-            return breakEvent.isCanceled();
-        }
+//        if (!world.isAirBlock(x, y, z)) {
+//            BlockEvent.BreakEvent breakEvent = new BlockEvent.BreakEvent(
+//                    x,
+//                    y,
+//                    z,
+//                    world,
+//                    world.getBlock(x, y, z),
+//                    world.getBlockMetadata(x, y, z),
+//                    CoreProxy.proxy.getBuildCraftPlayer((WorldServer) world, this.x, this.y, this.z).get());
+//            MinecraftForge.EVENT_BUS.post(breakEvent);
+//            return breakEvent.isCanceled();
+//        }
         return false;
     }
 
     protected boolean isBlockPlaceCanceled(World world, int x, int y, int z, SchematicBlockBase schematic) {
-        Block block = schematic instanceof SchematicBlock ? ((SchematicBlock) schematic).block : Blocks.stone;
-        int meta = schematic instanceof SchematicBlock ? ((SchematicBlock) schematic).meta : 0;
-
-        BlockEvent.PlaceEvent placeEvent = new BlockEvent.PlaceEvent(
-                new BlockSnapshot(world, x, y, z, block, meta),
-                Blocks.air,
-                CoreProxy.proxy.getBuildCraftPlayer((WorldServer) world, this.x, this.y, this.z).get());
-
-        MinecraftForge.EVENT_BUS.post(placeEvent);
-        return placeEvent.isCanceled();
+//        Block block = schematic instanceof SchematicBlock ? ((SchematicBlock) schematic).block : Blocks.stone;
+//        int meta = schematic instanceof SchematicBlock ? ((SchematicBlock) schematic).meta : 0;
+//
+//        BlockEvent.PlaceEvent placeEvent = new BlockEvent.PlaceEvent(
+//                new BlockSnapshot(world, x, y, z, block, meta),
+//                Blocks.air,
+//                CoreProxy.proxy.getBuildCraftPlayer((WorldServer) world, this.x, this.y, this.z).get());
+//
+//        MinecraftForge.EVENT_BUS.post(placeEvent);
+//        return placeEvent.isCanceled();
+        return false;
     }
 }

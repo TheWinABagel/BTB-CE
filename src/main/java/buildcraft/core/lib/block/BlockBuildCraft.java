@@ -16,12 +16,12 @@ import buildcraft.core.lib.utils.ResourceUtils;
 import buildcraft.core.lib.utils.Utils;
 import buildcraft.core.lib.utils.XorShift128Random;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
-import net.minecraft.src.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.Material;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.EntityPlayer;
@@ -29,7 +29,7 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -40,7 +40,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
     private static final int[][] SIDE_TEXTURING_LOCATIONS = new int[][] { { 2, 3, 5, 4 }, { 3, 2, 4, 5 },
             { 4, 5, 2, 3 }, { 5, 4, 3, 2 } };
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon[][] icons;
 
     protected final XorShift128Random rand = new XorShift128Random();
@@ -84,7 +84,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
 
         if (isRotatable()) {
             ForgeDirection orientation = Utils.get2dOrientation(entity);
@@ -121,7 +121,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
 
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
         if (tile instanceof IHasWork && ((IHasWork) tile).hasWork()) {
             return super.getLightValue(world, x, y, z) + 8;
         } else {
@@ -157,12 +157,12 @@ public abstract class BlockBuildCraft extends BlockContainer {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIconAbsolute(IBlockAccess access, int x, int y, int z, int side, int metadata) {
         return getIconAbsolute(side, metadata);
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIconAbsolute(int side, int metadata) {
         if (metadata < 0 || metadata >= icons.length || icons[metadata] == null) {
             return icons[0][side];
@@ -172,8 +172,8 @@ public abstract class BlockBuildCraft extends BlockContainer {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public Icon getIcon(IBlockAccess access, int x, int y, int z, int side) {
+    @Environment(EnvType.CLIENT)
+    public Icon getBlockTexture(IBlockAccess access, int x, int y, int z, int side) {
         Icon icon;
         int metadata = access.getBlockMetadata(x, y, z);
         if (isRotatable()) {
@@ -196,7 +196,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIcon(int side, int metadata) {
         if (isRotatable()) {
             if (side < 2) {
@@ -210,7 +210,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     protected void registerIconsForMeta(int meta, String blockName, IconRegister register) {
         icons[meta] = new Icon[6];
         String name = ResourceUtils.getObjectPrefix(blockName);
@@ -227,14 +227,14 @@ public abstract class BlockBuildCraft extends BlockContainer {
                 .getIconPriority(register, name, new String[] { "right", "leftright", "side", "default" });
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public String[] getIconBlockNames() {
         return new String[] { Block.blockRegistry.getNameForObject(this) };
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IconRegister register) {
+    @Environment(EnvType.CLIENT)
+    public void registerIcons(IconRegister register) {
         icons = new Icon[16][];
         String[] iconBlockNames = getIconBlockNames();
         for (int i = 0; i < iconBlockNames.length; i++) {
@@ -260,7 +260,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
         return pass == 0 || alphaPass;
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public int getRenderBlockPass() {
         return hasAlphaPass() ? 1 : 0;
     }
@@ -287,7 +287,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
     }
 
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
         if (tile instanceof IInventory) {
             int count = 0;
             int countNonEmpty = 0;

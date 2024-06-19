@@ -8,8 +8,8 @@ package buildcraft.core.render;
 
 import buildcraft.core.Box;
 import buildcraft.core.LaserData;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.TextureManager;
+import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public final class RenderBox {

@@ -11,7 +11,7 @@ import buildcraft.api.power.IRedstoneEngineReceiver;
 import buildcraft.api.transport.IPipeTile;
 import buildcraft.core.lib.engines.TileEngineBase;
 import net.minecraft.src.TileEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileEngineWood extends TileEngineBase implements IRedstoneEngine {

@@ -13,10 +13,10 @@ import buildcraft.api.statements.IStatementParameter;
 import buildcraft.core.Box;
 import buildcraft.core.blueprints.*;
 import buildcraft.core.lib.utils.StringUtils;
-import cpw.mods.fml.common.Loader;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.IconRegister;
+import net.minecraft.src.TextureMap;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
@@ -60,7 +60,7 @@ public abstract class FillerPattern implements IFillerPattern {
             icon = iconRegister.registerIcon("buildcraftcore:fillerPatterns/" + tag);
         }
 
-        if (Loader.isModLoaded("BuildCraft|Builders")) {
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Builders")) {
             if (!(iconRegister instanceof TextureMap) || ((TextureMap) iconRegister).getTextureType() == 0) {
                 blockIcon = iconRegister.registerIcon("buildcraftbuilders:fillerBlockIcons/" + tag);
             }

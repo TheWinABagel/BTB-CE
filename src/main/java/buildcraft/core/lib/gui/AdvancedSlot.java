@@ -6,12 +6,12 @@
  */
 package buildcraft.core.lib.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.TextureMap;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 public abstract class AdvancedSlot {

@@ -4,11 +4,11 @@ import buildcraft.api.tablet.TabletBitmap;
 import buildcraft.core.lib.render.DynamicTextureBC;
 import buildcraft.core.tablet.manager.TabletManagerClient;
 import buildcraft.core.tablet.manager.TabletThread;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.ScaledResolution;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -52,9 +52,9 @@ public class GuiTablet extends GuiScreen {
         super.initGui();
         // recalculate width/height
         int oldScale = mc.gameSettings.guiScale;
-        ScaledResolution realRes = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        ScaledResolution realRes = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         mc.gameSettings.guiScale = realRes.getScaleFactor() == 1 ? 2 : (realRes.getScaleFactor() & (~1));
-        ScaledResolution currentRes = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+        ScaledResolution currentRes = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         mc.gameSettings.guiScale = oldScale;
 
         glScale = (float) (currentRes.getScaledWidth_double() / realRes.getScaledWidth_double());

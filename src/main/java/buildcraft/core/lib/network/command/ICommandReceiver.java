@@ -6,10 +6,10 @@
  */
 package buildcraft.core.lib.network.command;
 
-import cpw.mods.fml.relauncher.Side;
+import net.fabricmc.api.EnvType;
 import io.netty.buffer.ByteBuf;
 
 public interface ICommandReceiver {
 
-    void receiveCommand(String command, Side side, Object sender, ByteBuf stream);
+    void receiveCommand(String command, EnvType side, Object sender, ByteBuf stream);
 }

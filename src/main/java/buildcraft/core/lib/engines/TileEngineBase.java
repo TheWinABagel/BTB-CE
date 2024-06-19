@@ -26,7 +26,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Container;
 import net.minecraft.src.ICrafting;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class TileEngineBase extends TileBuildCraft
@@ -83,7 +83,7 @@ public abstract class TileEngineBase extends TileBuildCraft
 
     private String getTexturePrefix() {
         if (!(blockType instanceof BlockEngineBase)) {
-            Block engineBase = worldObj.getBlock(xCoord, yCoord, zCoord);
+            Block engineBase = Block.blocksList[worldObj.getBlockId(xCoord, yCoord, zCoord)];
             if (engineBase instanceof BlockEngineBase) {
                 blockType = engineBase;
                 getBlockMetadata();
@@ -411,7 +411,7 @@ public abstract class TileEngineBase extends TileBuildCraft
                         xCoord,
                         yCoord,
                         zCoord,
-                        worldObj.getBlock(xCoord, yCoord, zCoord));
+                        worldObj.getBlockId(xCoord, yCoord, zCoord));
 
                 return true;
             }

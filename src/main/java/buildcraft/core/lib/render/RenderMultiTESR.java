@@ -1,7 +1,7 @@
 package buildcraft.core.lib.render;
 
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.src.TileEntityRenderer;
+import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.TileEntity;
 
 public class RenderMultiTESR extends TileEntitySpecialRenderer {
@@ -11,7 +11,7 @@ public class RenderMultiTESR extends TileEntitySpecialRenderer {
     public RenderMultiTESR(TileEntitySpecialRenderer[] renderers) {
         this.renderers = renderers;
         for (TileEntitySpecialRenderer r : renderers) {
-            r.func_147497_a(TileEntityRendererDispatcher.instance);
+            r.setTileEntityRenderer(TileEntityRenderer.instance);
         }
     }
 

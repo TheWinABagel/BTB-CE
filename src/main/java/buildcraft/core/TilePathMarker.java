@@ -11,6 +11,7 @@ import buildcraft.api.core.BlockIndex;
 import buildcraft.api.core.IPathProvider;
 import buildcraft.api.core.Position;
 import io.netty.buffer.ByteBuf;
+import net.fabricmc.example.injected.TileEntityExtension;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -20,7 +21,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-public class TilePathMarker extends TileMarker implements IPathProvider {
+public class TilePathMarker extends TileMarker implements IPathProvider, TileEntityExtension {
 
     // A list with the pathMarkers that aren't fully connected
     // It only contains markers within the loaded chunks
@@ -192,7 +193,7 @@ public class TilePathMarker extends TileMarker implements IPathProvider {
         }
 
         if (loadLink0) {
-            TileEntity e0 = worldObj.getTileEntity(x0, y0, z0);
+            TileEntity e0 = worldObj.getBlockTileEntity(x0, y0, z0);
 
             if (links[0] != e0 && links[1] != e0 && e0 instanceof TilePathMarker) {
                 createLaserAndConnect((TilePathMarker) e0);
@@ -202,7 +203,7 @@ public class TilePathMarker extends TileMarker implements IPathProvider {
         }
 
         if (loadLink1) {
-            TileEntity e1 = worldObj.getTileEntity(x1, y1, z1);
+            TileEntity e1 = worldObj.getBlockTileEntity(x1, y1, z1);
 
             if (links[0] != e1 && links[1] != e1 && e1 instanceof TilePathMarker) {
                 createLaserAndConnect((TilePathMarker) e1);
@@ -272,7 +273,6 @@ public class TilePathMarker extends TileMarker implements IPathProvider {
 
     @Override
     public void onChunkUnload() {
-        super.onChunkUnload();
         availableMarkers.remove(this);
     }
 

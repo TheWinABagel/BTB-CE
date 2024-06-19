@@ -6,8 +6,8 @@
  */
 package buildcraft.core.lib.gui.slots;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
@@ -39,7 +39,7 @@ public class SlotUntouchable extends SlotBase implements IPhantomSlot {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean func_111238_b() {
         return false;
     }

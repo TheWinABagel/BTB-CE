@@ -9,12 +9,7 @@ package buildcraft.core.lib.engines;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftCore.RenderMode;
 import buildcraft.core.lib.render.IInventoryRenderer;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.src.TileEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.*;
 import net.minecraftforge.common.util.ForgeDirection;
 import org.lwjgl.opengl.GL11;
 
@@ -73,7 +68,7 @@ public class RenderEngine extends TileEntitySpecialRenderer implements IInventor
         this.baseTexture = baseTexture;
         this.chamberTexture = chamberTexture;
         this.trunkTexture = trunkTexture;
-        field_147501_a = TileEntityRendererDispatcher.instance;
+        tileEntityRenderer = TileEntityRenderer.instance;
     }
 
     public RenderEngine(TileEngineBase engine) {

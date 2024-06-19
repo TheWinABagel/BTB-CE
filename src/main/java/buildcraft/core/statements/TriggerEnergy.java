@@ -15,9 +15,9 @@ import cofh.api.energy.IEnergyConnection;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -98,7 +98,7 @@ public class TriggerEnergy extends BCStatement implements ITriggerInternal {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         icon = iconRegister.registerIcon("buildcraftcore:triggers/trigger_energy_storage_" + (high ? "high" : "low"));
     }
@@ -127,7 +127,7 @@ public class TriggerEnergy extends BCStatement implements ITriggerInternal {
             }
         } else {
             for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
-                TileEntity tile = parent.getWorldObj().getTileEntity(
+                TileEntity tile = parent.getWorldObj().getBlockTileEntity(
                         parent.xCoord + side.offsetX,
                         parent.yCoord + side.offsetY,
                         parent.zCoord + side.offsetZ);

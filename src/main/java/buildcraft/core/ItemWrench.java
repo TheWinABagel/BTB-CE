@@ -23,8 +23,8 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
     private final Set<Class<? extends Block>> shiftRotations = new HashSet<Class<? extends Block>>();
     private final Set<Class<? extends Block>> blacklistedRotations = new HashSet<Class<? extends Block>>();
 
-    public ItemWrench() {
-        super();
+    public ItemWrench(int id) {
+        super(id);
 
         setFull3D();
         setMaxStackSize(1);
@@ -32,7 +32,7 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
         shiftRotations.add(BlockButton.class);
         shiftRotations.add(BlockChest.class);
         blacklistedRotations.add(BlockBed.class);
-        setHarvestLevel("wrench", 0);
+//        setHarvestLevel("wrench", 0);
     }
 
     private boolean isClass(Set<Class<? extends Block>> set, Class<? extends Block> cls) {
@@ -47,7 +47,7 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
             float hitX, float hitY, float hitZ) {
-        Block block = world.getBlock(x, y, z);
+        Block block = Block.blocksList[world.getBlockId(x, y, z)];
 
         if (block == null || isClass(blacklistedRotations, block.getClass())) {
             return false;
@@ -58,14 +58,14 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
         }
 
         // Double chests should NOT be rotated.
-        if (block instanceof BlockChest && BlockUtils.getOtherDoubleChest(world.getTileEntity(x, y, z)) != null) {
+        if (block instanceof BlockChest && BlockUtils.getOtherDoubleChest(world.getBlockTileEntity(x, y, z)) != null) {
             return false;
         }
 
-        if (block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
-            player.swingItem();
-            return !world.isRemote;
-        }
+//        if (block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
+//            player.swingItem();
+//            return !world.isRemote;
+//        }
         return false;
     }
 

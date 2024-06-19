@@ -6,13 +6,13 @@
  */
 package buildcraft.core;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import buildcraft.api.transport.IInjectable;
-import cpw.mods.fml.common.Loader;
 
 public class CompatHooks {
 
@@ -20,7 +20,7 @@ public class CompatHooks {
 
     static {
         CompatHooks i = null;
-        if (Loader.isModLoaded("BuildCraft|Compat")) {
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Compat")) {
             try {
                 i = (CompatHooks) CompatHooks.class.getClassLoader().loadClass("buildcraft.compat.CompatHooksImpl")
                         .newInstance();
@@ -53,7 +53,7 @@ public class CompatHooks {
     public Block getBlock(Class<? extends Block> klazz) {
         Block block = null;
 
-        if (Loader.isModLoaded("BuildCraft|Compat")) {
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Compat")) {
             try {
                 block = (Block) CompatHooks.class.getClassLoader().loadClass(klazz.getName() + "Compat").newInstance();
             } catch (ClassNotFoundException e) {
@@ -77,7 +77,7 @@ public class CompatHooks {
     public Class<? extends TileEntity> getTile(Class<? extends TileEntity> klazz) {
         Class<? extends TileEntity> tileClass = klazz;
 
-        if (Loader.isModLoaded("BuildCraft|Compat")) {
+        if (FabricLoader.getInstance().isModLoaded("BuildCraft|Compat")) {
             try {
                 tileClass = (Class<? extends TileEntity>) CompatHooks.class.getClassLoader()
                         .loadClass(klazz.getName() + "Compat");

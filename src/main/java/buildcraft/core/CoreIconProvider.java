@@ -7,9 +7,9 @@
 package buildcraft.core;
 
 import buildcraft.api.core.IIconProvider;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
 public class CoreIconProvider implements IIconProvider {
@@ -21,13 +21,13 @@ public class CoreIconProvider implements IIconProvider {
     private Icon[] icons;
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIcon(int iconIndex) {
         return icons[iconIndex];
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister iconRegister) {
         icons = new Icon[MAX];
 

@@ -7,7 +7,7 @@ import buildcraft.core.tablet.utils.TabletDrawUtils;
 import buildcraft.core.tablet.utils.TabletFont;
 import buildcraft.core.tablet.utils.TabletFontManager;
 import buildcraft.core.tablet.utils.TabletTextUtils;
-import cpw.mods.fml.relauncher.Side;
+import net.fabricmc.api.EnvType;
 
 public class TabletProgramMenu extends TabletProgram {
 

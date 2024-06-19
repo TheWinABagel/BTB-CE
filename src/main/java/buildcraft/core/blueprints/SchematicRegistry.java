@@ -14,8 +14,6 @@ import buildcraft.api.core.BCLog;
 import buildcraft.api.core.JavaTools;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

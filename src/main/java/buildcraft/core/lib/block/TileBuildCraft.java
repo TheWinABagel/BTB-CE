@@ -91,7 +91,7 @@ public abstract class TileBuildCraft extends TileEntity implements IEnergyHandle
 
     public void onBlockPlacedBy(EntityLivingBase entity, ItemStack stack) {
         if (entity instanceof EntityPlayer) {
-            owner = ((EntityPlayer) entity).getDisplayName();
+            owner = ((EntityPlayer) entity).getEntityName();
         }
     }
 
@@ -119,7 +119,7 @@ public abstract class TileBuildCraft extends TileEntity implements IEnergyHandle
     }
 
     @Override
-    public net.minecraft.network.Packet getDescriptionPacket() {
+    public net.minecraft.src.Packet getDescriptionPacket() {
         return Utils.toPacket(getPacketUpdate(), 0);
     }
 

@@ -9,7 +9,8 @@ package buildcraft.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.fabricmc.example.injected.INBTTagListExtension;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
@@ -29,14 +30,13 @@ import buildcraft.api.items.IMapLocation;
 import buildcraft.core.lib.items.ItemBuildCraft;
 import buildcraft.core.lib.utils.NBTUtils;
 import buildcraft.core.lib.utils.StringUtils;
-import buildcraft.robotics.ZonePlan;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
 
-    public ItemMapLocation() {
-        super(BCCreativeTab.get("main"));
+    public ItemMapLocation(int id) {
+        super(id, BCCreativeTab.get("main"));
     }
 
     @Override
@@ -91,8 +91,8 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
                     break;
                 }
                 case 2: {
-                    NBTTagList pathNBT = cpt.getTagList("path", Constants.NBT.TAG_COMPOUND);
-                    BlockIndex first = new BlockIndex(pathNBT.getCompoundTagAt(0));
+                    NBTTagList pathNBT = cpt.getTagList("path"/*, Constants.NBT.TAG_COMPOUND*/);
+                    BlockIndex first = new BlockIndex(((INBTTagListExtension) pathNBT).getCompoundTagAt(0));
 
                     int x = first.x;
                     int y = first.y;
@@ -128,7 +128,7 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
         super.registerIcons(par1IconRegister);
     }
@@ -136,7 +136,7 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer par2EntityPlayer, World world, int x, int y, int z, int side,
             float par8, float par9, float par10) {
-        TileEntity tile = world.getTileEntity(x, y, z);
+        TileEntity tile = world.getBlockTileEntity(x, y, z);
         NBTTagCompound cpt = NBTUtils.getItemData(stack);
 
         if (tile instanceof IPathProvider) {
@@ -234,13 +234,14 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
     @Override
     public IZone getZone(ItemStack item) {
         NBTTagCompound cpt = NBTUtils.getItemData(item);
-
-        if (cpt.hasKey("kind") && cpt.getByte("kind") == 3) {
+        //todorobot
+/*        if (cpt.hasKey("kind") && cpt.getByte("kind") == 3) {
             ZonePlan plan = new ZonePlan();
             plan.readFromNBT(cpt);
 
             return plan;
-        } else if (cpt.hasKey("kind") && cpt.getByte("kind") == 1) {
+        } else */
+            if (cpt.hasKey("kind") && cpt.getByte("kind") == 1) {
             return getBox(item);
         } else if (cpt.hasKey("kind") && cpt.getByte("kind") == 0) {
             return getPointBox(item);
@@ -255,9 +256,9 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
 
         if (cpt.hasKey("kind") && cpt.getByte("kind") == 2) {
             List<BlockIndex> indexList = new ArrayList<BlockIndex>();
-            NBTTagList pathNBT = cpt.getTagList("path", Constants.NBT.TAG_COMPOUND);
+            NBTTagList pathNBT = cpt.getTagList("path"/*, Constants.NBT.TAG_COMPOUND*/);
             for (int i = 0; i < pathNBT.tagCount(); i++) {
-                indexList.add(new BlockIndex(pathNBT.getCompoundTagAt(i)));
+                indexList.add(new BlockIndex(((INBTTagListExtension) pathNBT).getCompoundTagAt(i)));
             }
             return indexList;
         } else if (cpt.hasKey("kind") && cpt.getByte("kind") == 0) {
@@ -269,12 +270,12 @@ public class ItemMapLocation extends ItemBuildCraft implements IMapLocation {
         }
     }
 
-    public static void setZone(ItemStack item, ZonePlan plan) {
-        NBTTagCompound cpt = NBTUtils.getItemData(item);
-
-        cpt.setByte("kind", (byte) 3);
-        plan.writeToNBT(cpt);
-    }
+//    public static void setZone(ItemStack item, ZonePlan plan) {
+//        NBTTagCompound cpt = NBTUtils.getItemData(item);
+//
+//        cpt.setByte("kind", (byte) 3);
+//        plan.writeToNBT(cpt);
+//    }
 
     @Override
     public String getName(ItemStack item) {

@@ -6,6 +6,8 @@
  */
 package buildcraft.api.blueprints;
 
+import buildcraft.api.bagel.BasicRegistry;
+import buildcraft.api.core.BCLog;
 import net.fabricmc.example.injected.INBTTagListExtension;
 import net.fabricmc.example.mixin.NBTTagCompoundAccessor;
 import net.fabricmc.example.mixin.NBTTagListAccessor;
@@ -233,7 +235,7 @@ public class MappingRegistry {
         }
     }
 
-/*    public void write(NBTTagCompound nbt) {
+    public void write(NBTTagCompound nbt) {
         NBTTagList blocksMapping = new NBTTagList();
 
         for (Block b : idToBlock) {
@@ -290,43 +292,13 @@ public class MappingRegistry {
         // for (Item i : idToItem) {
         // System.out.println("- " + (i != null ? i.toString() : "null"));
         // }
-    }*/
-
-/*    private Object getMissingMappingFromFML(boolean isBlock, String name, int i) {
-        String modName = name.split(":")[0];
-        if (Loader.isModLoaded(modName)) {
-            try {
-                FMLMissingMappingsEvent.MissingMapping mapping = new FMLMissingMappingsEvent.MissingMapping(
-                        (isBlock ? '\u0001' : '\u0020') + name,
-                        i);
-                ListMultimap<String, FMLMissingMappingsEvent.MissingMapping> missingMapping = ArrayListMultimap
-                        .create();
-                missingMapping.put(modName, mapping);
-                FMLMissingMappingsEvent event = new FMLMissingMappingsEvent(missingMapping);
-                for (ModContainer container : Loader.instance().getModList()) {
-                    if (container instanceof FMLModContainer) {
-                        event.applyModContainer(container);
-                        ((FMLModContainer) container).handleModStateEvent(event);
-                        if (mapping.getAction() != FMLMissingMappingsEvent.Action.DEFAULT) {
-                            break;
-                        }
-                    }
-                }
-                if (mapping.getAction() == FMLMissingMappingsEvent.Action.REMAP) {
-                    return mapping.getTarget();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     public void read(NBTTagCompound nbt) {
-        NBTTagList blocksMapping = nbt.getTagList("blocksMapping", Constants.NBT.TAG_COMPOUND);
+        NBTTagList blocksMapping = nbt.getTagList("blocksMapping"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < blocksMapping.tagCount(); ++i) {
-            NBTTagCompound sub = blocksMapping.getCompoundTagAt(i);
+            NBTTagCompound sub = ((INBTTagListExtension) blocksMapping).getCompoundTagAt(i);
             if (!sub.hasKey("name")) {
                 // Keeping the order correct
                 idToBlock.add(null);
@@ -336,15 +308,15 @@ public class MappingRegistry {
             String name = sub.getString("name");
             Block b = null;
 
-            if (!Block.blockRegistry.containsKey(name) && name.contains(":")) {
-                b = (Block) getMissingMappingFromFML(true, name, i);
-                if (b != null) {
-                    BCLog.logger.info("Remapped " + name + " to " + Block.blockRegistry.getNameForObject(b));
-                }
-            }
+//            if (!Block.blockRegistry.containsKey(name) && name.contains(":")) {
+//                b = (Block) getMissingMappingFromFML(true, name, i);
+//                if (b != null) {
+//                    BCLog.logger.info("Remapped " + name + " to " + Block.blockRegistry.getNameForObject(b));
+//                }
+//            }
 
-            if (b == null && Block.blockRegistry.containsKey(name)) {
-                b = (Block) Block.blockRegistry.getObject(name);
+            if (BasicRegistry.blockNames.containsKey(name)) {
+                b = Block.blocksList[BasicRegistry.blockNames.get(name)];
             }
 
             if (b != null) {
@@ -356,10 +328,10 @@ public class MappingRegistry {
             }
         }
 
-        NBTTagList itemsMapping = nbt.getTagList("itemsMapping", Constants.NBT.TAG_COMPOUND);
+        NBTTagList itemsMapping = nbt.getTagList("itemsMapping"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < itemsMapping.tagCount(); ++i) {
-            NBTTagCompound sub = itemsMapping.getCompoundTagAt(i);
+            NBTTagCompound sub = ((INBTTagListExtension) itemsMapping).getCompoundTagAt(i);
             if (!sub.hasKey("name")) {
                 // Keeping the order correct
                 idToItem.add(null);
@@ -370,15 +342,15 @@ public class MappingRegistry {
             String name = sub.getString("name");
             Item item = null;
 
-            if (!Item.itemRegistry.containsKey(name) && name.contains(":")) {
+/*            if (!Item.itemRegistry.containsKey(name) && name.contains(":")) {
                 item = (Item) getMissingMappingFromFML(false, name, i);
                 if (item != null) {
                     BCLog.logger.info("Remapped " + name + " to " + Item.itemRegistry.getNameForObject(item));
                 }
-            }
+            }*/
 
-            if (item == null && Item.itemRegistry.containsKey(name)) {
-                item = (Item) Item.itemRegistry.getObject(name);
+            if (BasicRegistry.itemNames.containsKey(name)) {
+                item = Item.itemsList[BasicRegistry.itemNames.get(name)];
             }
 
             if (item != null) {
@@ -390,10 +362,10 @@ public class MappingRegistry {
             }
         }
 
-        NBTTagList entitiesMapping = nbt.getTagList("entitiesMapping", Constants.NBT.TAG_COMPOUND);
+        NBTTagList entitiesMapping = nbt.getTagList("entitiesMapping"/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int i = 0; i < entitiesMapping.tagCount(); ++i) {
-            NBTTagCompound sub = entitiesMapping.getCompoundTagAt(i);
+            NBTTagCompound sub = ((INBTTagListExtension) entitiesMapping).getCompoundTagAt(i);
             String name = sub.getString("name");
             Class<? extends Entity> e = null;
 
@@ -416,5 +388,5 @@ public class MappingRegistry {
         // for (Item i : idToItem) {
         // System.out.println("- " + (i != null ? i.toString() : "null"));
         // }
-    }*/
+    }
 }

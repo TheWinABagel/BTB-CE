@@ -183,7 +183,7 @@ public final class ListHandlerNew {
             NBTTagList list = data.getTagList("lines", 10);
             Line[] lines = new Line[list.tagCount()];
             for (int i = 0; i < lines.length; i++) {
-                lines[i] = Line.fromNBT(list.getCompoundTagAt(i));
+                lines[i] = Line.fromNBT(((INBTTagListExtension) list).getCompoundTagAt(i));
             }
             return lines;
         } else {
@@ -210,7 +210,7 @@ public final class ListHandlerNew {
         if (data.hasKey("written") && data.hasKey("lines")) {
             NBTTagList list = data.getTagList("lines", 10);
             for (int i = 0; i < list.tagCount(); i++) {
-                Line line = Line.fromNBT(list.getCompoundTagAt(i));
+                Line line = Line.fromNBT(((INBTTagListExtension) list).getCompoundTagAt(i));
                 if (line.matches(item)) {
                     return true;
                 }

@@ -9,7 +9,7 @@ package buildcraft.core;
 import buildcraft.api.core.Position;
 import net.minecraft.src.Entity;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import net.minecraft.src.World;
 
 public abstract class EntityLaser extends Entity {

@@ -6,9 +6,9 @@
  */
 package buildcraft.core.lib.render;
 
-import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.src.Render;
 import net.minecraft.src.Entity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 public class RenderVoid extends Render {
 

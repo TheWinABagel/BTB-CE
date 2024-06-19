@@ -20,17 +20,17 @@ import buildcraft.core.render.RenderingMarkers;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.multiplayer.WorldClient;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.NetHandlerPlayServer;
+import net.minecraft.src.NetHandler;
+import net.minecraft.src.NetHandlerPlayServer;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
-import net.minecraft.src.chunk.Chunk;
+import net.minecraft.src.Chunk;
 import net.minecraftforge.common.DimensionManager;
 
 public class CoreProxyClient extends CoreProxy {
@@ -126,7 +126,7 @@ public class CoreProxyClient extends CoreProxy {
      * instance if it's the client.
      */
     @Override
-    public EntityPlayer getPlayerFromNetHandler(INetHandler handler) {
+    public EntityPlayer getPlayerFromNetHandler(NetHandler handler) {
         if (handler instanceof NetHandlerPlayServer) {
             return ((NetHandlerPlayServer) handler).playerEntity;
         } else {

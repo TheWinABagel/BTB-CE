@@ -9,10 +9,10 @@ package buildcraft.core.render;
 import buildcraft.core.Box;
 import buildcraft.core.internal.IBoxProvider;
 import buildcraft.core.internal.IBoxesProvider;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.src.TileEntityRenderer;
+import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.TileEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class RenderBoxProvider extends TileEntitySpecialRenderer {
@@ -46,14 +46,14 @@ public class RenderBoxProvider extends TileEntitySpecialRenderer {
         if (tileentity instanceof IBoxesProvider) {
             for (Box b : ((IBoxesProvider) tileentity).getBoxes()) {
                 if (b.isVisible) {
-                    RenderBox.doRender(TileEntityRendererDispatcher.instance.field_147553_e, getTexture(b.kind), b);
+                    RenderBox.doRender(TileEntityRenderer.instance.field_147553_e, getTexture(b.kind), b);
                 }
             }
         } else if (tileentity instanceof IBoxProvider) {
             Box b = ((IBoxProvider) tileentity).getBox();
 
             if (b.isVisible) {
-                RenderBox.doRender(TileEntityRendererDispatcher.instance.field_147553_e, getTexture(b.kind), b);
+                RenderBox.doRender(TileEntityRenderer.instance.field_147553_e, getTexture(b.kind), b);
             }
         }
 

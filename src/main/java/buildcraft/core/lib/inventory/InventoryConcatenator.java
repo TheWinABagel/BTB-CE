@@ -61,7 +61,7 @@ public final class InventoryConcatenator implements IInventory {
     }
 
     @Override
-    public String getInventoryName() {
+    public String getInvName() {
         return "";
     }
 
@@ -76,10 +76,10 @@ public final class InventoryConcatenator implements IInventory {
     }
 
     @Override
-    public void openInventory() {}
+    public void openChest() {}
 
     @Override
-    public void closeInventory() {}
+    public void closeChest() {}
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
@@ -87,14 +87,14 @@ public final class InventoryConcatenator implements IInventory {
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
+    public boolean isInvNameLocalized() {
         return false;
     }
 
     @Override
-    public void markDirty() {
+    public void onInventoryChanged() {
         for (IInventory inv : invMap) {
-            inv.markDirty();
+            inv.onInventoryChanged();
         }
     }
 }

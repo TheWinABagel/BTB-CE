@@ -9,11 +9,11 @@ package buildcraft.core.properties;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.util.LongHashMap;
+import net.minecraft.src.LongHashMap;
 import net.minecraft.src.ChunkCoordIntPair;
 import net.minecraft.src.IWorldAccess;
 import net.minecraft.src.World;
-import net.minecraft.src.chunk.Chunk;
+import net.minecraft.src.Chunk;
 
 public class DimensionProperty implements IWorldAccess {
 

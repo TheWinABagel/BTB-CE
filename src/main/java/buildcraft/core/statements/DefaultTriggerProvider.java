@@ -42,7 +42,7 @@ public class DefaultTriggerProvider implements ITriggerProvider {
 
             if (isSided) {
                 int[] accessibleSlots = ((ISidedInventory) tile)
-                        .getAccessibleSlotsFromSide(side.getOpposite().ordinal());
+                        .getSlotsForFace(side.getOpposite().ordinal());
                 addTriggers = accessibleSlots != null && accessibleSlots.length > 0;
             }
 

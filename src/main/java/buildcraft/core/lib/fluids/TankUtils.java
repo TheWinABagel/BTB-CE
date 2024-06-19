@@ -10,7 +10,6 @@ import buildcraft.core.lib.TileBuffer;
 import buildcraft.core.lib.inventory.InvUtils;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -40,7 +39,7 @@ public final class TankUtils {
                     if (!player.capabilities.isCreativeMode) {
                         player.inventory
                                 .setInventorySlotContents(player.inventory.currentItem, InvUtils.consumeItem(current));
-                        player.inventory.markDirty();
+                        player.inventory.onInventoryChanged();
                     }
                     return true;
                 }
@@ -61,13 +60,13 @@ public final class TankUtils {
                             player.inventory.setInventorySlotContents(
                                     player.inventory.currentItem,
                                     InvUtils.consumeItem(current));
-                            player.inventory.markDirty();
+                            player.inventory.onInventoryChanged();
                         } else {
                             player.inventory.setInventorySlotContents(
                                     player.inventory.currentItem,
                                     InvUtils.consumeItem(current));
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, filled);
-                            player.inventory.markDirty();
+                            player.inventory.onInventoryChanged();
                         }
 
                         tank.drain(side, liquid.amount, true);
@@ -81,10 +80,10 @@ public final class TankUtils {
 
     public static Block getFluidBlock(Fluid fluid, boolean moving) {
         if (fluid == FluidRegistry.WATER) {
-            return moving ? Blocks.flowing_water : Blocks.water;
+            return moving ? Block.waterMoving : Block.waterStill;
         }
         if (fluid == FluidRegistry.LAVA) {
-            return moving ? Blocks.flowing_lava : Blocks.lava;
+            return moving ? Block.lavaMoving : Block.lavaStill;
         }
         return fluid.getBlock();
     }

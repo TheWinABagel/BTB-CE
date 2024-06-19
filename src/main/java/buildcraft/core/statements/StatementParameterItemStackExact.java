@@ -1,6 +1,6 @@
 package buildcraft.core.statements;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;

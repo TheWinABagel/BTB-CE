@@ -34,7 +34,7 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.MathHelper;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 import net.minecraftforge.common.util.FakePlayer;
@@ -104,7 +104,7 @@ public final class Utils {
             Position pos = new Position(x, y, z, orientation);
             pos.moveForwards(1.0);
 
-            TileEntity tileInventory = BlockUtils.getTileEntity(world, (int) pos.x, (int) pos.y, (int) pos.z);
+            TileEntity tileInventory = BlockUtils.getBlockTileEntity(world, (int) pos.x, (int) pos.y, (int) pos.z);
             ITransactor transactor = Transactor.getTransactorFor(tileInventory);
             if (transactor != null && !(tileInventory instanceof IEngine)
                     && !(tileInventory instanceof ILaserTarget)
@@ -144,7 +144,7 @@ public final class Utils {
 
             pos.moveForwards(1.0);
 
-            TileEntity tile = BlockUtils.getTileEntity(world, (int) pos.x, (int) pos.y, (int) pos.z);
+            TileEntity tile = BlockUtils.getBlockTileEntity(world, (int) pos.x, (int) pos.y, (int) pos.z);
 
             if (tile instanceof IInjectable) {
                 if (!((IInjectable) tile).canInjectItems(side.getOpposite())) {
@@ -193,7 +193,7 @@ public final class Utils {
     }
 
     public static void preDestroyBlock(World world, int i, int j, int k) {
-        TileEntity tile = BlockUtils.getTileEntity(world, i, j, k);
+        TileEntity tile = BlockUtils.getBlockTileEntity(world, i, j, k);
 
         if (tile instanceof IInventory && !world.isRemote) {
             if (!(tile instanceof IDropControlInventory) || ((IDropControlInventory) tile).doDrop()) {
@@ -282,7 +282,7 @@ public final class Utils {
 
     public static boolean isPipeConnected(IBlockAccess access, int x, int y, int z, ForgeDirection dir,
             IPipeTile.PipeType type) {
-        TileEntity tile = access.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+        TileEntity tile = access.getBlockTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
         return tile instanceof IPipeTile && ((IPipeTile) tile).getPipeType() == type
                 && ((IPipeTile) tile).isPipeConnected(dir.getOpposite());
     }
@@ -303,7 +303,7 @@ public final class Utils {
      * #FMLIndexedMessageToMessageCodec (in particular the encode member). It is probably opening a maintenance issue
      * and should be replaced eventually by some more solid mechanism.
      */
-    public static FMLProxyPacket toPacket(Packet packet, int discriminator) {
+    public static /*FMLProxyPacket*/ net.minecraft.src.Packet toPacket(Packet packet, int discriminator) {
         ByteBuf buf = Unpooled.buffer();
 
         buf.writeByte((byte) discriminator);

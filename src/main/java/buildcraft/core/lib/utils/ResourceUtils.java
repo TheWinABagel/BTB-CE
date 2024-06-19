@@ -1,11 +1,11 @@
 package buildcraft.core.lib.utils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.IResource;
+import net.minecraft.src.Minecraft;
+import net.minecraft.src.IconRegister;
+import net.minecraft.src.TextureMap;
+import net.minecraft.src.IResource;
 import net.minecraft.src.Icon;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 import java.io.IOException;
 

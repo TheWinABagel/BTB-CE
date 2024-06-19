@@ -4,7 +4,7 @@ import net.minecraft.src.NBTTagCompound;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.api.tablet.TabletBitmap;
-import cpw.mods.fml.relauncher.Side;
+import net.fabricmc.api.EnvType;
 
 public class TabletClient extends TabletBase {
 

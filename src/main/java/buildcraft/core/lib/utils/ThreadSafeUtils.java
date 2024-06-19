@@ -9,8 +9,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.src.ChunkCoordIntPair;
 import net.minecraft.src.World;
-import net.minecraft.src.chunk.Chunk;
-import net.minecraft.src.chunk.IChunkProvider;
+import net.minecraft.src.Chunk;
+import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.gen.ChunkProviderServer;
 
 public final class ThreadSafeUtils {
@@ -58,7 +58,7 @@ public final class ThreadSafeUtils {
      * @param channel
      * @return
      */
-    public static net.minecraft.network.Packet generatePacketFrom(Packet packet, FMLEmbeddedChannel channel) {
+    public static net.minecraft.src.Packet generatePacketFrom(Packet packet, FMLEmbeddedChannel channel) {
         ByteBuf data = Unpooled.buffer();
         for (io.netty.channel.ChannelHandler h : channel.pipeline().toMap().values()) {
             if (h instanceof ChannelHandler) {

@@ -11,17 +11,19 @@ import buildcraft.api.blocks.IColorRemovable;
 import buildcraft.api.core.EnumColor;
 import buildcraft.core.lib.items.ItemBuildCraft;
 import buildcraft.core.lib.utils.NBTUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.example.injected.BlockExtension;
+import net.fabricmc.example.injected.ItemExtension;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.src.IconRegister;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;
-import net.minecraft.util.Vec3;
+import net.minecraft.src.Vec3;
 import net.minecraft.src.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -30,8 +32,8 @@ import java.util.Locale;
 
 public class ItemPaintbrush extends ItemBuildCraft {
 
-    public ItemPaintbrush() {
-        super();
+    public ItemPaintbrush(int id) {
+        super(id);
 
         setFull3D();
         setMaxStackSize(1);
@@ -67,7 +69,7 @@ public class ItemPaintbrush extends ItemBuildCraft {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void registerIcons(IconRegister par1IconRegister) {
         super.registerIcons(par1IconRegister);
 
@@ -77,7 +79,7 @@ public class ItemPaintbrush extends ItemBuildCraft {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon getIconIndex(ItemStack stack) {
         this.itemIcon = icons[(getColor(stack) + 1) % icons.length];
         return itemIcon;
@@ -99,7 +101,7 @@ public class ItemPaintbrush extends ItemBuildCraft {
             float hitX, float hitY, float hitZ) {
         int dye = getColor(stack);
 
-        Block block = world.getBlock(x, y, z);
+        Block block = Block.blocksList[world.getBlockId(x, y, z)];
 
         if (block == null) {
             return false;
@@ -123,9 +125,9 @@ public class ItemPaintbrush extends ItemBuildCraft {
                 lookSide = look.zCoord > 0 ? ForgeDirection.SOUTH : ForgeDirection.NORTH;
             }
 
-            while (block.recolourBlock(world, x, y, z, ForgeDirection.getOrientation(side), 15 - dye)) {
+            while (((BlockExtension) block).recolourBlock(world, x, y, z, ForgeDirection.getOrientation(side), 15 - dye)) {
                 player.swingItem();
-                setDamage(stack, getDamage(stack) + 1);
+                setDamage(stack, ((ItemExtension) this).getDamage(stack) + 1);
                 dye = getColor(stack);
 
                 painted++;
@@ -156,7 +158,7 @@ public class ItemPaintbrush extends ItemBuildCraft {
                 if (y <= 0 || y > 256) {
                     return !world.isRemote;
                 }
-                block = world.getBlock(x, y, z);
+                block = Block.blocksList[world.getBlockId(x, y, z)];
                 if (block == null) {
                     return !world.isRemote;
                 }
@@ -177,8 +179,8 @@ public class ItemPaintbrush extends ItemBuildCraft {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tab, List itemList) {
+    @Environment(EnvType.CLIENT)
+    public void getSubItems(int itemId, CreativeTabs tab, List itemList) {
         itemList.add(new ItemStack(this));
         for (int i = 0; i < 16; i++) {
             ItemStack stack = new ItemStack(this);

@@ -1,7 +1,7 @@
 package buildcraft.core.lib.utils;
 
 import buildcraft.api.core.BlockIndex;
-import net.minecraft.util.MathHelper;
+import net.minecraft.src.MathHelper;
 
 import java.util.Iterator;
 import java.util.Random;

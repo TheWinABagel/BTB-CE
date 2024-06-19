@@ -233,11 +233,11 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     // Used to prevent updates on chunk generation
-//    @Override
-//    public boolean func_149698_L()
-//    {
-//        return false;
-//    }
+    @Override
+    public boolean func_82506_l()
+    {
+        return false;
+    }
 
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z

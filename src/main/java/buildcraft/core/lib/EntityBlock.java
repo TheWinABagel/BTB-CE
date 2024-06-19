@@ -6,8 +6,8 @@
  */
 package buildcraft.core.lib;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Entity;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;
@@ -15,7 +15,7 @@ import net.minecraft.src.World;
 
 public class EntityBlock extends Entity {
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public Icon[] texture;
 
     public float shadowSize = 0;
@@ -100,7 +100,7 @@ public class EntityBlock extends Entity {
         return brightness > 0 ? brightness : super.getBrightnessForRender(par1);
     }
 
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public boolean isInRangeToRenderDist(double distance) {
         return distance < 50000;
     }

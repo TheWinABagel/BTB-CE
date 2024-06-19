@@ -7,6 +7,7 @@
 package buildcraft.core.lib.inventory;
 
 import buildcraft.api.core.INBTStoreable;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
@@ -45,7 +46,7 @@ public class SimpleInventory implements IInventory, INBTStoreable {
         if (slotId < contents.length && contents[slotId] != null) {
             if (contents[slotId].stackSize > count) {
                 ItemStack result = contents[slotId].splitStack(count);
-                markDirty();
+                onInventoryChanged();
                 return result;
             }
             if (contents[slotId].stackSize < count) {
@@ -68,11 +69,11 @@ public class SimpleInventory implements IInventory, INBTStoreable {
         if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
             itemstack.stackSize = this.getInventoryStackLimit();
         }
-        markDirty();
+        onInventoryChanged();
     }
 
     @Override
-    public String getInventoryName() {
+    public String getInvName() {
         return name;
     }
 
@@ -87,10 +88,10 @@ public class SimpleInventory implements IInventory, INBTStoreable {
     }
 
     @Override
-    public void openInventory() {}
+    public void openChest() {}
 
     @Override
-    public void closeInventory() {}
+    public void closeChest() {}
 
     @Override
     public void readFromNBT(NBTTagCompound data) {
@@ -104,10 +105,10 @@ public class SimpleInventory implements IInventory, INBTStoreable {
     }
 
     public void readFromNBT(NBTTagCompound data, String tag) {
-        NBTTagList nbttaglist = data.getTagList(tag, Constants.NBT.TAG_COMPOUND);
+        NBTTagList nbttaglist = data.getTagList(tag/*, Constants.NBT.TAG_COMPOUND*/);
 
         for (int j = 0; j < nbttaglist.tagCount(); ++j) {
-            NBTTagCompound slot = nbttaglist.getCompoundTagAt(j);
+            NBTTagCompound slot = ((INBTTagListExtension) nbttaglist).getCompoundTagAt(j);
             int index;
             if (slot.hasKey("index")) {
                 index = slot.getInteger("index");
@@ -163,14 +164,14 @@ public class SimpleInventory implements IInventory, INBTStoreable {
     }
 
     @Override
-    public boolean hasCustomInventoryName() {
+    public boolean isInvNameLocalized() {
         return false;
     }
 
     @Override
-    public void markDirty() {
+    public void onInventoryChanged() {
         for (TileEntity handler : listener) {
-            handler.markDirty();
+            handler.onInventoryChanged();
         }
     }
 }

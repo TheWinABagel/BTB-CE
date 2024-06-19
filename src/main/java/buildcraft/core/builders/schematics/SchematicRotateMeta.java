@@ -8,6 +8,7 @@ package buildcraft.core.builders.schematics;
 
 import buildcraft.api.blueprints.IBuilderContext;
 import buildcraft.api.blueprints.SchematicTile;
+import net.minecraft.src.Block;
 
 public class SchematicRotateMeta extends SchematicTile {
 
@@ -34,7 +35,7 @@ public class SchematicRotateMeta extends SchematicTile {
 
     @Override
     public boolean isAlreadyBuilt(IBuilderContext context, int x, int y, int z) {
-        return block == context.world().getBlock(x, y, z);
+        return block == Block.blocksList[context.world().getBlockId(x, y, z)];
     }
 
     @Override

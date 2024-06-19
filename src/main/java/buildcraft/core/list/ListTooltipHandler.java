@@ -4,7 +4,7 @@ import buildcraft.api.items.IList;
 import buildcraft.core.lib.utils.StringUtils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.src.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.src.EnumChatFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 public class ListTooltipHandler {

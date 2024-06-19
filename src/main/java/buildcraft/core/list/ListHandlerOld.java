@@ -16,7 +16,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import buildcraft.core.lib.inventory.StackHelper;
 import buildcraft.core.lib.utils.NBTUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
+import net.fabricmc.api.EnvType;
 
 public final class ListHandlerOld {
 
