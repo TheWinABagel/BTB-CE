@@ -17,16 +17,16 @@ import java.io.IOException;
 public interface ISerializable {
 
     /**
-     * Serializes the state to the stream
-     *
-     * @param data
-     */
-    void writeData(DataOutput data) throws IOException;
-
-    /**
      * Deserializes the state from the stream
      *
-     * @param data
+     * @param stream
      */
-    void readData(DataInput data) throws IOException ;
+    void readData(DataInput stream) throws IOException ;
+
+    /**
+     * Serializes the state to the stream
+     *
+     * @param stream
+     */
+    void writeData(DataOutput stream) throws IOException;
 }
