@@ -7,3 +7,4 @@
 @API(apiVersion = "4.0", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|filler")
 package buildcraft.api.filler;
 
+import net.minecraftforge.common.util.API;

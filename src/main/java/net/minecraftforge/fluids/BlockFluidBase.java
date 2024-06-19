@@ -1,15 +1,8 @@
 package net.minecraftforge.fluids;
 
 import com.google.common.collect.Maps;
+import net.minecraft.src.*;
 import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.Entity;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
 
 import java.util.Map;
 import java.util.Random;
@@ -59,7 +52,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     public BlockFluidBase(Fluid fluid, Material material)
     {
-        super(material);
+        super(5, material); //todo block id
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         this.setTickRandomly(true);
         this.disableStats();
@@ -122,9 +115,9 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
      */
     public boolean canDisplace(IBlockAccess world, int x, int y, int z)
     {
-        if (world.getBlock(x, y, z).isAir(world, x, y, z)) return true;
+        if (world.isAirBlock(x, y, z)) return true;
 
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
 
         if (block == this)
         {
@@ -136,7 +129,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
             return displacements.get(block);
         }
 
-        Material material = block.getMaterial();
+        Material material = block.blockMaterial;
         if (material.blocksMovement() || material == Material.portal)
         {
             return false;
@@ -163,12 +156,12 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
      */
     public boolean displaceIfPossible(World world, int x, int y, int z)
     {
-        if (world.getBlock(x, y, z).isAir(world, x, y, z))
+        if (world.isAirBlock(x, y, z))
         {
             return true;
         }
 
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (block == this)
         {
             return false;
@@ -226,7 +219,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     @Override
     public void onBlockAdded(World world, int x, int y, int z)
     {
-        world.scheduleBlockUpdate(x, y, z, this, tickRate);
+        world.scheduleBlockUpdate(x, y, z, this.blockID, tickRate);
     }
 
     /**
@@ -234,17 +227,17 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
      * their own) Args: x, y, z, neighbor Block
      */
     @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block)
+    public void onNeighborBlockChange(World world, int x, int y, int z, int block)
     {
-        world.scheduleBlockUpdate(x, y, z, this, tickRate);
+        world.scheduleBlockUpdate(x, y, z, this.blockID, tickRate);
     }
 
     // Used to prevent updates on chunk generation
-    @Override
-    public boolean func_149698_L()
-    {
-        return false;
-    }
+//    @Override
+//    public boolean func_149698_L()
+//    {
+//        return false;
+//    }
 
     /**
      * Checks to see if its valid to put this block at the specified coordinates. Args: world, x, y, z
@@ -272,10 +265,15 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     }
 
     @Override
-    public Item getItemDropped(int par1, Random par2Random, int par3)
-    {
-        return null;
+    protected void dropBlockAsItem_do(World par1World, int par2, int par3, int par4, ItemStack par5ItemStack) {
+        //NO-OP
     }
+
+//    @Override
+//    public Item getItemDropped(int par1, Random par2Random, int par3)
+//    {
+//        return null;
+//    }
 
     /**
      * Returns the quantity of items to drop on block destruction.
@@ -389,18 +387,18 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
     @Override
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
     {
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (block != this)
         {
             return !block.isOpaqueCube();
         }
-        return block.getMaterial() == this.getMaterial() ? false : super.shouldSideBeRendered(world, x, y, z, side);
+        return block.blockMaterial == this.blockMaterial ? false : super.shouldSideBeRendered(world, x, y, z, side);
     }
 
     /* FLUID FUNCTIONS */
     public static final int getDensity(IBlockAccess world, int x, int y, int z)
     {
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (!(block instanceof BlockFluidBase))
         {
             return Integer.MAX_VALUE;
@@ -410,7 +408,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     public static final int getTemperature(IBlockAccess world, int x, int y, int z)
     {
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (!(block instanceof BlockFluidBase))
         {
             return Integer.MAX_VALUE;
@@ -420,7 +418,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
 
     public static double getFlowDirection(IBlockAccess world, int x, int y, int z)
     {
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (!block.blockMaterial.isLiquid())
         {
             return -1000.0;
@@ -476,7 +474,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
             int otherDecay = quantaPerBlock - getQuantaValue(world, x2, y, z2);
             if (otherDecay >= quantaPerBlock)
             {
-                if (!world.getBlock(x2, y, z2).getMaterial().blocksMovement())
+                if (!net.minecraft.src.Block.blocksList[world.getBlockId(x2, y, z2)].blockMaterial.blocksMovement())
                 {
                     otherDecay = quantaPerBlock - getQuantaValue(world, x2, y - 1, z2);
                     if (otherDecay >= 0)
@@ -493,7 +491,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock
             }
         }
 
-        if (world.getBlock(x, y + 1, z) == this)
+        if (world.getBlockId(x, y + 1, z) == this.blockID)
         {
             boolean flag =
                     isBlockSolid(world, x,     y,     z - 1, 2) ||

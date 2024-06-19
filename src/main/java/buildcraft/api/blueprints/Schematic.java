@@ -81,8 +81,8 @@ public abstract class Schematic {
 
         if (stack.stackSize == 0) {
             stack.stackSize = 1;
-            if (stack.getItem().hasContainerItem(stack)) {
-                ItemStack newStack = stack.getItem().getContainerItem(stack);
+            if (stack.getItem().hasContainerItem()) {
+                ItemStack newStack = new ItemStack(stack.getItem().getContainerItem());
                 slot.setStackInSlot(newStack);
             } else {
                 slot.setStackInSlot(null);

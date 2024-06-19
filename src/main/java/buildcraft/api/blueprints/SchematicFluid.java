@@ -6,6 +6,7 @@
  */
 package buildcraft.api.blueprints;
 
+import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -34,9 +35,9 @@ public class SchematicFluid extends SchematicBlock {
     @Override
     public boolean isAlreadyBuilt(IBuilderContext context, int x, int y, int z) {
         if (meta == 0) {
-            return block == context.world().getBlock(x, y, z) && context.world().getBlockMetadata(x, y, z) == 0;
+            return block == Block.blocksList[context.world().getBlockId(x, y, z)] && context.world().getBlockMetadata(x, y, z) == 0;
         } else {
-            return block == context.world().getBlock(x, y, z);
+            return block == Block.blocksList[context.world().getBlockId(x, y, z)];
         }
     }
 
@@ -51,14 +52,14 @@ public class SchematicFluid extends SchematicBlock {
     @Override
     public void placeInWorld(IBuilderContext context, int x, int y, int z, LinkedList<ItemStack> stacks) {
         if (meta == 0) {
-            context.world().setBlock(x, y, z, block, 0, 3);
+            context.world().setBlock(x, y, z, block.blockID, 0, 3);
         }
     }
 
     @Override
     public void postProcessing(IBuilderContext context, int x, int y, int z) {
         if (meta != 0) {
-            context.world().setBlock(x, y, z, block, meta, 3);
+            context.world().setBlock(x, y, z, block.blockID, meta, 3);
         }
     }
 

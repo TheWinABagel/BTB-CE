@@ -7,3 +7,4 @@
 @API(apiVersion = "1.2", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|tiles")
 package buildcraft.api.tiles;
 
+import net.minecraftforge.common.util.API;

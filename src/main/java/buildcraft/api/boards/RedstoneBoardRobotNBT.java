@@ -8,7 +8,7 @@ package buildcraft.api.boards;
 
 import buildcraft.api.robots.EntityRobotBase;
 import net.minecraft.src.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.src.ResourceLocation;
 
 public abstract class RedstoneBoardRobotNBT extends RedstoneBoardNBT<EntityRobotBase> {
 

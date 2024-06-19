@@ -3,6 +3,7 @@ package net.minecraftforge.fluids;
 import com.google.common.base.Strings;
 import com.google.common.collect.*;
 import cpw.mods.fml.common.registry.RegistryDelegate;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.Block;
@@ -15,7 +16,7 @@ import org.apache.logging.log4j.Level;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
+//todo fmllog
 /**
  * Handles Fluid registrations. Fluids MUST be registered in order to function.
  *
@@ -291,13 +292,13 @@ public abstract class FluidRegistry
     public static void loadFluidDefaults(NBTTagCompound tag)
     {
         Set<String> defaults = Sets.newHashSet();
-        if (tag.hasKey("DefaultFluidList",9))
+        if (tag.hasKey("DefaultFluidList"/*, 9*/))
         {
 //            FMLLog.getLogger().log(Level.DEBUG, "Loading persistent fluid defaults from world");
-            NBTTagList tl = tag.getTagList("DefaultFluidList", 8);
+            NBTTagList tl = tag.getTagList("DefaultFluidList"/*, 8*/);
             for (int i = 0; i < tl.tagCount(); i++)
             {
-                defaults.add(tl.getStringTagAt(i));
+                defaults.add(((INBTTagListExtension) tl).getStringTagAt(i));
             }
         }
         else

@@ -37,7 +37,7 @@ public class SchematicMask extends SchematicBlockBase {
 
                 // force the block to be air block, in case it's just a soft
                 // block which replacement is not straightforward
-                context.world().setBlock(x, y, z, Blocks.air, 0, 3);
+                context.world().setBlock(x, y, z, 0, 0, 3);
 
                 // Find nearest solid surface to place on
                 ForgeDirection dir = ForgeDirection.DOWN;
@@ -58,7 +58,7 @@ public class SchematicMask extends SchematicBlockBase {
                         0.0f);
             }
         } else {
-            context.world().setBlock(x, y, z, Blocks.air, 0, 3);
+            context.world().setBlock(x, y, z, 0, 0, 3);
         }
     }
 

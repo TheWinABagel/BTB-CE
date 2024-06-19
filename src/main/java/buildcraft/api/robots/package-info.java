@@ -7,3 +7,4 @@
 @API(apiVersion = "3.0", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|robotics")
 package buildcraft.api.robots;
 
+import net.minecraftforge.common.util.API;

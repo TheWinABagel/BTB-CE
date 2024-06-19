@@ -9,7 +9,7 @@ package buildcraft.api.core;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.Icon;
-import net.minecraft.util.StatCollector;
+import net.minecraft.src.StatCollector;
 
 import java.util.Locale;
 import java.util.Random;

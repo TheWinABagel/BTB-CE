@@ -6,6 +6,9 @@
  */
 package buildcraft.api.blueprints;
 
+import net.fabricmc.example.injected.INBTTagListExtension;
+import net.fabricmc.example.mixin.NBTTagCompoundAccessor;
+import net.fabricmc.example.mixin.NBTTagListAccessor;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
 import net.minecraft.src.Item;
@@ -175,7 +178,7 @@ public class MappingRegistry {
 
         // Then, look at the nbt compound contained in this nbt (even if it's a
         // stack) and checks for stacks in it.
-        for (Object keyO : nbt.tagMap.keySet()) {
+        for (Object keyO : ((NBTTagCompoundAccessor) nbt).getTagMap().keySet()) {
             String key = (String) keyO;
 
             if (nbt.getTag(key) instanceof NBTTagCompound) {
@@ -185,9 +188,9 @@ public class MappingRegistry {
             if (nbt.getTag(key) instanceof NBTTagList) {
                 NBTTagList list = (NBTTagList) nbt.getTag(key);
 
-                if (list.tagType == Constants.NBT.TAG_COMPOUND) {
+                if (((NBTTagListAccessor) list).getTagType() == Constants.NBT.TAG_COMPOUND) {
                     for (int i = 0; i < list.tagCount(); ++i) {
-                        scanAndTranslateStacksToRegistry(list.getCompoundTagAt(i));
+                        scanAndTranslateStacksToRegistry(((INBTTagListExtension) list).getCompoundTagAt(i));
                     }
                 }
             }
@@ -203,7 +206,7 @@ public class MappingRegistry {
 
         // Then, look at the nbt compound contained in this nbt (even if it's a
         // stack) and checks for stacks in it.
-        for (Object keyO : new HashSet(nbt.tagMap.keySet())) {
+        for (Object keyO : new HashSet(((NBTTagCompoundAccessor) nbt).getTagMap().keySet())) {
             String key = (String) keyO;
 
             if (nbt.getTag(key) instanceof NBTTagCompound) {
@@ -217,10 +220,10 @@ public class MappingRegistry {
             if (nbt.getTag(key) instanceof NBTTagList) {
                 NBTTagList list = (NBTTagList) nbt.getTag(key);
 
-                if (list.tagType == Constants.NBT.TAG_COMPOUND) {
+                if (((NBTTagListAccessor) list).getTagType() == Constants.NBT.TAG_COMPOUND) {
                     for (int i = list.tagCount() - 1; i >= 0; --i) {
                         try {
-                            scanAndTranslateStacksToWorld(list.getCompoundTagAt(i));
+                            scanAndTranslateStacksToWorld(((INBTTagListExtension) list).getCompoundTagAt(i));
                         } catch (MappingNotFoundException e) {
                             list.removeTag(i);
                         }

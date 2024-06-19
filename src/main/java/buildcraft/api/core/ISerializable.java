@@ -6,7 +6,10 @@
  */
 package buildcraft.api.core;
 
-import io.netty.buffer.ByteBuf;
+
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * Implemented by classes representing serializable packet state
@@ -18,12 +21,12 @@ public interface ISerializable {
      *
      * @param data
      */
-    void writeData(ByteBuf data);
+    void writeData(DataOutput data) throws IOException;
 
     /**
      * Deserializes the state from the stream
      *
      * @param data
      */
-    void readData(ByteBuf data);
+    void readData(DataInput data) throws IOException ;
 }

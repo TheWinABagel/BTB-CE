@@ -7,3 +7,4 @@
 @API(apiVersion = "4.1", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|transport")
 package buildcraft.api.transport;
 
+import net.minecraftforge.common.util.API;

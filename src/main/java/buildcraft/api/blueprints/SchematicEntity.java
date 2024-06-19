@@ -7,6 +7,7 @@
 package buildcraft.api.blueprints;
 
 import buildcraft.api.core.Position;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityList;
 import net.minecraft.src.Item;
@@ -56,11 +57,11 @@ public class SchematicEntity extends Schematic {
 
     @Override
     public void translateToBlueprint(Translation transform) {
-        NBTTagList nbttaglist = entityNBT.getTagList("Pos", 6);
+        NBTTagList nbttaglist = entityNBT.getTagList("Pos"/*, 6*/);
         Position pos = new Position(
-                nbttaglist.func_150309_d(0),
-                nbttaglist.func_150309_d(1),
-                nbttaglist.func_150309_d(2));
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(0),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(1),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(2));
         pos = transform.translate(pos);
 
         entityNBT.setTag("Pos", this.newDoubleNBTList(pos.x, pos.y, pos.z));
@@ -68,11 +69,11 @@ public class SchematicEntity extends Schematic {
 
     @Override
     public void translateToWorld(Translation transform) {
-        NBTTagList nbttaglist = entityNBT.getTagList("Pos", 6);
+        NBTTagList nbttaglist = entityNBT.getTagList("Pos"/*, 6*/);
         Position pos = new Position(
-                nbttaglist.func_150309_d(0),
-                nbttaglist.func_150309_d(1),
-                nbttaglist.func_150309_d(2));
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(0),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(1),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(2));
         pos = transform.translate(pos);
 
         entityNBT.setTag("Pos", this.newDoubleNBTList(pos.x, pos.y, pos.z));
@@ -94,18 +95,18 @@ public class SchematicEntity extends Schematic {
 
     @Override
     public void rotateLeft(IBuilderContext context) {
-        NBTTagList nbttaglist = entityNBT.getTagList("Pos", 6);
+        NBTTagList nbttaglist = entityNBT.getTagList("Pos"/*, 6*/);
         Position pos = new Position(
-                nbttaglist.func_150309_d(0),
-                nbttaglist.func_150309_d(1),
-                nbttaglist.func_150309_d(2));
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(0),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(1),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(2));
         pos = context.rotatePositionLeft(pos);
         entityNBT.setTag("Pos", this.newDoubleNBTList(pos.x, pos.y, pos.z));
 
-        nbttaglist = entityNBT.getTagList("Rotation", 5);
-        float yaw = nbttaglist.func_150308_e(0);
+        nbttaglist = entityNBT.getTagList("Rotation"/*, 5*/);
+        float yaw = ((INBTTagListExtension) nbttaglist).getFloatTagAt(0);
         yaw += 90;
-        entityNBT.setTag("Rotation", this.newFloatNBTList(yaw, nbttaglist.func_150308_e(1)));
+        entityNBT.setTag("Rotation", this.newFloatNBTList(yaw, ((INBTTagListExtension) nbttaglist).getFloatTagAt(1)));
     }
 
     @Override
@@ -133,17 +134,17 @@ public class SchematicEntity extends Schematic {
 
         entityNBT = nbt.getCompoundTag("entity");
 
-        NBTTagList rq = nbt.getTagList("rq", Constants.NBT.TAG_COMPOUND);
+        NBTTagList rq = nbt.getTagList("rq"/*, Constants.NBT.TAG_COMPOUND*/);
 
         ArrayList<ItemStack> rqs = new ArrayList<ItemStack>();
 
         for (int i = 0; i < rq.tagCount(); ++i) {
             try {
-                NBTTagCompound sub = rq.getCompoundTagAt(i);
+                NBTTagCompound sub = ((INBTTagListExtension) rq).getCompoundTagAt(i);
 
                 if (sub.getInteger("id") >= 0) {
                     // Maps the id in the blueprint to the id in the world
-                    sub.setInteger("id", Item.itemRegistry.getIDForObject(registry.getItemForId(sub.getInteger("id"))));
+                    sub.setInteger("id", Item.itemsList[registry.getItemForId(sub.getInteger("id")).itemID].itemID);
 
                     rqs.add(ItemStack.loadItemStackFromNBT(sub));
                 } else {
@@ -165,7 +166,7 @@ public class SchematicEntity extends Schematic {
 
         for (int j = 0; j < i; ++j) {
             double d1 = adouble[j];
-            nbttaglist.appendTag(new NBTTagDouble(d1));
+            nbttaglist.appendTag(new NBTTagDouble("", d1));
         }
 
         return nbttaglist;
@@ -178,18 +179,18 @@ public class SchematicEntity extends Schematic {
 
         for (int j = 0; j < i; ++j) {
             float f1 = afloat[j];
-            nbttaglist.appendTag(new NBTTagFloat(f1));
+            nbttaglist.appendTag(new NBTTagFloat("", f1));
         }
 
         return nbttaglist;
     }
 
     public boolean isAlreadyBuilt(IBuilderContext context) {
-        NBTTagList nbttaglist = entityNBT.getTagList("Pos", 6);
+        NBTTagList nbttaglist = entityNBT.getTagList("Pos"/*, 6*/);
         Position newPosition = new Position(
-                nbttaglist.func_150309_d(0),
-                nbttaglist.func_150309_d(1),
-                nbttaglist.func_150309_d(2));
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(0),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(1),
+                ((INBTTagListExtension) nbttaglist).getDoubleTagAt(2));
 
         for (Object o : context.world().loadedEntityList) {
             Entity e = (Entity) o;

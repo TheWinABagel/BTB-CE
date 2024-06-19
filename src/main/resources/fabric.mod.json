@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "btb-ce",
   "version": "${version}",
-  "name": "Example Mod",
+  "name": "Better Than Buildcraft: CE",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Me!"
@@ -23,7 +23,9 @@
     ]
   },
   "custom": {
-    "btw:addon_prefix": "EX"
+    "loom:injected_interfaces": {
+      "net/minecraft/class_795": ["buildcraft/api/interfaces/IWorldExtension"]
+    }
   },
   "mixins": [
     "modid.mixins.json"

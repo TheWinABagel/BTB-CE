@@ -77,7 +77,7 @@ public class BlockIndex implements Comparable<BlockIndex> {
     }
 
     public Block getBlock(World world) {
-        return world.getBlock(x, y, z);
+        return Block.blocksList[world.getBlockId(x, y, z)];
     }
 
     @Override

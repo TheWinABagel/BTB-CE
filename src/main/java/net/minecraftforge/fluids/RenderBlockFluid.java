@@ -1,6 +1,7 @@
 package net.minecraftforge.fluids;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import net.fabricmc.example.mixin.RenderBlocksAccessor;
 import net.minecraft.src.Block;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.RenderBlocks;
@@ -55,10 +56,10 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
 
     public float getFluidHeightForRender(IBlockAccess world, int x, int y, int z, BlockFluidBase block)
     {
-        if (world.getBlock(x, y, z) == block)
+        if (net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)] == block)
         {
-            Block verticalOrigin = world.getBlock(x, y - block.densityDir, z);
-            if (verticalOrigin.getMaterial().isLiquid() || verticalOrigin instanceof IFluidBlock)
+            Block verticalOrigin = Block.blocksList[world.getBlockId(x, y - block.densityDir, z)];
+            if (verticalOrigin.blockMaterial.isLiquid() || verticalOrigin instanceof IFluidBlock)
             {
                 return 1;
             }
@@ -68,7 +69,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 return 0.875F;
             }
         }
-        return !world.getBlock(x, y, z).getMaterial().isSolid() && world.getBlock(x, y - block.densityDir, z) == block ? 1 : block.getQuantaPercentage(world, x, y, z) * 0.875F;
+        return !Block.blocksList[world.getBlockId(x, y, z)].blockMaterial.isSolid() && Block.blocksList[world.getBlockId(x, y - block.densityDir, z)] == block ? 1 : block.getQuantaPercentage(world, x, y, z) * 0.875F;
     }
 
     /* ISimpleBlockRenderingHandler */
@@ -92,9 +93,9 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
         BlockFluidBase theFluid = (BlockFluidBase) block;
         int bMeta = world.getBlockMetadata(x, y, z);
 
-        boolean renderTop = world.getBlock(x, y - theFluid.densityDir, z) != theFluid;
+        boolean renderTop = Block.blocksList[world.getBlockId(x, y - theFluid.densityDir, z)] != theFluid;
 
-        boolean renderBottom = block.shouldSideBeRendered(world, x, y + theFluid.densityDir, z, 0) && world.getBlock(x, y + theFluid.densityDir, z) != theFluid;
+        boolean renderBottom = block.shouldSideBeRendered(world, x, y + theFluid.densityDir, z, 0) && Block.blocksList[world.getBlockId(x, y + theFluid.densityDir, z)] != theFluid;
 
         boolean[] renderSides = new boolean[]
         {
@@ -139,7 +140,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
             }
 
             boolean rises = theFluid.densityDir == 1;
-            if (renderer.renderAllFaces || renderTop)
+            if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderTop)
             {
                 rendered = true;
                 Icon iconStill = getIcon(block.getIcon(1, bMeta));
@@ -211,7 +212,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 }
             }
 
-            if (renderer.renderAllFaces || renderBottom)
+            if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderBottom)
             {
                 rendered = true;
                 tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y - 1, z));
@@ -241,7 +242,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                 }
 
                 Icon iconFlow = getIcon(block.getIcon(side + 2, bMeta));
-                if (renderer.renderAllFaces || renderSides[side])
+                if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderSides[side])
                 {
                     rendered = true;
 
@@ -334,8 +335,8 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler
                     }
                 }
             }
-            renderer.renderMinY = 0;
-            renderer.renderMaxY = 1;
+            ((RenderBlocksAccessor) renderer).setRenderMinY(0);
+            ((RenderBlocksAccessor) renderer).setRenderMaxY(1);
             return rendered;
         }
     }

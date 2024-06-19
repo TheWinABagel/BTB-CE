@@ -7,3 +7,4 @@
 @API(apiVersion = "1.0", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|tablet")
 package buildcraft.api.tablet;
 
+import net.minecraftforge.common.util.API;

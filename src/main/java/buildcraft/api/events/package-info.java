@@ -7,3 +7,4 @@
 @API(apiVersion = "2.0", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|events")
 package buildcraft.api.events;
 
+import net.minecraftforge.common.util.API;

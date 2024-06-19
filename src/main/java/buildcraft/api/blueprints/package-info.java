@@ -7,3 +7,4 @@
 @API(apiVersion = "1.5", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|blueprints")
 package buildcraft.api.blueprints;
 
+import net.minecraftforge.common.util.API;

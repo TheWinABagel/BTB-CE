@@ -48,7 +48,7 @@ public class BlockFluidClassic extends BlockFluidBase
             return 0;
         }
 
-        if (world.getBlock(x, y, z) != this)
+        if (net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)] != this)
         {
             return -1;
         }
@@ -99,11 +99,11 @@ public class BlockFluidClassic extends BlockFluidBase
         {
             int y2 = y - densityDir;
 
-            if (world.getBlock(x,     y2, z    ) == this ||
-                world.getBlock(x - 1, y2, z    ) == this ||
-                world.getBlock(x + 1, y2, z    ) == this ||
-                world.getBlock(x,     y2, z - 1) == this ||
-                world.getBlock(x,     y2, z + 1) == this)
+            if (world.getBlockId(x,     y2, z    ) == this.blockID ||
+                world.getBlockId(x - 1, y2, z    ) == this.blockID ||
+                world.getBlockId(x + 1, y2, z    ) == this.blockID ||
+                world.getBlockId(x,     y2, z - 1) == this.blockID ||
+                world.getBlockId(x,     y2, z + 1) == this.blockID)
             {
                 expQuanta = quantaPerBlock - 1;
             }
@@ -125,13 +125,13 @@ public class BlockFluidClassic extends BlockFluidBase
 
                 if (expQuanta <= 0)
                 {
-                    world.setBlock(x, y, z, Blocks.air);
+                    world.setBlockToAir(x, y, z);
                 }
                 else
                 {
                     world.setBlockMetadataWithNotify(x, y, z, quantaPerBlock - expQuanta, 3);
-                    world.scheduleBlockUpdate(x, y, z, this, tickRate);
-                    world.notifyBlocksOfNeighborChange(x, y, z, this);
+                    world.scheduleBlockUpdate(x, y, z, this.blockID, tickRate);
+                    world.notifyBlocksOfNeighborChange(x, y, z, this.blockID);
                 }
             }
         }
@@ -157,7 +157,7 @@ public class BlockFluidClassic extends BlockFluidBase
 
         if (isSourceBlock(world, x, y, z) || !isFlowingVertically(world, x, y, z))
         {
-            if (world.getBlock(x, y - densityDir, z) == this)
+            if (world.getBlockId(x, y - densityDir, z) == this.blockID)
             {
                 flowMeta = 1;
             }
@@ -172,13 +172,13 @@ public class BlockFluidClassic extends BlockFluidBase
 
     public boolean isFlowingVertically(IBlockAccess world, int x, int y, int z)
     {
-        return world.getBlock(x, y + densityDir, z) == this ||
-            (world.getBlock(x, y, z) == this && canFlowInto(world, x, y + densityDir, z));
+        return world.getBlockId(x, y + densityDir, z) == this.blockID ||
+            (Block.blocksList[world.getBlockId(x, y, z)] == this && canFlowInto(world, x, y + densityDir, z));
     }
 
     public boolean isSourceBlock(IBlockAccess world, int x, int y, int z)
     {
-        return world.getBlock(x, y, z) == this && world.getBlockMetadata(x, y, z) == 0;
+        return Block.blocksList[world.getBlockId(x, y, z)] == this && world.getBlockMetadata(x, y, z) == 0;
     }
 
     protected boolean[] getOptimalFlowDirections(World world, int x, int y, int z)
@@ -283,7 +283,7 @@ public class BlockFluidClassic extends BlockFluidBase
         if (meta < 0) return;
         if (displaceIfPossible(world, x, y, z))
         {
-            world.setBlock(x, y, z, this, meta, 3);
+            world.setBlock(x, y, z, this.blockID, meta, 3);
         }
     }
 
@@ -291,7 +291,7 @@ public class BlockFluidClassic extends BlockFluidBase
     {
         if (world.isAirBlock(x, y, z)) return true;
 
-        Block block = world.getBlock(x, y, z);
+        Block block = net.minecraft.src.Block.blocksList[world.getBlockId(x, y, z)];
         if (block == this)
         {
             return true;

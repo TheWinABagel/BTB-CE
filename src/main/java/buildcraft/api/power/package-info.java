@@ -7,3 +7,4 @@
 @API(apiVersion = "1.3", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|power")
 package buildcraft.api.power;
 
+import net.minecraftforge.common.util.API;

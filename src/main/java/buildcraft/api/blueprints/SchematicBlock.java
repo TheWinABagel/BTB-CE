@@ -7,6 +7,7 @@
 package buildcraft.api.blueprints;
 
 import buildcraft.api.core.BlockIndex;
+import net.fabricmc.example.injected.INBTTagListExtension;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockSand;
 import net.minecraft.src.BlockFluid;
@@ -50,7 +51,7 @@ public class SchematicBlock extends SchematicBlockBase {
 
     @Override
     public boolean isAlreadyBuilt(IBuilderContext context, int x, int y, int z) {
-        return block == context.world().getBlock(x, y, z) && meta == context.world().getBlockMetadata(x, y, z);
+        return block == Block.blocksList[context.world().getBlockId(x, y, z)] && meta == context.world().getBlockMetadata(x, y, z);
     }
 
     @Override
@@ -64,9 +65,11 @@ public class SchematicBlock extends SchematicBlockBase {
     public void storeRequirements(IBuilderContext context, int x, int y, int z) {
         super.storeRequirements(context, x, y, z);
 
-        if (block != null) {
-            ArrayList<ItemStack> req = block
-                    .getDrops(context.world(), x, y, z, context.world().getBlockMetadata(x, y, z), 0);
+        if (block != null) { //todo getDrops not a thing
+            ArrayList<ItemStack> req = new ArrayList<>();
+            req.add(new ItemStack(block.idDropped(context.world().getBlockMetadata(x, y, z), context.world().rand, 0), 0, block.quantityDropped(context.world().rand)));
+//            ArrayList<ItemStack> req = block
+//                    .getDrops(context.world(), x, y, z, context.world().getBlockMetadata(x, y, z), 0);
 
             if (req != null) {
                 storedRequirements = new ItemStack[req.size()];
@@ -121,7 +124,7 @@ public class SchematicBlock extends SchematicBlockBase {
     // Utility functions
     protected void setBlockInWorld(IBuilderContext context, int x, int y, int z) {
         // Meta needs to be specified twice, depending on the block behavior
-        context.world().setBlock(x, y, z, block, meta, 3);
+        context.world().setBlock(x, y, z, block.blockID, meta, 3);
         context.world().setBlockMetadataWithNotify(x, y, z, meta, 3);
     }
 
@@ -140,12 +143,12 @@ public class SchematicBlock extends SchematicBlockBase {
 
     protected void readRequirementsFromNBT(NBTTagCompound nbt, MappingRegistry registry) {
         if (nbt.hasKey("rq")) {
-            NBTTagList rq = nbt.getTagList("rq", Constants.NBT.TAG_COMPOUND);
+            NBTTagList rq = nbt.getTagList("rq"/*, Constants.NBT.TAG_COMPOUND*/);
 
             ArrayList<ItemStack> rqs = new ArrayList<ItemStack>();
             for (int i = 0; i < rq.tagCount(); ++i) {
                 try {
-                    NBTTagCompound sub = rq.getCompoundTagAt(i);
+                    NBTTagCompound sub = ((INBTTagListExtension) rq).getCompoundTagAt(i);
                     if (sub.getInteger("id") >= 0) {
                         registry.stackToWorld(sub);
                         rqs.add(ItemStack.loadItemStackFromNBT(sub));

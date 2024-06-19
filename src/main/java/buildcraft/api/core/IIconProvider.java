@@ -11,7 +11,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
-public interface IconProvider {
+public interface IIconProvider {
 
     /**
      * @param iconIndex

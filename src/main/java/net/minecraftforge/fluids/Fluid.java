@@ -1,6 +1,5 @@
 package net.minecraftforge.fluids;
 
-import cpw.mods.fml.common.FMLLog;
 import net.minecraft.src.Block;
 import net.minecraft.src.EnumRarity;
 import net.minecraft.src.Icon;

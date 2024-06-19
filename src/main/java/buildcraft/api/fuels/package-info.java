@@ -7,3 +7,4 @@
 @API(apiVersion = "2.0", owner = "BuildCraftAPI|core", provides = "BuildCraftAPI|fuels")
 package buildcraft.api.fuels;
 
+import net.minecraftforge.common.util.API;

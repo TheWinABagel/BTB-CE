@@ -66,7 +66,7 @@ public final class CropManager {
     }
 
     public static boolean harvestCrop(World world, int x, int y, int z, List<ItemStack> drops) {
-        Block block = world.getBlock(x, y, z);
+        Block block = Block.blocksList[world.getBlockId(x, y, z)];
         int meta = world.getBlockMetadata(x, y, z);
         for (ICropHandler cropHandler : handlers) {
             if (cropHandler.isMature(world, block, meta, x, y, z)) {

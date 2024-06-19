@@ -42,7 +42,7 @@ public abstract class RedstoneBoardNBT<T> {
         if (!nbt.hasKey("parameters")) {
             return 0;
         } else {
-            return nbt.getTagList("parameters", Constants.NBT.TAG_COMPOUND).tagCount();
+            return nbt.getTagList("parameters"/*, Constants.NBT.TAG_COMPOUND*/).tagCount();
         }
     }
 
