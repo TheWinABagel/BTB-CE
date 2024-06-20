@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "btw.community.example.ExampleMod"
     ],
     "btw:addon": [
       "btw.community.example.ExampleAddon"

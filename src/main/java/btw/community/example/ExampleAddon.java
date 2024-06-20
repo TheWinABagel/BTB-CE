@@ -14,4 +14,9 @@ public class ExampleAddon extends BTWAddon {
     public void initialize() {
         AddonHandler.logMessage(this.getName() + " Version " + this.getVersionString() + " Initializing...");
     }
+
+    @Override
+    public String getName() {
+        return "Better Then Buildcraft";
+    }
 }

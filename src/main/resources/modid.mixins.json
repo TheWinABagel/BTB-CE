@@ -1,20 +1,22 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "net.fabricmc.example.mixin",
+  "package": "btw.community.example.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BlockMixin",
+    "ChunkProviderGenerateMixin",
     "ItemMixin",
-    "ItemStackAccessor",
-    "NBTTagCompoundAccessor",
-    "NBTTagListAccessor",
+    "ItemStackMixin",
     "NBTTagListMixin",
-    "RenderBlocksAccessor",
-    "TileEntityMixin"
+    "TileEntityMixin",
+    "accessors.ItemStackAccessor",
+    "accessors.NBTTagCompoundAccessor",
+    "accessors.NBTTagListAccessor",
+    "accessors.RenderBlocksAccessor"
   ],
   "client": [
-    "ExampleMixin"
+    "WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
