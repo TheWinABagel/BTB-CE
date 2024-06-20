@@ -1,6 +1,6 @@
 package buildcraft.api.transport;
 
-import net.minecraft.world.World;
+import net.minecraft.src.World;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package buildcraft.api.transport;
 
-import net.minecraft.world.World;
+import net.minecraft.src.World;
 
 /**
  * Implement and register with the PipeManager if you want to suppress connections from wooden pipes.

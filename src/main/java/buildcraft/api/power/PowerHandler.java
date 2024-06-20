@@ -8,7 +8,7 @@
 package buildcraft.api.power;
 
 import buildcraft.api.core.SafeTimeTracker;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
 /**

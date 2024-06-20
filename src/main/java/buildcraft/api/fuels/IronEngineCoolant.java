@@ -8,8 +8,8 @@
 package buildcraft.api.fuels;
 
 import buildcraft.api.core.StackWrapper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 

@@ -9,7 +9,7 @@
 
 package buildcraft.api.core;
 
-import net.minecraft.block.Block;
+import net.minecraft.src.Block;
 
 public class BuildCraftAPI {
 

@@ -10,11 +10,11 @@
 package buildcraft.api.blueprints;
 
 import buildcraft.api.core.BuildCraftAPI;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.src.Block;
+import net.minecraft.src.BlockContainer;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.TileEntity;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

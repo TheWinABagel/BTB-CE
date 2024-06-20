@@ -8,9 +8,9 @@
  */
 package buildcraft.api.gates;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.src.IconRegister;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.Icon;
 
 /**
  *

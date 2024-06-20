@@ -7,7 +7,7 @@
  */
 package buildcraft.api.transport;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 
 public interface IPipeTile {

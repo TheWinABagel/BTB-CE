@@ -9,8 +9,8 @@
 
 package buildcraft.api.blueprints;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.NBTTagCompound;
 
 import java.util.LinkedList;
 

@@ -7,7 +7,7 @@
  */
 package buildcraft.api.power;
 
-import net.minecraft.world.World;
+import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
 
 /**

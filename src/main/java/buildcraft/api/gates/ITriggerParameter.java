@@ -1,7 +1,7 @@
 package buildcraft.api.gates;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.NBTTagCompound;
 
 public interface ITriggerParameter {
 

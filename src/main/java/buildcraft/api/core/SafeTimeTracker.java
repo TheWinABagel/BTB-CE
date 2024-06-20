@@ -7,7 +7,7 @@
  */
 package buildcraft.api.core;
 
-import net.minecraft.world.World;
+import net.minecraft.src.World;
 
 public class SafeTimeTracker {
 

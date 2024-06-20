@@ -12,7 +12,7 @@ package buildcraft.api.bptblocks;
 import buildcraft.api.blueprints.BptBlock;
 import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.blueprints.IBptContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.ItemStack;
 
 import java.util.LinkedList;
 

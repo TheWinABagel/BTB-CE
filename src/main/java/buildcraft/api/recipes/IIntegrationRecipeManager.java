@@ -8,7 +8,7 @@
  */
 package buildcraft.api.recipes;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.ItemStack;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@
  */
 package buildcraft.api.filler;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.ItemStack;
 
 /**
  *

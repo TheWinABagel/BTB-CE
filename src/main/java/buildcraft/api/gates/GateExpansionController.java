@@ -8,8 +8,8 @@
  */
 package buildcraft.api.gates;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.TileEntity;
 
 import java.util.List;
 

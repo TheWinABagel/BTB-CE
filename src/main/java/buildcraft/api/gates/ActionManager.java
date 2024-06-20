@@ -1,8 +1,8 @@
 package buildcraft.api.gates;
 
 import buildcraft.api.transport.IPipeTile;
-import net.minecraft.block.Block;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.src.Block;
+import net.minecraft.src.TileEntity;
 
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -2,8 +2,8 @@ package buildcraft.api.gates;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
+import net.minecraft.src.IconRegister;
+import net.minecraft.src.Icon;
 
 public interface ITrigger {
 

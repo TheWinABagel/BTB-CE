@@ -8,8 +8,8 @@
  */
 package buildcraft.api.transport;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemStack;
 
 import java.util.Locale;
 
