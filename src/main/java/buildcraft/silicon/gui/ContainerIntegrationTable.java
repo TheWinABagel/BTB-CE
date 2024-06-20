@@ -7,8 +7,8 @@ import buildcraft.core.gui.slots.SlotValidated;
 import buildcraft.silicon.TileIntegrationTable;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.ICrafting;
+import net.minecraft.src.Slot;
 
 public class ContainerIntegrationTable extends BuildCraftContainer {
 

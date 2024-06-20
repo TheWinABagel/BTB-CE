@@ -3,8 +3,8 @@ package buildcraft.core.network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.CompressedStreamTools;
+import net.minecraft.src.NBTTagCompound;
 
 public class PacketNBT extends PacketCoordinates {
 

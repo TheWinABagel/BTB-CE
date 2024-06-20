@@ -1,6 +1,5 @@
 package buildcraft.core.network;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.TileEntity;

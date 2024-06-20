@@ -8,7 +8,7 @@
 package buildcraft.core.network;
 
 import java.io.IOException;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.src.Packet;
 
 public interface ISynchronizedTile {
 

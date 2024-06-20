@@ -8,7 +8,7 @@
 package buildcraft.core.gui.slots;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 
 /**
  *

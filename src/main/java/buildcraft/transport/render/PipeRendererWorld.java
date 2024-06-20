@@ -7,7 +7,7 @@ import buildcraft.core.utils.MatrixTranformations;
 import buildcraft.transport.*;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
-import net.minecraft.src.renderer.RenderBlocks;
+import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.IBlockAccess;
 import net.minecraftforge.common.ForgeDirection;

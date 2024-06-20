@@ -5,8 +5,8 @@ import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportStructure;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipeStructureCobblestone extends Pipe {
@@ -16,7 +16,7 @@ public class PipeStructureCobblestone extends Pipe {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

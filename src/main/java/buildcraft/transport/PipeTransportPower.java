@@ -19,7 +19,7 @@ import buildcraft.core.DefaultProps;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.transport.network.PacketPowerUpdate;
 import buildcraft.transport.pipes.*;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 

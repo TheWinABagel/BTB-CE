@@ -2,8 +2,8 @@ package buildcraft.core.gui.widgets;
 
 import buildcraft.core.gui.GuiBuildCraft;
 import buildcraft.core.gui.tooltips.ToolTip;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  *
@@ -19,7 +19,7 @@ public class IndicatorWidget extends Widget {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void draw(GuiBuildCraft gui, int guiX, int guiY, int mouseX, int mouseY) {
         int scale = controller.getScaledLevel(h);
         gui.drawTexturedModalRect(guiX + x, guiY + y + h - scale, u, v + h - scale, w, scale);

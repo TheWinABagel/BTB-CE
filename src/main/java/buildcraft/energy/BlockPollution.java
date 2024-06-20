@@ -9,8 +9,8 @@
 
 package buildcraft.energy;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
@@ -39,7 +39,7 @@ public class BlockPollution extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
 	    par1IconRegister.registerIcon("buildcraft:blockPollution");

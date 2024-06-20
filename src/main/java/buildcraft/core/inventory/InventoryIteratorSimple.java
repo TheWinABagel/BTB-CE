@@ -2,7 +2,7 @@ package buildcraft.core.inventory;
 
 import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import java.util.Iterator;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 
 /**

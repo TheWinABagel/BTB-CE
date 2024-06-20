@@ -7,16 +7,16 @@
  */
 package buildcraft.core;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
 public class EntityBlock extends Entity {
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon texture;
 	public float shadowSize = 0;
 	public float rotationX = 0;

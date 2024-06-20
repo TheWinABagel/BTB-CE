@@ -14,11 +14,11 @@ import buildcraft.core.gui.GuiAdvancedInterface;
 import buildcraft.core.triggers.BCAction;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.transport.Pipe;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Iterator;
 import net.minecraft.src.TextureMap;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 import net.minecraft.src.ResourceLocation;
@@ -52,7 +52,7 @@ public class GuiGateInterface extends GuiAdvancedInterface {
 				return "";
 		}
 
-		@SideOnly(Side.CLIENT)
+		@Environment(EnvType.CLIENT)
 		@Override
 		public Icon getIcon() {
 			ITrigger trigger = pipe.gate.getTrigger(slot);
@@ -93,7 +93,7 @@ public class GuiGateInterface extends GuiAdvancedInterface {
 				return "";
 		}
 
-		@SideOnly(Side.CLIENT)
+		@Environment(EnvType.CLIENT)
 		@Override
 		public Icon getIcon() {
 			IAction action = pipe.gate.getAction(slot);

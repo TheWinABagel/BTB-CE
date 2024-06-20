@@ -21,7 +21,7 @@ public enum StackFilter implements IStackFilter {
 	FUEL {
 		@Override
 		public boolean matches(ItemStack stack) {
-			return TileEntityFurnace.getItemBurnTime(stack) > 0;
+			return new TileEntityFurnace().getItemBurnTime(stack) > 0;
 		}
 	};
 

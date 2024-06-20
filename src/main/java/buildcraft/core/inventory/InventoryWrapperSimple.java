@@ -1,7 +1,7 @@
 package buildcraft.core.inventory;
 
 import buildcraft.core.utils.Utils;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 
 public class InventoryWrapperSimple extends InventoryWrapper {
@@ -14,7 +14,7 @@ public class InventoryWrapperSimple extends InventoryWrapper {
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int var1) {
+	public int[] getSlotsForFace(int var1) {
 		return slots;
 	}
 

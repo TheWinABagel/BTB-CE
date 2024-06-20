@@ -1,6 +1,6 @@
 package buildcraft.energy.worldgen;
 
-import net.minecraft.src.biome.BiomeGenOcean;
+import net.minecraft.src.BiomeGenOcean;
 import net.minecraftforge.common.BiomeDictionary;
 
 /**

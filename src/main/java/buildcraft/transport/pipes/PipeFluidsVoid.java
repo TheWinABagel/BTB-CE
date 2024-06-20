@@ -13,8 +13,8 @@ import buildcraft.transport.IPipeTransportFluidsHook;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportFluids;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -25,7 +25,7 @@ public class PipeFluidsVoid extends Pipe implements IPipeTransportFluidsHook {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

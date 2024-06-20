@@ -9,8 +9,8 @@
 package buildcraft.transport;
 
 import buildcraft.core.utils.Localization;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * @author CovertJaguar <http://www.railcraft.info/>
  */
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class PipeToolTipManager {
 
 	private static final Map<Class<? extends Pipe>, String> toolTips = new HashMap<Class<? extends Pipe>, String>();

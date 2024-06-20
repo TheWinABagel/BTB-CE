@@ -10,9 +10,9 @@ package buildcraft.transport.gui;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.transport.TileFilteredBuffer;
-import net.minecraft.src.gui.inventory.GuiContainer;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 

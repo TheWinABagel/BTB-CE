@@ -18,8 +18,8 @@ import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportFluids;
 import buildcraft.transport.TileGenericPipe;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class PipeFluidsSandstone extends Pipe<PipeTransportFluids> implements IPipeTransportFluidsHook, IPipeConnectionForced {
 
@@ -28,7 +28,7 @@ public class PipeFluidsSandstone extends Pipe<PipeTransportFluids> implements IP
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

@@ -36,12 +36,12 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -360,7 +360,7 @@ public class BuildCraftBuilders {
 	}
 
 	@ForgeSubscribe
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void loadTextures(TextureStitchEvent.Pre evt) {
 		if (evt.map.textureType == 0) {
 			for (FillerPattern pattern : FillerPattern.patterns) {

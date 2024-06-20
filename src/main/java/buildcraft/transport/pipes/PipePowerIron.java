@@ -16,8 +16,8 @@ import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportPower;
 import buildcraft.transport.triggers.ActionPowerLimiter;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.LinkedList;
 import java.util.Map;
 import net.minecraft.src.EntityPlayer;
@@ -103,7 +103,7 @@ public class PipePowerIron extends Pipe<PipeTransportPower> {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

@@ -23,11 +23,11 @@ import buildcraft.transport.network.PacketPipeTransportTraveler;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.utils.TransportUtils;
 import cpw.mods.fml.common.network.PacketDispatcher;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.ISidedInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -469,7 +469,7 @@ public class PipeTransportItems extends PipeTransport {
 		}
 
 		if (tile instanceof ISidedInventory) {
-			int[] slots = ((ISidedInventory) tile).getAccessibleSlotsFromSide(side.getOpposite().ordinal());
+			int[] slots = ((ISidedInventory) tile).getSlotsForFace(side.getOpposite().ordinal());
 			return slots != null && slots.length > 0;
 		}
 

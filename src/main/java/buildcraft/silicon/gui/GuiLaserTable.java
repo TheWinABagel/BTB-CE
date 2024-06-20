@@ -9,7 +9,7 @@ import buildcraft.silicon.TileLaserTableBase;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.TextureMap;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ResourceLocation;
 
 public abstract class GuiLaserTable extends GuiBuildCraft {

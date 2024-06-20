@@ -9,7 +9,7 @@
 
 package buildcraft.core;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
 /**

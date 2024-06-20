@@ -19,8 +19,8 @@ import buildcraft.core.network.TilePacketWrapper;
 import buildcraft.core.utils.Utils;
 import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.pipes.events.PipeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -30,9 +30,9 @@ import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
-import net.minecraft.world.World;
+import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
 
 public abstract class Pipe<T extends PipeTransport> implements IDropControlInventory {
@@ -158,7 +158,7 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	 *
 	 * @return An array of icons
 	 */
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public abstract IIconProvider getIconProvider();
 
 	/**

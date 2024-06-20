@@ -1,8 +1,8 @@
 package buildcraft.core.triggers;
 
 import buildcraft.api.core.IIconProvider;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
@@ -52,20 +52,20 @@ public class ActionTriggerIconProvider implements IIconProvider {
 	public static final int Trigger_Inventory_Below50 = 34;
 	public static final int Trigger_Inventory_Below75 = 35;
 	public static final int MAX = 39;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private final Icon[] icons = new Icon[MAX];
 
 	private ActionTriggerIconProvider() {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int iconIndex) {
 		return icons[iconIndex];
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icons[ActionTriggerIconProvider.Action_MachineControl_On] = iconRegister.registerIcon("buildcraft:triggers/action_machinecontrol_on");
 		icons[ActionTriggerIconProvider.Action_MachineControl_Off] = iconRegister.registerIcon("buildcraft:triggers/action_machinecontrol_off");

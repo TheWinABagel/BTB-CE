@@ -8,8 +8,8 @@
 package buildcraft.core;
 
 import buildcraft.core.utils.StringUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -37,7 +37,7 @@ public class ItemBuildCraft extends Item {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("buildcraft:" + iconName);
 	}

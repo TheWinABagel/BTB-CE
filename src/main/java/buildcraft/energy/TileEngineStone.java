@@ -10,9 +10,9 @@ package buildcraft.energy;
 import java.util.LinkedList;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.src.ICrafting;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntityFurnace;
 import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;

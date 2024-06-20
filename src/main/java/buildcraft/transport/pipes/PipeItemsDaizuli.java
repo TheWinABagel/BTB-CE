@@ -22,15 +22,15 @@ import buildcraft.transport.TravelingItem;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.triggers.ActionPipeColor;
 import buildcraft.transport.triggers.ActionPipeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -108,7 +108,7 @@ public class PipeItemsDaizuli extends Pipe<PipeTransportItems> {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

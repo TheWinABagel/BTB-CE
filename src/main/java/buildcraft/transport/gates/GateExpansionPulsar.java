@@ -18,7 +18,7 @@ import buildcraft.api.power.PowerHandler.Type;
 import buildcraft.transport.TileGenericPipe;
 import buildcraft.transport.triggers.ActionEnergyPulsar;
 import buildcraft.transport.triggers.ActionSingleEnergyPulse;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 

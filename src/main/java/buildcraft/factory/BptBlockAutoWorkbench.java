@@ -13,7 +13,7 @@ import buildcraft.api.blueprints.BptBlock;
 import buildcraft.api.blueprints.BptBlockUtils;
 import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.blueprints.IBptContext;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 
 import java.util.LinkedList;

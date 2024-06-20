@@ -16,9 +16,9 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.Container;
+import net.minecraft.src.ICrafting;
+import net.minecraft.src.Slot;
 import net.minecraft.src.ItemStack;
 
 import java.io.DataInputStream;
@@ -58,8 +58,8 @@ public abstract class BuildCraftContainer extends Container {
 	}
 
 	@Override
-	public void addCraftingToCrafters(ICrafting player) {
-		super.addCraftingToCrafters(player);
+	public void onCraftGuiOpened(ICrafting player) {
+		super.onCraftGuiOpened(player);
 		for (Widget widget : widgets) {
 			widget.initWidget(player);
 		}

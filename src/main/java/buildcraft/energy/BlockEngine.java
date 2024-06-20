@@ -10,13 +10,13 @@ package buildcraft.energy;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.IItemPipe;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -46,7 +46,7 @@ public class BlockEngine extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		woodTexture = par1IconRegister.registerIcon("buildcraft:engineWoodBottom");
 		stoneTexture = par1IconRegister.registerIcon("buildcraft:engineStoneBottom");
@@ -160,7 +160,7 @@ public class BlockEngine extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int side, int meta) {
 		switch (meta) {
 			case 0:

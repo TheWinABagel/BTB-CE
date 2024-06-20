@@ -16,7 +16,7 @@ import buildcraft.core.network.PacketUpdate;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.StringUtils;
 import java.util.Date;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 

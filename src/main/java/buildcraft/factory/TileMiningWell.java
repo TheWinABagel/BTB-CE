@@ -19,7 +19,7 @@ import buildcraft.core.TileBuildCraft;
 import buildcraft.core.utils.BlockUtil;
 import buildcraft.core.utils.Utils;
 import java.util.List;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;

@@ -1,5 +1,6 @@
 package btw.community.example.mixin;
 
+import buildcraft.core.SpringPopulate;
 import net.minecraft.src.ChunkProviderGenerate;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.World;
@@ -20,6 +21,6 @@ public class ChunkProviderGenerateMixin {
 
     @Inject(method = "populate", at = @At("TAIL"))
     private void generateStructures(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
-
+        SpringPopulate.populate(chunkProvider, worldObj, rand, chunkX, chunkZ);
     }
 }

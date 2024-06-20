@@ -1,7 +1,7 @@
 package buildcraft.core.network;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

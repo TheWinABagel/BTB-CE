@@ -11,7 +11,7 @@ package buildcraft.factory;
 
 import buildcraft.core.EntityBlock;
 import net.minecraft.src.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 

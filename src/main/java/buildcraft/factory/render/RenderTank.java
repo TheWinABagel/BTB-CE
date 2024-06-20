@@ -10,7 +10,7 @@ package buildcraft.factory.render;
 import buildcraft.core.render.FluidRenderer;
 import buildcraft.core.render.RenderUtils;
 import buildcraft.factory.TileTank;
-import net.minecraft.src.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.src.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;

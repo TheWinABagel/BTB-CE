@@ -24,8 +24,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.TextureMap;
 import net.minecraft.src.Item;
@@ -314,7 +314,7 @@ public class BuildCraftFactory {
     }
 
 	@ForgeSubscribe
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void loadTextures(TextureStitchEvent.Pre evt) {
 		if (evt.map.textureType == 0) {
 			TextureMap terrainTextures = evt.map;

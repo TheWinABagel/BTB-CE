@@ -1,6 +1,6 @@
 package buildcraft.core.utils;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 
 public interface INBTTagable {
 

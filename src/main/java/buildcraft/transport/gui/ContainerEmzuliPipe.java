@@ -20,17 +20,17 @@ import buildcraft.core.utils.EnumColor;
 import buildcraft.core.utils.RevolvingList;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.transport.pipes.PipeItemsEmzuli;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import net.minecraft.src.TextureMap;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.ICrafting;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.Slot;
 
 /**
  *
@@ -98,7 +98,7 @@ public class ContainerEmzuliPipe extends BuildCraftContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void updateProgressBar(int id, int data) {
 		paintWidgets[id].colors.setCurrent(data == 0 ? null : EnumColor.fromId(data - 1));
 	}

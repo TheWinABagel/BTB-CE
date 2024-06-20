@@ -14,8 +14,8 @@ import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.GuiIds;
 import buildcraft.core.fluids.FluidUtils;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
@@ -139,13 +139,13 @@ public class BlockRefinery extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		icon = par1IconRegister.registerIcon("buildcraft:refineryBack");
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int par1, int par2) {
 		return icon;
 	}

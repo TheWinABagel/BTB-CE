@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.src.Entity;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.core.Position;

@@ -12,8 +12,8 @@ import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.GuiIds;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
@@ -122,7 +122,7 @@ public class BlockBuilder extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		blockTextureTop = par1IconRegister.registerIcon("buildcraft:builder_top");
 		blockTextureSide = par1IconRegister.registerIcon("buildcraft:builder_side");

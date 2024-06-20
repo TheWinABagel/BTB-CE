@@ -2,7 +2,7 @@ package buildcraft.factory.gui;
 
 import buildcraft.core.DefaultProps;
 import buildcraft.factory.TileHopper;
-import net.minecraft.src.gui.inventory.GuiContainer;
+import net.minecraft.src.GuiContainer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;

@@ -12,18 +12,16 @@ import buildcraft.transport.ItemFacade;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Ints;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.biome.BiomeGenBase;
+import net.minecraft.src.BiomeGenBase;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class InterModComms {
 
-    public static void processIMC(IMCEvent event) {
-        for (IMCMessage m : event.getMessages()) {
+    public static void processIMC(/*IMCEvent event*/) {
+/*        for (IMCMessage m : event.getMessages()) {
             if ("add-facade".equals(m.key)) {
                 processFacadeIMC(event, m);
             } else if (m.key.equals("oil-lake-biome")) {
@@ -31,10 +29,10 @@ public class InterModComms {
             } else if (m.key.equals("oil-gen-exclude")) {
                 processOilGenExcludeIMC(event, m);
             }
-        }
+        }*/
     }
 
-    public static void processFacadeIMC(IMCEvent event, IMCMessage m) {
+/*    public static void processFacadeIMC(IMCEvent event, IMCMessage m) {
         try {
             if (m.isStringMessage()) {
                 Splitter splitter = Splitter.on("@").trimResults();
@@ -85,5 +83,5 @@ public class InterModComms {
             Logger.getLogger("Buildcraft").log(Level.WARNING, String.format("Received an invalid oil-gen-exclude request %s from mod %s", m.getStringValue(), m.getSender()));
         }
         Logger.getLogger("Buildcraft").log(Level.INFO, String.format("Received an successfull oil-gen-exclude request %s from mod %s", m.getStringValue(), m.getSender()));
-    }
+    }*/
 }

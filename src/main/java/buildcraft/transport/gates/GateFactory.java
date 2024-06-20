@@ -16,8 +16,8 @@ import buildcraft.transport.Pipe;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
 import buildcraft.transport.gates.GateDefinition.GateMaterial;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 
 /**
  *

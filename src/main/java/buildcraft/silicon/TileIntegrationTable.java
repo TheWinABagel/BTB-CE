@@ -13,8 +13,8 @@ import buildcraft.api.recipes.IIntegrationRecipeManager.IIntegrationRecipe;
 import buildcraft.core.inventory.*;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.core.utils.Utils;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.ISidedInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -143,7 +143,7 @@ public class TileIntegrationTable extends TileLaserTableBase implements ISidedIn
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int side) {
+	public int[] getSlotsForFace(int side) {
 		return SLOTS;
 	}
 

@@ -16,7 +16,7 @@ import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeRenderState;
 import buildcraft.transport.TransportConstants;
 import net.minecraft.src.Block;
-import net.minecraft.src.renderer.RenderBlocks;
+import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;

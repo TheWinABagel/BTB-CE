@@ -1,9 +1,9 @@
 package buildcraft.factory.render;
 
-import net.minecraft.src.model.ModelRenderer;
-import net.minecraft.src.model.PositionTextureVertex;
-import net.minecraft.src.model.TexturedQuad;
-import net.minecraft.src.renderer.Tessellator;
+import net.minecraft.src.ModelRenderer;
+import net.minecraft.src.PositionTextureVertex;
+import net.minecraft.src.TexturedQuad;
+import net.minecraft.src.Tessellator;
 
 public class ModelFrustum {
 

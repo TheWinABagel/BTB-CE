@@ -3,12 +3,12 @@ package buildcraft.silicon;
 import buildcraft.BuildCraftSilicon;
 import buildcraft.core.ItemBuildCraft;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.List;
 import java.util.Locale;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 
@@ -63,7 +63,7 @@ public class ItemRedstoneChipset extends ItemBuildCraft {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void getSubItems(int id, CreativeTabs tab, List itemList) {
 		for (Chipset chipset : Chipset.VALUES) {
 			itemList.add(chipset.getStack());
@@ -71,7 +71,7 @@ public class ItemRedstoneChipset extends ItemBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		for (Chipset chipset : Chipset.VALUES) {
 			chipset.icon = par1IconRegister.registerIcon("buildcraft:" + chipset.getChipsetName());

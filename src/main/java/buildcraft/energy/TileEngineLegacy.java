@@ -7,7 +7,7 @@
  */
 package buildcraft.energy;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.ResourceLocation;
 

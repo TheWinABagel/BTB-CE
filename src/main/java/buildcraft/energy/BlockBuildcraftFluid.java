@@ -10,8 +10,8 @@ package buildcraft.energy;
 
 import buildcraft.energy.render.EntityDropParticleFX;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Random;
 import net.minecraft.src.Material;
 import net.minecraft.src.EntityFX;
@@ -36,7 +36,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 	public BlockBuildcraftFluid(int id, Fluid fluid, Material material) {
 		super(id, fluid, material);
 	}
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	protected Icon[] theIcon;
 	protected boolean flammable;
 	protected int flammability = 0;
@@ -47,7 +47,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.theIcon = new Icon[] { iconRegister.registerIcon("buildcraft:" + fluidName + "_still"), iconRegister.registerIcon("buildcraft:" + fluidName + "_flow") };
 	}
@@ -99,7 +99,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
 		super.randomDisplayTick(world, x, y, z, rand);
 

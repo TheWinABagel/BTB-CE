@@ -23,8 +23,8 @@ import buildcraft.transport.gates.GateDefinition;
 import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.gates.ItemGate;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.Minecraft;
@@ -129,7 +129,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return (renderMask & (1 << side)) != 0;
 	}
@@ -222,7 +222,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
 		RaytraceResult rayTraceResult = doRayTrace(world, x, y, z, Minecraft.getMinecraft().thePlayer);
@@ -507,7 +507,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
 
-		int count = quantityDropped(metadata, fortune, world.rand);
+		int count = quantityDroppedWithBonus(fortune, world.rand);
 		for (int i = 0; i < count; i++) {
 			Pipe pipe = getPipe(world, x, y, z);
 
@@ -565,7 +565,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		return 0;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public int idPicked(World world, int i, int j, int k) {
 		Pipe pipe = getPipe(world, i, j, k);
@@ -576,7 +576,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 			return pipe.itemID;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		RaytraceResult rayTraceResult = doRayTrace(world, x, y, z, Minecraft.getMinecraft().thePlayer);
@@ -859,7 +859,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	@SuppressWarnings({"all"})
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public Icon getBlockTexture(IBlockAccess iblockaccess, int x, int y, int z, int side) {
 		TileEntity tile = iblockaccess.getBlockTileEntity(x, y, z);
@@ -1001,7 +1001,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		if (!skippedFirstIconRegister) {
 			skippedFirstIconRegister = true;
@@ -1030,7 +1030,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int par1, int par2) {
 		return BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Stripes.ordinal());
 	}
@@ -1046,7 +1046,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @param effectRenderer A reference to the current effect renderer.
 	 * @return True to prevent vanilla digging particles form spawning.
 	 */
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean addBlockHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
 		int x = target.blockX;
@@ -1111,7 +1111,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @param effectRenderer A reference to the current effect renderer.
 	 * @return True to prevent vanilla break particles from spawning.
 	 */
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	@Override
 	public boolean addBlockDestroyEffects(World worldObj, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
 		Pipe pipe = getPipe(worldObj, x, y, z);

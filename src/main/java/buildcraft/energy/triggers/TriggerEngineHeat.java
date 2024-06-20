@@ -13,8 +13,8 @@ import buildcraft.core.triggers.BCTrigger;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.energy.TileEngine;
 import buildcraft.energy.TileEngine.EnergyStage;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Locale;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
@@ -24,7 +24,7 @@ import net.minecraftforge.common.ForgeDirection;
 public class TriggerEngineHeat extends BCTrigger implements ITileTrigger {
 
 	public EnergyStage stage;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Icon icon;
 
 	public TriggerEngineHeat(EnergyStage stage) {
@@ -50,13 +50,13 @@ public class TriggerEngineHeat extends BCTrigger implements ITileTrigger {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon() {
 		return icon;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("buildcraft:triggers/trigger_engineheat_" + stage.name().toLowerCase(Locale.ENGLISH));
 	}

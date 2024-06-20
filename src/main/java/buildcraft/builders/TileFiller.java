@@ -38,9 +38,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 
 public class TileFiller extends TileBuildCraft implements IInventory, IPowerReceptor, IMachine, IActionReceptor, IGuiReturnHandler {

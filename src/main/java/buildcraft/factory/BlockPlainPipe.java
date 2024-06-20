@@ -9,14 +9,14 @@ package buildcraft.factory;
 
 import buildcraft.core.CoreConstants;
 import buildcraft.core.IFramePipeConnection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.IBlockAccess;
 
@@ -69,7 +69,7 @@ public class BlockPlainPipe extends Block implements IFramePipeConnection {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon("buildcraft:blockPlainPipe");
 	}

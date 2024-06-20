@@ -11,9 +11,9 @@ import buildcraft.core.proxy.CoreProxy;
 import java.io.IOException;
 import java.util.ArrayList;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 
 public class TileBlueprintLibrary extends TileBuildCraft implements IInventory {
 	public static final int COMMAND_NEXT = 1, COMMAND_PREV = 2, COMMAND_LOCK_UPDATE = 3, COMMAND_DELETE = 4;

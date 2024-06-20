@@ -15,9 +15,9 @@ import java.util.Map.Entry;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.IAction;
@@ -160,8 +160,8 @@ public class PipeItemsEmzuli extends PipeItemsWood implements IGuiReturnHandler 
 	}
 
 	@Override
-	public ItemStack checkExtractGeneric(net.minecraft.inventory.ISidedInventory inventory, boolean doRemove, ForgeDirection from) {
-		for (int i : inventory.getAccessibleSlotsFromSide(from.ordinal())) {
+	public ItemStack checkExtractGeneric(net.minecraft.src.ISidedInventory inventory, boolean doRemove, ForgeDirection from) {
+		for (int i : inventory.getSlotsForFace(from.ordinal())) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack != null && stack.stackSize > 0) {
 				ItemStack filter = getCurrentFilter();

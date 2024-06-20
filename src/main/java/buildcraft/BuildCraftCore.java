@@ -32,8 +32,8 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockFluid;
 import net.minecraft.src.EntityList;
@@ -80,15 +80,15 @@ public class BuildCraftCore {
 	public static Item goldGearItem;
 	public static Item diamondGearItem;
 	public static Item wrenchItem;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static Icon redLaserTexture;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static Icon blueLaserTexture;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static Icon stripesLaserTexture;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static Icon transparentTexture;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public static IIconProvider iconProvider;
 	public static int blockByEntityModel;
 	public static int legacyPipeModel;
@@ -282,7 +282,7 @@ public class BuildCraftCore {
 	}
 
 	@ForgeSubscribe
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void textureHook(TextureStitchEvent.Pre event) {
 		if (event.map.textureType == 1) {
 			iconProvider = new CoreIconProvider();

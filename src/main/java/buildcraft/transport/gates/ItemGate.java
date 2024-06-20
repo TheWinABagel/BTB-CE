@@ -8,15 +8,15 @@ import buildcraft.core.utils.Localization;
 import buildcraft.transport.Gate;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
 import buildcraft.transport.gates.GateDefinition.GateMaterial;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
+import net.minecraft.src.NBTTagString;
 import net.minecraft.src.Icon;
 
 import java.util.ArrayList;
@@ -136,7 +136,7 @@ public class ItemGate extends ItemBuildCraft {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void getSubItems(int id, CreativeTabs tab, List itemList) {
 		for (GateMaterial material : GateMaterial.VALUES) {
 			for (GateLogic logic : GateLogic.VALUES) {
@@ -183,7 +183,7 @@ public class ItemGate extends ItemBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 
 		for (GateMaterial material : GateMaterial.VALUES) {

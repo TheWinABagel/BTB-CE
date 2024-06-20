@@ -27,15 +27,15 @@ import com.google.common.collect.Lists;
 import java.util.EnumSet;
 import java.util.List;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.SlotCrafting;
+import net.minecraft.src.Container;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.ISidedInventory;
+import net.minecraft.src.InventoryCraftResult;
+import net.minecraft.src.InventoryCrafting;
+import net.minecraft.src.SlotCrafting;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.IRecipe;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordinates;
@@ -444,7 +444,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int side) {
+	public int[] getSlotsForFace(int side) {
 		return SLOTS;
 	}
 

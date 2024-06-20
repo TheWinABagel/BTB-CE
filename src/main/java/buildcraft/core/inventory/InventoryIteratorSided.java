@@ -2,7 +2,7 @@ package buildcraft.core.inventory;
 
 import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import java.util.Iterator;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.src.ISidedInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -22,7 +22,7 @@ class InventoryIteratorSided implements Iterable<IInvSlot> {
     @Override
     public Iterator<IInvSlot> iterator() {
         return new Iterator<IInvSlot>() {
-            int[] slots = inv.getAccessibleSlotsFromSide(side);
+            int[] slots = inv.getSlotsForFace(side);
             int index = 0;
 
             @Override

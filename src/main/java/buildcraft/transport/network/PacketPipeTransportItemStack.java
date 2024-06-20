@@ -7,7 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import net.minecraft.src.ItemStack;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.src.Packet;
 
 public class PacketPipeTransportItemStack extends BuildCraftPacket {
 

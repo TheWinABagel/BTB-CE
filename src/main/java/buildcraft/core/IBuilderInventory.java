@@ -1,6 +1,6 @@
 package buildcraft.core;
 
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 
 public interface IBuilderInventory extends IInventory {
 

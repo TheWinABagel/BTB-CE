@@ -13,8 +13,8 @@ import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.Box;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityLivingBase;
@@ -228,7 +228,7 @@ public class BlockQuarry extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		textureSide = par1IconRegister.registerIcon("buildcraft:quarry_side");
 		textureTop = par1IconRegister.registerIcon("buildcraft:quarry_top");

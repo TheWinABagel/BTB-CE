@@ -10,10 +10,10 @@ package buildcraft.core.inventory;
 import buildcraft.core.utils.INBTTagable;
 import java.util.LinkedList;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntity;
 
 public class SimpleInventory implements IInventory, INBTTagable {

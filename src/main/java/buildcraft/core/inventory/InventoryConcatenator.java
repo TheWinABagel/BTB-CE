@@ -11,7 +11,7 @@ package buildcraft.core.inventory;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 
 /**

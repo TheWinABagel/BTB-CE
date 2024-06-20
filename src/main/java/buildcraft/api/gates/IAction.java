@@ -1,7 +1,7 @@
 package buildcraft.api.gates;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
@@ -9,10 +9,10 @@ public interface IAction {
 
 	String getUniqueTag();
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	Icon getIcon();
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	void registerIcons(IconRegister iconRegister);
 
 	boolean hasParameter();

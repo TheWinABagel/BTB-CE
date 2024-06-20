@@ -95,6 +95,19 @@ java {
 }
 
 jar {
+	sourceSets {
+		main {
+			java {
+				exclude 'buildcraft/api/**'
+				exclude 'buildcraft/core/**'
+				exclude 'buildcraft/transport/**'
+				exclude 'buildcraft/energy/**'
+				exclude 'buildcraft/silicon/**'
+				exclude 'buildcraft/factory/**'
+				exclude 'buildcraft/builders/**'
+			}
+		}
+	}
 	from sourceSets.main.output.resourcesDir
 	from sourceSets.main.output.classesDirs
 	from("LICENSE") {

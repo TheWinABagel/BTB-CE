@@ -11,8 +11,8 @@ import buildcraft.BuildCraftBuilders;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
@@ -149,7 +149,7 @@ public class BlockMarker extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.blockIcon = iconRegister.registerIcon("buildcraft:blockMarker");
 	}

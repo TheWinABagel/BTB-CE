@@ -2,9 +2,9 @@ package buildcraft.core.render;
 
 import buildcraft.core.DefaultProps;
 import buildcraft.core.EntityRobot;
-import net.minecraft.src.model.ModelBase;
-import net.minecraft.src.model.ModelRenderer;
-import net.minecraft.src.renderer.entity.Render;
+import net.minecraft.src.ModelBase;
+import net.minecraft.src.ModelRenderer;
+import net.minecraft.src.Render;
 import net.minecraft.src.Entity;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;

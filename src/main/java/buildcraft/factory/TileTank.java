@@ -19,7 +19,7 @@ import buildcraft.core.proxy.CoreProxy;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EnumSkyBlock;
 import net.minecraftforge.common.ForgeDirection;

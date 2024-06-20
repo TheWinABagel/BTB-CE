@@ -1,14 +1,14 @@
 package buildcraft.energy.render;
 
 import net.minecraft.src.*;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.BlockFluid;
 import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.World;
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class EntityDropParticleFX extends EntityFX {
 
 	/**

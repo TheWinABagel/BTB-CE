@@ -10,8 +10,8 @@ package buildcraft.factory;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.inventory.InvUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
@@ -60,7 +60,7 @@ public class BlockTank extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int par1, int par2) {
 		switch (par1) {
 			case 0:
@@ -152,7 +152,7 @@ public class BlockTank extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		textureStackedSide = par1IconRegister.registerIcon("buildcraft:tank_stacked_side");
 		textureBottomSide = par1IconRegister.registerIcon("buildcraft:tank_bottom_side");

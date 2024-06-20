@@ -8,8 +8,8 @@ import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.src.Block;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.src.InventoryCrafting;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.IRecipe;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -64,7 +64,7 @@ public class ItemFacade extends ItemBuildCraft {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List itemList) {
 		// Do not call super, that would add a 0:0 facade
 		for (ItemStack stack : allFacades) {
@@ -238,13 +238,13 @@ public class ItemFacade extends ItemBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		// NOOP
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public int getSpriteNumber() {
 		return 0;
 	}

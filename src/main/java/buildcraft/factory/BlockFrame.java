@@ -13,12 +13,12 @@ import buildcraft.BuildCraftCore;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.IFramePipeConnection;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Entity;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.AxisAlignedBB;
@@ -194,7 +194,7 @@ public class BlockFrame extends Block implements IFramePipeConnection {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
 	    blockIcon = par1IconRegister.registerIcon("buildcraft:blockFrame");

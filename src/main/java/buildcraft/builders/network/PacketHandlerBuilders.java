@@ -9,7 +9,7 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
 
 import java.io.ByteArrayInputStream;

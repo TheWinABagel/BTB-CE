@@ -8,7 +8,6 @@
 package buildcraft.core.inventory;
 
 import net.minecraft.src.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class StackHelper {
 
@@ -83,27 +82,27 @@ public class StackHelper {
 	public boolean isCraftingEquivalent(ItemStack base, ItemStack comparison, boolean oreDictionary) {
 		if (isMatchingItem(base, comparison, true, false))
 			return true;
-
-		if (oreDictionary) {
-			int idBase = OreDictionary.getOreID(base);
-			if (idBase >= 0) {
-				for (ItemStack itemstack : OreDictionary.getOres(idBase)) {
-					if (comparison.itemID == itemstack.itemID && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE || comparison.getItemDamage() == itemstack.getItemDamage()))
-						return true;
-				}
-			}
-		}
+		//todocore ore dict
+//		if (oreDictionary) {
+//			int idBase = OreDictionary.getOreID(base);
+//			if (idBase >= 0) {
+//				for (ItemStack itemstack : OreDictionary.getOres(idBase)) {
+//					if (comparison.itemID == itemstack.itemID && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE || comparison.getItemDamage() == itemstack.getItemDamage()))
+//						return true;
+//				}
+//			}
+//		}
 
 		return false;
 	}
 
 	public boolean isCraftingEquivalent(int oreID, ItemStack comparison) {
-		if (oreID >= 0) {
-			for (ItemStack itemstack : OreDictionary.getOres(oreID)) {
-				if (comparison.itemID == itemstack.itemID && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE || comparison.getItemDamage() == itemstack.getItemDamage()))
-					return true;
-			}
-		}
+//		if (oreID >= 0) {
+//			for (ItemStack itemstack : OreDictionary.getOres(oreID)) {
+//				if (comparison.itemID == itemstack.itemID && (itemstack.getItemDamage() == OreDictionary.WILDCARD_VALUE || comparison.getItemDamage() == itemstack.getItemDamage()))
+//					return true;
+//			}
+//		}
 
 		return false;
 	}

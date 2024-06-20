@@ -10,11 +10,11 @@ package buildcraft.energy;
 import java.util.LinkedList;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.ICrafting;
+import net.minecraft.src.ICrafting;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.ResourceLocation;
-import net.minecraft.src.biome.BiomeGenBase;
+import net.minecraft.src.BiomeGenBase;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;

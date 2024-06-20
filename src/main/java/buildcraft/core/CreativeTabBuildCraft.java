@@ -5,7 +5,8 @@ import buildcraft.core.utils.Localization;
 import buildcraft.transport.ItemFacade;
 import java.util.Locale;
 import net.minecraft.src.Block;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
 public enum CreativeTabBuildCraft {
@@ -41,14 +42,14 @@ public enum CreativeTabBuildCraft {
 	}
 
 	private class Tab extends CreativeTabs {
-
+		//todocore creative tab?
 		private Tab() {
-			super(getLabel());
+			super(20, getLabel());
 		}
 
 		@Override
-		public ItemStack getIconItemStack() {
-			return getItem();
+		public Item getTabIconItem() {
+			return getItem().getItem();
 		}
 
 		@Override

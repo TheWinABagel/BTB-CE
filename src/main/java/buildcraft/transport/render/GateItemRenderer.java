@@ -4,16 +4,16 @@ import buildcraft.api.gates.IGateExpansion;
 import buildcraft.transport.gates.ItemGate;
 import java.util.Random;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.renderer.entity.RenderItem;
-import net.minecraft.src.renderer.entity.RenderManager;
-import net.minecraft.src.renderer.Tessellator;
+import net.minecraft.src.RenderItem;
+import net.minecraft.src.RenderManager;
+import net.minecraft.src.Tessellator;
 import net.minecraft.src.Icon;
-import net.minecraft.src.renderer.ItemRenderer;
+import net.minecraft.src.ItemRenderer;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.client.IItemRenderer.ItemRendererHelper;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 
 /**
  *

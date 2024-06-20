@@ -11,8 +11,8 @@ import buildcraft.core.gui.BuildCraftContainer;
 import buildcraft.core.gui.slots.SlotPhantom;
 import buildcraft.transport.pipes.PipeItemsEmerald;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.Slot;
 
 public class ContainerEmeraldPipe extends BuildCraftContainer {
 

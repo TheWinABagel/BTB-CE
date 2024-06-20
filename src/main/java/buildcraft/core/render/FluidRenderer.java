@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.src.Block;
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.renderer.GLAllocation;
+import net.minecraft.src.GLAllocation;
 import net.minecraft.src.TextureMap;
 import net.minecraft.src.Icon;
 import net.minecraft.src.ResourceLocation;

@@ -7,26 +7,27 @@
  */
 package buildcraft.core.utils;
 
+import btw.community.example.injected.BlockExtension;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftEnergy;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.core.proxy.CoreProxy;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockFluid;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ItemStack;
-import net.minecraft.network.packet.Packet60Explosion;
+import net.minecraft.src.Packet60Explosion;
 import net.minecraft.src.ChunkPosition;
 import net.minecraft.src.Explosion;
 import net.minecraft.src.World;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -41,13 +42,14 @@ public class BlockUtil {
 		if (block == null)
 			return null;
 
-		if (block.isAirBlock(world, i, j, k))
+		if (world.isAirBlock(i, j, k))
 			return null;
 
 		int meta = world.getBlockMetadata(i, j, k);
 
-		ArrayList<ItemStack> dropsList = block.getBlockDropped(world, i, j, k, meta, 0);
-		float dropChance = ForgeEventFactory.fireBlockHarvesting(dropsList, world, block, i, j, k, meta, 0, 1.0F, false, CoreProxy.proxy.getBuildCraftPlayer(world));
+		ArrayList<ItemStack> dropsList = ((BlockExtension) block).getBlockDropped(world, i, j, k, meta, 0);
+//		float dropChance = ForgeEventFactory.fireBlockHarvesting(dropsList, world, block, i, j, k, meta, 0, 1.0F, false, CoreProxy.proxy.getBuildCraftPlayer(world));
+		float dropChance = 1f;
 
 		ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();
 		for (ItemStack s : dropsList) {
@@ -74,7 +76,7 @@ public class BlockUtil {
 				double dz = world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
 				EntityItem entityitem = new EntityItem(world, x + dx, y + dy, z + dz, item);
 
-				entityitem.lifespan = forcedLifespan;
+				entityitem.age = forcedLifespan;
 				entityitem.delayBeforeCanPickup = 10;
 
 				world.spawnEntityInWorld(entityitem);
@@ -87,7 +89,7 @@ public class BlockUtil {
 	public static boolean isAnObstructingBlock(int blockID, World world, int x, int y, int z) {
 		Block block = Block.blocksList[blockID];
 
-		if (blockID == 0 || block == null || block.isAirBlock(world, x, y, z))
+		if (blockID == 0 || block == null || world.isAirBlock(x, y, z))
 			return false;
 		return true;
 	}
@@ -99,7 +101,7 @@ public class BlockUtil {
 	public static boolean canChangeBlock(int blockID, World world, int x, int y, int z) {
 		Block block = Block.blocksList[blockID];
 
-		if (blockID == 0 || block == null || block.isAirBlock(world, x, y, z))
+		if (blockID == 0 || block == null || world.isAirBlock(x, y, z))
 			return true;
 
 		if (block.getBlockHardness(world, x, y, z) < 0)
@@ -121,7 +123,7 @@ public class BlockUtil {
 	public static boolean isSoftBlock(int blockID, World world, int x, int y, int z) {
 		Block block = Block.blocksList[blockID];
 
-		return blockID == 0 || block == null || BuildCraftAPI.softBlocks[blockID] || block.isAirBlock(world, x, y, z);
+		return blockID == 0 || block == null || BuildCraftAPI.softBlocks[blockID] || world.isAirBlock(x, y, z);
 	}
 
 	/**
@@ -186,7 +188,7 @@ public class BlockUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void explodeBlock(World world, int x, int y, int z) {
-		if (FMLCommonHandler.instance().getEffectiveSide().isClient())
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT))
 			return;
 
 		Explosion explosion = new Explosion(world, null, x + .5, y + .5, z + .5, 3f);

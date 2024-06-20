@@ -13,7 +13,7 @@ import buildcraft.core.inventory.InventoryIterator;
 import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.utils.StringUtils;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;

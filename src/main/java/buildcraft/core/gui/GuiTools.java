@@ -2,7 +2,7 @@ package buildcraft.core.gui;
 
 import buildcraft.core.gui.buttons.GuiBetterButton;
 import java.util.List;
-import net.minecraft.src.gui.FontRenderer;
+import net.minecraft.src.FontRenderer;
 
 public class GuiTools {
 

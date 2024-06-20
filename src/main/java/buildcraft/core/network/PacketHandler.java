@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IPacketHandler;

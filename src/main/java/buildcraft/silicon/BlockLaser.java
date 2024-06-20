@@ -8,8 +8,8 @@
 package buildcraft.silicon;
 
 import buildcraft.core.CreativeTabBuildCraft;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class BlockLaser extends BlockContainer {
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Icon textureTop, textureBottom, textureSide;
 
 	public BlockLaser(int i) {
@@ -85,7 +85,7 @@ public class BlockLaser extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		textureTop = par1IconRegister.registerIcon("buildcraft:laser_top");
 		textureBottom = par1IconRegister.registerIcon("buildcraft:laser_bottom");

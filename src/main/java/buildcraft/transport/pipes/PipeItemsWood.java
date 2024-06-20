@@ -23,11 +23,11 @@ import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportItems;
 import buildcraft.transport.TravelingItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.ISidedInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
@@ -76,7 +76,7 @@ public class PipeItemsWood extends Pipe<PipeTransportItems> implements IPowerRec
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}
@@ -194,7 +194,7 @@ public class PipeItemsWood extends Pipe<PipeTransportItems> implements IPowerRec
 		if (inventory == null)
 			return null;
 
-		for (int k : inventory.getAccessibleSlotsFromSide(from.ordinal())) {
+		for (int k : inventory.getSlotsForFace(from.ordinal())) {
 			ItemStack slot = inventory.getStackInSlot(k);
 
 			if (slot != null && slot.stackSize > 0 && inventory.canExtractItem(k, slot, from.ordinal())) {

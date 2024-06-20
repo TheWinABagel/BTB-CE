@@ -1,7 +1,7 @@
 package buildcraft.energy.worldgen;
 
 import buildcraft.BuildCraftEnergy;
-import net.minecraft.src.biome.BiomeGenBase;
+import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.gen.layer.GenLayer;
 
 /**

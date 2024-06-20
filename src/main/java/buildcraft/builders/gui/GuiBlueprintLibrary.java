@@ -17,7 +17,7 @@ import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketPayloadArrays;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.StringUtils;
-import net.minecraft.src.gui.GuiButton;
+import net.minecraft.src.GuiButton;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;

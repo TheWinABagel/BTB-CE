@@ -8,7 +8,7 @@ import buildcraft.core.utils.StringUtils;
 import buildcraft.energy.TileEngine;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.TextureMap;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ResourceLocation;
 
 public abstract class GuiEngine extends GuiBuildCraft {

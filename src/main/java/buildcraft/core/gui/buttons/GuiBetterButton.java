@@ -3,11 +3,11 @@ package buildcraft.core.gui.buttons;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.gui.tooltips.IToolTipProvider;
 import buildcraft.core.gui.tooltips.ToolTip;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.gui.FontRenderer;
-import net.minecraft.src.gui.GuiButton;
+import net.minecraft.src.FontRenderer;
+import net.minecraft.src.GuiButton;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11;
  *
  * @author CovertJaguar <railcraft.wikispaces.com>
  */
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class GuiBetterButton extends GuiButton implements IToolTipProvider {
 
 	public static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("buildcraft", DefaultProps.TEXTURE_PATH_GUI + "/buttons.png");

@@ -19,8 +19,8 @@ import buildcraft.transport.TransportConstants;
 import buildcraft.transport.TravelingItem;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.triggers.ActionPipeColor;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class PipeItemsLapis extends Pipe<PipeTransportItems> {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

@@ -9,8 +9,8 @@ package buildcraft.core.triggers;
 
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.IAction;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
@@ -42,7 +42,7 @@ public abstract class BCAction implements IAction {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon() {
 		return ActionTriggerIconProvider.INSTANCE.getIcon(getIconIndex());
 	}
@@ -52,7 +52,7 @@ public abstract class BCAction implements IAction {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 	}
 

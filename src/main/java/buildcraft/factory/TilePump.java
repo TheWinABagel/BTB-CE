@@ -38,7 +38,7 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeMap;
 import net.minecraft.src.Material;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;

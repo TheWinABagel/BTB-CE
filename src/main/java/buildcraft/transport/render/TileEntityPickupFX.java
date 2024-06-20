@@ -12,20 +12,20 @@
 package buildcraft.transport.render;
 
 import buildcraft.transport.utils.TransportUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.EntityFX;
-import net.minecraft.src.renderer.OpenGlHelper;
-import net.minecraft.src.renderer.Tessellator;
-import net.minecraft.src.renderer.entity.RenderManager;
+import net.minecraft.src.OpenGlHelper;
+import net.minecraft.src.Tessellator;
+import net.minecraft.src.RenderManager;
 import net.minecraft.src.Entity;
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import org.lwjgl.opengl.GL11;
 //import net.minecraft.src.EntityPickupFX; 
 
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class TileEntityPickupFX extends EntityFX
 {
     private Entity entityToPickUp;

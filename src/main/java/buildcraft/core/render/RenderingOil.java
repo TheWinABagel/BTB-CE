@@ -3,7 +3,7 @@ package buildcraft.core.render;
 import buildcraft.BuildCraftCore;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
-import net.minecraft.src.renderer.RenderBlocks;
+import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.IBlockAccess;
 
 public class RenderingOil implements ISimpleBlockRenderingHandler {

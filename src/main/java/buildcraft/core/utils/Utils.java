@@ -23,7 +23,7 @@ import buildcraft.core.proxy.CoreProxy;
 import buildcraft.energy.TileEngine;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityLivingBase;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.MathHelper;

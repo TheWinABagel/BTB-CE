@@ -12,11 +12,11 @@ import buildcraft.api.power.ILaserTarget;
 import buildcraft.core.TileBuildCraft;
 import buildcraft.core.inventory.SimpleInventory;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.Container;
+import net.minecraft.src.ICrafting;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 
 /**
  *

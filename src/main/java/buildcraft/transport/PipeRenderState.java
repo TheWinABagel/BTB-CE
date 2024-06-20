@@ -5,8 +5,8 @@ import buildcraft.transport.utils.ConnectionMatrix;
 import buildcraft.transport.utils.FacadeMatrix;
 import buildcraft.transport.utils.TextureMatrix;
 import buildcraft.transport.utils.WireMatrix;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -27,9 +27,9 @@ public class PipeRenderState implements IClientState {
 	/*
 	 * This is a placeholder for the pipe renderer to set to a value that the BlockGenericPipe->TileGenericPipe will then return the the WorldRenderer
 	 */
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon currentTexture;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon[] textureArray;
 
 	public void setIsGateLit(boolean value) {

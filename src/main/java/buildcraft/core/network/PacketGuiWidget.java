@@ -13,7 +13,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import net.minecraft.src.entity.EntityClientPlayerMP;
+import net.minecraft.src.EntityClientPlayerMP;
 /**
  *
  * @author CovertJaguar <http://www.railcraft.info/>

@@ -11,11 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.minecraft.src.item.EntityItem;
+import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet3Chat;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet3Chat;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordIntPair;

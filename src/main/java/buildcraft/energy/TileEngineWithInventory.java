@@ -1,9 +1,9 @@
 package buildcraft.energy;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import buildcraft.core.inventory.SimpleInventory;
 
 public abstract class TileEngineWithInventory extends TileEngine implements IInventory {

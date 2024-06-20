@@ -14,7 +14,7 @@ import net.minecraft.src.BlockFlower;
 import net.minecraft.src.BlockFluid;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
-import net.minecraft.src.biome.BiomeGenBase;
+import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.EnumHelper;

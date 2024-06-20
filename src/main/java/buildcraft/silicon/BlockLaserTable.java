@@ -4,13 +4,13 @@ import buildcraft.BuildCraftSilicon;
 import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.List;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -19,7 +19,7 @@ import net.minecraft.src.World;
 
 public class BlockLaserTable extends BlockContainer {
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Icon[][] icons;
 
 	public BlockLaserTable(int i) {
@@ -94,7 +94,7 @@ public class BlockLaserTable extends BlockContainer {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
 		par3List.add(new ItemStack(this, 1, 0));
 		par3List.add(new ItemStack(this, 1, 1));
@@ -102,7 +102,7 @@ public class BlockLaserTable extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		icons = new Icon[3][];
 		icons[0] = new Icon[3];

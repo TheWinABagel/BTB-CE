@@ -7,7 +7,7 @@ import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import buildcraft.core.inventory.Transactor;
 import buildcraft.core.inventory.filters.ArrayStackFilter;
 import net.minecraft.src.Block;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;

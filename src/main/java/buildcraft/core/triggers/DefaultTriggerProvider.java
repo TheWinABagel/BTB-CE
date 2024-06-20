@@ -7,7 +7,7 @@ import buildcraft.api.gates.ITriggerProvider;
 import buildcraft.api.transport.IPipeTile;
 import buildcraft.core.IMachine;
 import net.minecraft.src.Block;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidTankInfo;

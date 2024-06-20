@@ -12,8 +12,8 @@ package buildcraft.builders;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.core.GuiIds;
 import buildcraft.core.proxy.CoreProxy;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
@@ -86,7 +86,7 @@ public class BlockBlueprintLibrary extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
 	    textureTop = par1IconRegister.registerIcon("buildcraft:library_topbottom");

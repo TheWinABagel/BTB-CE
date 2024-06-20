@@ -5,7 +5,7 @@ import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.blueprints.IBptContext;
 import java.util.LinkedList;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 
 public class BptSlot extends BptSlotInfo {
 

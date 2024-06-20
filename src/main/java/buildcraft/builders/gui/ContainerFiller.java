@@ -11,12 +11,12 @@ import buildcraft.builders.TileFiller;
 import buildcraft.core.gui.BuildCraftContainer;
 import buildcraft.core.gui.GuiBuildCraft;
 import buildcraft.core.gui.widgets.Widget;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.TextureMap;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.Slot;
 
 public class ContainerFiller extends BuildCraftContainer {
 
@@ -29,7 +29,7 @@ public class ContainerFiller extends BuildCraftContainer {
 			super(80, 30, 0, 0, 16, 16);
 		}
 
-		@SideOnly(Side.CLIENT)
+		@Environment(EnvType.CLIENT)
 		@Override
 		public void draw(GuiBuildCraft gui, int guiX, int guiY, int mouseX, int mouseY) {
 			gui.bindTexture(TextureMap.locationBlocksTexture);

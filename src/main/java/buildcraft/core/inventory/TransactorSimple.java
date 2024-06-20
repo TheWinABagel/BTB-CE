@@ -4,7 +4,7 @@ import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import buildcraft.core.inventory.filters.IStackFilter;
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 

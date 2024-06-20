@@ -1,19 +1,19 @@
 package buildcraft.core.gui.buttons;
 
 import net.minecraft.src.Minecraft;
-import net.minecraft.src.gui.FontRenderer;
+import net.minecraft.src.FontRenderer;
 
 import org.lwjgl.opengl.GL11;
 
 import buildcraft.core.gui.tooltips.ToolTip;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 /**
  * 
  * @author CovertJaguar <railcraft.wikispaces.com>
  */
-@SideOnly(Side.CLIENT)
+@Environment(EnvType.CLIENT)
 public class GuiMultiButton extends GuiBetterButton {
 
 	private final MultiButtonController control;

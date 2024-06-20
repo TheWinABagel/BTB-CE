@@ -3,10 +3,10 @@ package buildcraft.transport;
 import buildcraft.api.transport.PipeWire;
 import buildcraft.core.ItemBuildCraft;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 
@@ -36,7 +36,7 @@ public class ItemPipeWire extends ItemBuildCraft {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void getSubItems(int id, CreativeTabs tab, List itemList) {
 		for (PipeWire pipeWire : PipeWire.VALUES) {
 			itemList.add(pipeWire.getStack());
@@ -44,7 +44,7 @@ public class ItemPipeWire extends ItemBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		icons = new Icon[PipeWire.VALUES.length];
 		for (PipeWire pipeWire : PipeWire.VALUES) {

@@ -2,12 +2,12 @@ package buildcraft.core.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.src.InventoryCrafting;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.crafting.CraftingManager;
-import net.minecraft.src.crafting.IRecipe;
-import net.minecraft.src.crafting.ShapelessRecipes;
+import net.minecraft.src.CraftingManager;
+import net.minecraft.src.IRecipe;
+import net.minecraft.src.ShapelessRecipes;
 import net.minecraft.src.World;
 
 public class CraftingHelper {
@@ -40,7 +40,7 @@ public class CraftingHelper {
             }
         }
 
-        if (itemNum == 2 && item1.itemID == item2.itemID && item1.stackSize == 1 && item2.stackSize == 1 && Item.itemsList[item1.itemID].isRepairable())
+        if (itemNum == 2 && item1.itemID == item2.itemID && item1.stackSize == 1 && item2.stackSize == 1 /*&& Item.itemsList[item1.itemID].isRepairable()*/)
         {
             Item itemBase = Item.itemsList[item1.itemID];
             int item1Durability = itemBase.getMaxDamage() - item1.getItemDamageForDisplay();

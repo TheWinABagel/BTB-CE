@@ -8,7 +8,7 @@
 package buildcraft.transport;
 
 import buildcraft.api.transport.IPipeTile.PipeType;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;

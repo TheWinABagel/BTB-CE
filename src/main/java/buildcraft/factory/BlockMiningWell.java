@@ -12,8 +12,8 @@ package buildcraft.factory;
 import buildcraft.BuildCraftFactory;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.ArrayList;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
@@ -88,7 +88,7 @@ public class BlockMiningWell extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
 	    textureFront = par1IconRegister.registerIcon("buildcraft:miningwell_front");

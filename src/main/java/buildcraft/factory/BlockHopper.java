@@ -6,8 +6,8 @@ import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.GuiIds;
 import buildcraft.core.IItemPipe;
 import buildcraft.core.proxy.CoreProxy;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
@@ -75,13 +75,13 @@ public class BlockHopper extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		icon = par1IconRegister.registerIcon("buildcraft:hopperBottom");
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int par1, int par2) {
 		return icon;
 	}

@@ -14,7 +14,7 @@ import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.blueprints.IBptContext;
 import buildcraft.core.blueprints.BptItem;
 import java.util.LinkedList;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
 

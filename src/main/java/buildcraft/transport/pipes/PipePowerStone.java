@@ -12,8 +12,8 @@ import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.Pipe;
 import buildcraft.transport.PipeIconProvider;
 import buildcraft.transport.PipeTransportPower;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipePowerStone extends Pipe<PipeTransportPower> {
@@ -24,7 +24,7 @@ public class PipePowerStone extends Pipe<PipeTransportPower> {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

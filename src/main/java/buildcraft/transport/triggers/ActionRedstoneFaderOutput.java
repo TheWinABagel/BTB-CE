@@ -9,15 +9,15 @@ package buildcraft.transport.triggers;
 
 import buildcraft.core.triggers.BCAction;
 import buildcraft.core.utils.StringUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
 public class ActionRedstoneFaderOutput extends BCAction {
 
 	public final int level;
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Icon icon;
 
 	public ActionRedstoneFaderOutput(int level) {
@@ -32,13 +32,13 @@ public class ActionRedstoneFaderOutput extends BCAction {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon() {
 		return icon;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon(String.format("buildcraft:triggers/redstone_%02d", level));
 	}

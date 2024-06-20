@@ -3,10 +3,10 @@ package buildcraft.transport;
 import buildcraft.core.TileBuildCraft;
 import buildcraft.core.inventory.SimpleInventory;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 
 public class TileFilteredBuffer extends TileBuildCraft implements IInventory {
 

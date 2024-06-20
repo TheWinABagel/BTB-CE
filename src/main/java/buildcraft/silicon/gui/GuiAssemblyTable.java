@@ -21,7 +21,7 @@ import buildcraft.silicon.TileAssemblyTable;
 import buildcraft.silicon.TileAssemblyTable.SelectionMessage;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.TextureMap;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;

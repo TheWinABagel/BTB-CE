@@ -9,15 +9,15 @@
 package buildcraft.core.fluids;
 
 import com.google.common.collect.ForwardingList;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -122,7 +122,7 @@ public class TankManager<T extends Tank> extends ForwardingList<T> implements IF
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void readData(DataInputStream data) throws IOException {
 		for (Tank tank : tanks) {
 			int fluidId = data.readShort();

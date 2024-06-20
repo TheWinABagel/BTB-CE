@@ -16,8 +16,8 @@ import buildcraft.core.gui.buttons.GuiBetterButton;
 import buildcraft.core.gui.buttons.StandardButtonTextureSets;
 import buildcraft.core.network.PacketGuiReturn;
 import buildcraft.core.utils.StringUtils;
-import net.minecraft.src.gui.GuiButton;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.GuiButton;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ResourceLocation;
 
 public class GuiFiller extends GuiBuildCraft {

@@ -22,8 +22,8 @@ import java.util.Map;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 

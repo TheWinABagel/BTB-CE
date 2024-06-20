@@ -12,8 +12,8 @@ import buildcraft.core.triggers.BCTrigger;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.transport.*;
 import buildcraft.transport.pipes.PipePowerWood;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 import net.minecraftforge.common.ForgeDirection;
@@ -137,7 +137,7 @@ public class TriggerPipeContents extends BCTrigger implements IPipeTrigger {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icon = iconRegister.registerIcon("buildcraft:triggers/trigger_pipecontents_" + kind.name().toLowerCase(Locale.ENGLISH));
 	}

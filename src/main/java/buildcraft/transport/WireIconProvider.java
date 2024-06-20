@@ -1,8 +1,8 @@
 package buildcraft.transport;
 
 import buildcraft.api.core.IIconProvider;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.Icon;
 
@@ -19,17 +19,17 @@ public class WireIconProvider implements IIconProvider {
 	
 	public static final int MAX								=  8;
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private Icon[] icons;
 	
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int pipeIconIndex) {
 		return icons[pipeIconIndex];
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		icons = new Icon[MAX];
 

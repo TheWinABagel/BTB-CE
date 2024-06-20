@@ -11,7 +11,7 @@ package buildcraft.core.fluids;
 import buildcraft.core.gui.tooltips.ToolTip;
 import buildcraft.core.gui.tooltips.ToolTipLine;
 import java.util.Locale;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidTank;

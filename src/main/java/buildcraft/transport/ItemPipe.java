@@ -12,8 +12,8 @@ import buildcraft.api.core.IIconProvider;
 import buildcraft.core.IItemPipe;
 import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.utils.BCLog;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
@@ -26,7 +26,7 @@ import java.util.logging.Level;
 
 public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	private IIconProvider iconProvider;
 	private int pipeIconIndex;
 
@@ -88,7 +88,7 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 			return false;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void setPipesIcons(IIconProvider iconProvider) {
 		this.iconProvider = iconProvider;
 	}
@@ -98,7 +98,7 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public Icon getIconFromDamage(int par1) {
 		if (iconProvider != null) { // invalid pipes won't have this set
 			return iconProvider.getIcon(pipeIconIndex);
@@ -108,19 +108,19 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		// NOOP
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public int getSpriteNumber() {
 		return 0;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
 		super.addInformation(stack, player, list, advanced);
 		Class<? extends Pipe> pipe = BlockGenericPipe.pipes.get(itemID);

@@ -9,6 +9,7 @@
 
 package buildcraft.api.blueprints;
 
+import btw.community.example.injected.BlockExtension;
 import buildcraft.api.core.BuildCraftAPI;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
@@ -172,7 +173,7 @@ public class BptBlock {
 		}
 
 		if (Block.blocksList[slot.blockId] != null) {
-			ArrayList<ItemStack> req = Block.blocksList[slot.blockId].getBlockDropped(context.world(), x, y, z, context.world().getBlockMetadata(x, y, z), 0);
+			ArrayList<ItemStack> req = ((BlockExtension) Block.blocksList[slot.blockId]).getBlockDropped(context.world(), x, y, z, context.world().getBlockMetadata(x, y, z), 0);
 
 			if (req != null) {
 				slot.storedRequirements.addAll(req);

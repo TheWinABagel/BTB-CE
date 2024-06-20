@@ -31,13 +31,13 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.biome.BiomeGenBase;
+import net.minecraft.src.BiomeGenBase;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -231,7 +231,7 @@ public class BuildCraftEnergy {
 	}
 
 	@ForgeSubscribe
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void textureHook(TextureStitchEvent.Post event) {
 		if (event.map.textureType == 0) {
 			buildcraftFluidOil.setIcons(blockOil.getBlockTextureFromSide(1), blockOil.getBlockTextureFromSide(2));

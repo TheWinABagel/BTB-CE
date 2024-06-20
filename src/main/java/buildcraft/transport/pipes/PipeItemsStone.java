@@ -15,8 +15,8 @@ import buildcraft.transport.PipeTransportItems;
 import buildcraft.transport.TransportConstants;
 import buildcraft.transport.TravelingItem;
 import buildcraft.transport.pipes.events.PipeEventItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipeItemsStone extends Pipe {
@@ -26,7 +26,7 @@ public class PipeItemsStone extends Pipe {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

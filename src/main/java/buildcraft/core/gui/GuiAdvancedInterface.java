@@ -1,9 +1,9 @@
 package buildcraft.core.gui;
 
-import net.minecraft.src.renderer.OpenGlHelper;
-import net.minecraft.src.renderer.RenderHelper;
+import net.minecraft.src.OpenGlHelper;
+import net.minecraft.src.RenderHelper;
 import net.minecraft.src.TextureMap;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 import net.minecraft.src.ResourceLocation;

@@ -11,8 +11,8 @@ import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.transport.*;
 import buildcraft.transport.pipes.events.PipeEventItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipeItemsQuartz extends Pipe {
@@ -23,7 +23,7 @@ public class PipeItemsQuartz extends Pipe {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
 		return BuildCraftTransport.instance.pipeIconProvider;
 	}

@@ -18,15 +18,15 @@ import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.CraftingHelper;
 import buildcraft.core.utils.Utils;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.InventoryCraftResult;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.SlotCrafting;
+import net.minecraft.src.Container;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.ISidedInventory;
+import net.minecraft.src.InventoryCraftResult;
+import net.minecraft.src.InventoryCrafting;
+import net.minecraft.src.SlotCrafting;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.src.IRecipe;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordinates;
 import net.minecraftforge.common.ForgeDirection;
@@ -297,7 +297,7 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 	}
 
 	@Override
-	public int[] getAccessibleSlotsFromSide(int var1) {
+	public int[] getSlotsForFace(int var1) {
 		return SLOTS;
 	}
 

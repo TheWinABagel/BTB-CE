@@ -9,33 +9,30 @@ package buildcraft.core;
 
 import buildcraft.BuildCraftCore;
 import net.minecraft.src.Block;
+import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.World;
-import net.minecraft.src.biome.BiomeGenBase;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraft.src.BiomeGenBase;
 
 import java.util.Random;
 
 public class SpringPopulate {
 
-	@ForgeSubscribe
-	public void populate(PopulateChunkEvent.Post event) {
+	public static void populate(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ) {
 
-		boolean doGen = TerrainGen.populate(event.chunkProvider, event.world, event.rand, event.chunkX, event.chunkX, event.hasVillageGenerated, PopulateChunkEvent.Populate.EventType.CUSTOM);
-
-		if (!doGen) {
-			return;
-		}
+//		boolean doGen = TerrainGen.populate(event.chunkProvider, event.world, event.rand, event.chunkX, event.chunkX, event.hasVillageGenerated, PopulateChunkEvent.Populate.EventType.CUSTOM);
+//
+//		if (!doGen) {
+//			return;
+//		}
 
 		// shift to world coordinates
-		int worldX = event.chunkX << 4;
-		int worldZ = event.chunkZ << 4;
+		int worldX = chunkX << 4;
+		int worldZ = chunkZ << 4;
 
-		doPopulate(event.world, event.rand, worldX, worldZ);
+		doPopulate(world, rand, worldX, worldZ);
 	}
 
-	private void doPopulate(World world, Random random, int x, int z) {
+	private static void doPopulate(World world, Random random, int x, int z) {
 
 		// A spring will be generated every 40th chunk.
 		if(random.nextFloat() > 0.025f)
@@ -66,7 +63,7 @@ public class SpringPopulate {
 		}
 	}
 
-	private boolean boreToSurface(World world, int x, int y, int z) {
+	private static boolean boreToSurface(World world, int x, int y, int z) {
 		if(world.isAirBlock(x, y, z))
 			return false;
 

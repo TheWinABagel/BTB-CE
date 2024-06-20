@@ -12,7 +12,7 @@ import buildcraft.core.DefaultProps;
 import buildcraft.core.gui.GuiAdvancedInterface;
 import buildcraft.core.utils.StringUtils;
 import java.util.Collection;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ResourceLocation;
 import org.lwjgl.opengl.GL11;

@@ -10,8 +10,8 @@ package buildcraft.factory;
 import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.utils.Utils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
@@ -97,7 +97,7 @@ public class BlockPump extends BlockBuildCraft {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		textureTop = par1IconRegister.registerIcon("buildcraft:pump_top");
 		textureBottom = par1IconRegister.registerIcon("buildcraft:pump_bottom");

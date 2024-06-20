@@ -13,8 +13,8 @@ import buildcraft.core.gui.slots.SlotValidated;
 import buildcraft.transport.TileFilteredBuffer;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.src.IInventory;
+import net.minecraft.src.Slot;
 
 /**
  *

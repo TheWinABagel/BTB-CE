@@ -34,13 +34,13 @@ import buildcraft.core.network.PacketTileState;
 import buildcraft.core.utils.BCLog;
 import buildcraft.transport.gates.GateDefinition;
 import buildcraft.transport.gates.GateFactory;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.Packet;
 import net.minecraft.server.management.PlayerInstance;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -629,7 +629,7 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 		return true;
 	}
 
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public IIconProvider getPipeIcons() {
 		if (pipe == null)
 			return null;
@@ -697,7 +697,7 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@Environment(EnvType.CLIENT)
 	public double getMaxRenderDistanceSquared() {
 		return DefaultProps.PIPE_CONTENTS_RENDER_DIST * DefaultProps.PIPE_CONTENTS_RENDER_DIST;
 	}
