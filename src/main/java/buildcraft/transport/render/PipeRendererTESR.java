@@ -37,7 +37,7 @@ import net.minecraft.src.RenderHelper;
 import net.minecraft.src.RenderItem;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.TextureMap;
-import net.minecraft.src.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -73,8 +73,8 @@ public class PipeRendererTESR extends TileEntitySpecialRenderer {
 	public int[] displayPowerListOverload = new int[POWER_STAGES];
 
 	public PipeRendererTESR() {
-		customRenderItem = new RenderItem() {
-			@Override
+		customRenderItem = new RenderItem() { //todotransport med custom render item
+/*			@Override
 			public boolean shouldBob() {
 				return false;
 			}
@@ -82,7 +82,7 @@ public class PipeRendererTESR extends TileEntitySpecialRenderer {
 			@Override
 			public boolean shouldSpreadItems() {
 				return false;
-			}
+			}*/
 		};
 		customRenderItem.setRenderManager(RenderManager.instance);
 	}

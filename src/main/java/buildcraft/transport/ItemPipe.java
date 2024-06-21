@@ -44,7 +44,7 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 		if (id == Block.snow.blockID) {
 			side = 1;
 		} else if (id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID
-				&& (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, i, j, k))) {
+				&& (Block.blocksList[id] == null || !Block.blocksList[id].isReplaceableVegetation(world, i, j, k))) {
 			if (side == 0) {
 				j--;
 			}
@@ -84,8 +84,10 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 				itemstack.stackSize--;
 			}
 			return true;
-		} else
+		} else {
+			BCLog.logger.log(Level.WARNING, "Pipe cannot be placed at {0},{1},{2}", new Object[]{i, j, k});
 			return false;
+		}
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -106,8 +108,9 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 			return null;
 		}
 	}
+//todotransport high, item rendering
 
-	@Override
+/*	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		// NOOP
@@ -117,7 +120,7 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 	@Environment(EnvType.CLIENT)
 	public int getSpriteNumber() {
 		return 0;
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

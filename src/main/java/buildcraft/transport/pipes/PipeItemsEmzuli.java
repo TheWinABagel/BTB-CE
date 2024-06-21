@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
@@ -68,7 +69,7 @@ public class PipeItemsEmzuli extends PipeItemsWood implements IGuiReturnHandler 
 		}
 
 		if (!CoreProxy.proxy.isRenderWorld(container.worldObj)) {
-			entityplayer.openGui(BuildCraftTransport.instance, GuiIds.PIPE_LOGEMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_LOGEMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;

@@ -1,5 +1,6 @@
 package buildcraft.transport;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.api.transport.PipeWire;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.ActionManager;
@@ -148,7 +149,7 @@ public final class Gate {
 	// GUI
 	public void openGui(EntityPlayer player) {
 		if (!CoreProxy.proxy.isRenderWorld(player.worldObj)) {
-			player.openGui(BuildCraftTransport.instance, GuiIds.GATES, pipe.container.worldObj, pipe.container.xCoord, pipe.container.yCoord, pipe.container.zCoord);
+			((EntityPlayerExtension) player).openGui(BuildCraftTransport.instance.getModId(), GuiIds.GATES, pipe.container.worldObj, pipe.container.xCoord, pipe.container.yCoord, pipe.container.zCoord);
 		}
 	}
 

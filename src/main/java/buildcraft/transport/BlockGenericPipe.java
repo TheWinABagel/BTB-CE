@@ -22,7 +22,6 @@ import buildcraft.core.utils.Utils;
 import buildcraft.transport.gates.GateDefinition;
 import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.gates.ItemGate;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
@@ -102,10 +101,10 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		return false;
 	}
 
-	@Override
+/*	@Override
 	public boolean canBeReplacedByLeaves(World world, int x, int y, int z) {
 		return false;
-	}
+	}*/
 
 	@Override
 	public boolean renderAsNormalBlock() {
@@ -134,14 +133,14 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		return (renderMask & (1 << side)) != 0;
 	}
 
-	@Override
-	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+/*	@Override
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z, int sideOrdinal) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile instanceof ISolidSideTile) {
-			return ((ISolidSideTile) tile).isSolidOnSide(side);
+			return ((ISolidSideTile) tile).isSolidOnSide(ForgeDirection.getOrientation(sideOrdinal));
 		}
 		return false;
-	}
+	}*/
 
 	public boolean isACube() {
 		return false;
@@ -261,11 +260,11 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	private RaytraceResult doRayTrace(World world, int x, int y, int z, EntityPlayer player) {
 		double reachDistance = 5;
 
-		if (player instanceof EntityPlayerMP) {
+/*		if (player instanceof EntityPlayerMP) {
 			reachDistance = ((EntityPlayerMP) player).theItemInWorldManager.getBlockReachDistance();
-		}
-
-		double eyeHeight = world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight();
+		}*/
+		//todotransport low, eye height something?
+		double eyeHeight = world.isRemote ? player.getEyeHeight() - 0.12f/*player.getDefaultEyeHeight()*/ : player.getEyeHeight();
 		Vec3 lookVec = player.getLookVec();
 		Vec3 origin = world.getWorldVec3Pool().getVecFromPool(player.posX, player.posY + eyeHeight, player.posZ);
 		Vec3 direction = origin.addVector(lookVec.xCoord * reachDistance, lookVec.yCoord * reachDistance, lookVec.zCoord * reachDistance);
@@ -499,7 +498,8 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
-	@Override
+	//todotransport high, getBlockDropped impl
+//	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
 		if (CoreProxy.proxy.isRenderWorld(world))
@@ -576,7 +576,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 			return pipe.itemID;
 	}
 
-	@Environment(EnvType.CLIENT)
+/*	@Environment(EnvType.CLIENT)
 	@Override
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		RaytraceResult rayTraceResult = doRayTrace(world, x, y, z, Minecraft.getMinecraft().thePlayer);
@@ -591,7 +591,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 			}
 		}
 		return super.getPickBlock(target, world, x, y, z);
-	}
+	}*/
 
 	/* Wrappers ************************************************************ */
 	@Override
@@ -881,7 +881,8 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		}
 	}
 
-	@Override
+	//todotransport med priority, redstone connectivity
+//	@Override
 	public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
 		Pipe pipe = getPipe(world, x, y, z);
 
@@ -934,7 +935,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	public static ItemPipe registerPipe(int key, Class<? extends Pipe> clas) {
 		ItemPipe item = new ItemPipe(key);
 		item.setUnlocalizedName("buildcraftPipe." + clas.getSimpleName().toLowerCase(Locale.ENGLISH));
-		GameRegistry.registerItem(item, item.getUnlocalizedName());
+//		GameRegistry.registerItem(item, item.getUnlocalizedName());
 
 		pipes.put(item.itemID, clas);
 
@@ -1046,14 +1047,15 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @param effectRenderer A reference to the current effect renderer.
 	 * @return True to prevent vanilla digging particles form spawning.
 	 */
+	//todotransport low prio, block hit effects, block destroy effects (down)
 	@Environment(EnvType.CLIENT)
-	@Override
-	public boolean addBlockHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+//	@Override
+	public boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
 		int x = target.blockX;
 		int y = target.blockY;
 		int z = target.blockZ;
 
-		Pipe pipe = getPipe(worldObj, x, y, z);
+		Pipe pipe = getPipe(world, x, y, z);
 		if (pipe == null)
 			return false;
 
@@ -1091,7 +1093,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 			px = x + block.getBlockBoundsMaxX() + b;
 		}
 
-		EntityDiggingFX fx = new EntityDiggingFX(worldObj, px, py, pz, 0.0D, 0.0D, 0.0D, block, sideHit, worldObj.getBlockMetadata(x, y, z));
+		EntityDiggingFX fx = new EntityDiggingFX(world, px, py, pz, 0.0D, 0.0D, 0.0D, block, sideHit/*, world.getBlockMetadata(x, y, z)*/);
 		fx.setParticleIcon(icon);
 		effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z).multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F));
 		return true;
@@ -1112,9 +1114,9 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @return True to prevent vanilla break particles from spawning.
 	 */
 	@Environment(EnvType.CLIENT)
-	@Override
-	public boolean addBlockDestroyEffects(World worldObj, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
-		Pipe pipe = getPipe(worldObj, x, y, z);
+//	@Override
+	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+		Pipe pipe = getPipe(world, x, y, z);
 		if (pipe == null)
 			return false;
 
@@ -1128,7 +1130,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 					double py = y + (j + 0.5D) / its;
 					double pz = z + (k + 0.5D) / its;
 					int random = rand.nextInt(6);
-					EntityDiggingFX fx = new EntityDiggingFX(worldObj, px, py, pz, px - x - 0.5D, py - y - 0.5D, pz - z - 0.5D, BuildCraftTransport.genericPipeBlock, random, meta);
+					EntityDiggingFX fx = new EntityDiggingFX(world, px, py, pz, px - x - 0.5D, py - y - 0.5D, pz - z - 0.5D, BuildCraftTransport.genericPipeBlock, random/*, meta*/);
 					fx.setParticleIcon(icon);
 					effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
 				}

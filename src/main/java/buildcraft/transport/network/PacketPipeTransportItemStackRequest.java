@@ -3,8 +3,9 @@ package buildcraft.transport.network;
 import buildcraft.core.network.BuildCraftPacket;
 import buildcraft.core.network.PacketIds;
 import buildcraft.transport.TravelingItem;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.EntityPlayerMP;
+import net.minecraftforge.PacketDispatcher;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,9 +14,9 @@ import java.io.IOException;
 public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 
 	public int travelerID;
-	public Player player;
+	public EntityPlayer player;
 
-	public PacketPipeTransportItemStackRequest(Player player) {
+	public PacketPipeTransportItemStackRequest(EntityPlayer player) {
 		this.player = player;
 	}
 

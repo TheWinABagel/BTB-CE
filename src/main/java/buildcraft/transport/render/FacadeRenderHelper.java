@@ -8,6 +8,7 @@
  */
 package buildcraft.transport.render;
 
+import btw.community.example.mixin.accessors.RenderBlocksAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.utils.MatrixTranformations;
@@ -113,13 +114,13 @@ public class FacadeRenderHelper {
 
 				if (renderBlock.getRenderType() == 31) {
 					if ((renderMeta & 12) == 4) {
-						renderblocks.uvRotateEast = 1;
-						renderblocks.uvRotateWest = 1;
-						renderblocks.uvRotateTop = 1;
-						renderblocks.uvRotateBottom = 1;
+						((RenderBlocksAccessor) renderblocks).setUvRotateEast(1);
+						((RenderBlocksAccessor) renderblocks).setUvRotateWest(1);
+						((RenderBlocksAccessor) renderblocks).setUvRotateTop(1);
+						((RenderBlocksAccessor) renderblocks).setUvRotateBottom(1);
 					} else if ((renderMeta & 12) == 8) {
-						renderblocks.uvRotateSouth = 1;
-						renderblocks.uvRotateNorth = 1;
+						((RenderBlocksAccessor) renderblocks).setUvRotateSouth(1);
+						((RenderBlocksAccessor) renderblocks).setUvRotateNorth(1);
 					}
 				}
 
@@ -163,12 +164,12 @@ public class FacadeRenderHelper {
 				}
 
 				if (renderBlock.getRenderType() == 31) {
-					renderblocks.uvRotateSouth = 0;
-					renderblocks.uvRotateEast = 0;
-					renderblocks.uvRotateWest = 0;
-					renderblocks.uvRotateNorth = 0;
-					renderblocks.uvRotateTop = 0;
-					renderblocks.uvRotateBottom = 0;
+					((RenderBlocksAccessor) renderblocks).setUvRotateSouth(0);
+					((RenderBlocksAccessor) renderblocks).setUvRotateEast(0);
+					((RenderBlocksAccessor) renderblocks).setUvRotateWest(0);
+					((RenderBlocksAccessor) renderblocks).setUvRotateNorth(0);
+					((RenderBlocksAccessor) renderblocks).setUvRotateTop(0);
+					((RenderBlocksAccessor) renderblocks).setUvRotateBottom(0);
 				}
 			}
 

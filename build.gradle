@@ -100,7 +100,7 @@ jar {
 			java {
 //				exclude 'buildcraft/api/**'
 //				exclude 'buildcraft/core/**'
-				exclude 'buildcraft/transport/**'
+//				exclude 'buildcraft/transport/**'
 				exclude 'buildcraft/energy/**'
 				exclude 'buildcraft/silicon/**'
 				exclude 'buildcraft/factory/**'

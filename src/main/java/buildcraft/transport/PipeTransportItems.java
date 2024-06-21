@@ -22,13 +22,13 @@ import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
 import buildcraft.transport.network.PacketPipeTransportTraveler;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.utils.TransportUtils;
-import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ISidedInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 import net.minecraft.src.TileEntity;
+import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.Collections;

@@ -2,7 +2,6 @@ package buildcraft.transport;
 
 import buildcraft.api.transport.PipeWire;
 import buildcraft.core.ItemBuildCraft;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.IconRegister;
@@ -52,9 +51,9 @@ public class ItemPipeWire extends ItemBuildCraft {
 		}
 	}
 
-	public void registerItemStacks() {
+/*	public void registerItemStacks() {
 		for (PipeWire pipeWire : PipeWire.VALUES) {
 			GameRegistry.registerCustomItemStack(pipeWire.getTag(), pipeWire.getStack());
 		}
-	}
+	}*/
 }

@@ -1,5 +1,6 @@
 package buildcraft.transport.network;
 
+import btw.community.example.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.core.network.PacketCoordinates;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketSlotChange;
@@ -10,22 +11,21 @@ import buildcraft.transport.TileGenericPipe;
 import buildcraft.transport.gui.ContainerGateInterface;
 import buildcraft.transport.pipes.PipeItemsDiamond;
 import buildcraft.transport.pipes.PipeItemsEmerald;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.IOException;
+
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Container;
-import net.minecraft.network.INetworkManager;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
-public class PacketHandlerTransport implements IPacketHandler {
+public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 
 	@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet2, Player player) {
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet2) {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet2.data));
 		try {
 			// NetClientHandler net = (NetClientHandler) network.getNetHandler();
@@ -306,4 +306,6 @@ public class PacketHandlerTransport implements IPacketHandler {
 
 		((PipeItemsEmerald) pipe.pipe).getFilters().setInventorySlotContents(packet.slot, packet.stack);
 	}
+
+
 }

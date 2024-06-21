@@ -26,4 +26,16 @@ public interface RenderBlocksAccessor {
 
     @Accessor
     void setUvRotateBottom(int uvRotateBottom);
+
+    @Accessor
+    void setUvRotateEast(int uvRotateEast);
+
+    @Accessor
+    void setUvRotateWest(int uvRotateWest);
+
+    @Accessor
+    void setUvRotateSouth(int uvRotateSouth);
+
+    @Accessor
+    void setUvRotateNorth(int uvRotateNorth);
 }

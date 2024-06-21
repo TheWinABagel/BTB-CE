@@ -7,6 +7,7 @@
  */
 package buildcraft.transport;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.GuiIds;
@@ -59,17 +60,17 @@ public class BlockFilteredBuffer extends BlockBuildCraft {
 		}
 
 		if (!CoreProxy.proxy.isRenderWorld(world)) {
-			entityplayer.openGui(BuildCraftTransport.instance, GuiIds.FILTERED_BUFFER, world, x, y, z);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.FILTERED_BUFFER, world, x, y, z);
 		}
 
 		return true;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

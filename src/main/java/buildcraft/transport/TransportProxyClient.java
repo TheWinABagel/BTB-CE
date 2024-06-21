@@ -7,8 +7,10 @@ import buildcraft.transport.render.PipeItemRenderer;
 import buildcraft.transport.render.PipeRendererWorld;
 import buildcraft.transport.render.PlugItemRenderer;
 import buildcraft.transport.render.PipeRendererTESR;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraft.src.TileEntity;
+import net.minecraft.src.TileEntityRenderer;
+import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class TransportProxyClient extends TransportProxy {
@@ -19,13 +21,18 @@ public class TransportProxyClient extends TransportProxy {
 	public final static PlugItemRenderer plugItemRenderer = new PlugItemRenderer();
 	public final static GateItemRenderer gateItemRenderer = new GateItemRenderer();
 
+	public static void bindTileEntitySpecialRenderer(Class<? extends TileEntity> tileEntityClass, TileEntitySpecialRenderer specialRenderer) {
+		TileEntityRenderer.instance.specialRendererMap.put(tileEntityClass, specialRenderer);
+		specialRenderer.setTileEntityRenderer(TileEntityRenderer.instance);
+	}
+
 	@Override
 	public void registerTileEntities() {
 		super.registerTileEntities();
 		PipeRendererTESR rp = new PipeRendererTESR();
-		ClientRegistry.bindTileEntitySpecialRenderer(TileDummyGenericPipe.class, rp);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileDummyGenericPipe2.class, rp);
-		ClientRegistry.bindTileEntitySpecialRenderer(TileGenericPipe.class, rp);
+		bindTileEntitySpecialRenderer(TileDummyGenericPipe.class, rp);
+		bindTileEntitySpecialRenderer(TileDummyGenericPipe2.class, rp);
+		bindTileEntitySpecialRenderer(TileGenericPipe.class, rp);
 	}
 
 	@Override

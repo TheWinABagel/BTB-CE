@@ -47,8 +47,9 @@ public class ItemPlug extends ItemBuildCraft {
 	public boolean shouldPassSneakingClickToBlock(World worldObj, int x, int y, int z ) {
 		return true;
 	}
+//todotransport high, item rendering
 
-	@Override
+/*	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)
 	{
@@ -60,6 +61,6 @@ public class ItemPlug extends ItemBuildCraft {
     public int getSpriteNumber()
     {
         return 0;
-    }
+    }*/
 	
 }

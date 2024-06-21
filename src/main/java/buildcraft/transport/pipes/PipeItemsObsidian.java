@@ -28,13 +28,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.Arrays;
 import java.util.List;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityMinecartChest;
-import net.minecraft.src.projectile.EntityArrow;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.AxisAlignedBB;
+
+import net.minecraft.src.*;
+import net.minecraft.src.EntityArrow;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipeItemsObsidian extends Pipe<PipeTransportItems> implements IPowerReceptor {

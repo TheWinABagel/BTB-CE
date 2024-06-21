@@ -15,17 +15,8 @@ import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.src.Block;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.InventoryCrafting;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.IRecipe;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 public class ItemFacade extends ItemBuildCraft {
@@ -37,7 +28,8 @@ public class ItemFacade extends ItemBuildCraft {
 
 		setHasSubtypes(true);
 		setMaxDamage(0);
-		setCreativeTab(CreativeTabBuildCraft.FACADES.get());
+		//todocore creative tab
+//		setCreativeTab(CreativeTabBuildCraft.FACADES.get());
 	}
 
 	@Override
@@ -114,19 +106,20 @@ public class ItemFacade extends ItemBuildCraft {
 							|| b.blockID == Block.pumpkinLantern.blockID) {
 						continue;
 					}
-					if (!b.isOpaqueCube() || b.hasTileEntity(0) || !b.renderAsNormalBlock()) {
+					if (!b.isOpaqueCube() || b.hasTileEntity() || !b.renderAsNormalBlock()) {
 						continue;
 					}
 				}
 				ItemStack base = new ItemStack(b, 1);
 				if (base.getHasSubtypes()) {
 					Set<String> names = Sets.newHashSet();
-					for (int meta = 0; meta <= 15; meta++) {
+					//todotransport temp disable as it caused crash
+/*					for (int meta = 0; meta <= 15; meta++) {
 						ItemStack is = new ItemStack(b, 1, meta);
 						if (!Strings.isNullOrEmpty(is.getUnlocalizedName()) && names.add(is.getUnlocalizedName())) {
 							ItemFacade.addFacade(is);
 						}
-					}
+					}*/
 				} else {
 					ItemFacade.addFacade(base);
 				}
@@ -234,6 +227,50 @@ public class ItemFacade extends ItemBuildCraft {
 		@Override
 		public ItemStack getRecipeOutput() {
 			return null;
+		}
+
+		@Override
+		public boolean matches(IRecipe recipe) {
+			//todotransport facade recipe
+/*			if (recipe instanceof FacadeRecipe facadeRecipe) {
+                if (this.recipeOutput.getItem().itemID == facadeRecipe.recipeOutput.getItem().itemID && this.recipeOutput.stackSize == facadeRecipe.recipeOutput.stackSize && this.recipeOutput.getItemDamage() == facadeRecipe.recipeOutput.getItemDamage() && this.recipeItems.size() == facadeRecipe.recipeItems.size()) {
+					for (int iTempIndex = 0; iTempIndex < this.recipeItems.size(); ++iTempIndex) {
+						ItemStack item1 = (ItemStack)this.recipeItems.get(iTempIndex);
+						ItemStack item2 = (ItemStack)facadeRecipe.recipeItems.get(iTempIndex);
+						if (!(item1 == null || item2 == null ? item1 != null || item2 != null : item1.getItem().itemID != item2.getItem().itemID || item1.stackSize != item2.stackSize || item1.getItemDamage() != item2.getItemDamage())) continue;
+						return false;
+					}
+					return true;
+				}
+			}
+			return false;
+
+			ItemStack slotmatch = null;
+			for (int i = 0; i < recipe.getRecipeSize(); i++) {
+				ItemStack slot = inventorycrafting.getStackInSlot(i);
+				if (slot != null && slot.itemID == ItemFacade.this.itemID && slotmatch == null) {
+					slotmatch = slot;
+				} else if (slot != null) {
+					slotmatch = NO_MATCH;
+				}
+			}
+			if (slotmatch != null && slotmatch != NO_MATCH) {
+				int blockId = ItemFacade.getBlockId(slotmatch);
+				return blockId < Block.blocksList.length && Block.blocksList[blockId] != null && Block.blocksList[blockId].getRenderType() == 31;
+			}
+
+			return false;*/
+			return true;
+		}
+
+		@Override
+		public boolean hasSecondaryOutput() {
+			return false;
+		}
+
+		@Override
+		public ItemStack[] getSecondaryOutput(IInventory var1) {
+			return new ItemStack[0];
 		}
 	}
 

@@ -11,6 +11,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
@@ -93,7 +94,7 @@ public class PipeItemsEmerald extends PipeItemsWood implements IClientState, IGu
 		}
 
 		if (!CoreProxy.proxy.isRenderWorld(container.worldObj)) {
-			entityplayer.openGui(BuildCraftTransport.instance, GuiIds.PIPE_EMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_EMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;

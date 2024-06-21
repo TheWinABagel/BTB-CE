@@ -13,10 +13,11 @@ import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.EnumColor;
 import com.google.common.collect.MapMaker;
-import cpw.mods.fml.common.FMLCommonHandler;
-import net.fabricmc.api.EnvType;
 import java.util.EnumSet;
 import java.util.Map;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.IInventory;
@@ -77,7 +78,7 @@ public final class TravelingItem {
 	}
 
 	public static TravelingItemCache getCache() {
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT))
 			return clientCache;
 		return serverCache;
 	}
@@ -199,15 +200,9 @@ public final class TravelingItem {
 			Position motion = new Position(0, 0, 0, output);
 			motion.moveForwards(0.1 + getSpeed() * 2F);
 
-			ItemStack stack = getItemStack();
 			EntityItem entity = new EntityItem(container.worldObj, xCoord, yCoord, zCoord, getItemStack());
-			if (stack.getItem().hasCustomEntity(stack)) {
-				Entity e = stack.getItem().createEntity(container.worldObj, entity, stack);
-				if (e instanceof EntityItem)
-					entity = (EntityItem) e;
-			}
 
-			entity.lifespan = BuildCraftCore.itemLifespan;
+			entity.age = BuildCraftCore.itemLifespan;
 			entity.delayBeforeCanPickup = 10;
 
 			float f3 = 0.00F + container.worldObj.rand.nextFloat() * 0.04F - 0.02F;

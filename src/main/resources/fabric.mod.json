@@ -16,7 +16,8 @@
   "environment": "*",
   "entrypoints": {
     "btw:addon": [
-      "buildcraft.BuildCraftCore"
+      "buildcraft.BuildCraftCore",
+      "buildcraft.BuildCraftTransport"
     ]
   },
   "custom": {

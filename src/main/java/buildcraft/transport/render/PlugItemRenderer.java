@@ -1,5 +1,6 @@
 package buildcraft.transport.render;
 
+import btw.community.example.mixin.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.transport.PipeIconProvider;
 import net.minecraft.src.Block;
@@ -22,7 +23,7 @@ public class PlugItemRenderer implements IItemRenderer {
 		block = BuildCraftTransport.genericPipeBlock;
 		Icon textureID = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure pipe
 
-		block.setBlockBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.375F, 0.75F);
+		((BlockAccessor) block).callSetBlockBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.375F, 0.75F);
 		block.setBlockBoundsForItemRender();
 		render.setRenderBoundsFromBlock(block);
 		GL11.glTranslatef(translateX, translateY, translateZ + 0.25F);

@@ -7,6 +7,7 @@
  */
 package buildcraft.transport.pipes;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.core.GuiIds;
@@ -86,7 +87,7 @@ public class PipeItemsDiamond extends Pipe<PipeTransportItems> implements IClien
 				return false;
 
 		if (!CoreProxy.proxy.isRenderWorld(container.worldObj)) {
-			entityplayer.openGui(BuildCraftTransport.instance, GuiIds.PIPE_DIAMOND, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_DIAMOND, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;

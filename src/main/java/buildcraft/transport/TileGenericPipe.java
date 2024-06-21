@@ -7,6 +7,8 @@
  */
 package buildcraft.transport;
 
+import btw.community.example.mixin.ChunkTrackerEntryAccessor;
+import btw.world.chunk.ChunkTracker;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
@@ -41,7 +43,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
-import net.minecraft.server.management.PlayerInstance;
+import btw.world.chunk.ChunkTrackerEntry;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldServer;
@@ -217,13 +219,13 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 
 		if (sendClientUpdate) {
 			sendClientUpdate = false;
-			if (worldObj instanceof WorldServer) {
-				WorldServer world = (WorldServer) worldObj;
-				PlayerInstance playerInstance = world.getPlayerManager().getOrCreateChunkWatcher(xCoord >> 4, zCoord >> 4, false);
+			//todotransport high chunk tracker is private and aw wont work
+/*			if (worldObj instanceof WorldServer world) {
+                ChunkTrackerEntry playerInstance = world.getChunkTracker().getOrCreateTrackerEntry(xCoord >> 4, zCoord >> 4, false);
 				if (playerInstance != null) {
-					playerInstance.sendToAllPlayersWatchingChunk(getDescriptionPacket());
+					((ChunkTrackerEntryAccessor) playerInstance).callSendToPlayersWatchingNotWaitingFullChunk(getDescriptionPacket());
 				}
-			}
+			}*/
 		}
 	}
 
@@ -530,11 +532,11 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 			return false;
 	}
 
-	@Override
+/*	@Override
 	public void onChunkUnload() {
 		if (pipe != null)
 			pipe.onChunkUnload();
-	}
+	}*/
 
 	/**
 	 * ITankContainer implementation *
@@ -702,10 +704,10 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 		return DefaultProps.PIPE_CONTENTS_RENDER_DIST * DefaultProps.PIPE_CONTENTS_RENDER_DIST;
 	}
 
-	@Override
-	public boolean shouldRefresh(int oldID, int newID, int oldMeta, int newMeta, World world, int x, int y, int z) {
+/*	@Override
+	public boolean shouldDeleteTileEntityOnBlockChange(int newID) {
 		return oldID != newID;
-	}
+	}*/
 
 	@Override
 	public boolean isSolidOnSide(ForgeDirection side) {

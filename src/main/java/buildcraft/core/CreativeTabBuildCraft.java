@@ -3,6 +3,8 @@ package buildcraft.core;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.utils.Localization;
 import java.util.Locale;
+
+import buildcraft.transport.ItemFacade;
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Item;
@@ -15,7 +17,8 @@ public enum CreativeTabBuildCraft {
 	private final CreativeTabs tab;
 
 	private CreativeTabBuildCraft() {
-		tab = new Tab();
+//		tab = new Tab();
+		tab = null;
 	}
 
 	public CreativeTabs get() {
@@ -30,10 +33,10 @@ public enum CreativeTabBuildCraft {
 		return Localization.get("tab." + name().toLowerCase(Locale.ENGLISH));
 	}
 
-	private ItemStack getItem() {//todocore reenable with transport
+	private ItemStack getItem() {
 		switch (this) {
-/*		case FACADES:
-			return ItemFacade.getStack(Block.stoneBrick, 0);*/
+		case FACADES:
+			return ItemFacade.getStack(Block.stoneBrick, 0);
 		default:
 			return new ItemStack(BuildCraftCore.diamondGearItem);
 		}

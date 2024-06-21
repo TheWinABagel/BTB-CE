@@ -6,7 +6,9 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-/*
+
+import btw.BTWAddon;
+import btw.crafting.recipe.RecipeManager;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.GateExpansions;
@@ -15,9 +17,7 @@ import buildcraft.api.transport.IExtractionHandler;
 import buildcraft.api.transport.PipeManager;
 import buildcraft.api.transport.PipeWire;
 import buildcraft.core.DefaultProps;
-import buildcraft.core.InterModComms;
 import buildcraft.core.ItemBuildCraft;
-import buildcraft.core.Version;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.triggers.BCAction;
 import buildcraft.core.triggers.BCTrigger;
@@ -28,39 +28,23 @@ import buildcraft.transport.gates.GateExpansionPulsar;
 import buildcraft.transport.gates.GateExpansionRedstoneFader;
 import buildcraft.transport.gates.GateExpansionTimer;
 import buildcraft.transport.gates.ItemGate;
-import buildcraft.transport.network.PacketHandlerTransport;
-import buildcraft.transport.network.TransportConnectionHandler;
+import buildcraft.transport.network.PacketGateExpansionMap;
 import buildcraft.transport.pipes.*;
 import buildcraft.transport.pipes.PipePowerIron.PowerMode;
 import buildcraft.transport.triggers.*;
 import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
-import net.minecraftforge.common.Configuration;
+import net.minecraft.src.*;
+import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.Property;
 
 import java.util.LinkedList;
-*/
+
 //@Mod(version = Version.VERSION, modid = "BuildCraft|Transport", name = "Buildcraft Transport", dependencies = DefaultProps.DEPENDENCY_CORE)
 //@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerTransport.class, connectionHandler = TransportConnectionHandler.class)
-public class BuildCraftTransport {
-/*
+public class BuildCraftTransport extends BuildcraftAddon {
+
 	public static BlockGenericPipe genericPipeBlock;
 	public static float pipeDurability;
 	public static Item pipeWaterproof;
@@ -119,8 +103,13 @@ public class BuildCraftTransport {
 	public static BCAction actionExtractionPresetYellow = new ActionExtractionPreset(EnumColor.YELLOW);
 	public IIconProvider pipeIconProvider = new PipeIconProvider();
 	public IIconProvider wireIconProvider = new WireIconProvider();
-	@Instance("BuildCraft|Transport")
-	public static BuildCraftTransport instance;
+
+	public static BuildCraftTransport instance = new BuildCraftTransport();
+
+	public BuildCraftTransport() {
+		super("tsp");
+	}
+
 
 	private static class PipeRecipe {
 
@@ -170,32 +159,34 @@ public class BuildCraftTransport {
 	}
 	private static LinkedList<PipeRecipe> pipeRecipes = new LinkedList<PipeRecipe>();
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent evt) {
+	@Override
+	public void preInitialize() {
+		//todotransport Config
 		try {
-			Property durability = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.durability", DefaultProps.PIPES_DURABILITY);
+		/*	Property durability = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.durability", DefaultProps.PIPES_DURABILITY);
 			durability.comment = "How long a pipe will take to break";
-			pipeDurability = (float) durability.getDouble(DefaultProps.PIPES_DURABILITY);
+			pipeDurability = (float) durability.getDouble(DefaultProps.PIPES_DURABILITY);*/
+			pipeDurability = (float) DefaultProps.PIPES_DURABILITY;
 
-			Property exclusionItemList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.item.exclusion", new String[0]);
+			/*Property exclusionItemList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.item.exclusion", new String[0]);
 
 			String[] excludedItemBlocks = exclusionItemList.getStringList();
 			if (excludedItemBlocks != null) {
 				for (int j = 0; j < excludedItemBlocks.length; ++j) {
 					excludedItemBlocks[j] = excludedItemBlocks[j].trim();
 				}
-			} else
-				excludedItemBlocks = new String[0];
+			} else*/
+			String[] excludedItemBlocks = new String[0];
 
-			Property exclusionFluidList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.liquid.exclusion", new String[0]);
+			/*Property exclusionFluidList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.liquid.exclusion", new String[0]);
 
 			String[] excludedFluidBlocks = exclusionFluidList.getStringList();
 			if (excludedFluidBlocks != null) {
 				for (int j = 0; j < excludedFluidBlocks.length; ++j) {
 					excludedFluidBlocks[j] = excludedFluidBlocks[j].trim();
 				}
-			} else
-				excludedFluidBlocks = new String[0];
+			} else*/
+				String[] excludedFluidBlocks = new String[0];
 
 			PipeManager.registerExtractionHandler(new ExtractionHandler(excludedItemBlocks, excludedFluidBlocks));
 
@@ -203,27 +194,29 @@ public class BuildCraftTransport {
 			GateExpansions.registerExpansion(GateExpansionTimer.INSTANCE);
 			GateExpansions.registerExpansion(GateExpansionRedstoneFader.INSTANCE);
 
-			Property groupItemsTriggerProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.groupItemsTrigger", 32);
+			/*Property groupItemsTriggerProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.groupItemsTrigger", 32);
 			groupItemsTriggerProp.comment = "when reaching this amount of objects in a pipes, items will be automatically grouped";
-			groupItemsTrigger = groupItemsTriggerProp.getInt();
+			groupItemsTrigger = groupItemsTriggerProp.getInt();*/
+			groupItemsTrigger = 32;
 
 
-			Property genericPipeId = BuildCraftCore.mainConfiguration.getBlock("pipe.id", DefaultProps.GENERIC_PIPE_ID);
 
-			Property pipeWaterproofId = BuildCraftCore.mainConfiguration.getItem("pipeWaterproof.id", DefaultProps.PIPE_WATERPROOF_ID);
 
-			pipeWaterproof = new ItemBuildCraft(pipeWaterproofId.getInt());
+//			Property pipeWaterproofId = BuildCraftCore.mainConfiguration.getItem("pipeWaterproof.id", DefaultProps.PIPE_WATERPROOF_ID);
+
+			pipeWaterproof = new ItemBuildCraft(DefaultProps.PIPE_WATERPROOF_ID);
 			pipeWaterproof.setUnlocalizedName("pipeWaterproof");
-			LanguageRegistry.addName(pipeWaterproof, "Pipe Sealant");
 			CoreProxy.proxy.registerItem(pipeWaterproof);
 
-			genericPipeBlock = new BlockGenericPipe(genericPipeId.getInt());
+//			Property genericPipeId = BuildCraftCore.mainConfiguration.getBlock("pipe.id", DefaultProps.GENERIC_PIPE_ID);
+
+			genericPipeBlock = new BlockGenericPipe(DefaultProps.GENERIC_PIPE_ID);
 			CoreProxy.proxy.registerBlock(genericPipeBlock.setUnlocalizedName("pipeBlock"), ItemBlock.class);
 
-			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", "plankWood", Block.glass, "plankWood");
+			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", Block.planks, Block.glass, Block.planks);
 			pipeItemsEmerald = buildPipe(DefaultProps.PIPE_ITEMS_EMERALD_ID, PipeItemsEmerald.class, "Emerald Transport Pipe", Item.emerald, Block.glass, Item.emerald);
-			pipeItemsCobblestone = buildPipe(DefaultProps.PIPE_ITEMS_COBBLESTONE_ID, PipeItemsCobblestone.class, "Cobblestone Transport Pipe", "cobblestone", Block.glass, "cobblestone");
-			pipeItemsStone = buildPipe(DefaultProps.PIPE_ITEMS_STONE_ID, PipeItemsStone.class, "Stone Transport Pipe", "stone", Block.glass, "stone");
+			pipeItemsCobblestone = buildPipe(DefaultProps.PIPE_ITEMS_COBBLESTONE_ID, PipeItemsCobblestone.class, "Cobblestone Transport Pipe", Block.cobblestone, Block.glass, Block.cobblestone);
+			pipeItemsStone = buildPipe(DefaultProps.PIPE_ITEMS_STONE_ID, PipeItemsStone.class, "Stone Transport Pipe", Block.stone, Block.glass, Block.stone);
 			pipeItemsQuartz = buildPipe(DefaultProps.PIPE_ITEMS_QUARTZ_ID, PipeItemsQuartz.class, "Quartz Transport Pipe", Block.blockNetherQuartz, Block.glass, Block.blockNetherQuartz);
 			pipeItemsIron = buildPipe(DefaultProps.PIPE_ITEMS_IRON_ID, PipeItemsIron.class, "Iron Transport Pipe", Item.ingotIron, Block.glass, Item.ingotIron);
 			pipeItemsGold = buildPipe(DefaultProps.PIPE_ITEMS_GOLD_ID, PipeItemsGold.class, "Golden Transport Pipe", Item.ingotGold, Block.glass, Item.ingotGold);
@@ -232,7 +225,7 @@ public class BuildCraftTransport {
 			pipeItemsLapis = buildPipe(DefaultProps.PIPE_ITEMS_LAPIS_ID, PipeItemsLapis.class, "Lapis Transport Pipe", Block.blockLapis, Block.glass, Block.blockLapis);
 			pipeItemsDaizuli = buildPipe(DefaultProps.PIPE_ITEMS_DAIZULI_ID, PipeItemsDaizuli.class, "Daizuli Transport Pipe", Block.blockLapis, Block.glass, Item.diamond);
 			pipeItemsSandstone = buildPipe(DefaultProps.PIPE_ITEMS_SANDSTONE_ID, PipeItemsSandstone.class, "Sandstone Transport Pipe", Block.sandStone, Block.glass, Block.sandStone);
-			pipeItemsVoid = buildPipe(DefaultProps.PIPE_ITEMS_VOID_ID, PipeItemsVoid.class, "Void Transport Pipe", "dyeBlack", Block.glass, Item.redstone);
+			pipeItemsVoid = buildPipe(DefaultProps.PIPE_ITEMS_VOID_ID, PipeItemsVoid.class, "Void Transport Pipe", new ItemStack(Item.dyePowder, 1, 0), Block.glass, Item.redstone);
 			pipeItemsEmzuli = buildPipe(DefaultProps.PIPE_ITEMS_EMZULI_ID, PipeItemsEmzuli.class, "Emzuli Transport Pipe", Block.blockLapis, Block.glass, Item.emerald);
 
 			pipeFluidsWood = buildPipe(DefaultProps.PIPE_LIQUIDS_WOOD_ID, PipeFluidsWood.class, "Wooden Waterproof Pipe", pipeWaterproof, pipeItemsWood);
@@ -258,38 +251,38 @@ public class BuildCraftTransport {
 			// pipeItemsStipes = createPipe(DefaultProps.PIPE_ITEMS_STRIPES_ID, PipeItemsStripes.class, "Stripes Transport Pipe", new ItemStack(Item.dyePowder,
 			// 1, 0), Block.glass, new ItemStack(Item.dyePowder, 1, 11));
 
-			int pipeWireId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeWire.id", DefaultProps.PIPE_WIRE).getInt(DefaultProps.PIPE_WIRE);
-			pipeWire = new ItemPipeWire(pipeWireId);
-			LanguageRegistry.addName(pipeWire, "Pipe Wire");
+//			int pipeWireId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeWire.id", DefaultProps.PIPE_WIRE).getInt(DefaultProps.PIPE_WIRE);
+
+			pipeWire = new ItemPipeWire(DefaultProps.PIPE_WIRE);
 			CoreProxy.proxy.registerItem(pipeWire);
 			PipeWire.item = pipeWire;
 
-			Property pipeGateId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeGate.id", DefaultProps.GATE_ID);
-			pipeGate = new ItemGate(pipeGateId.getInt());
+//			Property pipeGateId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeGate.id", DefaultProps.GATE_ID);
+			pipeGate = new ItemGate(DefaultProps.GATE_ID);
 			pipeGate.setUnlocalizedName("pipeGate");
 			CoreProxy.proxy.registerItem(pipeGate);
 
-			Property pipeFacadeId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeFacade.id", DefaultProps.PIPE_FACADE_ID);
-			facadeItem = new ItemFacade(pipeFacadeId.getInt());
+//			Property pipeFacadeId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeFacade.id", DefaultProps.PIPE_FACADE_ID);
+			facadeItem = new ItemFacade(DefaultProps.PIPE_FACADE_ID);
 			facadeItem.setUnlocalizedName("pipeFacade");
 			CoreProxy.proxy.registerItem(facadeItem);
 
-			Property pipePlugId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipePlug.id", DefaultProps.PIPE_PLUG_ID);
-			plugItem = new ItemPlug(pipePlugId.getInt());
+//			Property pipePlugId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipePlug.id", DefaultProps.PIPE_PLUG_ID);
+			plugItem = new ItemPlug(DefaultProps.PIPE_PLUG_ID);
 			plugItem.setUnlocalizedName("pipePlug");
 			CoreProxy.proxy.registerItem(plugItem);
 
-			Property filteredBufferId = BuildCraftCore.mainConfiguration.getBlock("filteredBuffer.id", DefaultProps.FILTERED_BUFFER_ID);
-			filteredBufferBlock = new BlockFilteredBuffer(filteredBufferId.getInt());
+//			Property filteredBufferId = BuildCraftCore.mainConfiguration.getBlock("filteredBuffer.id", DefaultProps.FILTERED_BUFFER_ID);
+			filteredBufferBlock = new BlockFilteredBuffer(DefaultProps.FILTERED_BUFFER_ID);
 			CoreProxy.proxy.registerBlock(filteredBufferBlock.setUnlocalizedName("filteredBufferBlock"));
 			CoreProxy.proxy.addName(filteredBufferBlock, "Filtered Buffer");
 		} finally {
-			BuildCraftCore.mainConfiguration.save();
+//			BuildCraftCore.mainConfiguration.save();
 		}
 	}
 
-	@EventHandler
-	public void init(FMLInitializationEvent evt) {
+	@Override
+	public void initialize() {
 		// Register connection handler
 		// MinecraftForge.registerConnectionHandler(new ConnectionHandler());
 
@@ -323,11 +316,12 @@ public class BuildCraftTransport {
 		}
 
 		TransportProxy.proxy.registerRenderers();
-		NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
+		NetworkRegistry.instance().registerGuiHandler("tsp", new GuiHandler());
 	}
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent evt) {
+
+	@Override
+	public void postInitialize() {
 		ItemFacade.initialize();
 
 		for (PipeContents kind : PipeContents.values()) {
@@ -365,7 +359,7 @@ public class BuildCraftTransport {
 	public void loadRecipes() {
 
 		// Add base recipe for pipe waterproof.
-		GameRegistry.addShapelessRecipe(new ItemStack(pipeWaterproof, 1), new ItemStack(Item.dyePowder, 1, 2));
+		RecipeManager.addShapelessRecipe(new ItemStack(pipeWaterproof, 1), new ItemStack[]{new ItemStack(Item.dyePowder, 1, 2)});
 
 		// Add pipe recipes
 		for (PipeRecipe pipe : pipeRecipes) {
@@ -377,30 +371,30 @@ public class BuildCraftTransport {
 		}
 
 		CoreProxy.proxy.addCraftingRecipe(new ItemStack(filteredBufferBlock, 1),
-				new Object[]{"wdw", "wcw", "wpw", 'w', "plankWood", 'd',
+				new Object[]{"wdw", "wcw", "wpw", 'w', Block.planks, 'd',
 			BuildCraftTransport.pipeItemsDiamond, 'c', Block.chest, 'p',
 			Block.pistonBase});
 
 		//Facade turning helper
-		GameRegistry.addRecipe(facadeItem.new FacadeRecipe());
+		CraftingManager.getInstance().getRecipes().add(facadeItem.new FacadeRecipe());
 
 		BuildcraftRecipes.assemblyTable.addRecipe(1000, new ItemStack(plugItem, 8), new ItemStack(pipeStructureCobblestone));
 	}
 
-	@EventHandler
+/*	@EventHandler
 	public void processIMCRequests(IMCEvent event) {
 		InterModComms.processIMC(event);
-	}
+	}*/
 
 	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {
 		String name = Character.toLowerCase(clas.getSimpleName().charAt(0)) + clas.getSimpleName().substring(1);
 
-		Property prop = BuildCraftCore.mainConfiguration.getItem(name + ".id", defaultID);
+/*		Property prop = BuildCraftCore.mainConfiguration.getItem(name + ".id", defaultID);
 
-		int id = prop.getInt(defaultID);
-		ItemPipe res = BlockGenericPipe.registerPipe(id, clas);
+		int id = prop.getInt(defaultID);*/
+		ItemPipe res = BlockGenericPipe.registerPipe(defaultID, clas);
 		res.setUnlocalizedName(clas.getSimpleName());
-		LanguageRegistry.addName(res, descr);
+		/*LanguageRegistry.addName(res, descr);*/
 
 		// Add appropriate recipe to temporary list
 		PipeRecipe recipe = new PipeRecipe();
@@ -427,5 +421,11 @@ public class BuildCraftTransport {
 		}
 
 		return res;
-	}*/
+	}
+
+	@Override
+	public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
+		PacketGateExpansionMap pkt = new PacketGateExpansionMap();
+		PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), playerMP);
+	}
 }

@@ -1,5 +1,6 @@
 package buildcraft.transport.render;
 
+import btw.community.example.mixin.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.CoreConstants;
 import net.minecraft.src.Block;
@@ -25,7 +26,7 @@ public class PipeItemRenderer implements IItemRenderer {
 		if (icon == null)
 			icon = ((TextureMap) Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture)).getAtlasSprite("missingno");
 
-		block.setBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
+		((BlockAccessor) block).callSetBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
 		block.setBlockBoundsForItemRender();
 		render.setRenderBoundsFromBlock(block);
 
@@ -55,7 +56,7 @@ public class PipeItemRenderer implements IItemRenderer {
 		render.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, icon);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) block).callSetBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	/**
