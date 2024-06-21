@@ -7,6 +7,7 @@
  */
 package buildcraft.core.render;
 
+import btw.community.example.mixin.TessellatorAccessor;
 import buildcraft.core.EntityBlock;
 import java.util.Arrays;
 import net.minecraft.src.Block;
@@ -188,7 +189,7 @@ public class RenderEntityBlock extends Render {
 		if (blockAccess == null)
 			doLight = false;
 
-		if (doTessellating && !tessellator.isDrawing)
+		if (doTessellating && !((TessellatorAccessor) tessellator).isIsDrawing())
 			tessellator.startDrawingQuads();
 
 		float light = 0;
@@ -246,7 +247,7 @@ public class RenderEntityBlock extends Render {
 		if (info.renderSide[5])
 			renderBlocks.renderFaceXPos(info.baseBlock, x, y, z, info.getBlockTextureFromSide(5));
 
-		if (doTessellating && tessellator.isDrawing)
+		if (doTessellating && ((TessellatorAccessor) tessellator).isIsDrawing())
 			tessellator.draw();
 	}
 //

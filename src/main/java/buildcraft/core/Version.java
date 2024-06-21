@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import net.minecraftforge.common.Property;
 
 public class Version implements Runnable {
 
@@ -41,7 +40,7 @@ public class Version implements Runnable {
 		if (!isOutdated())
 			return false;
 
-		Property property = BuildCraftCore.mainConfiguration.get("vars", "version.seen", VERSION);
+/*		Property property = BuildCraftCore.mainConfiguration.get("vars", "version.seen", VERSION);
 		property.comment = "indicates the last version the user has been informed about and will suppress further notices on it.";
 		String seenVersion = property.getString();
 
@@ -49,7 +48,7 @@ public class Version implements Runnable {
 			return false;
 
 		property.set(recommendedVersion);
-		BuildCraftCore.mainConfiguration.save();
+		BuildCraftCore.mainConfiguration.save();*/
 		return true;
 	}
 

@@ -27,7 +27,7 @@ public class TriggerFluidContainer extends BCTrigger implements ITileTrigger {
 	public State state;
 
 	public TriggerFluidContainer(State state) {
-		super("buildcraft:fluid." + state.name().toLowerCase(Locale.ENGLISH), "buildcraft.fluid." + state.name().toLowerCase(Locale.ENGLISH));
+		super("btb:fluid." + state.name().toLowerCase(Locale.ENGLISH), "buildcraft.fluid." + state.name().toLowerCase(Locale.ENGLISH));
 		this.state = state;
 	}
 

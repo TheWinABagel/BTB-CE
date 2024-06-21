@@ -2,8 +2,6 @@ package net.minecraftforge.fluids;
 
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
 
 import java.util.*;
 
@@ -53,7 +51,7 @@ public abstract class FluidContainerRegistry {
             emptyContainers.add(Arrays.asList(data.emptyContainer.itemID, data.emptyContainer.getItemDamage()));
          }
 
-         MinecraftForge.EVENT_BUS.post(new FluidContainerRegisterEvent(data));
+//         MinecraftForge.EVENT_BUS.post(new FluidContainerRegisterEvent(data));
          return true;
       }
    }
@@ -121,16 +119,16 @@ public abstract class FluidContainerRegistry {
       registerFluidContainer(FluidRegistry.WATER, new ItemStack(Item.potion), EMPTY_BOTTLE);
    }
 
-   public static class FluidContainerRegisterEvent extends Event {
-      /**
+/*   public static class FluidContainerRegisterEvent extends Event {
+      *//**
        * The string value for the tag (cannot be empty).
-       */
+       *//*
       public final FluidContainerData data;
 
       public FluidContainerRegisterEvent(FluidContainerData data) {
          this.data = data.copy();
       }
-   }
+   }*/
 
    public static class FluidContainerData {
       public final FluidStack fluid;

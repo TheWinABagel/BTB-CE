@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "btb-ce",
+  "id": "btb",
   "version": "${version}",
   "name": "Better Then Buildcraft: CE",
   "description": "This is an example description! Tell everyone what your mod is about!",
@@ -15,17 +15,12 @@
   "icon": "assets/modid/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "btw.community.example.ExampleMod"
-    ],
     "btw:addon": [
-      "btw.community.example.ExampleAddon"
+      "buildcraft.BuildCraftCore"
     ]
   },
   "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/class_795": ["buildcraft/api/interfaces/IWorldExtension"]
-    }
+
   },
   "mixins": [
     "modid.mixins.json"

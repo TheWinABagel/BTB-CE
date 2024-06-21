@@ -1,7 +1,7 @@
 package net.minecraftforge.fluids;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
+import net.minecraft.src.Material;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 

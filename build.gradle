@@ -98,8 +98,8 @@ jar {
 	sourceSets {
 		main {
 			java {
-				exclude 'buildcraft/api/**'
-				exclude 'buildcraft/core/**'
+//				exclude 'buildcraft/api/**'
+//				exclude 'buildcraft/core/**'
 				exclude 'buildcraft/transport/**'
 				exclude 'buildcraft/energy/**'
 				exclude 'buildcraft/silicon/**'

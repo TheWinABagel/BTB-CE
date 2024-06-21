@@ -11,11 +11,10 @@ import net.minecraft.src.IInventory;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.LinkedList;
 import java.util.List;
-
+//todocore oreDict
 public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 
 	public static final AssemblyRecipeManager INSTANCE = new AssemblyRecipeManager();
@@ -45,14 +44,15 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 
 			processedInput = new Object[inputs.length];
 			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i] instanceof String)
+				/*if (inputs[i] instanceof String)
 					processedInput[i] = OreDictionary.getOres((String) inputs[i]);
-				else if (inputs[i] instanceof ItemStack)
+				else */
+					if (inputs[i] instanceof ItemStack)
 					processedInput[i] = inputs[i];
 				else if (inputs[i] instanceof Item)
 					processedInput[i] = new ItemStack((Item) inputs[i]);
 				else if (inputs[i] instanceof Block)
-					processedInput[i] = new ItemStack((Block) inputs[i], 1, OreDictionary.WILDCARD_VALUE);
+					processedInput[i] = new ItemStack((Block) inputs[i], 1, Short.MAX_VALUE);
 				else if (inputs[i] instanceof Integer)
 					processedInput[i] = inputs[i];
 				else
@@ -110,7 +110,8 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 						if (item == null)
 							continue;
 						for (ItemStack oreItem : oreList) {
-							if (OreDictionary.itemMatches(oreItem, item, true)) {
+//							if (OreDictionary.itemMatches(oreItem, item, true)) {
+							if (oreItem.itemID == item.itemID) {
 								found += item.stackSize;
 								break;
 							}

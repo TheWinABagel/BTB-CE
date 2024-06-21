@@ -22,7 +22,7 @@ public class DefaultProps {
 	public static int PIPE_CONTENTS_RENDER_DIST = 24;
 
 	public static String TEXTURE_PATH_GUI = "textures/gui";
-	public static String TEXTURE_PATH_BLOCKS = "buildcraft:textures/blocks";
+	public static String TEXTURE_PATH_BLOCKS = "btb:textures/blocks";
 	public static String TEXTURE_PATH_ENTITIES = "textures/entities";
 
 	public static final String DEFAULT_LANGUAGE = "en_US";

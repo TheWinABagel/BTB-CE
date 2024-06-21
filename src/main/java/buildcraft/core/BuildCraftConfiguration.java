@@ -10,20 +10,18 @@
 package buildcraft.core;
 
 import java.io.File;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 
-public class BuildCraftConfiguration extends Configuration {
+public class BuildCraftConfiguration /*extends Configuration */{
 
 	public BuildCraftConfiguration(File file) {
-		super(file);
+//		super(file);
 	}
 
-	@Override
+/*	@Override
 	public void save() {
 		Property versionProp = get(CATEGORY_GENERAL, "version", Version.VERSION);
 		versionProp.set(Version.VERSION);
 		super.save();
-	}
+	}*/
 
 }

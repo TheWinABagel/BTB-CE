@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import btw.community.example.extensions.IEntityAdditionalSpawnData;
 import net.minecraft.src.Entity;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
@@ -28,8 +29,6 @@ import buildcraft.core.utils.BlockUtil;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
-
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 

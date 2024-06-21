@@ -7,6 +7,8 @@
  */
 package buildcraft;
 
+import btw.BTWAddon;
+import btw.community.example.mixin.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -24,37 +26,16 @@ import buildcraft.core.triggers.*;
 import buildcraft.core.triggers.ActionMachineControl.Mode;
 import buildcraft.core.utils.BCLog;
 import buildcraft.core.utils.Localization;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.*;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockFluid;
-import net.minecraft.src.EntityList;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Icon;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Property;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
+import java.util.Map;
 import java.util.TreeMap;
 
-@Mod(name = "BuildCraft", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Core", acceptedMinecraftVersions = "[1.6.4,1.7)", dependencies = "required-after:Forge@[9.11.1.953,)")
-@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = true)
-public class BuildCraftCore {
+public class BuildCraftCore extends BTWAddon {
 
 	public static enum RenderMode {
 
@@ -117,18 +98,37 @@ public class BuildCraftCore {
 	public static boolean forcePneumaticPower = true;
 	public static boolean consumeWaterSources = false;
 	public static BptItem[] itemBptProps = new BptItem[Item.itemsList.length];
-	@Instance("BuildCraft|Core")
+
 	public static BuildCraftCore instance;
 
-	@EventHandler
-	public void loadConfiguration(FMLPreInitializationEvent evt) {
+	@Override
+	public void handleConfigProperties(Map<String, String> propertyValues) {
+		super.handleConfigProperties(propertyValues);
+	}
 
+	@Override
+	public void postSetup() {
+		this.addonName = "Better Then Buildcraft: CE";
+		this.modID = "btb";
+	}
+
+	@Override
+	public void preInitialize() {
 		BCLog.initLog();
 
 		BuildcraftRecipes.assemblyTable = AssemblyRecipeManager.INSTANCE;
 		BuildcraftRecipes.integrationTable = IntegrationRecipeManager.INSTANCE;
 		BuildcraftRecipes.refinery = RefineryRecipeManager.INSTANCE;
 
+		woodenGearItem = (new ItemBuildCraft(DefaultProps.WOODEN_GEAR_ID)).setUnlocalizedName("woodenGearItem").setTextureName("woodenGearItem");
+		stoneGearItem = (new ItemBuildCraft(DefaultProps.STONE_GEAR_ID)).setUnlocalizedName("stoneGearItem");
+		ironGearItem = (new ItemBuildCraft(DefaultProps.IRON_GEAR_ID)).setUnlocalizedName("ironGearItem");
+		goldGearItem = (new ItemBuildCraft(DefaultProps.GOLDEN_GEAR_ID)).setUnlocalizedName("goldGearItem");
+		diamondGearItem = (new ItemBuildCraft(DefaultProps.DIAMOND_GEAR_ID)).setUnlocalizedName("diamondGearItem");
+
+		wrenchItem = (new ItemWrench(DefaultProps.WRENCH_ID)).setUnlocalizedName("wrenchItem");
+		//todocore config
+/*
 		mainConfiguration = new BuildCraftConfiguration(new File(evt.getModConfigurationDirectory(), "buildcraft/main.conf"));
 		try {
 			mainConfiguration.load();
@@ -222,49 +222,44 @@ public class BuildCraftCore {
 			colorBlindProp.comment = "Set to true to enable alternate textures";
 			colorBlindMode = colorBlindProp.getBoolean(false);
 
-			MinecraftForge.EVENT_BUS.register(this);
-
 		} finally {
 			if (mainConfiguration.hasChanged()) {
 				mainConfiguration.save();
 			}
-		}
+		}*/
 	}
 
-	@EventHandler
-	public void initialize(FMLInitializationEvent evt) {
+	@Override
+	public void initialize() {
 		// MinecraftForge.registerConnectionHandler(new ConnectionHandler());
 		ActionManager.registerTriggerProvider(new DefaultTriggerProvider());
 		ActionManager.registerActionProvider(new DefaultActionProvider());
 
-		if (BuildCraftCore.modifyWorld) {
-			MinecraftForge.EVENT_BUS.register(new SpringPopulate());
-		}
 
 		if (BuildCraftCore.loadDefaultRecipes) {
 			loadRecipes();
 		}
-		EntityRegistry.registerModEntity(EntityRobot.class, "bcRobot", EntityIds.ROBOT, instance, 50, 1, true);
+		//todocore registering entities...?
+/*		EntityRegistry.registerModEntity(EntityRobot.class, "bcRobot", EntityIds.ROBOT, instance, 50, 1, true);
 		EntityRegistry.registerModEntity(EntityPowerLaser.class, "bcLaser", EntityIds.LASER, instance, 50, 1, true);
 		EntityRegistry.registerModEntity(EntityEnergyLaser.class, "bcEnergyLaser", EntityIds.ENERGY_LASER, instance, 50, 1, true);
-		EntityList.classToStringMapping.remove(EntityRobot.class);
-		EntityList.classToStringMapping.remove(EntityPowerLaser.class);
-		EntityList.classToStringMapping.remove(EntityEnergyLaser.class);
-		EntityList.stringToClassMapping.remove("BuildCraft|Core.bcRobot");
-		EntityList.stringToClassMapping.remove("BuildCraft|Core.bcLaser");
-		EntityList.stringToClassMapping.remove("BuildCraft|Core.bcEnergyLaser");
+		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
+		EntityListAccessor.getClassToStringMapping().remove(EntityPowerLaser.class);
+		EntityListAccessor.getClassToStringMapping().remove(EntityEnergyLaser.class);
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcRobot");
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcLaser");
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");*/
 
 		CoreProxy.proxy.initializeRendering();
 		CoreProxy.proxy.initializeEntityRendering();
 
-		Localization.addLocalization("/lang/buildcraft/", DefaultProps.DEFAULT_LANGUAGE);
+		Localization.addLocalization("/lang/btb/", DefaultProps.DEFAULT_LANGUAGE);
 
 	}
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit() {
 		for (Block block : Block.blocksList) {
-			if (block instanceof BlockFluid || block instanceof IFluidBlock || block instanceof IPlantable) {
+			if (block instanceof BlockFluid || block instanceof IFluidBlock /*|| block instanceof IPlantable*/) {
 				BuildCraftAPI.softBlocks[block.blockID] = true;
 			}
 		}
@@ -272,43 +267,40 @@ public class BuildCraftCore {
 		BuildCraftAPI.softBlocks[Block.snow.blockID] = true;
 		BuildCraftAPI.softBlocks[Block.vine.blockID] = true;
 		BuildCraftAPI.softBlocks[Block.fire.blockID] = true;
-		TickRegistry.registerTickHandler(new TickHandlerCoreClient(), Side.CLIENT);
-
 	}
 
-	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event) {
-		event.registerServerCommand(new CommandBuildCraft());
+
+	public void serverStarting() {
+		registerAddonCommand(new CommandBuildCraft());
 	}
 
-	@ForgeSubscribe
 	@Environment(EnvType.CLIENT)
-	public void textureHook(TextureStitchEvent.Pre event) {
-		if (event.map.textureType == 1) {
+	public static void textureHook(TextureMap map) {
+		if (map.getTextureType() == 1) {
 			iconProvider = new CoreIconProvider();
-			iconProvider.registerIcons(event.map);
-			ActionTriggerIconProvider.INSTANCE.registerIcons(event.map);
-		} else if (event.map.textureType == 0) {
-			BuildCraftCore.redLaserTexture = event.map.registerIcon("buildcraft:blockRedLaser");
-			BuildCraftCore.blueLaserTexture = event.map.registerIcon("buildcraft:blockBlueLaser");
-			BuildCraftCore.stripesLaserTexture = event.map.registerIcon("buildcraft:blockStripesLaser");
-			BuildCraftCore.transparentTexture = event.map.registerIcon("buildcraft:blockTransparentLaser");
+			iconProvider.registerIcons(map);
+			ActionTriggerIconProvider.INSTANCE.registerIcons(map);
+		} else if (map.getTextureType() == 0) {
+			BuildCraftCore.redLaserTexture = map.registerIcon("btb:blockRedLaser");
+			BuildCraftCore.blueLaserTexture = map.registerIcon("btb:blockBlueLaser");
+			BuildCraftCore.stripesLaserTexture = map.registerIcon("btb:blockStripesLaser");
+			BuildCraftCore.transparentTexture = map.registerIcon("btb:blockTransparentLaser");
 		}
 
 	}
 
 	public void loadRecipes() {
 		CoreProxy.proxy.addCraftingRecipe(new ItemStack(wrenchItem), "I I", " G ", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(woodenGearItem), " S ", "S S", " S ", 'S', "stickWood");
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(stoneGearItem), " I ", "IGI", " I ", 'I', "cobblestone", 'G',
+		CoreProxy.proxy.addCraftingRecipe(new ItemStack(woodenGearItem), " S ", "S S", " S ", 'S', Item.stick);
+		CoreProxy.proxy.addCraftingRecipe(new ItemStack(stoneGearItem), " I ", "IGI", " I ", 'I', Block.cobblestone, 'G',
 				woodenGearItem);
 		CoreProxy.proxy.addCraftingRecipe(new ItemStack(ironGearItem), " I ", "IGI", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
 		CoreProxy.proxy.addCraftingRecipe(new ItemStack(goldGearItem), " I ", "IGI", " I ", 'I', Item.ingotGold, 'G', ironGearItem);
 		CoreProxy.proxy.addCraftingRecipe(new ItemStack(diamondGearItem), " I ", "IGI", " I ", 'I', Item.diamond, 'G', goldGearItem);
 	}
 
-	@EventHandler
-	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
+
+/*	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
 		InterModComms.processIMC(event);
-	}
+	}*/
 }

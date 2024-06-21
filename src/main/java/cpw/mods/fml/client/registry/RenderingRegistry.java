@@ -1,0 +1,107 @@
+package cpw.mods.fml.client.registry;
+
+import btw.community.example.mixin.RenderBipedAccessor;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.ObjectArrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import net.minecraft.src.Block;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.Render;
+import net.minecraft.src.RenderBiped;
+import net.minecraft.src.RenderManager;
+import net.minecraft.src.Entity;
+import net.minecraft.src.IBlockAccess;
+
+public class RenderingRegistry {
+    private static final RenderingRegistry INSTANCE = new RenderingRegistry();
+    private int nextRenderId = 40;
+    private Map<Integer, ISimpleBlockRenderingHandler> blockRenderers = Maps.newHashMap();
+    private List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
+
+    public static int addNewArmourRendererPrefix(String armor) {
+        RenderBipedAccessor.setBipedArmorFilenamePrefix(ObjectArrays.concat(RenderBipedAccessor.getBipedArmorFilenamePrefix(), armor));
+        return RenderBipedAccessor.getBipedArmorFilenamePrefix().length - 1;
+    }
+
+    public static void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer) {
+        instance().entityRenderers.add(new RenderingRegistry.EntityRendererInfo(entityClass, renderer));
+    }
+
+    public static void registerBlockHandler(ISimpleBlockRenderingHandler handler) {
+        instance().blockRenderers.put(handler.getRenderId(), handler);
+    }
+
+    public static void registerBlockHandler(int renderId, ISimpleBlockRenderingHandler handler) {
+        instance().blockRenderers.put(renderId, handler);
+    }
+
+    public static int getNextAvailableRenderId() {
+        return instance().nextRenderId++;
+    }
+
+    /** @deprecated */
+    @Deprecated
+    public static int addTextureOverride(String fileToOverride, String fileToAdd) {
+        return -1;
+    }
+
+    public static void addTextureOverride(String path, String overlayPath, int index) {
+    }
+
+    /** @deprecated */
+    @Deprecated
+    public static int getUniqueTextureIndex(String path) {
+        return -1;
+    }
+
+    /** @deprecated */
+    @Deprecated
+    public static RenderingRegistry instance() {
+        return INSTANCE;
+    }
+
+    public boolean renderWorldBlock(RenderBlocks renderer, IBlockAccess world, int x, int y, int z, Block block, int modelId) {
+        if (!this.blockRenderers.containsKey(modelId)) {
+            return false;
+        } else {
+            ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelId);
+            return bri.renderWorldBlock(world, x, y, z, block, modelId, renderer);
+        }
+    }
+
+    public void renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID) {
+        if (this.blockRenderers.containsKey(modelID)) {
+            ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelID);
+            bri.renderInventoryBlock(block, metadata, modelID, renderer);
+        }
+    }
+
+    public boolean renderItemAsFull3DBlock(int modelId) {
+        ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelId);
+        return bri != null && bri.shouldRender3DInInventory();
+    }
+
+    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
+        Iterator i$ = this.entityRenderers.iterator();
+
+        while(i$.hasNext()) {
+            RenderingRegistry.EntityRendererInfo info = (RenderingRegistry.EntityRendererInfo)i$.next();
+            rendererMap.put(info.target, info.renderer);
+            info.renderer.setRenderManager(RenderManager.instance);
+        }
+
+    }
+
+    private static class EntityRendererInfo {
+        private Class<? extends Entity> target;
+        private Render renderer;
+
+        public EntityRendererInfo(Class<? extends Entity> target, Render renderer) {
+            this.target = target;
+            this.renderer = renderer;
+        }
+    }
+}

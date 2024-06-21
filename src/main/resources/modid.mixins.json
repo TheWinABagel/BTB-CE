@@ -4,11 +4,17 @@
   "package": "btw.community.example.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AddonHandlerMixin",
+    "BlockAccessor",
     "BlockMixin",
     "ChunkProviderGenerateMixin",
+    "EntityListAccessor",
+    "EntityPlayerAccessor",
     "ItemMixin",
     "ItemStackMixin",
     "NBTTagListMixin",
+    "RenderBipedAccessor",
+    "TessellatorAccessor",
     "TileEntityMixin",
     "accessors.ItemStackAccessor",
     "accessors.NBTTagCompoundAccessor",
@@ -16,6 +22,7 @@
     "accessors.RenderBlocksAccessor"
   ],
   "client": [
+    "TextureMapMixin",
     "WorldMixin"
   ],
   "injectors": {

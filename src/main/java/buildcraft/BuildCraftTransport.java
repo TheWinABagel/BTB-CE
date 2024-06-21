@@ -6,7 +6,7 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-
+/*
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.GateExpansions;
@@ -56,11 +56,11 @@ import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.Property;
 
 import java.util.LinkedList;
-
-@Mod(version = Version.VERSION, modid = "BuildCraft|Transport", name = "Buildcraft Transport", dependencies = DefaultProps.DEPENDENCY_CORE)
-@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerTransport.class, connectionHandler = TransportConnectionHandler.class)
+*/
+//@Mod(version = Version.VERSION, modid = "BuildCraft|Transport", name = "Buildcraft Transport", dependencies = DefaultProps.DEPENDENCY_CORE)
+//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerTransport.class, connectionHandler = TransportConnectionHandler.class)
 public class BuildCraftTransport {
-
+/*
 	public static BlockGenericPipe genericPipeBlock;
 	public static float pipeDurability;
 	public static Item pipeWaterproof;
@@ -427,5 +427,5 @@ public class BuildCraftTransport {
 		}
 
 		return res;
-	}
+	}*/
 }

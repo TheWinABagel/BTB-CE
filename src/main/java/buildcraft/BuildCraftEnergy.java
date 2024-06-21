@@ -6,7 +6,7 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-
+/*
 import buildcraft.api.fuels.IronEngineCoolant;
 import buildcraft.api.fuels.IronEngineFuel;
 import buildcraft.api.recipes.BuildcraftRecipes;
@@ -49,11 +49,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.TreeMap;
-
-@Mod(name = "BuildCraft Energy", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Energy", dependencies = DefaultProps.DEPENDENCY_CORE)
-@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, clientSideRequired = true, serverSideRequired = true)
+*/
+//@Mod(name = "BuildCraft Energy", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Energy", dependencies = DefaultProps.DEPENDENCY_CORE)
+//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, clientSideRequired = true, serverSideRequired = true)
 public class BuildCraftEnergy {
-
+/*
 	public final static int ENERGY_REMOVE_BLOCK = 25;
 	public final static int ENERGY_EXTRACT_ITEM = 2;
 	public static boolean spawnOilSprings = true;
@@ -352,5 +352,5 @@ public class BuildCraftEnergy {
 	// return (tile instanceof TilePollution && ((TilePollution)
 	// tile).saturation < 100);
 	// }
-	// }
+	// }*/
 }

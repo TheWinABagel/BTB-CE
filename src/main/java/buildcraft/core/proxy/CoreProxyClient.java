@@ -9,6 +9,7 @@
 
 package buildcraft.core.proxy;
 
+import btw.community.example.mixin.EntityPlayerAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
@@ -22,12 +23,10 @@ import buildcraft.core.render.RenderRobot;
 import buildcraft.core.render.RenderingEntityBlocks;
 import buildcraft.core.render.RenderingMarkers;
 import buildcraft.core.render.RenderingOil;
-import buildcraft.transport.render.TileEntityPickupFX;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 import java.util.List;
+
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.src.Block;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.WorldClient;
@@ -48,12 +47,12 @@ public class CoreProxyClient extends CoreProxy {
 	/* INSTANCES */
 	@Override
 	public Object getClient() {
-		return FMLClientHandler.instance().getClient();
+		return Minecraft.getMinecraft();
 	}
 
 	@Override
 	public World getClientWorld() {
-		return FMLClientHandler.instance().getClient().theWorld;
+		return Minecraft.getMinecraft().theWorld;
 	}
 
 	/* ENTITY HANDLING */
@@ -84,12 +83,12 @@ public class CoreProxyClient extends CoreProxy {
 
 	@Override
 	public void addName(Object obj, String s) {
-		LanguageRegistry.addName(obj, s);
+		/*LanguageRegistry.addName(obj, s);*/
 	}
 
 	@Override
 	public void addLocalization(String s1, String string) {
-		LanguageRegistry.instance().addStringLocalization(s1, string);
+		/*LanguageRegistry.instance().addStringLocalization(s1, string);*/
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class CoreProxyClient extends CoreProxy {
 	/* GFX */
 	@Override
 	public void obsidianPipePickup(World world, EntityItem item, TileEntity tile) {
-		FMLClientHandler.instance().getClient().effectRenderer.addEffect(new TileEntityPickupFX(world, item, tile));
+		/*FMLClientHandler.instance().getClient().effectRenderer.addEffect(new TileEntityPickupFX(world, item, tile));*/
 	}
 
 	@Override
@@ -130,13 +129,13 @@ public class CoreProxyClient extends CoreProxy {
 	/* NETWORKING */
 	@Override
 	public void sendToServer(Packet packet) {
-		FMLClientHandler.instance().getClient().getNetHandler().addToSendQueue(packet);
+		Minecraft.getMinecraft().getNetHandler().addToSendQueue(packet);
 	}
 
 	/* BUILDCRAFT PLAYER */
 	@Override
 	public String playerName() {
-		return FMLClientHandler.instance().getClient().thePlayer.username;
+		return ((EntityPlayerAccessor) Minecraft.getMinecraft().thePlayer).getUsername();
 	}
 
 	private EntityPlayer createNewPlayer(World world) {

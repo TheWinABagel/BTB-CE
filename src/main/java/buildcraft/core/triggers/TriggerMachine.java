@@ -19,7 +19,7 @@ public class TriggerMachine extends BCTrigger implements ITileTrigger {
 	boolean active;
 
 	public TriggerMachine(boolean active) {
-		super("buildcraft:work." + (active ? "scheduled" : "done"), "buildcraft.work." + (active ? "scheduled" : "done"));
+		super("btb:work." + (active ? "scheduled" : "done"), "buildcraft.work." + (active ? "scheduled" : "done"));
 
 		this.active = active;
 	}

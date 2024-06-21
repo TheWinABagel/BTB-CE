@@ -1,9 +1,10 @@
 package net.minecraftforge.fluids;
 
+import btw.community.example.mixin.accessors.RenderBlocksAccessor;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.src.RenderBlocks;
+import net.minecraft.src.Tessellator;
 import net.minecraft.src.Icon;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.IBlockAccess;
@@ -112,7 +113,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler {
             float v2Flow;
             double ty1;
             double tx1;
-            if (renderer.renderAllFaces || renderTop) {
+            if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderTop) {
                rendered = true;
                Icon iconStill = block.getIcon(1, bMeta);
                flowDir = (float)BlockFluidBase.getFlowDirection(world, x, y, z);
@@ -163,7 +164,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler {
                }
             }
 
-            if (renderer.renderAllFaces || renderBottom) {
+            if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderBottom) {
                rendered = true;
                tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y - 1, z));
                if (!rises) {
@@ -193,7 +194,7 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler {
                }
 
                Icon iconFlow = block.getIcon(side + 2, bMeta);
-               if (renderer.renderAllFaces || renderSides[side]) {
+               if (((RenderBlocksAccessor) renderer).isRenderAllFaces() || renderSides[side]) {
                   rendered = true;
                   if (side == 0) {
                      ty1 = heightNW;
@@ -253,8 +254,8 @@ public class RenderBlockFluid implements ISimpleBlockRenderingHandler {
                }
             }
 
-            renderer.renderMinY = 0.0D;
-            renderer.renderMaxY = 1.0D;
+            ((RenderBlocksAccessor) renderer).setRenderMinY(0.0D);
+            ((RenderBlocksAccessor) renderer).setRenderMaxY(1.0D);
             return rendered;
          }
       }

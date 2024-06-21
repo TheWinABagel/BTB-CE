@@ -11,12 +11,10 @@ import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
 import buildcraft.core.ItemBlockBuildCraft;
 import buildcraft.core.network.BuildCraftPacket;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Entity;
@@ -33,16 +31,13 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.World;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class CoreProxy {
 
-	@SidedProxy(clientSide = "buildcraft.core.proxy.CoreProxyClient", serverSide = "buildcraft.core.proxy.CoreProxy")
-	public static CoreProxy proxy;
+	public static CoreProxy proxy = new CoreProxy();
 
 	public String getMinecraftVersion() {
-		return Loader.instance().getMinecraftModContainer().getVersion();
+		return "1.6.4";
 	}
 
 	/* INSTANCES */
@@ -104,16 +99,16 @@ public class CoreProxy {
 	}
 
 	public void registerBlock(Block block, Class<? extends ItemBlock> item) {
-		GameRegistry.registerBlock(block, item, block.getUnlocalizedName().replace("tile.", ""));
+//		GameRegistry.registerBlock(block, item, block.getUnlocalizedName().replace("tile.", ""));
 	}
 
 	public void registerItem(Item item) {
-		GameRegistry.registerItem(item, item.getUnlocalizedName().replace("item.", ""));
+//		GameRegistry.registerItem(item, item.getUnlocalizedName().replace("item.", ""));
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public void registerTileEntity(Class clas, String ident) {
-		GameRegistry.registerTileEntity(clas, ident);
+//		GameRegistry.registerTileEntity(clas, ident);
 	}
 
 	public void onCraftingPickup(World world, EntityPlayer player, ItemStack stack) {
@@ -122,12 +117,12 @@ public class CoreProxy {
 
 	@SuppressWarnings("unchecked")
 	public void addCraftingRecipe(ItemStack result, Object... recipe) {
-		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(result, recipe));
+		CraftingManager.getInstance().addRecipe(result, recipe);
 		//GameRegistry.addRecipe(result, recipe);
 	}
 
 	public void addShapelessRecipe(ItemStack result, Object... recipe) {
-	        CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(result, recipe));
+	        CraftingManager.getInstance().addShapelessRecipe(result, recipe);
 	        //GameRegistry.addShapelessRecipe(result, recipe);
 	}
 
@@ -156,7 +151,7 @@ public class CoreProxy {
 	}
 
 	public void TakenFromCrafting(EntityPlayer thePlayer, ItemStack itemstack, IInventory craftMatrix) {
-		GameRegistry.onItemCrafted(thePlayer, itemstack, craftMatrix);
+//		GameRegistry.onItemCrafted(thePlayer, itemstack, craftMatrix);
 	}
 
 	public Random createNewRandom(World world) {

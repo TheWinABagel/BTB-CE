@@ -6,7 +6,7 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-
+/*
 import buildcraft.api.bptblocks.BptBlockInventory;
 import buildcraft.api.bptblocks.BptBlockRotateMeta;
 import buildcraft.api.recipes.BuildcraftRecipes;
@@ -43,11 +43,11 @@ import net.minecraftforge.common.Property;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-
-@Mod(name = "BuildCraft Silicon", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Silicon", dependencies = DefaultProps.DEPENDENCY_TRANSPORT)
-@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerSilicon.class, clientSideRequired = true, serverSideRequired = true)
+*/
+//@Mod(name = "BuildCraft Silicon", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Silicon", dependencies = DefaultProps.DEPENDENCY_TRANSPORT)
+//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerSilicon.class, clientSideRequired = true, serverSideRequired = true)
 public class BuildCraftSilicon {
-
+/*
 	public static ItemRedstoneChipset redstoneChipset;
 	public static BlockLaser laserBlock;
 	public static BlockLaserTable assemblyTableBlock;
@@ -187,5 +187,5 @@ public class BuildCraftSilicon {
 	@EventHandler
 	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
 		InterModComms.processIMC(event);
-	}
+	}*/
 }

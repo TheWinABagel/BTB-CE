@@ -106,9 +106,9 @@ public class BlockUtil {
 
 		if (block.getBlockHardness(world, x, y, z) < 0)
 			return false;
-
-		if (blockID == BuildCraftEnergy.blockOil.blockID)
-			return false;
+		//todocore reenable with energy
+/*		if (blockID == BuildCraftEnergy.blockOil.blockID)
+			return false;*/
 
 		if (blockID == Block.lavaStill.blockID || blockID == Block.lavaMoving.blockID)
 			return false;

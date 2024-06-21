@@ -1,8 +1,8 @@
 package net.minecraftforge.fluids;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
-import net.minecraft.entity.Entity;
+import net.minecraft.src.Material;
+import net.minecraft.src.Entity;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Vec3;
 import net.minecraft.src.IBlockAccess;

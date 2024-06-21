@@ -8,17 +8,15 @@
  */
 package buildcraft.core.utils;
 
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
-
 import java.util.logging.Level;
 
 /**
  *
  * @author CovertJaguar <http://www.railcraft.info/>
  */
+//todocore config stuffs...
 public class ConfigUtils {
-
+/*
 	private static final String COMMENT_PREFIX = "";
 	private static final String COMMENT_SUFFIX = "";
 	private final Configuration config;
@@ -111,5 +109,5 @@ public class ConfigUtils {
 			return defaultValue;
 		}
 		return parsed;
-	}
+	}*/
 }

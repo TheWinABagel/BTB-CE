@@ -156,6 +156,6 @@ public class StackHelper {
 	}
 
 	public boolean isWildcard(int damage) {
-		return damage == -1 || damage == OreDictionary.WILDCARD_VALUE;
+		return damage == -1 || damage == Short.MAX_VALUE;
 	}
 }

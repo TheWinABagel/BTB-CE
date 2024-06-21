@@ -1,7 +1,7 @@
 package net.minecraftforge.fluids;
 
 import net.minecraft.src.Block;
-import net.minecraft.src.material.Material;
+import net.minecraft.src.Material;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 
@@ -72,14 +72,13 @@ public class BlockFluidClassic extends BlockFluidBase {
     */
    public void updateTick(World world, int x, int y, int z, Random rand) {
       int quantaRemaining = this.quantaPerBlock - world.getBlockMetadata(x, y, z);
-      int expQuanta = true;
       int flowMeta;
       if (quantaRemaining < this.quantaPerBlock) {
          flowMeta = y - this.densityDir;
          int expQuanta;
          if (world.getBlockId(x, flowMeta, z) != this.blockID && world.getBlockId(x - 1, flowMeta, z) != this.blockID && world.getBlockId(x + 1, flowMeta, z) != this.blockID && world.getBlockId(x, flowMeta, z - 1) != this.blockID && world.getBlockId(x, flowMeta, z + 1) != this.blockID) {
             int maxQuanta = -100;
-            int maxQuanta = this.getLargerQuanta(world, x - 1, y, z, maxQuanta);
+            maxQuanta = this.getLargerQuanta(world, x - 1, y, z, maxQuanta);
             maxQuanta = this.getLargerQuanta(world, x + 1, y, z, maxQuanta);
             maxQuanta = this.getLargerQuanta(world, x, y, z - 1, maxQuanta);
             maxQuanta = this.getLargerQuanta(world, x, y, z + 1, maxQuanta);

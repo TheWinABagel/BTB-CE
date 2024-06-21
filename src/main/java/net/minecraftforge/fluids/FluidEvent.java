@@ -1,10 +1,8 @@
 package net.minecraftforge.fluids;
 
 import net.minecraft.src.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
 
-public class FluidEvent extends Event {
+public class FluidEvent /*extends Event */{
    public final FluidStack fluid;
    /**
     * The x coordinate of this ChunkPosition
@@ -29,7 +27,7 @@ public class FluidEvent extends Event {
    }
 
    public static final void fireEvent(FluidEvent event) {
-      MinecraftForge.EVENT_BUS.post(event);
+//      MinecraftForge.EVENT_BUS.post(event);
    }
 
    public static class FluidSpilledEvent extends FluidEvent {

@@ -9,11 +9,12 @@
 package buildcraft.core.network;
 
 import buildcraft.core.gui.BuildCraftContainer;
-import cpw.mods.fml.client.FMLClientHandler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import net.minecraft.src.EntityClientPlayerMP;
+import net.minecraft.src.Minecraft;
+
 /**
  *
  * @author CovertJaguar <http://www.railcraft.info/>
@@ -45,7 +46,7 @@ public class PacketGuiWidget extends BuildCraftPacket {
         windowId = data.readByte();
         widgetId = data.readByte();
 
-        EntityClientPlayerMP player = FMLClientHandler.instance().getClient().thePlayer;
+        EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 
         if (player.openContainer instanceof BuildCraftContainer && player.openContainer.windowId == windowId)
             ((BuildCraftContainer) player.openContainer).handleWidgetClientData(widgetId, data);

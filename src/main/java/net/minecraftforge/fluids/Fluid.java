@@ -1,14 +1,11 @@
 package net.minecraftforge.fluids;
 
 import com.google.common.collect.Maps;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.LoaderException;
 import net.minecraft.src.Block;
 import net.minecraft.src.EnumRarity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.StatCollector;
 import net.minecraft.src.World;
-import net.minecraftforge.common.ForgeDummyContainer;
 
 import java.util.Locale;
 import java.util.Map;
@@ -53,12 +50,12 @@ public class Fluid {
 
    public Fluid setBlockID(int blockID) {
       if (this.blockID != -1 && this.blockID != blockID) {
-         if (ForgeDummyContainer.forceDuplicateFluidBlockCrash) {
-            FMLLog.severe("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening.");
-            throw new LoaderException(new RuntimeException("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening."));
+         if (this.blockID < 0 /*ForgeDummyContainer.forceDuplicateFluidBlockCrash*/) {
+            System.err.println("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening.");
+            throw new RuntimeException("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening.");
          }
 
-         FMLLog.warning("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening.");
+         System.err.println("A mod has attempted to assign BlockID " + blockID + " to the Fluid '" + this.fluidName + "' but this Fluid has already been linked to BlockID " + this.blockID + ". Configure your mods to prevent this from happening.");
       } else {
          this.blockID = blockID;
       }

@@ -44,10 +44,11 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
 		if (player.isSneaking() != isShiftRotation(block.getClass()))
 			return false;
 
-		if (block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
+		//todocore block rotation?
+/*		if (block.rotateBlock(world, x, y, z, ForgeDirection.getOrientation(side))) {
 			player.swingItem();
 			return !world.isRemote;
-		}
+		}*/
 		return false;
 	}
 

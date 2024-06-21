@@ -12,7 +12,7 @@ public class ActionMachineControl extends BCAction {
 	public final Mode mode;
 
 	public ActionMachineControl(Mode mode) {
-		super("buildcraft:machine." + mode.name().toLowerCase(Locale.ENGLISH), "buildcraft.machine." + mode.name().toLowerCase(Locale.ENGLISH));
+		super("btb:machine." + mode.name().toLowerCase(Locale.ENGLISH), "buildcraft.machine." + mode.name().toLowerCase(Locale.ENGLISH));
 
 		this.mode = mode;
 	}

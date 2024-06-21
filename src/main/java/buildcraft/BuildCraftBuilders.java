@@ -6,7 +6,7 @@
  * http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 package buildcraft;
-
+/*
 import buildcraft.api.blueprints.BptBlock;
 import buildcraft.api.bptblocks.*;
 import buildcraft.api.filler.FillerManager;
@@ -51,11 +51,11 @@ import net.minecraftforge.event.ForgeSubscribe;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.TreeMap;
-
-@Mod(name = "BuildCraft Builders", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Builders", dependencies = DefaultProps.DEPENDENCY_CORE)
-@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerBuilders.class, clientSideRequired = true, serverSideRequired = true)
+*/
+//@Mod(name = "BuildCraft Builders", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Builders", dependencies = DefaultProps.DEPENDENCY_CORE)
+//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerBuilders.class, clientSideRequired = true, serverSideRequired = true)
 public class BuildCraftBuilders {
-
+/*
 	public static final int LIBRARY_PAGE_SIZE = 12;
 	public static final int MAX_BLUEPRINTS_NAME_SIZE = 14;
 	public static BlockMarker markerBlock;
@@ -367,5 +367,5 @@ public class BuildCraftBuilders {
 				pattern.registerIcon(evt.map);
 			}
 		}
-	}
+	}*/
 }

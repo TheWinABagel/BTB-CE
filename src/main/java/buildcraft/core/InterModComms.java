@@ -7,8 +7,6 @@
  */
 package buildcraft.core;
 
-import buildcraft.energy.worldgen.OilPopulate;
-import buildcraft.transport.ItemFacade;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.primitives.Ints;

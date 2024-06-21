@@ -9,7 +9,6 @@
 package buildcraft.core.utils;
 
 import buildcraft.core.Version;
-import cpw.mods.fml.common.FMLLog;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +21,6 @@ public class BCLog {
 	public static final Logger logger = Logger.getLogger("Buildcraft");
 
 	public static void initLog() {
-		logger.setParent(FMLLog.getLogger());
 		logger.info("Starting BuildCraft " + Version.getVersion());
 		logger.info("Copyright (c) SpaceToad, 2011");
 		logger.info("http://www.mod-buildcraft.com");

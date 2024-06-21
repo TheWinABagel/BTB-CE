@@ -5,8 +5,6 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.src.Block;
 import net.minecraft.src.StatCollector;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.Event;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,7 +34,7 @@ public abstract class FluidRegistry {
       } else {
          fluids.put(fluid.getName(), fluid);
          fluidIDs.put(fluid.getName(), ++maxID);
-         MinecraftForge.EVENT_BUS.post(new FluidRegisterEvent(fluid.getName(), maxID));
+//         MinecraftForge.EVENT_BUS.post(new FluidRegisterEvent(fluid.getName(), maxID));
          return true;
       }
    }
@@ -119,7 +117,7 @@ public abstract class FluidRegistry {
       registerFluid(LAVA);
    }
 
-   public static class FluidRegisterEvent extends Event {
+/*   public static class FluidRegisterEvent extends Event {
       public final String fluidName;
       public final int fluidID;
 
@@ -127,5 +125,5 @@ public abstract class FluidRegistry {
          this.fluidName = fluidName;
          this.fluidID = fluidID;
       }
-   }
+   }*/
 }

@@ -18,7 +18,7 @@ import java.util.Random;
 public class SpringPopulate {
 
 	public static void populate(IChunkProvider chunkProvider, World world, Random rand, int chunkX, int chunkZ) {
-
+		if (!BuildCraftCore.modifyWorld) return;
 //		boolean doGen = TerrainGen.populate(event.chunkProvider, event.world, event.rand, event.chunkX, event.chunkX, event.hasVillageGenerated, PopulateChunkEvent.Populate.EventType.CUSTOM);
 //
 //		if (!doGen) {

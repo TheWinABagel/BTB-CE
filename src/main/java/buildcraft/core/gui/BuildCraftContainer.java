@@ -12,8 +12,6 @@ import buildcraft.core.gui.slots.SlotBase;
 import buildcraft.core.gui.widgets.Widget;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.network.PacketGuiWidget;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Container;
@@ -50,7 +48,8 @@ public abstract class BuildCraftContainer extends Container {
 
 	public void sendWidgetDataToClient(Widget widget, ICrafting player, byte[] data) {
 		PacketGuiWidget pkt = new PacketGuiWidget(windowId, widgets.indexOf(widget), data);
-		PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), (Player) player);
+		//todocore low, might not be necessary?
+//		PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), (Player) player);
 	}
 
 	public void handleWidgetClientData(int widgetId, DataInputStream data) throws IOException {

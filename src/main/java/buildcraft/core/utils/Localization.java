@@ -31,7 +31,7 @@ public class Localization {
 
 	/**
 	 * Adds localization from a given directory. The files must have the same name as the corresponding language file in minecraft and a ".properties" file
-	 * extention e.g "en_US.properties"
+	 * extention e.g "en_US.lang"
 	 * 
 	 * @param path
 	 *            The path to the localization files
