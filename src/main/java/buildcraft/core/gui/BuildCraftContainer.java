@@ -12,12 +12,7 @@ import buildcraft.core.gui.slots.SlotBase;
 import buildcraft.core.gui.widgets.Widget;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.network.PacketGuiWidget;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.Container;
-import net.minecraft.src.ICrafting;
-import net.minecraft.src.Slot;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.*;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -48,8 +43,9 @@ public abstract class BuildCraftContainer extends Container {
 
 	public void sendWidgetDataToClient(Widget widget, ICrafting player, byte[] data) {
 		PacketGuiWidget pkt = new PacketGuiWidget(windowId, widgets.indexOf(widget), data);
-		//todocore low, might not be necessary?
-//		PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), (Player) player);
+		if (player instanceof EntityPlayerMP) {
+			((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(pkt.getPacket());
+		}
 	}
 
 	public void handleWidgetClientData(int widgetId, DataInputStream data) throws IOException {

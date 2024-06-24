@@ -9,10 +9,10 @@ package buildcraft.core.triggers;
 
 import buildcraft.api.gates.ITriggerParameter;
 import buildcraft.core.utils.StringUtils;
-//import buildcraft.transport.IPipeTrigger;
-//import buildcraft.transport.Pipe;
-//todocore reenable with transport
-public class TriggerRedstoneInput extends BCTrigger /*implements IPipeTrigger */{
+import buildcraft.transport.IPipeTrigger;
+import buildcraft.transport.Pipe;
+
+public class TriggerRedstoneInput extends BCTrigger implements IPipeTrigger {
 
 	boolean active;
 
@@ -25,7 +25,6 @@ public class TriggerRedstoneInput extends BCTrigger /*implements IPipeTrigger */
 	public String getDescription() {
 		return StringUtils.localize("gate.trigger.redstone.input." + (active ? "active" : "inactive"));
 	}
-/*
 	@Override
 	public boolean isTriggerActive(Pipe pipe, ITriggerParameter parameter) {
 		if (active)
@@ -35,7 +34,7 @@ public class TriggerRedstoneInput extends BCTrigger /*implements IPipeTrigger */
 
 	private boolean isBeingPowered(Pipe pipe) {
 		return pipe.container.redstoneInput > 0;
-	}*/
+	}
 
 	@Override
 	public int getIconIndex() {

@@ -20,6 +20,7 @@ import buildcraft.core.inventory.Transactor;
 import buildcraft.core.network.ISynchronizedTile;
 import buildcraft.core.network.PacketUpdate;
 import buildcraft.core.proxy.CoreProxy;
+import buildcraft.energy.TileEngine;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.IInventory;
@@ -58,8 +59,7 @@ public class Utils {
 
 			TileEntity tileInventory = world.getBlockTileEntity((int) pos.x, (int) pos.y, (int) pos.z);
 			ITransactor transactor = Transactor.getTransactorFor(tileInventory);
-			//todocore reenable with energy
-			if (transactor != null && /*!(tileInventory instanceof TileEngine) &&*/ transactor.add(stack, orientation.getOpposite(), false).stackSize > 0) {
+			if (transactor != null && !(tileInventory instanceof TileEngine) && transactor.add(stack, orientation.getOpposite(), false).stackSize > 0) {
 				return transactor.add(stack, orientation.getOpposite(), true).stackSize;
 			}
 		}

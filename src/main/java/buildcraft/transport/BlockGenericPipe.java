@@ -7,6 +7,7 @@
  */
 package buildcraft.transport;
 
+import btw.community.example.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.GateExpansions;
 import buildcraft.api.gates.IGateExpansion;
@@ -84,6 +85,8 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	public BlockGenericPipe(int i) {
 		super(i, Material.glass);
 		setRenderAllSides();
+		this.initBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+
 //		setCreativeTab(null);
 	}
 
@@ -151,76 +154,75 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB axisalignedbb, List arraylist, Entity par7Entity) {
-		setBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+		((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
 		super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 
 		TileEntity tile1 = world.getBlockTileEntity(i, j, k);
-		if (tile1 instanceof TileGenericPipe) {
-			TileGenericPipe tileG = (TileGenericPipe) tile1;
+		if (tile1 instanceof TileGenericPipe tileG) {
 
-			if (tileG.isPipeConnected(ForgeDirection.WEST)) {
-				setBlockBounds(0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+            if (tileG.isPipeConnected(ForgeDirection.WEST)) {
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.isPipeConnected(ForgeDirection.EAST)) {
-				setBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, 1.0F, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, 1.0F, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.isPipeConnected(ForgeDirection.DOWN)) {
-				setBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.isPipeConnected(ForgeDirection.UP)) {
-				setBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.isPipeConnected(ForgeDirection.NORTH)) {
-				setBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.isPipeConnected(ForgeDirection.SOUTH)) {
-				setBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			float facadeThickness = TransportConstants.FACADE_THICKNESS;
 
 			if (tileG.hasFacade(ForgeDirection.EAST)) {
-				setBlockBounds(1 - facadeThickness, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(1 - facadeThickness, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.hasFacade(ForgeDirection.WEST)) {
-				setBlockBounds(0.0F, 0.0F, 0.0F, facadeThickness, 1.0F, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, facadeThickness, 1.0F, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.hasFacade(ForgeDirection.UP)) {
-				setBlockBounds(0.0F, 1 - facadeThickness, 0.0F, 1.0F, 1.0F, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 1 - facadeThickness, 0.0F, 1.0F, 1.0F, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.hasFacade(ForgeDirection.DOWN)) {
-				setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, facadeThickness, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, facadeThickness, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.hasFacade(ForgeDirection.SOUTH)) {
-				setBlockBounds(0.0F, 0.0F, 1 - facadeThickness, 1.0F, 1.0F, 1.0F);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 0.0F, 1 - facadeThickness, 1.0F, 1.0F, 1.0F);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 
 			if (tileG.hasFacade(ForgeDirection.NORTH)) {
-				setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, facadeThickness);
+				((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, facadeThickness);
 				super.addCollisionBoxesToList(world, i, j, k, axisalignedbb, arraylist, par7Entity);
 			}
 		}
-		setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) this).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -303,7 +305,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		for (ForgeDirection side : DIR_VALUES) {
 			if (side == ForgeDirection.UNKNOWN || tileG.isPipeConnected(side)) {
 				AxisAlignedBB bb = getPipeBoundingBox(side);
-				setBlockBounds(bb);
+				((BlockAccessor) this).getFixedBlockBounds().setBB(bb);
 				boxes[side.ordinal()] = bb;
 				hits[side.ordinal()] = super.collisionRayTrace(world, x, y, z, origin, direction);
 				sideHit[side.ordinal()] = side;
@@ -315,7 +317,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
 			if (pipe.hasGate(side)) {
 				AxisAlignedBB bb = getGateBoundingBox(side);
-				setBlockBounds(bb);
+				((BlockAccessor) this).getFixedBlockBounds().setBB(bb);
 				boxes[7 + side.ordinal()] = bb;
 				hits[7 + side.ordinal()] = super.collisionRayTrace(world, x, y, z, origin, direction);
 				sideHit[7 + side.ordinal()] = side;
@@ -327,7 +329,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
 			if (tileG.hasFacade(side)) {
 				AxisAlignedBB bb = getFacadeBoundingBox(side);
-				setBlockBounds(bb);
+				((BlockAccessor) this).getFixedBlockBounds().setBB(bb);
 				boxes[13 + side.ordinal()] = bb;
 				hits[13 + side.ordinal()] = super.collisionRayTrace(world, x, y, z, origin, direction);
 				sideHit[13 + side.ordinal()] = side;
@@ -339,7 +341,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		for (ForgeDirection side : ForgeDirection.VALID_DIRECTIONS) {
 			if (tileG.hasPlug(side)) {
 				AxisAlignedBB bb = getPlugBoundingBox(side);
-				setBlockBounds(bb);
+				((BlockAccessor) this).getFixedBlockBounds().setBB(bb);
 				boxes[19 + side.ordinal()] = bb;
 				hits[19 + side.ordinal()] = super.collisionRayTrace(world, x, y, z, origin, direction);
 				sideHit[19 + side.ordinal()] = side;
@@ -368,7 +370,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 
 		// reset bounds
 
-		setBlockBounds(0, 0, 0, 1, 1, 1);
+		((BlockAccessor) this).getFixedBlockBounds().setBounds(0, 0, 0, 1, 1, 1);
 
 		if (minIndex == -1) {
 			return null;
@@ -390,7 +392,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	private void setBlockBounds(AxisAlignedBB bb) {
-		setBlockBounds((float) bb.minX, (float) bb.minY, (float) bb.minZ, (float) bb.maxX, (float) bb.maxY, (float) bb.maxZ);
+		((BlockAccessor) this).getFixedBlockBounds().setBounds((float) bb.minX, (float) bb.minY, (float) bb.minZ, (float) bb.maxX, (float) bb.maxY, (float) bb.maxZ);
 	}
 
 	private AxisAlignedBB getGateBoundingBox(ForgeDirection side) {

@@ -176,11 +176,6 @@ public class ItemGate extends ItemBuildCraft {
 			}
 		}
 	}
-	//todotransport med icon index aw not working...?
-/*	@Override
-	public Icon getIconIndex(ItemStack stack) {
-		return getLogic(stack).getIconItem();
-	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

@@ -10,7 +10,6 @@ package buildcraft.transport;
 import buildcraft.api.transport.PipeWire;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
-import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.gates.IAction;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.core.IDropControlInventory;
@@ -43,9 +42,8 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	public boolean[] wireSet = new boolean[]{false, false, false, false};
 	public Gate gate;
 	@SuppressWarnings("rawtypes")
-	private static Map<Class, TilePacketWrapper> networkWrappers = new HashMap<Class, TilePacketWrapper>();
-	public SafeTimeTracker actionTracker = new SafeTimeTracker();
-	private static Map<Class<? extends Pipe>, Map<Class<? extends PipeEvent>, EventHandler>> eventHandlers = new HashMap<>();
+	private static final Map<Class, TilePacketWrapper> networkWrappers = new HashMap<Class, TilePacketWrapper>();
+	private static final Map<Class<? extends Pipe>, Map<Class<? extends PipeEvent>, EventHandler>> eventHandlers = new HashMap<>();
 
 	public Pipe(T transport, int itemID) {
 		this.transport = transport;
@@ -58,22 +56,12 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	}
 
 	public void setTile(TileEntity tile) {
-
 		this.container = (TileGenericPipe) tile;
 
 		transport.setTile((TileGenericPipe) tile);
 	}
 
-	//	public final void handlePipeEvent(PipeEvent event) {
-	//		try {
-	//			Method method = getClass().getDeclaredMethod("eventHandler", event.getClass());
-	//			method.invoke(this, event);
-	//		} catch (Exception ex) {
-	//		}
-	//	}
-		private record EventHandler(Method method) {
-
-	}
+    private record EventHandler(Method method) {}
 
 	public final void handlePipeEvent(PipeEvent event) {
         Map<Class<? extends PipeEvent>, EventHandler> handlerMap = eventHandlers.computeIfAbsent(getClass(), k -> new HashMap<>());
@@ -235,10 +223,9 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 		for (ForgeDirection o : ForgeDirection.VALID_DIRECTIONS) {
 			TileEntity tile = container.getTile(o);
 
-			if (tile instanceof TileGenericPipe) {
-				TileGenericPipe tilePipe = (TileGenericPipe) tile;
+			if (tile instanceof TileGenericPipe tilePipe) {
 
-				if (BlockGenericPipe.isFullyDefined(tilePipe.pipe))
+                if (BlockGenericPipe.isFullyDefined(tilePipe.pipe))
 					if (isWireConnectedTo(tile, color)) {
 						foundBiggerSignal |= receiveSignal(tilePipe.pipe.signalStrength[color.ordinal()] - 1, color);
 					}
@@ -253,10 +240,9 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 			for (ForgeDirection o : ForgeDirection.VALID_DIRECTIONS) {
 				TileEntity tile = container.getTile(o);
 
-				if (tile instanceof TileGenericPipe) {
-					TileGenericPipe tilePipe = (TileGenericPipe) tile;
+				if (tile instanceof TileGenericPipe tilePipe) {
 
-					if (BlockGenericPipe.isFullyDefined(tilePipe.pipe)) {
+                    if (BlockGenericPipe.isFullyDefined(tilePipe.pipe)) {
 						tilePipe.pipe.internalUpdateScheduled = true;
 					}
 				}
@@ -288,10 +274,9 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 			for (ForgeDirection o : ForgeDirection.VALID_DIRECTIONS) {
 				TileEntity tile = container.getTile(o);
 
-				if (tile instanceof TileGenericPipe) {
-					TileGenericPipe tilePipe = (TileGenericPipe) tile;
+				if (tile instanceof TileGenericPipe tilePipe) {
 
-					if (BlockGenericPipe.isFullyDefined(tilePipe.pipe) && tilePipe.pipe.wireSet[wire.ordinal()])
+                    if (BlockGenericPipe.isFullyDefined(tilePipe.pipe) && tilePipe.pipe.wireSet[wire.ordinal()])
 						if (isWireConnectedTo(tile, wire)) {
 							tilePipe.pipe.receiveSignal(signalStrength[wire.ordinal()] - 1, wire);
 						}
@@ -331,8 +316,7 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	}
 
 	public boolean canConnectRedstone() {
-		if (hasGate())
-			return true;
+		if (hasGate()) return true;
 
 		return false;
 	}
@@ -442,7 +426,7 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	}
 
 	public LinkedList<IAction> getActions() {
-		LinkedList<IAction> result = new LinkedList<IAction>();
+		LinkedList<IAction> result = new LinkedList<>();
 
 		if (hasGate()) {
 			gate.addActions(result);
@@ -465,12 +449,10 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	}
 
 	public boolean isWireConnectedTo(TileEntity tile, PipeWire color) {
-		if (!(tile instanceof TileGenericPipe))
+		if (!(tile instanceof TileGenericPipe tilePipe))
 			return false;
 
-		TileGenericPipe tilePipe = (TileGenericPipe) tile;
-
-		if (!BlockGenericPipe.isFullyDefined(tilePipe.pipe))
+        if (!BlockGenericPipe.isFullyDefined(tilePipe.pipe))
 			return false;
 
 		if (!tilePipe.pipe.wireSet[color.ordinal()])

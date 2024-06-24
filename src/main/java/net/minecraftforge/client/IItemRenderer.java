@@ -2,7 +2,7 @@ package net.minecraftforge.client;
 
 import net.minecraft.src.ItemStack;
 
-public interface IItemRenderer { //todotransport HIGH implement item rendering
+public interface IItemRenderer {
     boolean handleRenderType(ItemStack itemStack, IItemRenderer.ItemRenderType itemRenderType);
 
     boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType itemRenderType, ItemStack itemStack, IItemRenderer.ItemRendererHelper itemRendererHelper);

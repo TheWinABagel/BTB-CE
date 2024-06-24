@@ -14,7 +14,6 @@ import buildcraft.core.gui.slots.SlotPhantom;
 import buildcraft.core.gui.tooltips.ToolTip;
 import buildcraft.core.gui.tooltips.ToolTipLine;
 import buildcraft.core.gui.widgets.ButtonWidget;
-import buildcraft.core.network.IGuiReturnHandler;
 import buildcraft.core.network.PacketGuiReturn;
 import buildcraft.core.utils.EnumColor;
 import buildcraft.core.utils.RevolvingList;
@@ -151,9 +150,9 @@ public class ContainerEmzuliPipe extends BuildCraftContainer {
 				data.writeByte(slot);
 				EnumColor color = colors.getCurrent();
 				data.writeByte(color == null ? 0 : color.ordinal() + 1);
-				PacketGuiReturn pkt = new PacketGuiReturn((IGuiReturnHandler) pipe.getContainer(), bytes.toByteArray());
+				PacketGuiReturn pkt = new PacketGuiReturn(pipe.getContainer(), bytes.toByteArray());
 				pkt.sendPacket();
-			} catch (IOException ex) {
+			} catch (IOException ignored) {
 			}
 		}
 
@@ -161,7 +160,8 @@ public class ContainerEmzuliPipe extends BuildCraftContainer {
 		public ToolTip getToolTip() {
 			return toolTip;
 		}
-		private ToolTip toolTip = new ToolTip(500) {
+
+		private final ToolTip toolTip = new ToolTip(500) {
 			@Override
 			public void refresh() {
 				toolTip.clear();

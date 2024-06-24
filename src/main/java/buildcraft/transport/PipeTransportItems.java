@@ -43,7 +43,6 @@ public class PipeTransportItems extends PipeTransport {
 	public static final int MAX_PIPE_ITEMS = 1024;
 	public boolean allowBouncing = false;
 	// TODO: generalize the use of this hook in particular for obsidian pipe
-	public IItemTravelingHook travelHook;
 	public final TravelerSet items = new TravelerSet(this);
 
 	@Override
@@ -274,9 +273,6 @@ public class PipeTransportItems extends PipeTransport {
 					if (items.scheduleRemoval(item))
 						dropItem(item);
 				} else {
-					if (travelHook != null) {
-						travelHook.centerReached(this, item);
-					}
 					PipeEventItem.ReachedCenter event = new PipeEventItem.ReachedCenter(item);
 					container.pipe.handlePipeEvent(event);
 				}
@@ -287,10 +283,6 @@ public class PipeTransportItems extends PipeTransport {
 				PipeEventItem.ReachedEnd event = new PipeEventItem.ReachedEnd(item, tile);
 				container.pipe.handlePipeEvent(event);
 				boolean handleItem = !event.handled;
-
-				if (travelHook != null) {
-					handleItem = !travelHook.endReached(this, item, tile);
-				}
 
 				// If the item has not been scheduled to removal by the hook
 				if (handleItem && items.scheduleRemoval(item)) {
@@ -334,10 +326,6 @@ public class PipeTransportItems extends PipeTransport {
 	private void dropItem(TravelingItem item) {
 		if (container.worldObj.isRemote)
 			return;
-
-		if (travelHook != null) {
-			travelHook.drop(this, item);
-		}
 
 		PipeEventItem.DropItem event = new PipeEventItem.DropItem(item, item.toEntityItem());
 		container.pipe.handlePipeEvent(event);

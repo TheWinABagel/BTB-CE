@@ -1,5 +1,6 @@
 package buildcraft.core.network;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 
 import java.io.DataInputStream;
@@ -48,12 +49,11 @@ public class PacketGuiReturn extends BuildCraftPacket {
 		if (extraData != null)
 			data.write(extraData);
 	}
-	//todocore IMPORTANT, get world from id?
+
 	@Override
 	public void readData(DataInputStream data) throws IOException {
 		int dim = data.readInt();
-//		World world = DimensionManager.getWorld(dim);
-		World world = null;
+		World world = MinecraftServer.getServer().worldServerForDimension(dim);
 		boolean tileReturn = data.readBoolean();
 		if (tileReturn) {
 			int x = data.readInt();
