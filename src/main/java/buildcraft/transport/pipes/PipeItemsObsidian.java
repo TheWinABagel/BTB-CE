@@ -184,7 +184,7 @@ public class PipeItemsObsidian extends Pipe<PipeTransportItems> implements IPowe
 	}
 
 	public void pullItemIntoPipe(Entity entity, int distance) {
-		if (CoreProxy.proxy.isRenderWorld(container.worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(container.worldObj))
 			return;
 
 		ForgeDirection orientation = getOpenOrientation().getOpposite();
@@ -200,13 +200,13 @@ public class PipeItemsObsidian extends Pipe<PipeTransportItems> implements IPowe
 				EntityItem item = (EntityItem) entity;
 				ItemStack contained = item.getEntityItem();
 
-				CoreProxy.proxy.obsidianPipePickup(container.worldObj, item, this.container);
+				CoreProxy.getProxy().obsidianPipePickup(container.worldObj, item, this.container);
 
 				double energyUsed = powerHandler.useEnergy(distance, contained.stackSize * distance, true);
 
 				if (distance == 0 || energyUsed / distance == contained.stackSize) {
 					stack = contained;
-					CoreProxy.proxy.removeEntity(entity);
+					CoreProxy.getProxy().removeEntity(entity);
 				} else {
 					stack = contained.splitStack((int) (energyUsed / distance));
 				}
@@ -220,7 +220,7 @@ public class PipeItemsObsidian extends Pipe<PipeTransportItems> implements IPowe
 			} else if (entity instanceof EntityArrow) {
 				powerHandler.useEnergy(distance, distance, true);
 				stack = new ItemStack(Item.arrow, 1);
-				CoreProxy.proxy.removeEntity(entity);
+				CoreProxy.getProxy().removeEntity(entity);
 			}
 
 			TravelingItem item = TravelingItem.make(container.xCoord + 0.5, container.yCoord + TransportUtils.getPipeFloorOf(stack), container.zCoord + 0.5, stack);

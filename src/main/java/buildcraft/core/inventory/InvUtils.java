@@ -216,10 +216,9 @@ public class InvUtils {
 	 * @return Modified inventory if double chest, unmodified otherwise.
 	 */
 	public static IInventory getInventory(IInventory inv) {
-		if (inv instanceof TileEntityChest) {
-			TileEntityChest chest = (TileEntityChest) inv;
+		if (inv instanceof TileEntityChest chest) {
 
-			TileEntityChest adjacent = null;
+            TileEntityChest adjacent = null;
 
 			if (chest.adjacentChestXNeg != null) {
 				adjacent = chest.adjacentChestXNeg;

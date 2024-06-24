@@ -36,7 +36,7 @@ public class ItemBuildCraft extends Item {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("btb:" + iconString);
+		this.itemIcon = par1IconRegister.registerIcon("buildcraft:" + iconString);
 	}
 
 	public Item setPassSneakClick(boolean passClick) {

@@ -15,26 +15,19 @@ import net.minecraft.src.BlockFluid;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
 import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.chunk.Chunk;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.EnumHelper;
+import net.minecraft.src.Chunk;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType;
-import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import static net.minecraftforge.common.BiomeDictionary.Type.*;
 
-public class OilPopulate {
+public class OilPopulate { //todoenergy WORLD GEN (big)
 
 	public static final OilPopulate INSTANCE = new OilPopulate();
-	public static final EventType EVENT_TYPE = EnumHelper.addEnum(EventType.class, "BUILDCRAFT_OIL", new Class[0], new Object[0]);
+	/*public static final EventType EVENT_TYPE = EnumHelper.addEnum(EventType.class, "BUILDCRAFT_OIL", new Class[0], new Object[0]);
 	private static final byte LARGE_WELL_HEIGHT = 16;
 	private static final byte MEDIUM_WELL_HEIGHT = 6;
 	public final Set<Integer> excessiveBiomes = new HashSet<Integer>();
@@ -372,5 +365,5 @@ public class OilPopulate {
 			}
 		}
 		return Math.abs(deviation / centralTendancy);
-	}
+	}*/
 }

@@ -1,6 +1,7 @@
-package btw.community.example.mixin;
+package btw.community.example.mixin.client;
 
 import buildcraft.BuildCraftCore;
+import buildcraft.BuildCraftEnergy;
 import net.minecraft.src.ResourceManager;
 import net.minecraft.src.TextureMap;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +15,7 @@ public abstract class TextureMapMixin {
     @Inject(method = "loadTextureAtlas", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", shift = At.Shift.AFTER))
     private void btb$hookRegisterTextures(ResourceManager par1ResourceManager, CallbackInfo ci) {
         BuildCraftCore.textureHook((TextureMap) (Object) this);
+        BuildCraftEnergy.textureHook((TextureMap) (Object) this);
     }
 
 }

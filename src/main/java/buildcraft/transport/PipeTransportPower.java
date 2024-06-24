@@ -127,7 +127,7 @@ public class PipeTransportPower extends PipeTransport {
 
 	@Override
 	public void updateEntity() {
-		if (CoreProxy.proxy.isRenderWorld(container.worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(container.worldObj))
 			return;
 
 		step();
@@ -252,7 +252,7 @@ public class PipeTransportPower extends PipeTransport {
 
 			packet.displayPower = clientDisplayPower;
 			packet.overload = isOverloaded();
-			CoreProxy.proxy.sendToPlayers(packet.getPacket(), container.worldObj, container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST);
+			CoreProxy.getProxy().sendToPlayers(packet.getPacket(), container.worldObj, container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST);
 		}
 
 	}

@@ -8,7 +8,7 @@ import net.minecraft.src.Packet250CustomPayload;
 
 import java.io.IOException;
 
-public interface BuildcraftCustomPacketHandler extends CustomPacketHandler {
+public interface BuildcraftCustomPacketHandler extends CustomPacketHandler { //Forge is IPacketHandler
 
     @Override
     default void handleCustomPacket(Packet250CustomPayload var1) throws IOException {

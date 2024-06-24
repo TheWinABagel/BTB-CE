@@ -8,7 +8,9 @@
 package buildcraft;
 
 import btw.BTWAddon;
+import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import btw.crafting.recipe.RecipeManager;
+import btw.network.packet.handler.CustomPacketHandler;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.GateExpansions;
@@ -29,12 +31,15 @@ import buildcraft.transport.gates.GateExpansionRedstoneFader;
 import buildcraft.transport.gates.GateExpansionTimer;
 import buildcraft.transport.gates.ItemGate;
 import buildcraft.transport.network.PacketGateExpansionMap;
+import buildcraft.transport.network.PacketHandlerTransport;
 import buildcraft.transport.pipes.*;
 import buildcraft.transport.pipes.PipePowerIron.PowerMode;
 import buildcraft.transport.triggers.*;
 import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
@@ -107,9 +112,13 @@ public class BuildCraftTransport extends BuildcraftAddon {
 	public static BuildCraftTransport instance = new BuildCraftTransport();
 
 	public BuildCraftTransport() {
-		super("tsp");
+		super("bctransport");
 	}
-
+	@Override
+	public void postSetup() {
+		this.addonName = "Better Then Buildcraft: CE";
+		this.modID = "bctransport";
+	}
 
 	private static class PipeRecipe {
 
@@ -206,12 +215,12 @@ public class BuildCraftTransport extends BuildcraftAddon {
 
 			pipeWaterproof = new ItemBuildCraft(DefaultProps.PIPE_WATERPROOF_ID);
 			pipeWaterproof.setUnlocalizedName("pipeWaterproof");
-			CoreProxy.proxy.registerItem(pipeWaterproof);
+			CoreProxy.getProxy().registerItem(pipeWaterproof);
 
 //			Property genericPipeId = BuildCraftCore.mainConfiguration.getBlock("pipe.id", DefaultProps.GENERIC_PIPE_ID);
 
 			genericPipeBlock = new BlockGenericPipe(DefaultProps.GENERIC_PIPE_ID);
-			CoreProxy.proxy.registerBlock(genericPipeBlock.setUnlocalizedName("pipeBlock"), ItemBlock.class);
+			CoreProxy.getProxy().registerBlock(genericPipeBlock.setUnlocalizedName("pipeBlock"), ItemBlock.class);
 
 			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", Block.planks, Block.glass, Block.planks);
 			pipeItemsEmerald = buildPipe(DefaultProps.PIPE_ITEMS_EMERALD_ID, PipeItemsEmerald.class, "Emerald Transport Pipe", Item.emerald, Block.glass, Item.emerald);
@@ -254,28 +263,28 @@ public class BuildCraftTransport extends BuildcraftAddon {
 //			int pipeWireId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeWire.id", DefaultProps.PIPE_WIRE).getInt(DefaultProps.PIPE_WIRE);
 
 			pipeWire = new ItemPipeWire(DefaultProps.PIPE_WIRE);
-			CoreProxy.proxy.registerItem(pipeWire);
+			CoreProxy.getProxy().registerItem(pipeWire);
 			PipeWire.item = pipeWire;
 
 //			Property pipeGateId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeGate.id", DefaultProps.GATE_ID);
 			pipeGate = new ItemGate(DefaultProps.GATE_ID);
 			pipeGate.setUnlocalizedName("pipeGate");
-			CoreProxy.proxy.registerItem(pipeGate);
+			CoreProxy.getProxy().registerItem(pipeGate);
 
 //			Property pipeFacadeId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeFacade.id", DefaultProps.PIPE_FACADE_ID);
 			facadeItem = new ItemFacade(DefaultProps.PIPE_FACADE_ID);
 			facadeItem.setUnlocalizedName("pipeFacade");
-			CoreProxy.proxy.registerItem(facadeItem);
+			CoreProxy.getProxy().registerItem(facadeItem);
 
 //			Property pipePlugId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipePlug.id", DefaultProps.PIPE_PLUG_ID);
 			plugItem = new ItemPlug(DefaultProps.PIPE_PLUG_ID);
 			plugItem.setUnlocalizedName("pipePlug");
-			CoreProxy.proxy.registerItem(plugItem);
+			CoreProxy.getProxy().registerItem(plugItem);
 
 //			Property filteredBufferId = BuildCraftCore.mainConfiguration.getBlock("filteredBuffer.id", DefaultProps.FILTERED_BUFFER_ID);
 			filteredBufferBlock = new BlockFilteredBuffer(DefaultProps.FILTERED_BUFFER_ID);
-			CoreProxy.proxy.registerBlock(filteredBufferBlock.setUnlocalizedName("filteredBufferBlock"));
-			CoreProxy.proxy.addName(filteredBufferBlock, "Filtered Buffer");
+			CoreProxy.getProxy().registerBlock(filteredBufferBlock.setUnlocalizedName("filteredBufferBlock"));
+			CoreProxy.getProxy().addName(filteredBufferBlock, "Filtered Buffer");
 		} finally {
 //			BuildCraftCore.mainConfiguration.save();
 		}
@@ -288,9 +297,14 @@ public class BuildCraftTransport extends BuildcraftAddon {
 
 		// Register GUI handler
 		// MinecraftForge.setGuiHandler(mod_BuildCraftTransport.instance, new GuiHandler());
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)){
+			TransportProxyClient.PROXY_CLIENT.registerTileEntities();
+		}
+		else {
+			TransportProxy.proxy.registerTileEntities();
+		}
 
-		TransportProxy.proxy.registerTileEntities();
-
+		initPackets();
 		// dockingStationBlock = new
 		// BlockDockingStation(Integer.parseInt(dockingStationId.value));
 		// ModLoader.registerBlock(dockingStationBlock);
@@ -315,8 +329,13 @@ public class BuildCraftTransport extends BuildcraftAddon {
 			loadRecipes();
 		}
 
-		TransportProxy.proxy.registerRenderers();
-		NetworkRegistry.instance().registerGuiHandler("tsp", new GuiHandler());
+		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)){
+			TransportProxyClient.PROXY_CLIENT.registerRenderers();
+		}
+		else {
+			TransportProxy.proxy.registerRenderers();
+		}
+		NetworkRegistry.instance().registerGuiHandler("bctransport", new GuiHandler());
 	}
 
 
@@ -364,13 +383,13 @@ public class BuildCraftTransport extends BuildcraftAddon {
 		// Add pipe recipes
 		for (PipeRecipe pipe : pipeRecipes) {
 			if (pipe.isShapeless) {
-				CoreProxy.proxy.addShapelessRecipe(pipe.result, pipe.input);
+				CoreProxy.getProxy().addShapelessRecipe(pipe.result, pipe.input);
 			} else {
-				CoreProxy.proxy.addCraftingRecipe(pipe.result, pipe.input);
+				CoreProxy.getProxy().addCraftingRecipe(pipe.result, pipe.input);
 			}
 		}
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(filteredBufferBlock, 1),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(filteredBufferBlock, 1),
 				new Object[]{"wdw", "wcw", "wpw", 'w', Block.planks, 'd',
 			BuildCraftTransport.pipeItemsDiamond, 'c', Block.chest, 'p',
 			Block.pistonBase});
@@ -385,6 +404,10 @@ public class BuildCraftTransport extends BuildcraftAddon {
 	public void processIMCRequests(IMCEvent event) {
 		InterModComms.processIMC(event);
 	}*/
+
+	private static void initPackets() {
+		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
+	}
 
 	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {
 		String name = Character.toLowerCase(clas.getSimpleName().charAt(0)) + clas.getSimpleName().substring(1);

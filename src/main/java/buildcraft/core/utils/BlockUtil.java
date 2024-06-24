@@ -48,7 +48,7 @@ public class BlockUtil {
 		int meta = world.getBlockMetadata(i, j, k);
 
 		ArrayList<ItemStack> dropsList = ((BlockExtension) block).getBlockDropped(world, i, j, k, meta, 0);
-//		float dropChance = ForgeEventFactory.fireBlockHarvesting(dropsList, world, block, i, j, k, meta, 0, 1.0F, false, CoreProxy.proxy.getBuildCraftPlayer(world));
+//		float dropChance = ForgeEventFactory.fireBlockHarvesting(dropsList, world, block, i, j, k, meta, 0, 1.0F, false, CoreProxy.getProxy().getBuildCraftPlayer(world));
 		float dropChance = 1f;
 
 		ArrayList<ItemStack> returnList = new ArrayList<ItemStack>();

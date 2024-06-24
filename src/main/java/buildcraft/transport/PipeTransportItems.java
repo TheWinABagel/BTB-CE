@@ -232,10 +232,8 @@ public class PipeTransportItems extends PipeTransport {
 		if (!container.isPipeConnected(o))
 			return false;
 
-		if (entity instanceof TileGenericPipe) {
-			TileGenericPipe pipe = (TileGenericPipe) entity;
-
-			return pipe.pipe.transport instanceof PipeTransportItems;
+		if (entity instanceof TileGenericPipe pipe) {
+            return pipe.pipe.transport instanceof PipeTransportItems;
 		} else if (entity instanceof IInventory && item.getInsertionHandler().canInsertItem(item, (IInventory) entity))
 			if (Transactor.getTransactorFor(entity).add(item.getItemStack(), o.getOpposite(), false).stackSize > 0)
 				return true;
@@ -306,10 +304,9 @@ public class PipeTransportItems extends PipeTransport {
 	}
 
 	private boolean passToNextPipe(TravelingItem item, TileEntity tile) {
-		if (tile instanceof TileGenericPipe) {
-			TileGenericPipe pipe = (TileGenericPipe) tile;
-			if (BlockGenericPipe.isValid(pipe.pipe) && pipe.pipe.transport instanceof PipeTransportItems) {
-				((PipeTransportItems) pipe.pipe.transport).injectItem(item, item.output);
+		if (tile instanceof TileGenericPipe pipe) {
+            if (BlockGenericPipe.isValid(pipe.pipe) && pipe.pipe.transport instanceof PipeTransportItems transportItems) {
+				transportItems.injectItem(item, item.output);
 				return true;
 			}
 		}
@@ -319,9 +316,9 @@ public class PipeTransportItems extends PipeTransport {
 	private void handleTileReached(TravelingItem item, TileEntity tile) {
 		if (passToNextPipe(item, tile)) {
 			// NOOP
-		} else if (tile instanceof IInventory) {
+		} else if (tile instanceof IInventory inv) {
 			if (!container.worldObj.isRemote) {
-				if (item.getInsertionHandler().canInsertItem(item, (IInventory) tile)) {
+				if (item.getInsertionHandler().canInsertItem(item, inv)) {
 					ItemStack added = Transactor.getTransactorFor(tile).add(item.getItemStack(), item.output.getOpposite(), true);
 					item.getItemStack().stackSize -= added.stackSize;
 				}

@@ -14,7 +14,7 @@ import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class TransportProxyClient extends TransportProxy {
-
+	public static final TransportProxyClient PROXY_CLIENT = new TransportProxyClient();
 	public final static PipeItemRenderer pipeItemRenderer = new PipeItemRenderer();
 	public final static PipeRendererWorld pipeWorldRenderer = new PipeRendererWorld();
 	public final static FacadeItemRenderer facadeItemRenderer = new FacadeItemRenderer();

@@ -130,13 +130,6 @@ public final class TravelingItem {
 		return extraData != null;
 	}
 
-	@Deprecated
-	public void setInsetionHandler(InsertionHandler handler) {
-		if (handler == null)
-			return;
-		this.insertionHandler = handler;
-	}
-
 	public void setInsertionHandler(InsertionHandler handler) {
 		if (handler == null)
 			return;
@@ -193,7 +186,7 @@ public final class TravelingItem {
 	}
 
 	public EntityItem toEntityItem() {
-		if (container != null && !CoreProxy.proxy.isRenderWorld(container.worldObj)) {
+		if (container != null && !CoreProxy.getProxy().isRenderWorld(container.worldObj)) {
 			if (getItemStack().stackSize <= 0)
 				return null;
 

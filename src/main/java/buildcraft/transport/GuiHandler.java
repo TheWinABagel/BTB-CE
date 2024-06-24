@@ -110,4 +110,9 @@ public class GuiHandler implements IGuiHandler {
 		}
 		return null;
 	}
+
+	@Override
+	public int getId() {
+		return 0;
+	}
 }

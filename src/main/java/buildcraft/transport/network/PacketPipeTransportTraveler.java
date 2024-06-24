@@ -27,9 +27,11 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 	public int posZ;
 
 	public PacketPipeTransportTraveler() {
+		this.channel = "buildcraft|TP";
 	}
 
 	public PacketPipeTransportTraveler(TravelingItem item, boolean forceStackRefresh) {
+		this();
 		this.item = item;
 		this.forceStackRefresh = forceStackRefresh;
 	}

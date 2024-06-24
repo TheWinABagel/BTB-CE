@@ -70,7 +70,7 @@ public abstract class PipeLogicWood {
 	protected abstract boolean isValidConnectingTile(TileEntity tile);
 
 	public void initialize() {
-		if (!CoreProxy.proxy.isRenderWorld(pipe.container.worldObj)) {
+		if (!CoreProxy.getProxy().isRenderWorld(pipe.container.worldObj)) {
 			switchSourceIfNeeded();
 		}
 	}
@@ -87,7 +87,7 @@ public abstract class PipeLogicWood {
 	}
 
 	public void onNeighborBlockChange(int blockId) {
-		if (!CoreProxy.proxy.isRenderWorld(pipe.container.worldObj)) {
+		if (!CoreProxy.getProxy().isRenderWorld(pipe.container.worldObj)) {
 			switchSourceIfNeeded();
 		}
 	}

@@ -4,30 +4,37 @@
   "package": "btw.community.example.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AddonHandlerAccessor",
     "AddonHandlerMixin",
-    "BlockAccessor",
     "BlockMixin",
     "ChunkProviderGenerateMixin",
-    "ChunkTrackerEntryAccessor",
-    "EntityListAccessor",
-    "EntityPlayerAccessor",
+    "ChunkTrackerAccessor",
     "EntityPlayerMixin",
-    "EntityPlayerMPAccessor",
     "ItemMixin",
     "ItemStackMixin",
     "NBTTagListMixin",
-    "RenderBipedAccessor",
-    "RenderItemMixin",
-    "TessellatorAccessor",
     "TileEntityMixin",
+    "accessors.BlockAccessor",
+    "accessors.ChunkTrackerEntryAccessor",
+    "accessors.EntityListAccessor",
+    "accessors.EntityPlayerAccessor",
+    "accessors.EntityPlayerMPAccessor",
     "accessors.ItemStackAccessor",
     "accessors.NBTTagCompoundAccessor",
     "accessors.NBTTagListAccessor",
-    "accessors.RenderBlocksAccessor"
+    "accessors.RenderBipedAccessor",
+    "accessors.RenderBlocksAccessor",
+    "accessors.TessellatorAccessor",
+    "client.ItemRendererMixin",
+    "client.RenderBipedMixin",
+    "client.RenderBlocksMixin",
+    "client.RendererPlayerMixin",
+    "client.RenderItemMixin"
   ],
   "client": [
-    "TextureMapMixin",
-    "WorldMixin"
+    "WorldMixin",
+    "client.ItemMixin",
+    "client.TextureMapMixin"
   ],
   "injectors": {
     "defaultRequire": 1

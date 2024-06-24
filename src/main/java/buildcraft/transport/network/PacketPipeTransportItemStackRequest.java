@@ -18,10 +18,12 @@ public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 
 	public PacketPipeTransportItemStackRequest(EntityPlayer player) {
 		this.player = player;
+		this.channel = "buildcraft|TP";
 	}
 
 	public PacketPipeTransportItemStackRequest(int travelerID) {
 		this.travelerID = travelerID;
+		this.channel = "buildcraft|TP";
 	}
 
 	@Override

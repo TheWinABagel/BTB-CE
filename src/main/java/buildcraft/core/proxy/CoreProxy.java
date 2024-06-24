@@ -15,6 +15,8 @@ import buildcraft.core.network.BuildCraftPacket;
 import java.util.List;
 import java.util.Random;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Entity;
@@ -33,6 +35,15 @@ import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.World;
 
 public class CoreProxy {
+
+	public static CoreProxy getProxy() {
+		if (MinecraftServer.getIsServer()) {
+			return proxy;
+		}
+		else {
+			return CoreProxyClient.INSTANCE;
+		}
+	}
 
 	public static CoreProxy proxy = new CoreProxy();
 

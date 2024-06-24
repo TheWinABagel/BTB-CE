@@ -22,10 +22,8 @@ import buildcraft.transport.pipes.events.PipeEvent;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.EntityPlayer;
@@ -47,7 +45,7 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 	@SuppressWarnings("rawtypes")
 	private static Map<Class, TilePacketWrapper> networkWrappers = new HashMap<Class, TilePacketWrapper>();
 	public SafeTimeTracker actionTracker = new SafeTimeTracker();
-	private static Map<Class<? extends Pipe>, Map<Class<? extends PipeEvent>, EventHandler>> eventHandlers = new HashMap<Class<? extends Pipe>, Map<Class<? extends PipeEvent>, EventHandler>>();
+	private static Map<Class<? extends Pipe>, Map<Class<? extends PipeEvent>, EventHandler>> eventHandlers = new HashMap<>();
 
 	public Pipe(T transport, int itemID) {
 		this.transport = transport;
@@ -66,36 +64,29 @@ public abstract class Pipe<T extends PipeTransport> implements IDropControlInven
 		transport.setTile((TileGenericPipe) tile);
 	}
 
-//	public final void handlePipeEvent(PipeEvent event) {
-//		try {
-//			Method method = getClass().getDeclaredMethod("eventHandler", event.getClass());
-//			method.invoke(this, event);
-//		} catch (Exception ex) {
-//		}
-//	}
-	private static class EventHandler {
+	//	public final void handlePipeEvent(PipeEvent event) {
+	//		try {
+	//			Method method = getClass().getDeclaredMethod("eventHandler", event.getClass());
+	//			method.invoke(this, event);
+	//		} catch (Exception ex) {
+	//		}
+	//	}
+		private record EventHandler(Method method) {
 
-		public final Method method;
-
-		public EventHandler(Method method) {
-			this.method = method;
-		}
 	}
 
 	public final void handlePipeEvent(PipeEvent event) {
-		Map<Class<? extends PipeEvent>, EventHandler> handlerMap = eventHandlers.get(getClass());
-		if (handlerMap == null) {
-			handlerMap = new HashMap<Class<? extends PipeEvent>, EventHandler>();
-			eventHandlers.put(getClass(), handlerMap);
-		}
-		EventHandler handler = handlerMap.get(event.getClass());
-		if (handler == null)
+        Map<Class<? extends PipeEvent>, EventHandler> handlerMap = eventHandlers.computeIfAbsent(getClass(), k -> new HashMap<>());
+        EventHandler handler = handlerMap.get(getClass());
+		if (handler == null) {
 			handler = makeEventHandler(event, handlerMap);
-		if (handler.method == null)
+		}
+		if (handler.method == null) {
 			return;
+		}
 		try {
 			handler.method.invoke(this, event);
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 		}
 	}
 

@@ -15,6 +15,7 @@ public class PacketPipeTransportItemStack extends BuildCraftPacket {
 	private int entityId;
 
 	public PacketPipeTransportItemStack() {
+		this.channel = "buildcraft|TP";
 	}
 
 	public PacketPipeTransportItemStack(int entityId, ItemStack stack) {

@@ -10,25 +10,20 @@ package buildcraft.energy;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.IItemPipe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.src.Material;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 public class BlockEngine extends BlockBuildCraft {
 
-	private static Icon woodTexture;
-	private static Icon stoneTexture;
-	private static Icon ironTexture;
+	protected static Icon woodTexture;
+	protected static Icon stoneTexture;
+	protected static Icon ironTexture;
 
 	public BlockEngine(int i) {
 		super(i, Material.iron);
@@ -59,16 +54,12 @@ public class BlockEngine extends BlockBuildCraft {
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
-		if (metadata == 1)
-			return new TileEngineStone();
-		else if (metadata == 2)
-			return new TileEngineIron();
-		else
-			return new TileEngineWood();
+	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
+//		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, BuildCraftCore.blockByEntityModel);
 	}
 
-	@Override
+
+/*	@Override
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile instanceof TileEngine) {
@@ -84,12 +75,12 @@ public class BlockEngine extends BlockBuildCraft {
 			return ((TileEngine) tile).switchOrientation(false);
 		}
 		return false;
-	}
+	}*/
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int side, float par7, float par8, float par9) {
 
-		TileEngine tile = (TileEngine) world.getBlockTileEntity(i, j, k);
+		TileEntity tile = world.getBlockTileEntity(i, j, k);
 
 		// Drop through if the player is sneaking
 		if (player.isSneaking())
@@ -102,8 +93,8 @@ public class BlockEngine extends BlockBuildCraft {
 			}
 		}
 
-		if (tile instanceof TileEngine) {
-			return ((TileEngine) tile).onBlockActivated(player, ForgeDirection.getOrientation(side));
+		if (tile instanceof TileEngine tileEngine) {
+			return tileEngine.onBlockActivated(player, ForgeDirection.getOrientation(side));
 		}
 
 		return false;
@@ -145,9 +136,9 @@ public class BlockEngine extends BlockBuildCraft {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubBlocks(int blockid, CreativeTabs par2CreativeTabs, List itemList) {
-		itemList.add(new ItemStack(this, 1, 0));
+/*		itemList.add(new ItemStack(this, 1, 0));
 		itemList.add(new ItemStack(this, 1, 1));
-		itemList.add(new ItemStack(this, 1, 2));
+		itemList.add(new ItemStack(this, 1, 2));*/
 	}
 
 	@Override
@@ -160,6 +151,11 @@ public class BlockEngine extends BlockBuildCraft {
 	}
 
 	@Override
+	public TileEntity createNewTileEntity(World world) {
+		return null;
+	}
+
+/*	@Override
 	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int side, int meta) {
 		switch (meta) {
@@ -172,10 +168,5 @@ public class BlockEngine extends BlockBuildCraft {
 			default:
 				return null;
 		}
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return null;
-	}
+	}*/
 }

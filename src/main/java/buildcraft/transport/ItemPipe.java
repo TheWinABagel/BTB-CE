@@ -108,9 +108,8 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 			return null;
 		}
 	}
-//todotransport high, item rendering
 
-/*	@Override
+	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		// NOOP
@@ -120,7 +119,7 @@ public class ItemPipe extends ItemBuildCraft implements IItemPipe {
 	@Environment(EnvType.CLIENT)
 	public int getSpriteNumber() {
 		return 0;
-	}*/
+	}
 
 	@Override
 	@Environment(EnvType.CLIENT)

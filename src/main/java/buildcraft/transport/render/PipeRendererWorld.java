@@ -3,6 +3,7 @@ package buildcraft.transport.render;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.core.CoreConstants;
+import buildcraft.core.DefaultProps;
 import buildcraft.core.utils.MatrixTranformations;
 import buildcraft.transport.*;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -16,6 +17,7 @@ public class PipeRendererWorld implements ISimpleBlockRenderingHandler {
 
 	public void renderPipe(RenderBlocks renderblocks, IBlockAccess iblockaccess, BlockGenericPipe block, TileGenericPipe tile, int x, int y, int z) {
 		PipeRenderState state = tile.renderState;
+
 		IIconProvider icons = tile.getPipeIcons();
 		if (icons == null)
 			return;
@@ -149,9 +151,8 @@ public class PipeRendererWorld implements ISimpleBlockRenderingHandler {
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-		if (tile instanceof TileGenericPipe) {
-			TileGenericPipe pipeTile = (TileGenericPipe) tile;
-			renderPipe(renderer, world, (BlockGenericPipe) block, pipeTile, x, y, z);
+		if (tile instanceof TileGenericPipe pipeTile) {
+            renderPipe(renderer, world, (BlockGenericPipe) block, pipeTile, x, y, z);
 		}
 		return true;
 	}

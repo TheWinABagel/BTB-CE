@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "btb",
+  "id": "buildcraft",
   "version": "${version}",
   "name": "Better Then Buildcraft: CE",
   "description": "This is an example description! Tell everyone what your mod is about!",
@@ -17,7 +17,9 @@
   "entrypoints": {
     "btw:addon": [
       "buildcraft.BuildCraftCore",
-      "buildcraft.BuildCraftTransport"
+      "buildcraft.BuildCraftTransport",
+      "buildcraft.BuildCraftEnergy",
+      "cpw.mods.fml.common.network.NetworkRegistry"
     ]
   },
   "custom": {

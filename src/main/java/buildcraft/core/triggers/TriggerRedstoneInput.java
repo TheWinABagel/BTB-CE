@@ -17,7 +17,7 @@ public class TriggerRedstoneInput extends BCTrigger /*implements IPipeTrigger */
 	boolean active;
 
 	public TriggerRedstoneInput(boolean active) {
-		super("btb:redstone.input." + (active ? "active" : "inactive"), active ? "buildcraft.redtone.input.active" : "buildcraft.redtone.input.inactive");
+		super("buildcraft:redstone.input." + (active ? "active" : "inactive"), active ? "buildcraft.redtone.input.active" : "buildcraft.redtone.input.inactive");
 		this.active = active;
 	}
 

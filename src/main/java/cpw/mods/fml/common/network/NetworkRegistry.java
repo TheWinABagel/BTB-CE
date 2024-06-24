@@ -1,15 +1,18 @@
 package cpw.mods.fml.common.network;
 
-import btw.community.example.mixin.EntityPlayerMPAccessor;
+import btw.BTWAddon;
+import btw.community.example.mixin.accessors.EntityPlayerMPAccessor;
+import buildcraft.core.utils.BCLog;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.minecraft.src.*;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
-public class NetworkRegistry {
+public class NetworkRegistry extends BTWAddon {
     private static final NetworkRegistry INSTANCE = new NetworkRegistry();
     private Map<String, IGuiHandler> serverGuiHandlers = new HashMap<>();
     private Map<String, IGuiHandler> clientGuiHandlers = new HashMap<>();
@@ -17,11 +20,13 @@ public class NetworkRegistry {
         this.serverGuiHandlers.put(mod, handler);
 
         this.clientGuiHandlers.put(mod, handler);
+
     }
 
     public static NetworkRegistry instance() {
         return INSTANCE;
     }
+
     public void openRemoteGui(String modId, EntityPlayerMP player, int modGuiId, World world, int x, int y, int z) {
         IGuiHandler handler = this.serverGuiHandlers.get(modId);
         if (handler != null) {
@@ -30,10 +35,7 @@ public class NetworkRegistry {
                 ((EntityPlayerMPAccessor) player).callIncrementWindowID();
                 player.closeContainer();
                 int windowId = ((EntityPlayerMPAccessor) player).getCurrentWindowId();
-                Packet250CustomPayload pkt = new Packet250CustomPayload();
-                pkt.channel = "FML";
-                pkt.data = generateGuiPacket(/*FMLPacket.Type.GUIOPEN, */windowId, modId, modGuiId, x, y, z);
-                pkt.length = pkt.data.length;
+                Packet250CustomPayload pkt = new Packet250CustomPayload("fml|NW", generateGuiPacket(windowId, handler.getId(), modGuiId, x, y, z));
                 player.playerNetServerHandler.sendPacketToPlayer(pkt);
                 player.openContainer = container;
                 player.openContainer.windowId = windowId;
@@ -45,7 +47,27 @@ public class NetworkRegistry {
 
     public void openLocalGui(String modId, EntityPlayer player, int modGuiId, World world, int x, int y, int z) {
         IGuiHandler handler = this.clientGuiHandlers.get(modId);
-        Minecraft.getMinecraft().displayGuiScreen((GuiContainer) handler.getClientGuiElement(modGuiId, player, world, x, y, z));
+
+        if (handler == null) {
+            try {
+                int handlerId = Integer.parseInt(modId);
+                for (IGuiHandler handler1 : this.clientGuiHandlers.values()) {
+                    if (handler1.getId() == handlerId){
+                        handler = handler1;
+                    }
+                }
+            }
+            catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (handler != null) {
+            Minecraft.getMinecraft().displayGuiScreen((GuiContainer) handler.getClientGuiElement(modGuiId, player, world, x, y, z));
+        }
+        else {
+            BCLog.logger.warning("Packet failed to send, mod id is " + modId);
+        }
     }
 
     public byte[] generateGuiPacket(Object... data) {
@@ -58,4 +80,15 @@ public class NetworkRegistry {
         dat.writeInt((Integer)data[5]);
         return dat.toByteArray();
     }
+
+    @Override
+    public void postSetup() {
+        this.modID = "fml";
+    }
+
+    @Override
+    public void initialize() {
+        registerPacketHandler("fml|NW", new ForgeCustomPacket());
+    }
+
 }

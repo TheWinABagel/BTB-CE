@@ -42,7 +42,7 @@ public class ItemFacade extends ItemBuildCraft {
 		}
 		ItemStack newStack = new ItemStack(decodedBlockId, 1, decodedMeta);
 		if (Item.itemsList[decodedBlockId] != null) {
-			name += ": " + CoreProxy.proxy.getItemDisplayName(newStack);
+			name += ": " + CoreProxy.getProxy().getItemDisplayName(newStack);
 		} else {
 			name += " < BROKEN (" + decodedBlockId + ":" + decodedMeta + " )>";
 		}

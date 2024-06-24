@@ -1,6 +1,6 @@
 package cpw.mods.fml.client.registry;
 
-import btw.community.example.mixin.RenderBipedAccessor;
+import btw.community.example.mixin.accessors.RenderBipedAccessor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.ObjectArrays;
@@ -10,7 +10,6 @@ import java.util.Map;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.Render;
-import net.minecraft.src.RenderBiped;
 import net.minecraft.src.RenderManager;
 import net.minecraft.src.Entity;
 import net.minecraft.src.IBlockAccess;
@@ -18,7 +17,7 @@ import net.minecraft.src.IBlockAccess;
 public class RenderingRegistry {
     private static final RenderingRegistry INSTANCE = new RenderingRegistry();
     private int nextRenderId = 40;
-    private Map<Integer, ISimpleBlockRenderingHandler> blockRenderers = Maps.newHashMap();
+    public Map<Integer, ISimpleBlockRenderingHandler> blockRenderers = Maps.newHashMap();
     private List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
 
     public static int addNewArmourRendererPrefix(String armor) {
@@ -67,14 +66,14 @@ public class RenderingRegistry {
         if (!this.blockRenderers.containsKey(modelId)) {
             return false;
         } else {
-            ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelId);
+            ISimpleBlockRenderingHandler bri = this.blockRenderers.get(modelId);
             return bri.renderWorldBlock(world, x, y, z, block, modelId, renderer);
         }
     }
 
     public void renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID) {
         if (this.blockRenderers.containsKey(modelID)) {
-            ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelID);
+            ISimpleBlockRenderingHandler bri = this.blockRenderers.get(modelID);
             bri.renderInventoryBlock(block, metadata, modelID, renderer);
         }
     }

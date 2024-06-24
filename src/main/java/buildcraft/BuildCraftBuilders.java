@@ -203,36 +203,36 @@ public class BuildCraftBuilders {
 		templateItem = new ItemBptTemplate(templateItemId.getInt());
 		templateItem.setUnlocalizedName("templateItem");
 		LanguageRegistry.addName(templateItem, "Template");
-		CoreProxy.proxy.registerItem(templateItem);
+		CoreProxy.getProxy().registerItem(templateItem);
 
 		blueprintItem = new ItemBptBluePrint(blueprintItemId.getInt());
 		blueprintItem.setUnlocalizedName("blueprintItem");
 		LanguageRegistry.addName(blueprintItem, "Blueprint");
-		CoreProxy.proxy.registerItem(blueprintItem);
+		CoreProxy.getProxy().registerItem(blueprintItem);
 
 		markerBlock = new BlockMarker(markerId.getInt());
-		CoreProxy.proxy.registerBlock(markerBlock.setUnlocalizedName("markerBlock"));
-		CoreProxy.proxy.addName(markerBlock, "Land Mark");
+		CoreProxy.getProxy().registerBlock(markerBlock.setUnlocalizedName("markerBlock"));
+		CoreProxy.getProxy().addName(markerBlock, "Land Mark");
 
 		pathMarkerBlock = new BlockPathMarker(pathMarkerId.getInt());
-		CoreProxy.proxy.registerBlock(pathMarkerBlock.setUnlocalizedName("pathMarkerBlock"));
-		CoreProxy.proxy.addName(pathMarkerBlock, "Path Mark");
+		CoreProxy.getProxy().registerBlock(pathMarkerBlock.setUnlocalizedName("pathMarkerBlock"));
+		CoreProxy.getProxy().addName(pathMarkerBlock, "Path Mark");
 
 		fillerBlock = new BlockFiller(fillerId.getInt());
-		CoreProxy.proxy.registerBlock(fillerBlock.setUnlocalizedName("fillerBlock"));
-		CoreProxy.proxy.addName(fillerBlock, "Filler");
+		CoreProxy.getProxy().registerBlock(fillerBlock.setUnlocalizedName("fillerBlock"));
+		CoreProxy.getProxy().addName(fillerBlock, "Filler");
 
 		builderBlock = new BlockBuilder(builderId.getInt());
-		CoreProxy.proxy.registerBlock(builderBlock.setUnlocalizedName("builderBlock"));
-		CoreProxy.proxy.addName(builderBlock, "Builder");
+		CoreProxy.getProxy().registerBlock(builderBlock.setUnlocalizedName("builderBlock"));
+		CoreProxy.getProxy().addName(builderBlock, "Builder");
 
 		architectBlock = new BlockArchitect(architectId.getInt());
-		CoreProxy.proxy.registerBlock(architectBlock.setUnlocalizedName("architectBlock"));
-		CoreProxy.proxy.addName(architectBlock, "Architect Table");
+		CoreProxy.getProxy().registerBlock(architectBlock.setUnlocalizedName("architectBlock"));
+		CoreProxy.getProxy().addName(architectBlock, "Architect Table");
 
 		libraryBlock = new BlockBlueprintLibrary(libraryId.getInt());
-		CoreProxy.proxy.registerBlock(libraryBlock.setUnlocalizedName("libraryBlock"));
-		CoreProxy.proxy.addName(libraryBlock, "Blueprint Library");
+		CoreProxy.getProxy().registerBlock(libraryBlock.setUnlocalizedName("libraryBlock"));
+		CoreProxy.getProxy().addName(libraryBlock, "Blueprint Library");
 
 		GameRegistry.registerTileEntity(TileMarker.class, "Marker");
 		GameRegistry.registerTileEntity(TileFiller.class, "Filler");
@@ -270,32 +270,32 @@ public class BuildCraftBuilders {
 
 	public static void loadRecipes() {
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(templateItem, 1), new Object[]{"ppp", "pip", "ppp", 'i',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(templateItem, 1), new Object[]{"ppp", "pip", "ppp", 'i',
 //			new ItemStack(Item.dyePowder, 1, 0), 'p', Item.paper});
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(blueprintItem, 1), new Object[]{"ppp", "pip", "ppp", 'i',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(blueprintItem, 1), new Object[]{"ppp", "pip", "ppp", 'i',
 //			new ItemStack(Item.dyePowder, 1, 4), 'p', Item.paper});
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(markerBlock, 1), new Object[]{"l ", "r ", 'l',
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(markerBlock, 1), new Object[]{"l ", "r ", 'l',
 			new ItemStack(Item.dyePowder, 1, 4), 'r', Block.torchRedstoneActive});
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(pathMarkerBlock, 1), new Object[]{"l ", "r ", 'l',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(pathMarkerBlock, 1), new Object[]{"l ", "r ", 'l',
 //			new ItemStack(Item.dyePowder, 1, 2), 'r', Block.torchRedstoneActive});
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(fillerBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(fillerBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
 			new ItemStack(Item.dyePowder, 1, 0), 't', markerBlock, 'y', new ItemStack(Item.dyePowder, 1, 11),
 			'c', Block.workbench, 'g', BuildCraftCore.goldGearItem, 'C', Block.chest});
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(builderBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(builderBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
 //			new ItemStack(Item.dyePowder, 1, 0), 't', markerBlock, 'y', new ItemStack(Item.dyePowder, 1, 11),
 //			'c', Block.workbench, 'g', BuildCraftCore.diamondGearItem, 'C', Block.chest});
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(architectBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(architectBlock, 1), new Object[]{"btb", "ycy", "gCg", 'b',
 //			new ItemStack(Item.dyePowder, 1, 0), 't', markerBlock, 'y', new ItemStack(Item.dyePowder, 1, 11),
 //			'c', Block.workbench, 'g', BuildCraftCore.diamondGearItem, 'C',
 //			new ItemStack(templateItem, 1)});
 
-//		CoreProxy.proxy.addCraftingRecipe(new ItemStack(libraryBlock, 1), new Object[]{"bbb", "bBb", "bbb", 'b',
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(libraryBlock, 1), new Object[]{"bbb", "bBb", "bbb", 'b',
 //			new ItemStack(blueprintItem), 'B', Block.bookShelf});
 	}
 

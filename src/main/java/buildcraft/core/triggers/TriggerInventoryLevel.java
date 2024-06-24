@@ -34,7 +34,7 @@ public class TriggerInventoryLevel extends BCTrigger implements ITileTrigger {
 	public TriggerType type;
 
 	public TriggerInventoryLevel(TriggerType type) {
-		super("btb:inventorylevel." + type.name().toLowerCase(Locale.ENGLISH),
+		super("buildcraft:inventorylevel." + type.name().toLowerCase(Locale.ENGLISH),
 				"buildcraft.inventorylevel." + type.name().toLowerCase(Locale.ENGLISH),
 				"buildcraft.filteredBuffer." + type.name().toLowerCase(Locale.ENGLISH));
 		this.type = type;

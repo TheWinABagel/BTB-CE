@@ -9,6 +9,7 @@ package buildcraft.energy;
 
 import java.util.LinkedList;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ICrafting;
 import net.minecraft.src.ItemStack;
@@ -83,7 +84,7 @@ public class TileEngineIron extends TileEngineWithInventory implements IFluidHan
 			}
 		}
 		if (!CoreProxy.proxy.isRenderWorld(worldObj)) {
-			player.openGui(BuildCraftEnergy.instance, GuiIds.ENGINE_IRON, worldObj, xCoord, yCoord, zCoord);
+			((EntityPlayerExtension) player).openGui(BuildCraftEnergy.instance.getModId(), GuiIds.ENGINE_IRON, worldObj, xCoord, yCoord, zCoord);
 		}
 		return true;
 	}

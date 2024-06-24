@@ -1,6 +1,6 @@
 package buildcraft.transport.render;
 
-import btw.community.example.mixin.BlockAccessor;
+import btw.community.example.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.render.RenderUtils;
@@ -13,7 +13,6 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 import net.minecraftforge.client.IItemRenderer;
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON;
 import org.lwjgl.opengl.GL11;
 
 public class FacadeItemRenderer implements IItemRenderer {

@@ -17,12 +17,12 @@ public class DefaultProps {
 	public static final String DEPENDENCY_TRANSPORT = "required-after:BuildCraft|Transport@" + Version.VERSION;
 
 	public static int WORLD_HEIGHT = 256;
-	public static final String NET_CHANNEL_NAME = "BC";
+	public static final String NET_CHANNEL_NAME = "buildcraft|CR";
 	public static int NETWORK_UPDATE_RANGE = 128;
 	public static int PIPE_CONTENTS_RENDER_DIST = 24;
 
 	public static String TEXTURE_PATH_GUI = "textures/gui";
-	public static String TEXTURE_PATH_BLOCKS = "btb:textures/blocks";
+	public static String TEXTURE_PATH_BLOCKS = "buildcraft:textures/blocks";
 	public static String TEXTURE_PATH_ENTITIES = "textures/entities";
 
 	public static final String DEFAULT_LANGUAGE = "en_US";
@@ -92,6 +92,9 @@ public class DefaultProps {
 	public static int PIPE_LIQUIDS_SANDSTONE_ID = 3223;
 	public static int PIPE_STRUCTURE_COBBLESTONE_ID = 3224;
 
+	public static int WOOD_ENGINE_ID = 1497;
+	public static int STONE_ENGINE_ID = 1498;
+	public static int IRON_ENGINE_ID = 1499;
 	public static int MINING_WELL_ID = 1500;
 	public static int DRILL_ID = 1501;
 	public static int AUTO_WORKBENCH_ID = 1502;
@@ -101,7 +104,7 @@ public class DefaultProps {
 	public static int BUILDER_ID = 1507;
 	public static int ARCHITECT_ID = 1508;
 	public static int FRAME_ID = 1509;
-	public static int ENGINE_ID = 1510;
+	/*public static int ENGINE_ID = 1510;*/
 	public static int PUMP_ID = 1511;
 	public static int TANK_ID = 1512;
 	public static int GENERIC_PIPE_ID = 1513;

@@ -187,7 +187,7 @@ public class PipeTransportFluids extends PipeTransport implements IFluidHandler 
 
 	@Override
 	public void updateEntity() {
-		if (CoreProxy.proxy.isRenderWorld(container.worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(container.worldObj))
 			return;
 
 		moveFluids();
@@ -201,7 +201,7 @@ public class PipeTransportFluids extends PipeTransport implements IFluidHandler 
 			}
 			PacketFluidUpdate packet = computeFluidUpdate(init, true);
 			if (packet != null) {
-				CoreProxy.proxy.sendToPlayers(packet.getPacket(), container.worldObj, container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST);
+				CoreProxy.getProxy().sendToPlayers(packet.getPacket(), container.worldObj, container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST);
 			}
 		}
 	}

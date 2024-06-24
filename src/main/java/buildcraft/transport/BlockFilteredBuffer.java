@@ -59,7 +59,7 @@ public class BlockFilteredBuffer extends BlockBuildCraft {
 			}
 		}
 
-		if (!CoreProxy.proxy.isRenderWorld(world)) {
+		if (!CoreProxy.getProxy().isRenderWorld(world)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.FILTERED_BUFFER, world, x, y, z);
 		}
 

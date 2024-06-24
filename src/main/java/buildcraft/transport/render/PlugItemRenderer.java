@@ -1,6 +1,6 @@
 package buildcraft.transport.render;
 
-import btw.community.example.mixin.BlockAccessor;
+import btw.community.example.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.transport.PipeIconProvider;
 import net.minecraft.src.Block;
@@ -10,8 +10,6 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
-
-import static net.minecraftforge.client.IItemRenderer.ItemRenderType.EQUIPPED_FIRST_PERSON;
 
 public class PlugItemRenderer implements IItemRenderer {
 

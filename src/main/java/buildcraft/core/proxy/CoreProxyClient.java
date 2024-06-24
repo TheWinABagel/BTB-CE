@@ -9,7 +9,7 @@
 
 package buildcraft.core.proxy;
 
-import btw.community.example.mixin.EntityPlayerAccessor;
+import btw.community.example.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
@@ -44,6 +44,7 @@ import net.minecraft.src.World;
 
 public class CoreProxyClient extends CoreProxy {
 
+	public static final CoreProxyClient INSTANCE = new CoreProxyClient();
 	/* INSTANCES */
 	@Override
 	public Object getClient() {

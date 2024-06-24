@@ -9,16 +9,11 @@
 package buildcraft.energy;
 
 import buildcraft.energy.render.EntityDropParticleFX;
-import cpw.mods.fml.client.FMLClientHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.Random;
-import net.minecraft.src.Material;
-import net.minecraft.src.EntityFX;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.Icon;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
@@ -71,7 +66,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 		return this;
 	}
 
-	@Override
+/*	@Override
 	public int getFireSpreadSpeed(World world, int x, int y, int z, int metadata, ForgeDirection face) {
 		return flammable ? 300 : 0;
 	}
@@ -89,7 +84,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 	@Override
 	public boolean isFireSource(World world, int x, int y, int z, int metadata, ForgeDirection side) {
 		return flammable && flammability == 0;
-	}
+	}*/
 
 	public BlockBuildcraftFluid setParticleColor(float particleRed, float particleGreen, float particleBlue) {
 		this.particleRed = particleRed;
@@ -109,7 +104,7 @@ public class BlockBuildcraftFluid extends BlockFluidClassic {
 			double pz = (double) ((float) z + rand.nextFloat());
 
 			EntityFX fx = new EntityDropParticleFX(world, px, py, pz, particleRed, particleGreen, particleBlue);
-			FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx);
+			Minecraft.getMinecraft().effectRenderer.addEffect(fx);
 		}
 	}
 

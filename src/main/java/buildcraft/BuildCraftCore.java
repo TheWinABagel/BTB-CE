@@ -8,14 +8,13 @@
 package buildcraft;
 
 import btw.BTWAddon;
-import btw.community.example.mixin.EntityListAccessor;
+import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.*;
 import buildcraft.core.blueprints.BptItem;
-import buildcraft.core.network.EntityIds;
 import buildcraft.core.network.PacketHandler;
 import buildcraft.core.network.PacketUpdate;
 import buildcraft.core.proxy.CoreProxy;
@@ -31,11 +30,14 @@ import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
 
-import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BuildCraftCore extends BTWAddon {
+public class BuildCraftCore extends BuildcraftAddon {
+
+	public BuildCraftCore() {
+		super("buildcraft");
+	}
 
 	public static enum RenderMode {
 
@@ -99,7 +101,7 @@ public class BuildCraftCore extends BTWAddon {
 	public static boolean consumeWaterSources = false;
 	public static BptItem[] itemBptProps = new BptItem[Item.itemsList.length];
 
-	public static BuildCraftCore instance;
+	public static BuildCraftCore instance = new BuildCraftCore();
 
 	@Override
 	public void handleConfigProperties(Map<String, String> propertyValues) {
@@ -109,7 +111,7 @@ public class BuildCraftCore extends BTWAddon {
 	@Override
 	public void postSetup() {
 		this.addonName = "Better Then Buildcraft: CE";
-		this.modID = "btb";
+		this.modID = "buildcraft";
 	}
 
 	@Override
@@ -170,7 +172,7 @@ public class BuildCraftCore extends BTWAddon {
 
 			wrenchItem = (new ItemWrench(wrenchId.getInt(DefaultProps.WRENCH_ID))).setUnlocalizedName("wrenchItem");
 			LanguageRegistry.addName(wrenchItem, "Wrench");
-			CoreProxy.proxy.registerItem(wrenchItem);
+			CoreProxy.getProxy().registerItem(wrenchItem);
 
 			int springId = BuildCraftCore.mainConfiguration.getBlock("springBlock.id", DefaultProps.SPRING_ID).getInt(DefaultProps.SPRING_ID);
 
@@ -186,7 +188,7 @@ public class BuildCraftCore extends BTWAddon {
 			if (BuildCraftCore.modifyWorld && springId > 0) {
 				BlockSpring.EnumSpring.WATER.canGen = BuildCraftCore.mainConfiguration.get("worldgen", "waterSpring", true).getBoolean(true);
 				springBlock = new BlockSpring(springId).setUnlocalizedName("eternalSpring");
-				CoreProxy.proxy.registerBlock(springBlock, ItemSpring.class);
+				CoreProxy.getProxy().registerBlock(springBlock, ItemSpring.class);
 			}
 
 			Property consumeWater = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "consumeWater", consumeWaterSources);
@@ -195,27 +197,27 @@ public class BuildCraftCore extends BTWAddon {
 
 			woodenGearItem = (new ItemBuildCraft(woodenGearId.getInt())).setUnlocalizedName("woodenGearItem");
 			LanguageRegistry.addName(woodenGearItem, "Wooden Gear");
-			CoreProxy.proxy.registerItem(woodenGearItem);
+			CoreProxy.getProxy().registerItem(woodenGearItem);
 			OreDictionary.registerOre("gearWood", new ItemStack(woodenGearItem));
 
 			stoneGearItem = (new ItemBuildCraft(stoneGearId.getInt())).setUnlocalizedName("stoneGearItem");
 			LanguageRegistry.addName(stoneGearItem, "Stone Gear");
-			CoreProxy.proxy.registerItem(stoneGearItem);
+			CoreProxy.getProxy().registerItem(stoneGearItem);
 			OreDictionary.registerOre("gearStone", new ItemStack(stoneGearItem));
 
 			ironGearItem = (new ItemBuildCraft(ironGearId.getInt())).setUnlocalizedName("ironGearItem");
 			LanguageRegistry.addName(ironGearItem, "Iron Gear");
-			CoreProxy.proxy.registerItem(ironGearItem);
+			CoreProxy.getProxy().registerItem(ironGearItem);
 			OreDictionary.registerOre("gearIron", new ItemStack(ironGearItem));
 
 			goldGearItem = (new ItemBuildCraft(goldenGearId.getInt())).setUnlocalizedName("goldGearItem");
 			LanguageRegistry.addName(goldGearItem, "Gold Gear");
-			CoreProxy.proxy.registerItem(goldGearItem);
+			CoreProxy.getProxy().registerItem(goldGearItem);
 			OreDictionary.registerOre("gearGold", new ItemStack(goldGearItem));
 
 			diamondGearItem = (new ItemBuildCraft(diamondGearId.getInt())).setUnlocalizedName("diamondGearItem");
 			LanguageRegistry.addName(diamondGearItem, "Diamond Gear");
-			CoreProxy.proxy.registerItem(diamondGearItem);
+			CoreProxy.getProxy().registerItem(diamondGearItem);
 			OreDictionary.registerOre("gearDiamond", new ItemStack(diamondGearItem));
 
 			Property colorBlindProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "client.colorblindmode", false);
@@ -239,6 +241,8 @@ public class BuildCraftCore extends BTWAddon {
 		if (BuildCraftCore.loadDefaultRecipes) {
 			loadRecipes();
 		}
+		this.modID = "buildcraft";
+		initPackets();
 		//todocore registering entities...?
 /*		EntityRegistry.registerModEntity(EntityRobot.class, "bcRobot", EntityIds.ROBOT, instance, 50, 1, true);
 		EntityRegistry.registerModEntity(EntityPowerLaser.class, "bcLaser", EntityIds.LASER, instance, 50, 1, true);
@@ -250,14 +254,15 @@ public class BuildCraftCore extends BTWAddon {
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcLaser");
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");*/
 
-		CoreProxy.proxy.initializeRendering();
-		CoreProxy.proxy.initializeEntityRendering();
+		CoreProxy.getProxy().initializeRendering();
+		CoreProxy.getProxy().initializeEntityRendering();
 
-		Localization.addLocalization("/lang/btb/", DefaultProps.DEFAULT_LANGUAGE);
+//		Localization.addLocalization("/lang/btb/", DefaultProps.DEFAULT_LANGUAGE);
 
 	}
 
-	public void postInit() {
+	@Override
+	public void postInitialize() {
 		for (Block block : Block.blocksList) {
 			if (block instanceof BlockFluid || block instanceof IFluidBlock /*|| block instanceof IPlantable*/) {
 				BuildCraftAPI.softBlocks[block.blockID] = true;
@@ -267,6 +272,10 @@ public class BuildCraftCore extends BTWAddon {
 		BuildCraftAPI.softBlocks[Block.snow.blockID] = true;
 		BuildCraftAPI.softBlocks[Block.vine.blockID] = true;
 		BuildCraftAPI.softBlocks[Block.fire.blockID] = true;
+	}
+
+	private static void initPackets() {
+		BuildCraftCore.instance.registerPacketHandler("buildcraft|CR", new PacketHandler());
 	}
 
 
@@ -281,22 +290,22 @@ public class BuildCraftCore extends BTWAddon {
 			iconProvider.registerIcons(map);
 			ActionTriggerIconProvider.INSTANCE.registerIcons(map);
 		} else if (map.getTextureType() == 0) {
-			BuildCraftCore.redLaserTexture = map.registerIcon("btb:blockRedLaser");
-			BuildCraftCore.blueLaserTexture = map.registerIcon("btb:blockBlueLaser");
-			BuildCraftCore.stripesLaserTexture = map.registerIcon("btb:blockStripesLaser");
-			BuildCraftCore.transparentTexture = map.registerIcon("btb:blockTransparentLaser");
+			BuildCraftCore.redLaserTexture = map.registerIcon("buildcraft:blockRedLaser");
+			BuildCraftCore.blueLaserTexture = map.registerIcon("buildcraft:blockBlueLaser");
+			BuildCraftCore.stripesLaserTexture = map.registerIcon("buildcraft:blockStripesLaser");
+			BuildCraftCore.transparentTexture = map.registerIcon("buildcraft:blockTransparentLaser");
 		}
 
 	}
 
 	public void loadRecipes() {
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(wrenchItem), "I I", " G ", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(woodenGearItem), " S ", "S S", " S ", 'S', Item.stick);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(stoneGearItem), " I ", "IGI", " I ", 'I', Block.cobblestone, 'G',
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(wrenchItem), "I I", " G ", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodenGearItem), " S ", "S S", " S ", 'S', Item.stick);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneGearItem), " I ", "IGI", " I ", 'I', Block.cobblestone, 'G',
 				woodenGearItem);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(ironGearItem), " I ", "IGI", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(goldGearItem), " I ", "IGI", " I ", 'I', Item.ingotGold, 'G', ironGearItem);
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(diamondGearItem), " I ", "IGI", " I ", 'I', Item.diamond, 'G', goldGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironGearItem), " I ", "IGI", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(goldGearItem), " I ", "IGI", " I ", 'I', Item.ingotGold, 'G', ironGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(diamondGearItem), " I ", "IGI", " I ", 'I', Item.diamond, 'G', goldGearItem);
 	}
 
 

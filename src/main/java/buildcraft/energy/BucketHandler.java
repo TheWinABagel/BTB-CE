@@ -12,9 +12,6 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.World;
-import net.minecraftforge.event.Event.Result;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.entity.player.FillBucketEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +24,9 @@ public class BucketHandler {
 	private BucketHandler() {
 	}
 
-	@ForgeSubscribe
-	public void onBucketFill(FillBucketEvent event) {
+//todoenergy bucket fill event
+
+/*	public void onBucketFill(FillBucketEvent event) {
 
 		ItemStack result = fillCustomBucket(event.world, event.target);
 
@@ -37,7 +35,7 @@ public class BucketHandler {
 
 		event.result = result;
 		event.setResult(Result.ALLOW);
-	}
+	}*/
 
 	private ItemStack fillCustomBucket(World world, MovingObjectPosition pos) {
 

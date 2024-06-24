@@ -7,8 +7,8 @@
  */
 package buildcraft.transport;
 
-import btw.community.example.mixin.ChunkTrackerEntryAccessor;
-import btw.world.chunk.ChunkTracker;
+import btw.community.example.mixin.ChunkTrackerAccessor;
+import btw.community.example.mixin.accessors.ChunkTrackerEntryAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
@@ -38,15 +38,7 @@ import buildcraft.transport.gates.GateDefinition;
 import buildcraft.transport.gates.GateFactory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet;
-import btw.world.chunk.ChunkTrackerEntry;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
-import net.minecraft.src.WorldServer;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -60,6 +52,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Level;
+import btw.world.chunk.ChunkTrackerEntry;
 
 public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFluidHandler, IPipeTile, IOverrideDefaultTriggers, ITileBufferHolder,
 		IDropControlInventory, ISyncedTile, ISolidSideTile, IGuiReturnHandler {
@@ -130,7 +123,6 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 			nbt.setInteger("facadeMeta[" + i + "]", facadeMeta[i]);
 			nbt.setBoolean("plug[" + i + "]", plugs[i]);
 		}
-
 	}
 
 	@Override
@@ -154,7 +146,6 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 			facadeMeta[i] = nbt.getInteger("facadeMeta[" + i + "]");
 			plugs[i] = nbt.getBoolean("plug[" + i + "]");
 		}
-
 	}
 
 	@Override
@@ -179,6 +170,7 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 
 	@Override
 	public void updateEntity() {
+		super.updateEntity();
 		if (!worldObj.isRemote) {
 			if (deletePipe)
 				worldObj.setBlockToAir(xCoord, yCoord, zCoord);
@@ -189,7 +181,9 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 			if (!initialized)
 				initialize(pipe);
 		}
+		if (worldObj.isRemote) {
 
+		}
 		if (!BlockGenericPipe.isValid(pipe))
 			return;
 
@@ -219,13 +213,12 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 
 		if (sendClientUpdate) {
 			sendClientUpdate = false;
-			//todotransport high chunk tracker is private and aw wont work
-/*			if (worldObj instanceof WorldServer world) {
-                ChunkTrackerEntry playerInstance = world.getChunkTracker().getOrCreateTrackerEntry(xCoord >> 4, zCoord >> 4, false);
+			if (worldObj instanceof WorldServer world) {
+                ChunkTrackerEntry playerInstance = ((ChunkTrackerAccessor) world.getChunkTracker()).callGetOrCreateTrackerEntry(xCoord >> 4, zCoord >> 4);
 				if (playerInstance != null) {
 					((ChunkTrackerEntryAccessor) playerInstance).callSendToPlayersWatchingNotWaitingFullChunk(getDescriptionPacket());
 				}
-			}*/
+			}
 		}
 	}
 

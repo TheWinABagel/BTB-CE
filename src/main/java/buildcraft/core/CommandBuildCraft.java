@@ -59,7 +59,7 @@ public class CommandBuildCraft extends CommandBase {
 		String colour = Version.isOutdated() ? "\u00A7c" : "\u00A7a";
 
 		sender.sendChatToPlayer(ChatMessageComponent.createFromText(String.format(colour + "BuildCraft %s for Minecraft %s (Latest: %s).", Version.getVersion(),
-				CoreProxy.proxy.getMinecraftVersion(), Version.getRecommendedVersion())));
+				CoreProxy.getProxy().getMinecraftVersion(), Version.getRecommendedVersion())));
 		if (Version.isOutdated()) {
 			for (String updateLine : Version.getChangelog()) {
 				sender.sendChatToPlayer(ChatMessageComponent.createFromText("\u00A79" + updateLine));

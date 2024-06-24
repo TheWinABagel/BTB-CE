@@ -86,7 +86,7 @@ public class PipeItemsDiamond extends Pipe<PipeTransportItems> implements IClien
 			if (Block.blocksList[entityplayer.getCurrentEquippedItem().itemID] instanceof BlockGenericPipe)
 				return false;
 
-		if (!CoreProxy.proxy.isRenderWorld(container.worldObj)) {
+		if (!CoreProxy.getProxy().isRenderWorld(container.worldObj)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_DIAMOND, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
@@ -94,8 +94,8 @@ public class PipeItemsDiamond extends Pipe<PipeTransportItems> implements IClien
 	}
 
 	public void eventHandler(PipeEventItem.FindDest event) {
-		LinkedList<ForgeDirection> filteredOrientations = new LinkedList<ForgeDirection>();
-		LinkedList<ForgeDirection> defaultOrientations = new LinkedList<ForgeDirection>();
+		LinkedList<ForgeDirection> filteredOrientations = new LinkedList<>();
+		LinkedList<ForgeDirection> defaultOrientations = new LinkedList<>();
 
 		// Filtered outputs
 		for (ForgeDirection dir : event.destinations) {

@@ -65,11 +65,11 @@ public class BuildCraftSilicon {
 		BuildCraftCore.mainConfiguration.save();
 
 		laserBlock = new BlockLaser(laserId.getInt());
-		CoreProxy.proxy.addName(laserBlock.setUnlocalizedName("laserBlock"), "Laser");
-		CoreProxy.proxy.registerBlock(laserBlock);
+		CoreProxy.getProxy().addName(laserBlock.setUnlocalizedName("laserBlock"), "Laser");
+		CoreProxy.getProxy().registerBlock(laserBlock);
 
 		assemblyTableBlock = new BlockLaserTable(assemblyTableId.getInt());
-		CoreProxy.proxy.registerBlock(assemblyTableBlock, ItemLaserTable.class);
+		CoreProxy.getProxy().registerBlock(assemblyTableBlock, ItemLaserTable.class);
 
 		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 0), "Assembly Table");
 		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 1), "Advanced Crafting Table");
@@ -77,17 +77,17 @@ public class BuildCraftSilicon {
 
 		redstoneChipset = new ItemRedstoneChipset(redstoneChipsetId.getInt());
 		redstoneChipset.setUnlocalizedName("redstoneChipset");
-		CoreProxy.proxy.registerItem(redstoneChipset);
+		CoreProxy.getProxy().registerItem(redstoneChipset);
 		redstoneChipset.registerItemStacks();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent evt) {
 		NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
-		CoreProxy.proxy.registerTileEntity(TileLaser.class, "net.minecraft.src.buildcraft.factory.TileLaser");
-		CoreProxy.proxy.registerTileEntity(TileAssemblyTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyTable");
-		CoreProxy.proxy.registerTileEntity(TileAdvancedCraftingTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyAdvancedWorkbench");
-		CoreProxy.proxy.registerTileEntity(TileIntegrationTable.class, "net.minecraft.src.buildcraft.factory.TileIntegrationTable");
+		CoreProxy.getProxy().registerTileEntity(TileLaser.class, "net.minecraft.src.buildcraft.factory.TileLaser");
+		CoreProxy.getProxy().registerTileEntity(TileAssemblyTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyTable");
+		CoreProxy.getProxy().registerTileEntity(TileAdvancedCraftingTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyAdvancedWorkbench");
+		CoreProxy.getProxy().registerTileEntity(TileIntegrationTable.class, "net.minecraft.src.buildcraft.factory.TileIntegrationTable");
 
 		new BptBlockRotateMeta(laserBlock.blockID, new int[]{2, 5, 3, 4}, true);
 		new BptBlockInventory(assemblyTableBlock.blockID);
@@ -102,7 +102,7 @@ public class BuildCraftSilicon {
 	public static void loadRecipes() {
 
 		// TABLES
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(laserBlock),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(laserBlock),
 				"ORR",
 				"DDR",
 				"ORR",
@@ -110,7 +110,7 @@ public class BuildCraftSilicon {
 				'R', Item.redstone,
 				'D', Item.diamond);
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 0),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 0),
 				"ORO",
 				"ODO",
 				"OGO",
@@ -119,7 +119,7 @@ public class BuildCraftSilicon {
 				'D', Item.diamond,
 				'G', BuildCraftCore.diamondGearItem);
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 1),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 1),
 				"OWO",
 				"OCO",
 				"ORO",
@@ -128,7 +128,7 @@ public class BuildCraftSilicon {
 				'C', Block.chest,
 				'R', new ItemStack(redstoneChipset, 1, 0));
 
-		CoreProxy.proxy.addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 2),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 2),
 				"ORO",
 				"OCO",
 				"OGO",

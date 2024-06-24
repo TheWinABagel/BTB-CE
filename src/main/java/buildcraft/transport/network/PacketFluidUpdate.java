@@ -25,12 +25,13 @@ public class PacketFluidUpdate extends PacketCoordinates {
 	public BitSet delta;
 
 	public PacketFluidUpdate(int xCoord, int yCoord, int zCoord) {
-		super(PacketIds.PIPE_LIQUID, xCoord, yCoord, zCoord);
+		this(xCoord, yCoord, zCoord, false);
 	}
 
 	public PacketFluidUpdate(int xCoord, int yCoord, int zCoord, boolean chunkPacket) {
 		super(PacketIds.PIPE_LIQUID, xCoord, yCoord, zCoord);
 		this.isChunkDataPacket = chunkPacket;
+		this.channel = "buildcraft|TP";
 	}
 
 	public PacketFluidUpdate() {
@@ -40,7 +41,7 @@ public class PacketFluidUpdate extends PacketCoordinates {
 	public void readData(DataInputStream data) throws IOException {
 		super.readData(data);
 
-		World world = CoreProxy.proxy.getClientWorld();
+		World world = CoreProxy.getProxy().getClientWorld();
 		if (!world.blockExists(posX, posY, posZ))
 			return;
 

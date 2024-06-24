@@ -25,10 +25,7 @@ public abstract class BuildCraftPacket {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = channel;
-		packet.data = bytes.toByteArray();
-		packet.length = packet.data.length;
+		Packet250CustomPayload packet = new Packet250CustomPayload(channel, bytes.toByteArray());
 		packet.isChunkDataPacket = this.isChunkDataPacket;
 		return packet;
 	}

@@ -10,7 +10,7 @@ package buildcraft.core.triggers;
 public class ActionRedstoneOutput extends BCAction {
 
 	public ActionRedstoneOutput() {
-		super("btb:redstone.output", "buildcraft.redstone.output");
+		super("buildcraft:redstone.output", "buildcraft.redstone.output");
 	}
 
 	@Override

@@ -37,28 +37,24 @@ public class GuiHandler implements IGuiHandler {
 	}
 
 	@Override
+	public int getId() {
+		return 1;
+	}
+
+	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
 		if (!world.blockExists(x, y, z))
 			return null;
 
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
-		if (!(tile instanceof TileEngineWithInventory))
+		if (!(tile instanceof TileEngineWithInventory engine))
 			return null;
 
-		TileEngineWithInventory engine = (TileEngineWithInventory) tile;
-
-		switch (ID) {
-
-		case GuiIds.ENGINE_IRON:
-			return new ContainerEngine(player.inventory, engine);
-
-		case GuiIds.ENGINE_STONE:
-			return new ContainerEngine(player.inventory, engine);
-
-		default:
-			return null;
-		}
+        return switch (ID) {
+            case GuiIds.ENGINE_IRON, GuiIds.ENGINE_STONE -> new ContainerEngine(player.inventory, engine);
+            default -> null;
+        };
 	}
 
 }

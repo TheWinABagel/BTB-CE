@@ -9,6 +9,7 @@ package buildcraft.energy;
 
 import java.util.LinkedList;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ICrafting;
 import net.minecraft.src.ItemStack;
@@ -44,7 +45,7 @@ public class TileEngineStone extends TileEngineWithInventory {
 	@Override
 	public boolean onBlockActivated(EntityPlayer player, ForgeDirection side) {
 		if (!CoreProxy.proxy.isRenderWorld(worldObj)) {
-			player.openGui(BuildCraftEnergy.instance, GuiIds.ENGINE_STONE, worldObj, xCoord, yCoord, zCoord);
+			((EntityPlayerExtension) player).openGui(BuildCraftEnergy.instance.getModId(), GuiIds.ENGINE_STONE, worldObj, xCoord, yCoord, zCoord);
 		}
 		return true;
 	}
@@ -92,7 +93,7 @@ public class TileEngineStone extends TileEngineWithInventory {
 		if (itemstack == null)
 			return 0;
 
-		return TileEntityFurnace.getItemBurnTime(itemstack);
+		return new TileEntityFurnace().getItemBurnTime(itemstack);
 	}
 
 	/* SAVING & LOADING */

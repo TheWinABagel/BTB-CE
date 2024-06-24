@@ -1,4 +1,4 @@
-package btw.community.example.mixin;
+package btw.community.example.mixin.accessors;
 
 import net.minecraft.src.Packet;
 import org.spongepowered.asm.mixin.Mixin;

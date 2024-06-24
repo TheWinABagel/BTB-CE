@@ -46,7 +46,7 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 				case PacketIds.PIPE_TRAVELER: {
 					PacketPipeTransportTraveler pkt = new PacketPipeTransportTraveler();
 					pkt.readData(data);
-					onPipeTravelerUpdate((EntityPlayer) player, pkt);
+					onPipeTravelerUpdate(player, pkt);
 					break;
 				}
 				case PacketIds.GATE_ACTIONS:
@@ -180,10 +180,10 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 		if (pipe.pipe == null)
 			return;
 
-		if (!(pipe.pipe.transport instanceof PipeTransportItems))
+		if (!(pipe.pipe.transport instanceof PipeTransportItems transportItems))
 			return;
 
-		((PipeTransportItems) pipe.pipe.transport).handleTravelerPacket(packet);
+		transportItems.handleTravelerPacket(packet);
 	}
 
 	/**

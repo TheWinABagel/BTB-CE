@@ -7,7 +7,7 @@
  */
 package buildcraft.core;
 
-import btw.community.example.mixin.EntityPlayerAccessor;
+import btw.community.example.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.core.network.ISynchronizedTile;
 import buildcraft.core.network.PacketPayload;
@@ -89,8 +89,8 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 	}
 
 	public void sendNetworkUpdate() {
-		if (CoreProxy.proxy.isSimulating(worldObj)) {
-			CoreProxy.proxy.sendToPlayers(getUpdatePacket(), worldObj, xCoord, yCoord, zCoord, DefaultProps.NETWORK_UPDATE_RANGE);
+		if (CoreProxy.getProxy().isSimulating(worldObj)) {
+			CoreProxy.getProxy().sendToPlayers(getUpdatePacket(), worldObj, xCoord, yCoord, zCoord, DefaultProps.NETWORK_UPDATE_RANGE);
 		}
 	}
 

@@ -130,6 +130,6 @@ public class Localization {
 	}
 
 	private static String getCurrentLanguage() {
-		return CoreProxy.proxy.getCurrentLanguage();
+		return CoreProxy.getProxy().getCurrentLanguage();
 	}
 }

@@ -83,7 +83,7 @@ public class Version implements Runnable {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
 			String line;
-			String mcVersion = CoreProxy.proxy.getMinecraftVersion();
+			String mcVersion = CoreProxy.getProxy().getMinecraftVersion();
 			while ((line = reader.readLine()) != null) {
 				String[] tokens = line.split(":");
 				if (mcVersion.matches(tokens[0])) {

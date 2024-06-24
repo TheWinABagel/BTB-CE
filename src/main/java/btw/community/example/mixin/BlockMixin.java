@@ -1,6 +1,7 @@
 package btw.community.example.mixin;
 
 import btw.community.example.injected.BlockExtension;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -49,4 +50,12 @@ public abstract class BlockMixin implements BlockExtension {
 
         return ret;
     }
+
+/*    @Inject(method = "renderBlockAsItem", at = @At("HEAD"), cancellable = true)
+    private void test(RenderBlocks renderBlocks, int iItemDamage, float fBrightness, CallbackInfo ci) {
+        if (RenderingRegistry.instance().blockRenderers.containsKey(((Block)(Object) this).getRenderType())) {
+            RenderingRegistry.instance().renderInventoryBlock(renderBlocks, (Block)(Object) this, iItemDamage, (int) fBrightness);
+            ci.cancel();
+        }
+    }*/
 }

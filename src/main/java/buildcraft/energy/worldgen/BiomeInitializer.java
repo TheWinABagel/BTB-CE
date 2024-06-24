@@ -1,19 +1,17 @@
 package buildcraft.energy.worldgen;
 
 import buildcraft.BuildCraftEnergy;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.terraingen.WorldTypeEvent;
 
 /**
  *
  * @author CovertJaguar <http://www.railcraft.info/>
  */
 public class BiomeInitializer {
-
+	//todoenergy world gen
 	public BiomeInitializer() {
 	}
 
-	@ForgeSubscribe
+/*	@ForgeSubscribe
 	public void initBiomes(WorldTypeEvent.InitBiomeGens event) {
 		if (BuildCraftEnergy.biomeOilDesert != null) {
 			event.newBiomeGens[0] = new GenLayerAddOilDesert(event.seed, 1500L, event.newBiomeGens[0]);
@@ -25,7 +23,7 @@ public class BiomeInitializer {
 			event.newBiomeGens[1] = new GenLayerAddOilOcean(event.seed, 1500L, event.newBiomeGens[1]);
 			event.newBiomeGens[2] = new GenLayerAddOilOcean(event.seed, 1500L, event.newBiomeGens[2]);
 		}
-
+	}*/
 //		int range = GenLayerBiomeReplacer.OFFSET_RANGE;
 //		Random rand = new Random(event.seed);
 //		double xOffset = rand.nextInt(range) - (range / 2);
@@ -39,5 +37,5 @@ public class BiomeInitializer {
 //				}
 //			}
 //		}
-	}
+
 }

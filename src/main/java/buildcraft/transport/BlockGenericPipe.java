@@ -24,6 +24,7 @@ import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.gates.ItemGate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.Minecraft;
@@ -83,7 +84,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	public BlockGenericPipe(int i) {
 		super(i, Material.glass);
 		setRenderAllSides();
-		setCreativeTab(null);
+//		setCreativeTab(null);
 	}
 
 	@Override
@@ -132,12 +133,13 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int x, int y, int z, int side) {
 		return (renderMask & (1 << side)) != 0;
 	}
+//todotransport med-low isBlockSolidOnSide
 
 /*	@Override
-	public boolean isBlockSolidOnSide(World world, int x, int y, int z, int sideOrdinal) {
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile instanceof ISolidSideTile) {
-			return ((ISolidSideTile) tile).isSolidOnSide(ForgeDirection.getOrientation(sideOrdinal));
+			return ((ISolidSideTile) tile).isSolidOnSide(side);
 		}
 		return false;
 	}*/
@@ -502,7 +504,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 //	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 
-		if (CoreProxy.proxy.isRenderWorld(world))
+		if (CoreProxy.getProxy().isRenderWorld(world))
 			return null;
 
 		ArrayList<ItemStack> list = new ArrayList<ItemStack>();
@@ -533,7 +535,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	@Override
 	public void dropBlockAsItemWithChance(World world, int i, int j, int k, int l, float f, int dmg) {
 
-		if (CoreProxy.proxy.isRenderWorld(world))
+		if (CoreProxy.getProxy().isRenderWorld(world))
 			return;
 
 		int i1 = quantityDropped(world.rand);
@@ -731,7 +733,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 
 	private boolean stripGate(Pipe pipe) {
 		if (pipe.hasGate()) {
-			if (!CoreProxy.proxy.isRenderWorld(pipe.container.worldObj)) {
+			if (!CoreProxy.getProxy().isRenderWorld(pipe.container.worldObj)) {
 				pipe.gate.dropGate();
 			}
 			pipe.resetGate();
@@ -762,7 +764,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 
 	private boolean stripWire(Pipe pipe, PipeWire color) {
 		if (pipe.wireSet[color.ordinal()]) {
-			if (!CoreProxy.proxy.isRenderWorld(pipe.container.worldObj)) {
+			if (!CoreProxy.getProxy().isRenderWorld(pipe.container.worldObj)) {
 				dropWire(color, pipe);
 			}
 			pipe.wireSet[color.ordinal()] = false;
@@ -942,7 +944,12 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		Pipe dummyPipe = createPipe(item.itemID);
 		if (dummyPipe != null) {
 			item.setPipeIconIndex(dummyPipe.getIconIndexForItem());
-			TransportProxy.proxy.setIconProviderFromPipe(item, dummyPipe);
+			if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)){
+				TransportProxyClient.PROXY_CLIENT.setIconProviderFromPipe(item, dummyPipe);
+			}
+			else {
+				TransportProxy.proxy.setIconProviderFromPipe(item, dummyPipe);
+			}
 		}
 		return item;
 	}
@@ -969,11 +976,9 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	}
 
 	public static boolean placePipe(Pipe pipe, World world, int i, int j, int k, int blockId, int meta) {
-		if (world.isRemote)
-			return true;
+		if (world.isRemote) return true;
 
 		boolean placed = world.setBlock(i, j, k, blockId, meta, 3);
-
 		if (placed) {
 			TileGenericPipe tile = (TileGenericPipe) world.getBlockTileEntity(i, j, k);
 			tile.initialize(pipe);
@@ -1001,13 +1006,15 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		return isFullyDefined(pipe);
 	}
 
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		if (!skippedFirstIconRegister) {
+		//todotransport skipped first register... why?
+/*		if (!skippedFirstIconRegister) {
 			skippedFirstIconRegister = true;
 			return;
-		}
+		}*/
 		BuildCraftTransport.instance.wireIconProvider.registerIcons(iconRegister);
 		for (int i : pipes.keySet()) {
 			Pipe dummyPipe = createPipe(i);

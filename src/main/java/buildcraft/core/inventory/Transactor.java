@@ -19,12 +19,12 @@ public abstract class Transactor implements ITransactor {
 
 	public static ITransactor getTransactorFor(Object object) {
 
-		if (object instanceof ISpecialInventory)
-			return new TransactorSpecial((ISpecialInventory) object);
-		else if (object instanceof ISidedInventory)
-			return new TransactorSimple((ISidedInventory) object);
-		else if (object instanceof IInventory)
-			return new TransactorSimple(InvUtils.getInventory((IInventory) object));
+		if (object instanceof ISpecialInventory special)
+			return new TransactorSpecial(special);
+		else if (object instanceof ISidedInventory sided)
+			return new TransactorSimple(sided);
+		else if (object instanceof IInventory inv)
+			return new TransactorSimple(InvUtils.getInventory(inv));
 
 		return null;
 	}
