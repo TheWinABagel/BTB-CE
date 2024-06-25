@@ -10,14 +10,7 @@ import buildcraft.transport.gates.GateDefinition.GateLogic;
 import buildcraft.transport.gates.GateDefinition.GateMaterial;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.NBTTagString;
-import net.minecraft.src.Icon;
+import net.minecraft.src.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +28,7 @@ public class ItemGate extends ItemBuildCraft {
 		setHasSubtypes(false);
 		setMaxDamage(0);
 		setPassSneakClick(true);
+		setCreativeTab(CreativeTabs.tabRedstone);
 	}
 
 	private static NBTTagCompound getNBT(ItemStack stack) {
@@ -134,7 +128,7 @@ public class ItemGate extends ItemBuildCraft {
 		return GateDefinition.getLocalizedName(getMaterial(stack), getLogic(stack));
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings({"unchecked"})
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void getSubItems(int id, CreativeTabs tab, List itemList) {
@@ -152,7 +146,7 @@ public class ItemGate extends ItemBuildCraft {
 	}
 
 	public static ItemStack[] getGateVarients() {
-		ArrayList<ItemStack> gates = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> gates = new ArrayList<>();
 		for (GateMaterial material : GateMaterial.VALUES) {
 			for (GateLogic logic : GateLogic.VALUES) {
 				if (material == GateMaterial.REDSTONE && logic == GateLogic.OR)
@@ -166,11 +160,11 @@ public class ItemGate extends ItemBuildCraft {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean adv) {
 		super.addInformation(stack, player, list, adv);
-		list.add("§9§o" + Localization.get("tip.gate.wires"));
-		list.add(Localization.get("tip.gate.wires." + getMaterial(stack).getTag()));
+		list.add("§9§o" + I18n.getString("tip.gate.wires"));
+		list.add(I18n.getString("tip.gate.wires." + getMaterial(stack).getTag()));
 		Set<IGateExpansion> expansions = getInstalledExpansions(stack);
 		if (!expansions.isEmpty()) {
-			list.add("§9§o" + Localization.get("tip.gate.expansions"));
+			list.add("§9§o" + I18n.getString("tip.gate.expansions"));
 			for (IGateExpansion expansion : expansions) {
 				list.add(expansion.getDisplayName());
 			}

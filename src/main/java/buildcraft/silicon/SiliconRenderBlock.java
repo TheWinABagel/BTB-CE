@@ -9,6 +9,8 @@
 
 package buildcraft.silicon;
 
+import btw.community.example.mixin.accessors.BlockAccessor;
+import btw.community.example.mixin.accessors.RenderBlocksAccessor;
 import buildcraft.core.CoreConstants;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
@@ -35,85 +37,85 @@ public class SiliconRenderBlock implements ISimpleBlockRenderingHandler {
 		int meta = iblockaccess.getBlockMetadata(x, y, z);
 
 		if (meta == ForgeDirection.EAST.ordinal()) {
-			renderblocks.uvRotateEast = 2;
-			renderblocks.uvRotateWest = 1;
-			renderblocks.uvRotateTop = 1;
-			renderblocks.uvRotateBottom = 2;
+			((RenderBlocksAccessor) renderblocks).setUvRotateEast(2);
+			((RenderBlocksAccessor) renderblocks).setUvRotateWest(1);
+			((RenderBlocksAccessor) renderblocks).setUvRotateTop(1);
+			((RenderBlocksAccessor) renderblocks).setUvRotateBottom(2);
 
-			block.setBlockBounds(0.0F, 0.0F, 0.0F, 4F / 16F, 1, 1);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 4F / 16F, 1, 1);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(4F / 16F, 5F / 16F, 5F / 16F, 13F / 16F, 11F / 16F, 11F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(4F / 16F, 5F / 16F, 5F / 16F, 13F / 16F, 11F / 16F, 11F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		} else if (meta == ForgeDirection.WEST.ordinal()) {
-			renderblocks.uvRotateEast = 1;
-			renderblocks.uvRotateWest = 2;
-			renderblocks.uvRotateTop = 2;
-			renderblocks.uvRotateBottom = 1;
+			((RenderBlocksAccessor) renderblocks).setUvRotateEast(1);
+			((RenderBlocksAccessor) renderblocks).setUvRotateWest(2);
+			((RenderBlocksAccessor) renderblocks).setUvRotateTop(2);
+			((RenderBlocksAccessor) renderblocks).setUvRotateBottom(1);
 
-			block.setBlockBounds(1F - 4F / 16F, 0.0F, 0.0F, 1, 1, 1);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(1F - 4F / 16F, 0.0F, 0.0F, 1, 1, 1);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(1F - 13F / 16F, 5F / 16F, 5F / 16F, 1F - 4F / 16F, 11F / 16F, 11F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(1F - 13F / 16F, 5F / 16F, 5F / 16F, 1F - 4F / 16F, 11F / 16F, 11F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		} else if (meta == ForgeDirection.NORTH.ordinal()) {
-			renderblocks.uvRotateSouth = 1;
-			renderblocks.uvRotateNorth = 2;
+			((RenderBlocksAccessor) renderblocks).setUvRotateSouth(1);
+			((RenderBlocksAccessor) renderblocks).setUvRotateNorth(2);
 
-			block.setBlockBounds(0.0F, 0.0F, 1F - 4F / 16F, 1, 1, 1);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 1F - 4F / 16F, 1, 1, 1);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(5F / 16F, 5F / 16F, 1F - 13F / 16F, 11F / 16F, 11F / 16F, 1F - 4F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(5F / 16F, 5F / 16F, 1F - 13F / 16F, 11F / 16F, 11F / 16F, 1F - 4F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		} else if (meta == ForgeDirection.SOUTH.ordinal()) {
-			renderblocks.uvRotateSouth = 2;
-			renderblocks.uvRotateNorth = 1;
-			renderblocks.uvRotateTop = 3;
-			renderblocks.uvRotateBottom = 3;
+			((RenderBlocksAccessor) renderblocks).setUvRotateSouth(2);
+			((RenderBlocksAccessor) renderblocks).setUvRotateNorth(1);
+			((RenderBlocksAccessor) renderblocks).setUvRotateTop(3);
+			((RenderBlocksAccessor) renderblocks).setUvRotateBottom(3);
 
-			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1, 1, 4F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1, 1, 4F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(5F / 16F, 5F / 16F, 4F / 16F, 11F / 16F, 11F / 16F, 13F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(5F / 16F, 5F / 16F, 4F / 16F, 11F / 16F, 11F / 16F, 13F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		} else if (meta == ForgeDirection.DOWN.ordinal()) {
-			renderblocks.uvRotateEast = 3;
-			renderblocks.uvRotateWest = 3;
-			renderblocks.uvRotateSouth = 3;
-			renderblocks.uvRotateNorth = 3;
+			((RenderBlocksAccessor) renderblocks).setUvRotateEast(3);
+			((RenderBlocksAccessor) renderblocks).setUvRotateWest(3);
+			((RenderBlocksAccessor) renderblocks).setUvRotateSouth(3);
+			((RenderBlocksAccessor) renderblocks).setUvRotateNorth(3);
 
-			block.setBlockBounds(0.0F, 1.0F - 4F / 16F, 0.0F, 1.0F, 1.0F, 1.0F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 1.0F - 4F / 16F, 0.0F, 1.0F, 1.0F, 1.0F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(5F / 16F, 1F - 13F / 16F, 5F / 16F, 11F / 16F, 1F - 4F / 16F, 11F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(5F / 16F, 1F - 13F / 16F, 5F / 16F, 11F / 16F, 1F - 4F / 16F, 11F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		} else if (meta == ForgeDirection.UP.ordinal()) {
-			block.setBlockBounds(0.0F, 0.0F, 0.0F, 1, 4F / 16F, 1);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1, 4F / 16F, 1);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 
-			block.setBlockBounds(5F / 16F, 4F / 16F, 5F / 16F, 11F / 16F, 13F / 16F, 11F / 16F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(5F / 16F, 4F / 16F, 5F / 16F, 11F / 16F, 13F / 16F, 11F / 16F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, x, y, z);
 		}
 
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1, 1, 1);
-		renderblocks.uvRotateEast = 0;
-		renderblocks.uvRotateWest = 0;
-		renderblocks.uvRotateSouth = 0;
-		renderblocks.uvRotateNorth = 0;
-		renderblocks.uvRotateTop = 0;
-		renderblocks.uvRotateBottom = 0;
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1, 1, 1);
+		((RenderBlocksAccessor) renderblocks).setUvRotateEast(0);
+		((RenderBlocksAccessor) renderblocks).setUvRotateWest(0);
+		((RenderBlocksAccessor) renderblocks).setUvRotateSouth(0);
+		((RenderBlocksAccessor) renderblocks).setUvRotateNorth(0);
+		((RenderBlocksAccessor) renderblocks).setUvRotateTop(0);
+		((RenderBlocksAccessor) renderblocks).setUvRotateBottom(0);
 
 		return true;
 
@@ -121,19 +123,19 @@ public class SiliconRenderBlock implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int i, int j, RenderBlocks renderblocks) {
-		block.setBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1, 4F / 16F, 1);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1, 4F / 16F, 1);
 		renderblocks.setRenderBoundsFromBlock(block);
 		renderBlockInInv(renderblocks, block, 0);
 
-		block.setBlockBounds(5F / 16F, 4F / 16F, 5F / 16F, 11F / 16F, 13F / 16F, 11F / 16F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(5F / 16F, 4F / 16F, 5F / 16F, 11F / 16F, 13F / 16F, 11F / 16F);
 		renderblocks.setRenderBoundsFromBlock(block);
 		renderBlockInInv(renderblocks, block, 1);
 
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	private void renderBlockInInv(RenderBlocks renderblocks, Block block, int i) {

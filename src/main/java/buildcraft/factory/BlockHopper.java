@@ -1,5 +1,6 @@
 package buildcraft.factory;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
 import buildcraft.core.BlockBuildCraft;
@@ -62,17 +63,17 @@ public class BlockHopper extends BlockBuildCraft {
 		}
 
 		if (!CoreProxy.proxy.isRenderWorld(world)) {
-			entityplayer.openGui(BuildCraftFactory.instance, GuiIds.HOPPER, world, x, y, z);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.instance.getModId(), GuiIds.HOPPER, world, x, y, z);
 		}
 
 		return true;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

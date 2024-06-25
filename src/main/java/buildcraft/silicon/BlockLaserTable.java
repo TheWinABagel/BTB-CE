@@ -1,5 +1,6 @@
 package buildcraft.silicon;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftSilicon;
 import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
@@ -50,11 +51,16 @@ public class BlockLaserTable extends BlockContainer {
 		if (entityplayer.isSneaking())
 			return false;
 
-		if (!CoreProxy.proxy.isRenderWorld(world)) {
+		if (!CoreProxy.getProxy().isRenderWorld(world)) {
 			int meta = world.getBlockMetadata(i, j, k);
-			entityplayer.openGui(BuildCraftSilicon.instance, meta, world, i, j, k);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.instance.getModId(), meta, world, i, j, k);
 		}
 		return true;
+	}
+
+	@Override
+	public TileEntity createNewTileEntity(World world) {
+		return null;
 	}
 
 	@Override
@@ -67,29 +73,6 @@ public class BlockLaserTable extends BlockContainer {
 	public Icon getIcon(int side, int meta) {
 		int s = side > 1 ? 2 : side;
 		return icons[meta][s];
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, int metadata) {
-		switch (metadata) {
-			case 0:
-				return new TileAssemblyTable();
-			case 1:
-				return new TileAdvancedCraftingTable();
-			case 2:
-				return new TileIntegrationTable();
-		}
-		return null;
-	}
-
-	@Override
-	public TileEntity createNewTileEntity(World var1) {
-		return null;
-	}
-
-	@Override
-	public int damageDropped(int par1) {
-		return par1;
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})

@@ -45,7 +45,6 @@ import static net.minecraftforge.common.ForgeDirection.EAST;
 import static net.minecraftforge.common.ForgeDirection.NORTH;
 import static net.minecraftforge.common.ForgeDirection.SOUTH;
 import static net.minecraftforge.common.ForgeDirection.WEST;
-import net.minecraftforge.oredict.OreDictionary;
 import org.bouncycastle.util.Arrays;
 
 public class TileAdvancedCraftingTable extends TileLaserTableBase implements IInventory, ILaserTarget, IMachine, IActionReceptor, ISidedInventory {
@@ -70,8 +69,8 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 		@Override
 		public void setInventorySlotContents(int slotId, ItemStack itemstack) {
 			super.setInventorySlotContents(slotId, itemstack);
-			if (TileAdvancedCraftingTable.this.worldObj == null || !TileAdvancedCraftingTable.this.worldObj.isRemote)
-				oreIDs[slotId] = itemstack == null ? -1 : OreDictionary.getOreID(itemstack);
+/*			if (TileAdvancedCraftingTable.this.worldObj == null || !TileAdvancedCraftingTable.this.worldObj.isRemote)
+				oreIDs[slotId] = itemstack == null ? -1 : OreDictionary.getOreID(itemstack);*/
 		}
 	}
 

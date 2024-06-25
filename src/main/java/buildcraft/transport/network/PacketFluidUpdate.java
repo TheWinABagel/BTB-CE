@@ -31,7 +31,7 @@ public class PacketFluidUpdate extends PacketCoordinates {
 	public PacketFluidUpdate(int xCoord, int yCoord, int zCoord, boolean chunkPacket) {
 		super(PacketIds.PIPE_LIQUID, xCoord, yCoord, zCoord);
 		this.isChunkDataPacket = chunkPacket;
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	public PacketFluidUpdate() {

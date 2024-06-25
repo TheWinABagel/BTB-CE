@@ -11,6 +11,8 @@ package buildcraft.transport;
 import buildcraft.core.utils.Localization;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.src.I18n;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,7 +42,7 @@ public class PipeToolTipManager {
 		List<String> tips = new ArrayList<String>();
 		String tipTag = "tip." + pipe.getSimpleName();
 		if (Localization.hasKey(tipTag)) {
-			String localized = Localization.get(tipTag);
+			String localized = I18n.getString(tipTag);
 			if (localized != null) {
 				String[] lines = localized.split("\\n");
 				tips.addAll(Arrays.asList(lines));

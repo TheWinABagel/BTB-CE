@@ -27,11 +27,10 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 	public int posZ;
 
 	public PacketPipeTransportTraveler() {
-		this.channel = "buildcraft|TP";
 	}
 
+	//sent from server to client
 	public PacketPipeTransportTraveler(TravelingItem item, boolean forceStackRefresh) {
-		this();
 		this.item = item;
 		this.forceStackRefresh = forceStackRefresh;
 	}
@@ -52,6 +51,12 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 		data.writeFloat(item.getSpeed());
 
 		data.writeBoolean(forceStackRefresh);
+
+		int i = 0;
+/*		if (i == 0) {
+			data.writeInt(30);
+//			System.out.println("sent data " + data.writeInt(30));
+		}*/
 	}
 
 	@Override
@@ -76,6 +81,9 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 		this.speed = data.readFloat();
 
 		this.forceStackRefresh = data.readBoolean();
+		if (this.posX == 0) {
+			this.posX = 0;
+		}
 	}
 
 	public int getTravelingEntityId() {

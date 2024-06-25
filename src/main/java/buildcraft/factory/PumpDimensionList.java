@@ -9,7 +9,7 @@ import net.minecraftforge.fluids.Fluid;
 public class PumpDimensionList {
 	public PumpDimensionList(String string) {
 
-		entries = new LinkedList<Entry>();
+		entries = new LinkedList<>();
 
 		for(String entryString : string.trim().split(",")) {
 

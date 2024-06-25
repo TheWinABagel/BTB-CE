@@ -2,7 +2,6 @@ package buildcraft.silicon;
 
 import buildcraft.BuildCraftSilicon;
 import buildcraft.core.ItemBuildCraft;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.List;
@@ -80,7 +79,7 @@ public class ItemRedstoneChipset extends ItemBuildCraft {
 
 	public void registerItemStacks() {
 		for (Chipset chipset : Chipset.VALUES) {
-			GameRegistry.registerCustomItemStack(chipset.getChipsetName(), chipset.getStack());
+//			GameRegistry.registerCustomItemStack(chipset.getChipsetName(), chipset.getStack());
 		}
 	}
 }

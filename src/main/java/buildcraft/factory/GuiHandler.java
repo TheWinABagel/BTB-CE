@@ -13,7 +13,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 public class GuiHandler implements IGuiHandler {
-
+	public static final int FACTORY_GUI_ID = 3;
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
@@ -42,6 +42,11 @@ public class GuiHandler implements IGuiHandler {
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	public int getId() {
+		return FACTORY_GUI_ID;
 	}
 
 	@Override

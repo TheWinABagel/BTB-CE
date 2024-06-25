@@ -14,7 +14,7 @@ import java.util.Map;
 public class PacketGateExpansionMap extends BuildCraftPacket {
 
 	public PacketGateExpansionMap() {
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	@Override

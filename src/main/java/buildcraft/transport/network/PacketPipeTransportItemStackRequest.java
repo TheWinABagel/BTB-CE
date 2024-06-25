@@ -18,17 +18,18 @@ public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 
 	public PacketPipeTransportItemStackRequest(EntityPlayer player) {
 		this.player = player;
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	public PacketPipeTransportItemStackRequest(int travelerID) {
 		this.travelerID = travelerID;
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	@Override
 	public void writeData(DataOutputStream data) throws IOException {
 		data.writeShort(travelerID);
+		System.out.println("writing packet itemstack data");
 	}
 
 	@Override
@@ -38,6 +39,7 @@ public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 		TravelingItem item = cache.get(travelerID);
 		if (item == null)
 			return;
+		System.out.println("sending packet pipe transport itemstack to player" + player);
 		PacketDispatcher.sendPacketToPlayer(new PacketPipeTransportItemStack(travelerID, item.getItemStack()).getPacket(), player);
 	}
 

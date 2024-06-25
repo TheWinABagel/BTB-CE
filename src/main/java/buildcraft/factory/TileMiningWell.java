@@ -91,7 +91,7 @@ public class TileMiningWell extends TileBuildCraft implements IMachine, IPowerRe
 
 			EntityItem entityitem = new EntityItem(world, xCoord + f, yCoord + f1 + 0.5F, zCoord + f2, stack);
 
-			entityitem.lifespan = BuildCraftCore.itemLifespan;
+			entityitem.age = BuildCraftCore.itemLifespan;
 			entityitem.delayBeforeCanPickup = 10;
 
 			float f3 = 0.05F;

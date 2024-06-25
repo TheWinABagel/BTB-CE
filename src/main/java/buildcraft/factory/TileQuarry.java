@@ -19,9 +19,6 @@ import net.minecraft.src.Packet3Chat;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordIntPair;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
@@ -49,9 +46,6 @@ import buildcraft.core.utils.Utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class TileQuarry extends TileBuildCraft implements IMachine, IPowerReceptor, IBuilderInventory {
 

@@ -3,9 +3,14 @@ package buildcraft.core.network;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import btw.community.example.extensions.BuildcraftCustomPacketHandler;
 import btw.network.packet.handler.CustomPacketHandler;
+import buildcraft.silicon.network.PacketHandlerSilicon;
+import buildcraft.transport.network.PacketHandlerTransport;
+import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
+import buildcraft.transport.network.PacketPipeTransportTraveler;
 import net.minecraft.src.*;
 
 
@@ -30,7 +35,13 @@ public class PacketHandler implements BuildcraftCustomPacketHandler {
 	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
-			int packetID = data.read();
+			int packetID = data.readByte();
+/*			if (packetID == PacketIds.PIPE_TRAVELER) {
+				System.out.println("traveller received");
+			} else if (packetID == PacketIds.PIPE_ITEMSTACK_REQUEST) {
+				System.out.println("itemstack request received");
+			}*/
+
 			switch (packetID) {
 				case PacketIds.TILE_UPDATE: {
 					PacketTileUpdate pkt = new PacketTileUpdate();
@@ -59,6 +70,22 @@ public class PacketHandler implements BuildcraftCustomPacketHandler {
 				case PacketIds.GUI_WIDGET: {
 					PacketGuiWidget pkt = new PacketGuiWidget();
 					pkt.readData(data);
+					break;
+				}
+				case PacketIds.PIPE_TRAVELER: {
+					PacketPipeTransportTraveler pkt = new PacketPipeTransportTraveler();
+					pkt.readData(data);
+					PacketHandlerTransport.onPipeTravelerUpdate(player, pkt);
+					break;
+				}
+				case PacketIds.PIPE_ITEMSTACK_REQUEST: {
+					PacketPipeTransportItemStackRequest pkt = new PacketPipeTransportItemStackRequest(player);
+					pkt.readData(data);
+					break;
+				}
+				default: {
+					PacketHandlerTransport.INSTANCE.onPacketDataExtra(player, packet, packetID, data);
+					PacketHandlerSilicon.INSTANCE.onPacketDataExtra(player, packet, packetID, data);
 					break;
 				}
 			}

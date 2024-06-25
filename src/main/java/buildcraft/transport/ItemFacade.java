@@ -29,6 +29,7 @@ public class ItemFacade extends ItemBuildCraft {
 		setHasSubtypes(true);
 		setMaxDamage(0);
 		//todocore creative tab
+		setCreativeTab(CreativeTabs.tabRedstone);
 //		setCreativeTab(CreativeTabBuildCraft.FACADES.get());
 	}
 

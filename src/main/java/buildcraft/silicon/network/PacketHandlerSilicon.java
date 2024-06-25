@@ -1,5 +1,6 @@
 package buildcraft.silicon.network;
 
+import btw.community.example.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.core.network.PacketCoordinates;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketNBT;
@@ -8,21 +9,19 @@ import buildcraft.silicon.TileAdvancedCraftingTable;
 import buildcraft.silicon.TileAssemblyTable;
 import buildcraft.silicon.TileAssemblyTable.SelectionMessage;
 import buildcraft.silicon.gui.ContainerAssemblyTable;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Container;
-import net.minecraft.network.INetworkManager;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
-public class PacketHandlerSilicon implements IPacketHandler {
-
+public class PacketHandlerSilicon implements BuildcraftCustomPacketHandler {
+	public static final PacketHandlerSilicon INSTANCE = new PacketHandlerSilicon();
 	@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) {
 
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
@@ -49,6 +48,38 @@ public class PacketHandlerSilicon implements IPacketHandler {
 				packet1.readData(data);
 				onAdvancedWorkbenchSet((EntityPlayer) player, packet1);
 				break;
+
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+	}
+
+	public void onPacketDataExtra(EntityPlayer player, Packet250CustomPayload packet, int packetID, DataInputStream data) {
+		try {
+			switch (packetID) {
+				case PacketIds.SELECTION_ASSEMBLY_SEND:
+					PacketNBT packetT = new PacketNBT();
+					packetT.readData(data);
+					onSelectionUpdate((EntityPlayer) player, packetT);
+					break;
+
+				case PacketIds.SELECTION_ASSEMBLY:
+					PacketNBT packetA = new PacketNBT();
+					packetA.readData(data);
+					onAssemblySelect((EntityPlayer) player, packetA);
+					break;
+				case PacketIds.SELECTION_ASSEMBLY_GET:
+					PacketCoordinates packetC = new PacketCoordinates();
+					packetC.readData(data);
+					onAssemblyGetSelection((EntityPlayer) player, packetC);
+					break;
+				case PacketIds.ADVANCED_WORKBENCH_SETSLOT:
+					PacketSlotChange packet1 = new PacketSlotChange();
+					packet1.readData(data);
+					onAdvancedWorkbenchSet((EntityPlayer) player, packet1);
+					break;
 
 			}
 		} catch (Exception ex) {

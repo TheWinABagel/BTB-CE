@@ -31,11 +31,23 @@ public interface RenderBlocksAccessor {
     void setUvRotateEast(int uvRotateEast);
 
     @Accessor
+    int getUvRotateWest();
+
+    @Accessor
     void setUvRotateWest(int uvRotateWest);
+
+    @Accessor
+    int getUvRotateSouth();
 
     @Accessor
     void setUvRotateSouth(int uvRotateSouth);
 
     @Accessor
+    int getUvRotateNorth();
+
+    @Accessor
     void setUvRotateNorth(int uvRotateNorth);
+
+    @Accessor
+    int getUvRotateEast();
 }

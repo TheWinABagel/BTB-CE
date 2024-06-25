@@ -10,7 +10,6 @@ import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
 import buildcraft.core.recipes.AssemblyRecipeManager.AssemblyRecipe;
 import buildcraft.core.utils.StringUtils;
-import cpw.mods.fml.common.FMLCommonHandler;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -60,10 +59,10 @@ public class TileAssemblyTable extends TileLaserTableBase implements IMachine, I
 		return result;
 	}
 
-	@Override
+/*	@Override
 	public boolean canUpdate() {
 		return !FMLCommonHandler.instance().getEffectiveSide().isClient();
-	}
+	}*/
 
 	@Override
 	public void updateEntity() { // WARNING: run only server-side, see canUpdate()

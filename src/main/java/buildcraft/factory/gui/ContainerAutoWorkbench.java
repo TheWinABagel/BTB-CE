@@ -71,9 +71,9 @@ public class ContainerAutoWorkbench extends BuildCraftContainer {
 	}
 
 	@Override
-	public void addCraftingToCrafters(ICrafting icrafting) {
-		super.addCraftingToCrafters(icrafting);
-		icrafting.sendProgressBarUpdate(this, 0, tile.progress);
+	public void onCraftGuiOpened(ICrafting player) {
+		super.onCraftGuiOpened(player);
+		player.sendProgressBarUpdate(this, 0, tile.progress);
 	}
 
 	@Override

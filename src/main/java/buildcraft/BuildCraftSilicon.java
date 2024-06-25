@@ -6,7 +6,8 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-/*
+
+import btw.util.color.Color;
 import buildcraft.api.bptblocks.BptBlockInventory;
 import buildcraft.api.bptblocks.BptBlockRotateMeta;
 import buildcraft.api.recipes.BuildcraftRecipes;
@@ -26,64 +27,64 @@ import buildcraft.transport.gates.GateExpansionPulsar;
 import buildcraft.transport.gates.GateExpansionRedstoneFader;
 import buildcraft.transport.gates.GateExpansionTimer;
 import buildcraft.transport.gates.ItemGate;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
+import emi.shims.java.net.minecraft.util.DyeColor;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
+import net.minecraft.src.ItemDye;
 import net.minecraft.src.ItemStack;
-import net.minecraftforge.common.Property;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-*/
-//@Mod(name = "BuildCraft Silicon", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Silicon", dependencies = DefaultProps.DEPENDENCY_TRANSPORT)
-//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerSilicon.class, clientSideRequired = true, serverSideRequired = true)
-public class BuildCraftSilicon {
-/*
+
+public class BuildCraftSilicon extends BuildcraftAddon {
+
 	public static ItemRedstoneChipset redstoneChipset;
 	public static BlockLaser laserBlock;
 	public static BlockLaserTable assemblyTableBlock;
-	@Instance("BuildCraft|Silicon")
-	public static BuildCraftSilicon instance;
+	public static BlockLaserTable advancedCraftingTableBlock;
+	public static BlockLaserTable integrationTableBlock;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent evt) {
-		Property laserId = BuildCraftCore.mainConfiguration.getBlock("laser.id", DefaultProps.LASER_ID);
+	public static BuildCraftSilicon instance = new BuildCraftSilicon();
+
+	public BuildCraftSilicon() {
+		super("bcsilicon");
+	}
+
+	@Override
+	public void preInitialize() {
+/*		Property laserId = BuildCraftCore.mainConfiguration.getBlock("laser.id", DefaultProps.LASER_ID);
 
 		Property assemblyTableId = BuildCraftCore.mainConfiguration.getBlock("assemblyTable.id", DefaultProps.ASSEMBLY_TABLE_ID);
 
 		Property redstoneChipsetId = BuildCraftCore.mainConfiguration.getItem("redstoneChipset.id", DefaultProps.REDSTONE_CHIPSET);
 
-		BuildCraftCore.mainConfiguration.save();
+		BuildCraftCore.mainConfiguration.save();*/
 
-		laserBlock = new BlockLaser(laserId.getInt());
+		laserBlock = new BlockLaser(DefaultProps.LASER_ID);
 		CoreProxy.getProxy().addName(laserBlock.setUnlocalizedName("laserBlock"), "Laser");
 		CoreProxy.getProxy().registerBlock(laserBlock);
 
-		assemblyTableBlock = new BlockLaserTable(assemblyTableId.getInt());
+		assemblyTableBlock = new BlockLaserTableAssembly(DefaultProps.ASSEMBLY_TABLE_ID);
+		advancedCraftingTableBlock = new BlockLaserTableAdvancedCrafting(DefaultProps.ADVANCED_CRAFTING_TABLE_ID);
+		integrationTableBlock = new BlockLaserTableIntegration(DefaultProps.INTEGRATION_TABLE_ID);
+
 		CoreProxy.getProxy().registerBlock(assemblyTableBlock, ItemLaserTable.class);
 
-		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 0), "Assembly Table");
+/*		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 0), "Assembly Table");
 		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 1), "Advanced Crafting Table");
-		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 2), "Integration Table");
+		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 2), "Integration Table");*/
 
-		redstoneChipset = new ItemRedstoneChipset(redstoneChipsetId.getInt());
+		redstoneChipset = new ItemRedstoneChipset(DefaultProps.REDSTONE_CHIPSET);
 		redstoneChipset.setUnlocalizedName("redstoneChipset");
 		CoreProxy.getProxy().registerItem(redstoneChipset);
 		redstoneChipset.registerItemStacks();
 	}
 
-	@EventHandler
-	public void init(FMLInitializationEvent evt) {
-		NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
+	@Override
+	public void initialize() {
+		NetworkRegistry.instance().registerGuiHandler("bcsilicon", new GuiHandler());
 		CoreProxy.getProxy().registerTileEntity(TileLaser.class, "net.minecraft.src.buildcraft.factory.TileLaser");
 		CoreProxy.getProxy().registerTileEntity(TileAssemblyTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyTable");
 		CoreProxy.getProxy().registerTileEntity(TileAdvancedCraftingTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyAdvancedWorkbench");
@@ -138,10 +139,10 @@ public class BuildCraftSilicon {
 				'G', BuildCraftCore.diamondGearItem);
 
 		// PIPE WIRE
-		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.RED.getStack(8), "dyeRed", 1, Item.redstone, Item.ingotIron);
-		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.BLUE.getStack(8), "dyeBlue", 1, Item.redstone, Item.ingotIron);
-		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.GREEN.getStack(8), "dyeGreen", 1, Item.redstone, Item.ingotIron);
-		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.YELLOW.getStack(8), "dyeYellow", 1, Item.redstone, Item.ingotIron);
+		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.RED.getStack(8), new ItemStack(Item.dyePowder, 1, Color.RED.colorID), 1, Item.redstone, Item.ingotIron);
+		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.BLUE.getStack(8), new ItemStack(Item.dyePowder, 1, Color.BLUE.colorID), 1, Item.redstone, Item.ingotIron);
+		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.GREEN.getStack(8), new ItemStack(Item.dyePowder, 1, Color.GREEN.colorID), 1, Item.redstone, Item.ingotIron);
+		BuildcraftRecipes.assemblyTable.addRecipe(500, PipeWire.YELLOW.getStack(8), new ItemStack(Item.dyePowder, 1, Color.YELLOW.colorID), 1, Item.redstone, Item.ingotIron);
 
 		// CHIPSETS
 		BuildcraftRecipes.assemblyTable.addRecipe(10000, Chipset.RED.getStack(), Item.redstone);
@@ -184,7 +185,7 @@ public class BuildCraftSilicon {
 		BuildcraftRecipes.assemblyTable.addRecipe(energyCost, ItemGate.makeGateItem(material, GateLogic.OR), inputs);
 	}
 
-	@EventHandler
+/*	@EventHandler
 	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
 		InterModComms.processIMC(event);
 	}*/

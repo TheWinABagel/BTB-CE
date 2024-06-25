@@ -6,7 +6,6 @@
  * granted by the copyright holder.
  */
 package buildcraft;
-/*
 import buildcraft.core.DefaultProps;
 import buildcraft.core.InterModComms;
 import buildcraft.core.Version;
@@ -40,11 +39,18 @@ import net.minecraftforge.common.Property;
 import net.minecraftforge.event.ForgeSubscribe;
 
 import java.util.List;
-*/
 //@Mod(name = "BuildCraft Factory", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Factory", dependencies = DefaultProps.DEPENDENCY_CORE)
 //@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerFactory.class, clientSideRequired = true, serverSideRequired = true)
-public class BuildCraftFactory {
-/*
+public class BuildCraftFactory extends BuildcraftAddon {
+    public BuildCraftFactory() {
+        super("bcfactory");
+    }
+
+    @Override
+    public void initialize() {
+
+    }
+
 	public static final int MINING_MJ_COST_PER_BLOCK = 64;
 	public static BlockQuarry quarryBlock;
 	public static BlockMiningWell miningWellBlock;
@@ -61,10 +67,10 @@ public class BuildCraftFactory {
 	public static float miningMultiplier = 1;
 	public static int miningDepth = 256;
 	public static PumpDimensionList pumpDimensionList;
-	@Instance("BuildCraft|Factory")
-	public static BuildCraftFactory instance;
 
-	@EventHandler
+	public static BuildCraftFactory instance = new BuildCraftFactory();
+
+
 	public void postInit(FMLPostInitializationEvent evt) {
 		FactoryProxy.proxy.initializeNEIIntegration();
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new QuarryChunkloadCallback());
@@ -103,7 +109,7 @@ public class BuildCraftFactory {
 
 	@EventHandler
 	public void load(FMLInitializationEvent evt) {
-		NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
+		NetworkRegistry.instance().registerGuiHandler(instance.getModId(), new GuiHandler());
 
 		// EntityRegistry.registerModEntity(EntityMechanicalArm.class, "bcMechanicalArm", EntityIds.MECHANICAL_ARM, instance, 50, 1, true);
 
@@ -136,15 +142,15 @@ public class BuildCraftFactory {
 		quarryOneTimeUse = genCat.get("quarry.one.time.use", false, "Quarry cannot be picked back up after placement");
 		miningMultiplier = genCat.get("mining.cost.multipler", 1F, 1F, 10F, "cost multiplier for mining operations, range (1.0 - 10.0)\nhigh values may render engines incapable of powering machines directly");
 		miningDepth = genCat.get("mining.depth", 2, 256, 256, "how far below the machine can mining machines dig, range (2 - 256), default 256");
-*/
+
 	//todofactory whacky comment
 
-//		Property pumpList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pumping.controlList", DefaultProps.PUMP_DIMENSION_LIST);
-//		pumpList.comment = "Allows admins to whitelist or blacklist pumping of specific fluids in specific dimensions.\n"
-//				+ "Eg. \"-/-1/Lava\" will disable lava in the nether. \"-/*/Lava\" will disable lava in any dimension. \"+/0/*\" will enable any fluid in the overworld.\n"
-//				+ "Entries are comma seperated, banned fluids have precedence over allowed ones."
-//				+ "Default is \"+/*/*,+/-1/Lava\" - the second redundant entry (\"+/-1/lava\") is there to show the format.";
-/*		pumpDimensionList = new PumpDimensionList(pumpList.getString());
+		Property pumpList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pumping.controlList", DefaultProps.PUMP_DIMENSION_LIST);
+		pumpList.comment = "Allows admins to whitelist or blacklist pumping of specific fluids in specific dimensions.\n"
+				+ "Eg. \"-/-1/Lava\" will disable lava in the nether. \"-/*/Lava\" will disable lava in any dimension. \"+/0/*\" will enable any fluid in the overworld.\n"
+				+ "Entries are comma seperated, banned fluids have precedence over allowed ones."
+				+ "Default is \"+/*/*,+/-1/Lava\" - the second redundant entry (\"+/-1/lava\") is there to show the format.";
+		pumpDimensionList = new PumpDimensionList(pumpList.getString());
 
 		int miningWellId = BuildCraftCore.mainConfiguration.getBlock("miningWell.id", DefaultProps.MINING_WELL_ID).getInt(DefaultProps.MINING_WELL_ID);
 		int plainPipeId = BuildCraftCore.mainConfiguration.getBlock("drill.id", DefaultProps.DRILL_ID).getInt(DefaultProps.DRILL_ID);
@@ -310,19 +316,19 @@ public class BuildCraftFactory {
 					'F', new ItemStack(Block.fenceIron));
 	}
 	
-	@EventHandler
+/*	@EventHandler
     public void processIMCRequests(FMLInterModComms.IMCEvent event) {
         InterModComms.processIMC(event);
-    }
+    }*/
 
 	@ForgeSubscribe
 	@Environment(EnvType.CLIENT)
 	public void loadTextures(TextureStitchEvent.Pre evt) {
-		if (evt.map.textureType == 0) {
-			TextureMap terrainTextures = evt.map;
-			FactoryProxyClient.pumpTexture = terrainTextures.registerIcon("buildcraft:pump_tube");
-			FactoryProxyClient.drillTexture = terrainTextures.registerIcon("buildcraft:blockDrillTexture");
-			FactoryProxyClient.drillHeadTexture = terrainTextures.registerIcon("buildcraft:blockDrillHeadTexture");
-		}
-	}*/
+        if (evt.map.textureType == 0) {
+            TextureMap terrainTextures = evt.map;
+            FactoryProxyClient.pumpTexture = terrainTextures.registerIcon("buildcraft:pump_tube");
+            FactoryProxyClient.drillTexture = terrainTextures.registerIcon("buildcraft:blockDrillTexture");
+            FactoryProxyClient.drillHeadTexture = terrainTextures.registerIcon("buildcraft:blockDrillHeadTexture");
+        }
+    }
 }

@@ -406,7 +406,7 @@ public class BuildCraftTransport extends BuildcraftAddon {
 	}*/
 
 	private static void initPackets() {
-		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
+
 	}
 
 	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {

@@ -187,7 +187,7 @@ public class BlockUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void explodeBlock(World world, int x, int y, int z) {
-		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT))
+		if (world.isRemote)
 			return;
 
 		Explosion explosion = new Explosion(world, null, x + .5, y + .5, z + .5, 3f);

@@ -19,6 +19,8 @@
       "buildcraft.BuildCraftCore",
       "buildcraft.BuildCraftTransport",
       "buildcraft.BuildCraftEnergy",
+      "buildcraft.BuildCraftSilicon",
+      "buildcraft.BuildCraftFactory",
       "cpw.mods.fml.common.network.NetworkRegistry"
     ]
   },

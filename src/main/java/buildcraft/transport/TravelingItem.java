@@ -18,14 +18,8 @@ import java.util.Map;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.MathHelper;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 public final class TravelingItem {
@@ -77,8 +71,10 @@ public final class TravelingItem {
 		return item;
 	}
 
+
+
 	public static TravelingItemCache getCache() {
-		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT))
+		if (BuildCraftCore.instance.getEffectiveSide() == EnvType.CLIENT)
 			return clientCache;
 		return serverCache;
 	}

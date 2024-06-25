@@ -1,12 +1,10 @@
 package buildcraft.factory;
 
 import buildcraft.core.EntityBlock;
-import cpw.mods.fml.common.SidedProxy;
 import net.minecraft.src.World;
 
 public class FactoryProxy {
-	@SidedProxy(clientSide = "buildcraft.factory.FactoryProxyClient", serverSide = "buildcraft.factory.FactoryProxy")
-	public static FactoryProxy proxy;
+	public static FactoryProxy proxy = new FactoryProxy();
 
 	public void initializeTileEntities() {
 	}

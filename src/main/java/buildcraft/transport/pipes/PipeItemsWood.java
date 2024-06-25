@@ -122,13 +122,11 @@ public class PipeItemsWood extends Pipe<PipeTransportItems> implements IPowerRec
 		ForgeDirection side = ForgeDirection.getOrientation(meta);
 		TileEntity tile = container.getTile(side);
 
-		if (tile instanceof IInventory) {
+		if (tile instanceof IInventory inventory) {
 			if (!PipeManager.canExtractItems(this, tile.worldObj, tile.xCoord, tile.yCoord, tile.zCoord))
 				return;
 
-			IInventory inventory = (IInventory) tile;
-
-			ItemStack[] extracted = checkExtract(inventory, true, side.getOpposite());
+            ItemStack[] extracted = checkExtract(inventory, true, side.getOpposite());
 			if (extracted == null)
 				return;
 

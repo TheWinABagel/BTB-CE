@@ -5,6 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
 
@@ -16,7 +18,6 @@ public abstract class BuildCraftPacket {
 	public abstract int getID();
 
 	public Packet getPacket() {
-
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(bytes);
 		try {
@@ -25,8 +26,17 @@ public abstract class BuildCraftPacket {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Packet250CustomPayload packet = new Packet250CustomPayload(channel, bytes.toByteArray());
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		packet.channel = channel;
+		packet.data = bytes.toByteArray();
+		packet.length = packet.data.length;
 		packet.isChunkDataPacket = this.isChunkDataPacket;
+		if (getID() == PacketIds.PIPE_TRAVELER) {
+//			packet = new Packet250CustomPayload();
+			System.out.println("sent data     " + Arrays.toString(packet.data) + " channel " + channel);
+//			packet.channel = channel;
+//			return new Packet250CustomPayload();
+		}
 		return packet;
 	}
 

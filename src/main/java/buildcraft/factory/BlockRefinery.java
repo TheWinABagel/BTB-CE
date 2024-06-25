@@ -7,6 +7,7 @@
  */
 package buildcraft.factory;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
 import buildcraft.api.tools.IToolWrench;
@@ -78,7 +79,8 @@ public class BlockRefinery extends BlockContainer {
 		world.setBlockMetadataWithNotify(i, j, k, orientation.getOpposite().ordinal(), 1);
 	}
 
-	@Override
+	//todofactory rotate
+//	@Override
 	public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
 		int meta = world.getBlockMetadata(x, y, z);
 
@@ -126,17 +128,17 @@ public class BlockRefinery extends BlockContainer {
 		}
 
 		if (!world.isRemote) {
-			player.openGui(BuildCraftFactory.instance, GuiIds.REFINERY, world, x, y, z);
+			((EntityPlayerExtension) player).openGui(BuildCraftFactory.instance.getModId(), GuiIds.REFINERY, world, x, y, z);
 		}
 
 		return true;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

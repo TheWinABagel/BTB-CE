@@ -12,10 +12,9 @@ import net.minecraft.src.Packet;
 public class PacketDispatcher {
 
     public static void sendPacketToServer(Packet packet) {
-        if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
-            if (Minecraft.getMinecraft().thePlayer != null) {
-                Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(packet);
-            }
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc != null && mc.thePlayer != null) {
+            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(packet);
         }
     }
 

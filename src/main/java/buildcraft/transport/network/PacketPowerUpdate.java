@@ -12,12 +12,12 @@ public class PacketPowerUpdate extends PacketCoordinates {
 	public short[] displayPower;
 
 	public PacketPowerUpdate() {
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	public PacketPowerUpdate(int x, int y, int z) {
 		super(PacketIds.PIPE_POWER, x, y, z);
-		this.channel = "buildcraft|TP";
+//		this.channel = "buildcraft|TP";
 	}
 
 	@Override

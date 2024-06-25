@@ -111,12 +111,14 @@ public class DefaultProps {
 	public static int REFINERY_ID = 1514;
 	public static int BLUEPRINT_LIBRARY_ID = 1515;
 	public static int LASER_ID = 1516;
-	public static int ASSEMBLY_TABLE_ID = 1517;
 	public static int PATH_MARKER_ID = 1518;
 	public static int HOPPER_ID = 1519;
 	public static int SPRING_ID = 1522;
 	public static int FILTERED_BUFFER_ID = 1523;
 	public static int FLOOD_GATE_ID = 1524;
+	public static int ASSEMBLY_TABLE_ID = 1525;
+	public static int ADVANCED_CRAFTING_TABLE_ID = 1526;
+	public static int INTEGRATION_TABLE_ID = 1527;
 	
 	public static int OIL_ID = 1530;
 	public static int FUEL_ID = 1531;

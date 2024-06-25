@@ -9,6 +9,7 @@
 
 package buildcraft.factory;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftFactory;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.GuiIds;
@@ -55,9 +56,9 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 			if (entityplayer.getCurrentEquippedItem().getItem() instanceof IItemPipe)
 				return false;
 		}
-
+		//todofactory opengui
 		if (!CoreProxy.proxy.isRenderWorld(world)) {
-			entityplayer.openGui(BuildCraftFactory.instance, GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.instance.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
 		}
 
 		return true;
@@ -68,11 +69,12 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 		return new TileAutoWorkbench();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+/*	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
+
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)

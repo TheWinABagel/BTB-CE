@@ -14,6 +14,7 @@ import buildcraft.transport.pipes.PipeItemsEmerald;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
@@ -23,7 +24,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
-
+	public static final PacketHandlerTransport INSTANCE = new PacketHandlerTransport();
 	@Override
 	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet2) {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet2.data));
@@ -44,6 +45,98 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 					packetFluid.readData(data);
 					break;
 				case PacketIds.PIPE_TRAVELER: {
+					PacketPipeTransportTraveler pkt = new PacketPipeTransportTraveler();
+					pkt.readData(data);
+					onPipeTravelerUpdate(player, pkt);
+					break;
+				}
+				case PacketIds.GATE_ACTIONS:
+					packet.readData(data);
+					onGateActions((EntityPlayer) player, packet);
+					break;
+				case PacketIds.GATE_TRIGGERS:
+					packet.readData(data);
+					onGateTriggers((EntityPlayer) player, packet);
+					break;
+				case PacketIds.GATE_SELECTION:
+					packet.readData(data);
+					onGateSelection((EntityPlayer) player, packet);
+					break;
+				case PacketIds.PIPE_ITEMSTACK: {
+					PacketPipeTransportItemStack pkt = new PacketPipeTransportItemStack();
+					pkt.readData(data);
+					break;
+				}
+				case PacketIds.PIPE_GATE_EXPANSION_MAP: {
+					PacketGateExpansionMap pkt = new PacketGateExpansionMap();
+					pkt.readData(data);
+					break;
+				}
+
+				/**
+				 * SERVER SIDE *
+				 */
+				case PacketIds.DIAMOND_PIPE_SELECT: {
+					PacketSlotChange packet1 = new PacketSlotChange();
+					packet1.readData(data);
+					onDiamondPipeSelect((EntityPlayer) player, packet1);
+					break;
+				}
+
+				case PacketIds.EMERALD_PIPE_SELECT: {
+					PacketSlotChange packet1 = new PacketSlotChange();
+					packet1.readData(data);
+					onEmeraldPipeSelect((EntityPlayer) player, packet1);
+					break;
+				}
+
+				case PacketIds.GATE_REQUEST_INIT:
+					PacketCoordinates packetU = new PacketCoordinates();
+					packetU.readData(data);
+					onGateInitRequest((EntityPlayer) player, packetU);
+					break;
+
+				case PacketIds.GATE_REQUEST_SELECTION:
+					PacketCoordinates packetS = new PacketCoordinates();
+					packetS.readData(data);
+					onGateSelectionRequest((EntityPlayerMP) player, packetS);
+					break;
+
+				case PacketIds.GATE_SELECTION_CHANGE:
+					PacketUpdate packet3 = new PacketUpdate();
+					packet3.readData(data);
+					onGateSelectionChange((EntityPlayerMP) player, packet3);
+					break;
+
+				case PacketIds.PIPE_ITEMSTACK_REQUEST: {
+					PacketPipeTransportItemStackRequest pkt = new PacketPipeTransportItemStackRequest(player);
+					pkt.readData(data);
+					break;
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void onPacketDataExtra(EntityPlayer player, Packet250CustomPayload packet2, int packetID, DataInputStream data) {
+		try {
+			// NetClientHandler net = (NetClientHandler) network.getNetHandler();
+
+			PacketUpdate packet = new PacketUpdate();
+			switch (packetID) {
+				case PacketIds.PIPE_POWER:
+					PacketPowerUpdate packetPower = new PacketPowerUpdate();
+					packetPower.readData(data);
+					onPacketPower((EntityPlayer) player, packetPower);
+					break;
+				case PacketIds.PIPE_LIQUID:
+					PacketFluidUpdate packetFluid = new PacketFluidUpdate();
+					packetFluid.readData(data);
+					break;
+				case PacketIds.PIPE_TRAVELER: {
+					System.out.println("received data " + Arrays.toString(packet2.data));
 					PacketPipeTransportTraveler pkt = new PacketPipeTransportTraveler();
 					pkt.readData(data);
 					onPipeTravelerUpdate(player, pkt);
@@ -166,22 +259,28 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 *
 	 * @param packet
 	 */
-	private void onPipeTravelerUpdate(EntityPlayer player, PacketPipeTransportTraveler packet) {
+	public static void onPipeTravelerUpdate(EntityPlayer player, PacketPipeTransportTraveler packet) {
 		World world = player.worldObj;
 
-		if (!world.blockExists(packet.posX, packet.posY, packet.posZ))
+		if (!world.blockExists(packet.posX, packet.posY, packet.posZ)) {
+			System.out.println("block does not exist at " + packet.posX + ", " + packet.posY + ", " + packet.posZ);
 			return;
+		}
 
 		TileEntity entity = world.getBlockTileEntity(packet.posX, packet.posY, packet.posZ);
-		if (!(entity instanceof TileGenericPipe))
+		if (!(entity instanceof TileGenericPipe pipe)) {
+			System.out.println("tile entity not instance of pipe " + entity);
 			return;
+		}
 
-		TileGenericPipe pipe = (TileGenericPipe) entity;
-		if (pipe.pipe == null)
+        if (pipe.pipe == null) {
+			System.out.println("pipe.pipe is null");
 			return;
+		}
 
-		if (!(pipe.pipe.transport instanceof PipeTransportItems transportItems))
+		if (!(pipe.pipe.transport instanceof PipeTransportItems transportItems)) {
 			return;
+		}
 
 		transportItems.handleTravelerPacket(packet);
 	}

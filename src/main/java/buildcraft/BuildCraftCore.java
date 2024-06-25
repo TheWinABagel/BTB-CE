@@ -276,6 +276,9 @@ public class BuildCraftCore extends BuildcraftAddon {
 
 	private static void initPackets() {
 		BuildCraftCore.instance.registerPacketHandler("buildcraft|CR", new PacketHandler());
+		//todocore packet handling is a total mess atm
+//		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
+//		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
 	}
 
 
@@ -309,7 +312,8 @@ public class BuildCraftCore extends BuildcraftAddon {
 	}
 
 
-/*	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
-		InterModComms.processIMC(event);
-	}*/
+	public EnvType getEffectiveSide() {
+		Thread thr = Thread.currentThread();
+		return !(thr instanceof ThreadMinecraftServer) && !(thr instanceof ServerListenThread) ? EnvType.CLIENT : EnvType.SERVER;
+	}
 }

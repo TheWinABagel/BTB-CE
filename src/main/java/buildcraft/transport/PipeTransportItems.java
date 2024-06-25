@@ -7,11 +7,17 @@
  */
 package buildcraft.transport;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Level;
+
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.Position;
 import buildcraft.api.gates.ITrigger;
 import buildcraft.api.inventory.ISpecialInventory;
-import buildcraft.api.transport.IPipeTile.PipeType;
+import buildcraft.api.transport.IPipeTile;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.IMachine;
 import buildcraft.core.inventory.Transactor;
@@ -22,20 +28,9 @@ import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
 import buildcraft.transport.network.PacketPipeTransportTraveler;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.utils.TransportUtils;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ISidedInventory;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.NBTTagList;
-import net.minecraft.src.TileEntity;
+import net.minecraft.src.*;
 import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
-
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Level;
 
 public class PipeTransportItems extends PipeTransport {
 
@@ -46,8 +41,8 @@ public class PipeTransportItems extends PipeTransport {
 	public final TravelerSet items = new TravelerSet(this);
 
 	@Override
-	public PipeType getPipeType() {
-		return PipeType.ITEM;
+	public IPipeTile.PipeType getPipeType() {
+		return IPipeTile.PipeType.ITEM;
 	}
 
 	public void readjustSpeed(TravelingItem item) {
@@ -167,9 +162,6 @@ public class PipeTransportItems extends PipeTransport {
 			item.output = resolveDestination(item);
 		}
 
-		if (container.pipe instanceof IPipeTransportItemsHook) {
-			((IPipeTransportItemsHook) container.pipe).entityEntered(item, item.input);
-		}
 		PipeEventItem.Entered event = new PipeEventItem.Entered(item);
 		container.pipe.handlePipeEvent(event);
 		if (event.cancelled)
@@ -207,10 +199,6 @@ public class PipeTransportItems extends PipeTransport {
 				result.add(o);
 		}
 
-		if (this.container.pipe instanceof IPipeTransportItemsHook) {
-			Position pos = new Position(container.xCoord, container.yCoord, container.zCoord, item.input);
-			result = ((IPipeTransportItemsHook) this.container.pipe).filterPossibleMovements(result, pos, item);
-		}
 		PipeEventItem.FindDest event = new PipeEventItem.FindDest(item, result);
 		container.pipe.handlePipeEvent(event);
 
@@ -232,6 +220,7 @@ public class PipeTransportItems extends PipeTransport {
 			return false;
 
 		if (entity instanceof TileGenericPipe pipe) {
+
             return pipe.pipe.transport instanceof PipeTransportItems;
 		} else if (entity instanceof IInventory && item.getInsertionHandler().canInsertItem(item, (IInventory) entity))
 			if (Transactor.getTransactorFor(entity).add(item.getItemStack(), o.getOpposite(), false).stackSize > 0)
@@ -247,7 +236,7 @@ public class PipeTransportItems extends PipeTransport {
 
 	private void moveSolids() {
 		items.flush();
-		
+
 		if (!container.worldObj.isRemote)
 			items.purgeCorruptedItems();
 
@@ -297,8 +286,8 @@ public class PipeTransportItems extends PipeTransport {
 
 	private boolean passToNextPipe(TravelingItem item, TileEntity tile) {
 		if (tile instanceof TileGenericPipe pipe) {
-            if (BlockGenericPipe.isValid(pipe.pipe) && pipe.pipe.transport instanceof PipeTransportItems transportItems) {
-				transportItems.injectItem(item, item.output);
+            if (BlockGenericPipe.isValid(pipe.pipe) && pipe.pipe.transport instanceof PipeTransportItems) {
+				((PipeTransportItems) pipe.pipe.transport).injectItem(item, item.output);
 				return true;
 			}
 		}
@@ -308,9 +297,9 @@ public class PipeTransportItems extends PipeTransport {
 	private void handleTileReached(TravelingItem item, TileEntity tile) {
 		if (passToNextPipe(item, tile)) {
 			// NOOP
-		} else if (tile instanceof IInventory inv) {
+		} else if (tile instanceof IInventory) {
 			if (!container.worldObj.isRemote) {
-				if (item.getInsertionHandler().canInsertItem(item, inv)) {
+				if (item.getInsertionHandler().canInsertItem(item, (IInventory) tile)) {
 					ItemStack added = Transactor.getTransactorFor(tile).add(item.getItemStack(), item.output.getOpposite(), true);
 					item.getItemStack().stackSize -= added.stackSize;
 				}
@@ -394,7 +383,7 @@ public class PipeTransportItems extends PipeTransport {
 	}
 
 	/**
-	 * Handles a packet describing a stack of items inside a pipe.
+	 * Handles a packet describing a stack of items inside a pipe. Client only
 	 *
 	 * @param packet
 	 */
@@ -404,8 +393,10 @@ public class PipeTransportItems extends PipeTransport {
 			item = TravelingItem.make(packet.getTravelingEntityId());
 		}
 
-		if (item.getContainer() != container)
+		if (item.getContainer() != container) {
+			System.out.println("item container not eq");
 			items.add(item);
+		}
 
 		if (packet.forceStackRefresh() || item.getItemStack() == null) {
 			PacketDispatcher.sendPacketToServer(new PacketPipeTransportItemStackRequest(packet.getTravelingEntityId()).getPacket());
@@ -422,6 +413,7 @@ public class PipeTransportItems extends PipeTransport {
 
 	}
 
+	// only called on server
 	private void sendTravelerPacket(TravelingItem data, boolean forceStackRefresh) {
 		PacketPipeTransportTraveler packet = new PacketPipeTransportTraveler(data, forceStackRefresh);
 		int dimension = container.worldObj.provider.dimensionId;
@@ -447,8 +439,8 @@ public class PipeTransportItems extends PipeTransport {
 
 	@Override
 	public boolean canPipeConnect(TileEntity tile, ForgeDirection side) {
-		if (tile instanceof TileGenericPipe) {
-			Pipe pipe2 = ((TileGenericPipe) tile).pipe;
+		if (tile instanceof TileGenericPipe pipeTile) {
+			Pipe pipe2 = pipeTile.pipe;
 			if (BlockGenericPipe.isValid(pipe2) && !(pipe2.transport instanceof PipeTransportItems))
 				return false;
 		}

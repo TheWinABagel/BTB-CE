@@ -13,7 +13,6 @@ import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.core.Position;
-import buildcraft.api.core.SafeTimeTracker;
 import buildcraft.api.gates.GateExpansions;
 import buildcraft.api.gates.IGateExpansion;
 import buildcraft.api.gates.IOverrideDefaultTriggers;
@@ -92,7 +91,6 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 	private boolean deletePipe = false;
 	private TileBuffer[] tileBuffer;
 	public boolean[] pipeConnectionsBuffer = new boolean[6];
-	public SafeTimeTracker networkSyncTracker = new SafeTimeTracker();
 	public Pipe pipe;
 	private boolean sendClientUpdate = false;
 	private boolean blockNeighborChange = false;
@@ -180,9 +178,6 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 
 			if (!initialized)
 				initialize(pipe);
-		}
-		if (worldObj.isRemote) {
-
 		}
 		if (!BlockGenericPipe.isValid(pipe))
 			return;
