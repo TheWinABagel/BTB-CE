@@ -1,24 +1,21 @@
 package buildcraft.factory.network;
 
+import btw.community.example.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketPayloadStream;
 import buildcraft.core.network.PacketUpdate;
 import buildcraft.factory.TileRefinery;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Packet250CustomPayload;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.FluidRegistry;
 
-public class PacketHandlerFactory implements IPacketHandler {
+public class PacketHandlerFactory implements BuildcraftCustomPacketHandler {
 
 	@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) throws IOException {
 
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {

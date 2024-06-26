@@ -10,6 +10,7 @@ import buildcraft.factory.gui.GuiAutoCrafting;
 import buildcraft.factory.render.RenderHopper;
 import buildcraft.factory.render.RenderRefinery;
 import buildcraft.factory.render.RenderTank;
+import buildcraft.transport.TransportProxyClient;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import java.lang.reflect.Method;
 import net.minecraft.src.Icon;
@@ -26,16 +27,16 @@ public class FactoryProxyClient extends FactoryProxy {
 		super.initializeTileEntities();
 
 		if (BuildCraftFactory.tankBlock != null) {
-			ClientRegistry.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
+			TransportProxyClient.bindTileEntitySpecialRenderer(TileTank.class, new RenderTank());
 		}
 
 		if (BuildCraftFactory.refineryBlock != null) {
-			ClientRegistry.bindTileEntitySpecialRenderer(TileRefinery.class, new RenderRefinery());
+			TransportProxyClient.bindTileEntitySpecialRenderer(TileRefinery.class, new RenderRefinery());
 			RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftFactory.refineryBlock, 0), new RenderRefinery());
 		}
 
 		if (BuildCraftFactory.hopperBlock != null) {
-			ClientRegistry.bindTileEntitySpecialRenderer(TileHopper.class, new RenderHopper());
+			TransportProxyClient.bindTileEntitySpecialRenderer(TileHopper.class, new RenderHopper());
 			RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftFactory.hopperBlock, 0), new RenderHopper());
 		}
 

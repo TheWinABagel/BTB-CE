@@ -255,6 +255,7 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 			return;
 		}
 		result = result.copy();
+		craftSlot.setRecipe(recipe);
 		craftSlot.onPickupFromSlot(internalPlayer, result);
 		resultInv.setInventorySlotContents(SLOT_RESULT, result);
 

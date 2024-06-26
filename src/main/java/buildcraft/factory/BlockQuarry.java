@@ -27,6 +27,7 @@ import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockQuarry extends BlockBuildCraft {
 
@@ -120,14 +121,18 @@ public class BlockQuarry extends BlockBuildCraft {
 		}
 	}
 
-	//todofactory getBlockedDropped
 	@Override
+	public int idDropped(int par1, Random par2Random, int par3) {
+		return BuildCraftFactory.quarryOneTimeUse ? 0 : super.idDropped(par1, par2Random, par3);
+	}
+
+/*	@Override
 	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
 		if (BuildCraftFactory.quarryOneTimeUse) {
-			return new ArrayList<ItemStack>();
+			return new ArrayList<>();
 		}
 		return super.getBlockDropped(world, x, y, z, metadata, fortune);
-	}
+	}*/
 
 	@Override
 	public void breakBlock(World world, int i, int j, int k, int par5, int par6) {
@@ -222,11 +227,11 @@ public class BlockQuarry extends BlockBuildCraft {
 		return false;
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

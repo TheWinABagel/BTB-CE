@@ -119,7 +119,7 @@ public class CoreProxy {
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public void registerTileEntity(Class clas, String ident) {
-//		GameRegistry.registerTileEntity(clas, ident);
+		TileEntity.addMapping(clas, ident);
 	}
 
 	public void onCraftingPickup(World world, EntityPlayer player, ItemStack stack) {

@@ -19,6 +19,7 @@ import net.minecraft.src.Packet3Chat;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.ChatMessageComponent;
 import net.minecraft.src.ChunkCoordIntPair;
+import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
@@ -115,7 +116,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	private boolean movingHorizontally;
 	private boolean movingVertically;
 	private double headTrajectory;
-	private Ticket chunkTicket;
+//	private Ticket chunkTicket;
 	public @TileNetworkData
 	boolean isAlive;
 	public EntityPlayer placedBy;
@@ -469,7 +470,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 			EntityItem entityitem = new EntityItem(worldObj, xCoord + f, yCoord + f1 + 0.5F, zCoord + f2, stack);
 
-			entityitem.lifespan = BuildCraftCore.itemLifespan;
+			entityitem.age = BuildCraftCore.itemLifespan;
 			entityitem.delayBeforeCanPickup = 10;
 
 			float f3 = 0.05F;
@@ -487,16 +488,16 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 	@Override
 	public void invalidate() {
-		ForgeChunkManager.releaseTicket(chunkTicket);
+		/*ForgeChunkManager.releaseTicket(chunkTicket);*/
 
 		super.invalidate();
 		destroy();
 	}
 
-	@Override
+/*	@Override
 	public void onChunkUnload() {
 		destroy();
-	}
+	}*/
 
 	@Override
 	public void destroy() {
@@ -517,9 +518,9 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	public boolean isActive() {
 		return isDigging;
 	}
-
+	//todofactory chunk loading
 	private void setBoundaries(boolean useDefault) {
-		if (chunkTicket == null) {
+/*		if (chunkTicket == null) {
 			chunkTicket = ForgeChunkManager.requestTicket(BuildCraftFactory.instance, worldObj, Type.NORMAL);
 		}
 		if (chunkTicket == null) {
@@ -527,7 +528,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 			if (placedBy != null && CoreProxy.proxy.isSimulating(worldObj)) {
 				PacketDispatcher.sendPacketToPlayer(
 						new Packet3Chat(ChatMessageComponent.createFromText(String.format("[BUILDCRAFT] The quarry at %d, %d, %d will not work because there are no more chunkloaders available",
-						xCoord, yCoord, zCoord))), (Player) placedBy);
+						xCoord, yCoord, zCoord))), placedBy);
 			}
 			sendNetworkUpdate();
 			return;
@@ -535,7 +536,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		chunkTicket.getModData().setInteger("quarryX", xCoord);
 		chunkTicket.getModData().setInteger("quarryY", yCoord);
 		chunkTicket.getModData().setInteger("quarryZ", zCoord);
-		ForgeChunkManager.forceChunk(chunkTicket, new ChunkCoordIntPair(xCoord >> 4, zCoord >> 4));
+		ForgeChunkManager.forceChunk(chunkTicket, new ChunkCoordIntPair(xCoord >> 4, zCoord >> 4));*/
 
 		IAreaProvider a = null;
 
@@ -552,7 +553,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		int xSize = a.xMax() - a.xMin() + 1;
 		int zSize = a.zMax() - a.zMin() + 1;
 
-		if (xSize < 3 || zSize < 3 || ((xSize * zSize) >> 8) >= chunkTicket.getMaxChunkListDepth()) {
+/*		if (xSize < 3 || zSize < 3 || ((xSize * zSize) >> 8) >= chunkTicket.getMaxChunkListDepth()) {
 			if (placedBy != null) {
 				PacketDispatcher.sendPacketToPlayer(
 						new Packet3Chat(ChatMessageComponent.createFromText(String.format("Quarry size is outside of chunkloading bounds or too small %d %d (%d)", xSize, zSize,
@@ -561,7 +562,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 			a = new DefaultAreaProvider(xCoord, yCoord, zCoord, xCoord + 10, yCoord + 4, zCoord + 10);
 
 			useDefault = true;
-		}
+		}*/
 
 		xSize = a.xMax() - a.xMin() + 1;
 		int ySize = a.yMax() - a.yMin() + 1;
@@ -603,7 +604,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 
 		a.removeFromWorld();
-		forceChunkLoading(chunkTicket);
+		/*forceChunkLoading(chunkTicket);*/
 	}
 
 	private void initializeBluePrintBuilder() {
@@ -825,7 +826,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		this.targetZ = z;
 	}
 
-	public void forceChunkLoading(Ticket ticket) {
+/*	public void forceChunkLoading(Ticket ticket) {
 		if (chunkTicket == null) {
 			chunkTicket = ticket;
 		}
@@ -849,5 +850,5 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 					(Player) placedBy);
 		}
 		sendNetworkUpdate();
-	}
+	}*/
 }

@@ -81,11 +81,11 @@ public class BlockMiningWell extends BlockBuildCraft {
 		return new TileMiningWell();
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+/*	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

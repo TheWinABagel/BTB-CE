@@ -61,7 +61,7 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 		public int pipeId = -1;
 		public int gateMaterial = -1;
 		public int gateLogic = -1;
-		public final Set<Byte> expansions = new HashSet<Byte>();
+		public final Set<Byte> expansions = new HashSet<>();
 
 		@Override
 		public void writeData(DataOutputStream data) throws IOException {
@@ -293,10 +293,10 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 		for (ForgeDirection o : ForgeDirection.VALID_DIRECTIONS) {
 			TileEntity tile = getTile(o);
 
-			if (tile instanceof ITileBufferHolder)
-				((ITileBufferHolder) tile).blockCreated(o, BuildCraftTransport.genericPipeBlock.blockID, this);
-			if (tile instanceof TileGenericPipe)
-				((TileGenericPipe) tile).scheduleNeighborChange();
+			if (tile instanceof ITileBufferHolder bufferHolder)
+                bufferHolder.blockCreated(o, BuildCraftTransport.genericPipeBlock.blockID, this);
+			if (tile instanceof TileGenericPipe genericPipe)
+                genericPipe.scheduleNeighborChange();
 		}
 
 		bindPipe();
@@ -412,7 +412,6 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 
 	@Override
 	public void blockRemoved(ForgeDirection from) {
-		// TODO Auto-generated method stub
 	}
 
 	public TileBuffer[] getTileCache() {
@@ -702,8 +701,8 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 		if (hasFacade(side))
 			return true;
 
-		if (BlockGenericPipe.isValid(pipe) && pipe instanceof ISolidSideTile)
-			if (((ISolidSideTile) pipe).isSolidOnSide(side))
+		if (BlockGenericPipe.isValid(pipe) && pipe instanceof ISolidSideTile solid)
+			if (solid.isSolidOnSide(side))
 				return true;
 		return false;
 	}
