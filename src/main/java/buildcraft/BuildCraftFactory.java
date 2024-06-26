@@ -21,9 +21,6 @@ import net.minecraft.src.TextureMap;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-import java.util.List;
-//@Mod(name = "BuildCraft Factory", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Factory", dependencies = DefaultProps.DEPENDENCY_CORE)
-//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerFactory.class, clientSideRequired = true, serverSideRequired = true)
 public class BuildCraftFactory extends BuildcraftAddon {
     public BuildCraftFactory() {
         super("bcfactory");
@@ -48,9 +45,8 @@ public class BuildCraftFactory extends BuildcraftAddon {
 
 	public static BuildCraftFactory instance = new BuildCraftFactory();
 
-
 	public void postInit() {
-		FactoryProxy.proxy.initializeNEIIntegration();
+		FactoryProxy.getProxy().initializeNEIIntegration();
 		/*ForgeChunkManager.setForcedChunkLoadingCallback(instance, new QuarryChunkloadCallback());*/
 	}
 
@@ -85,7 +81,6 @@ public class BuildCraftFactory extends BuildcraftAddon {
 		}
 	}*/
 
-
 	@Override
 	public void initialize() {
 		NetworkRegistry.instance().registerGuiHandler(instance.getModId(), new GuiHandler());
@@ -101,7 +96,7 @@ public class BuildCraftFactory extends BuildcraftAddon {
 		CoreProxy.getProxy().registerTileEntity(TileRefinery.class, "net.minecraft.src.buildcraft.factory.Refinery");
 		CoreProxy.getProxy().registerTileEntity(TileHopper.class, "net.minecraft.src.buildcraft.factory.TileHopper");
 
-		FactoryProxy.proxy.initializeTileEntities();
+		FactoryProxy.getProxy().initializeTileEntities();
 
 		new BptBlockAutoWorkbench(autoWorkbenchBlock.blockID);
 		new BptBlockFrame(frameBlock.blockID);
@@ -214,8 +209,9 @@ public class BuildCraftFactory extends BuildcraftAddon {
 			CoreProxy.getProxy().addName(hopperBlock, "Hopper");
 		}
 
-/*		FactoryProxy.proxy.initializeEntityRenders();
-		if (BuildCraftCore.mainConfiguration.hasChanged()) {
+		FactoryProxy.getProxy().initializeEntityRenders();
+
+/*		if (BuildCraftCore.mainConfiguration.hasChanged()) {
 			BuildCraftCore.mainConfiguration.save();
 		}*/
 

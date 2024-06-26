@@ -17,7 +17,7 @@ import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
 public class FactoryProxyClient extends FactoryProxy {
-
+	public static final FactoryProxyClient INSTANCE = new FactoryProxyClient();
 	public static Icon pumpTexture;
 	public static Icon drillTexture;
 	public static Icon drillHeadTexture;

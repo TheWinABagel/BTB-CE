@@ -2,13 +2,8 @@ package buildcraft.core;
 
 import buildcraft.core.utils.Utils;
 import java.util.Random;
-import net.minecraft.src.BlockContainer;
-import net.minecraft.src.Material;
-import net.minecraft.src.EntityLivingBase;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 
 public abstract class BlockBuildCraft extends BlockContainer {
 
@@ -17,7 +12,7 @@ public abstract class BlockBuildCraft extends BlockContainer {
 
 	protected BlockBuildCraft(int id, Material material) {
 		super(id, material);
-		setCreativeTab(CreativeTabBuildCraft.MACHINES.get());
+		setCreativeTab(CreativeTabs.tabRedstone);
 		setHardness(5F);
 	}
 
@@ -25,8 +20,8 @@ public abstract class BlockBuildCraft extends BlockContainer {
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
 		super.onBlockPlacedBy(world, x, y, z, entity, stack);
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
-		if (tile instanceof TileBuildCraft) {
-			((TileBuildCraft) tile).onBlockPlacedBy(entity, stack);
+		if (tile instanceof TileBuildCraft tileBC) {
+			tileBC.onBlockPlacedBy(entity, stack);
 		}
 	}
 
@@ -39,8 +34,13 @@ public abstract class BlockBuildCraft extends BlockContainer {
 	@Override
 	public int getLightValue(IBlockAccess world, int x, int y, int z) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
-		if (tile instanceof IMachine && ((IMachine) tile).isActive())
+		if (tile instanceof IMachine machine && machine.isActive())
 			return super.getLightValue(world, x, y, z) + 8;
 		return super.getLightValue(world, x, y, z);
+	}
+
+	@Override
+	public String getLocalizedName() {
+		return StatCollector.translateToLocal(this.getUnlocalizedName());
 	}
 }

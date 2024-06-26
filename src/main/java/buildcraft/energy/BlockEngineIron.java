@@ -9,6 +9,7 @@ import net.minecraft.src.World;
 public class BlockEngineIron extends BlockEngine {
     public BlockEngineIron(int i) {
         super(i);
+        setUnlocalizedName("engineIron");
     }
 
     @Override

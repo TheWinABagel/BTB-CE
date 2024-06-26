@@ -1,10 +1,23 @@
 package buildcraft.factory;
 
+import buildcraft.BuildCraftCore;
 import buildcraft.core.EntityBlock;
+import buildcraft.core.proxy.CoreProxyClient;
+import net.fabricmc.api.EnvType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.World;
 
 public class FactoryProxy {
 	public static FactoryProxy proxy = new FactoryProxy();
+
+    public static FactoryProxy getProxy() {
+        if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.SERVER)) {
+            return proxy;
+        }
+        else {
+            return FactoryProxyClient.INSTANCE;
+        }
+    }
 
 	public void initializeTileEntities() {
 	}

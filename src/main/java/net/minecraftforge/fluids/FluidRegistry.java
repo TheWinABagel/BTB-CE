@@ -96,22 +96,22 @@ public abstract class FluidRegistry {
    }
 
    static {
-      WATER = (new Fluid("water") {
+      WATER = new Fluid("water") {
          /**
           * Gets the localized name of this block. Used for the statistics page.
           */
          public String getLocalizedName() {
             return StatCollector.translateToLocal("tile.water.name");
          }
-      }).setBlockID(Block.waterStill.blockID).setUnlocalizedName(Block.waterStill.getUnlocalizedName());
-      LAVA = (new Fluid("lava") {
+      }.setBlockID(Block.waterStill.blockID).setUnlocalizedName(Block.waterStill.getUnlocalizedName());
+      LAVA = new Fluid("lava") {
          /**
           * Gets the localized name of this block. Used for the statistics page.
           */
          public String getLocalizedName() {
             return StatCollector.translateToLocal("tile.lava.name");
          }
-      }).setBlockID(Block.lavaStill.blockID).setLuminosity(15).setDensity(3000).setViscosity(6000).setTemperature(1300).setUnlocalizedName(Block.lavaStill.getUnlocalizedName());
+      }.setBlockID(Block.lavaStill.blockID).setLuminosity(15).setDensity(3000).setViscosity(6000).setTemperature(1300).setUnlocalizedName(Block.lavaStill.getUnlocalizedName());
       renderIdFluid = -1;
       registerFluid(WATER);
       registerFluid(LAVA);

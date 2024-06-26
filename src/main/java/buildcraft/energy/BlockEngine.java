@@ -19,7 +19,7 @@ import java.util.Random;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BlockEngine extends BlockBuildCraft {
+public abstract class BlockEngine extends BlockBuildCraft {
 
 	protected static Icon woodTexture;
 	protected static Icon stoneTexture;
@@ -27,7 +27,6 @@ public class BlockEngine extends BlockBuildCraft {
 
 	public BlockEngine(int i) {
 		super(i, Material.iron);
-		setUnlocalizedName("engineBlock");
 	}
 
 	@Override
@@ -55,9 +54,8 @@ public class BlockEngine extends BlockBuildCraft {
 
 	@Override
 	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
-//		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, BuildCraftCore.blockByEntityModel);
+		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, BuildCraftCore.blockByEntityModel);
 	}
-
 
 /*	@Override
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
@@ -133,13 +131,13 @@ public class BlockEngine extends BlockBuildCraft {
 		world.spawnParticle("reddust", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void getSubBlocks(int blockid, CreativeTabs par2CreativeTabs, List itemList) {
-/*		itemList.add(new ItemStack(this, 1, 0));
+*//*		itemList.add(new ItemStack(this, 1, 0));
 		itemList.add(new ItemStack(this, 1, 1));
-		itemList.add(new ItemStack(this, 1, 2));*/
-	}
+		itemList.add(new ItemStack(this, 1, 2));*//*
+	}*/
 
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
@@ -149,24 +147,4 @@ public class BlockEngine extends BlockBuildCraft {
 			tile.checkRedstonePower();
 		}
 	}
-
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return null;
-	}
-
-/*	@Override
-	@Environment(EnvType.CLIENT)
-	public Icon getIcon(int side, int meta) {
-		switch (meta) {
-			case 0:
-				return woodTexture;
-			case 1:
-				return stoneTexture;
-			case 2:
-				return ironTexture;
-			default:
-				return null;
-		}
-	}*/
 }

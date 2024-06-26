@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(RenderBlocks.class)
@@ -31,4 +32,9 @@ public abstract class RenderBlocksMixin {
             cir.setReturnValue(true);
         }
     }
+
+/*    @Inject(method = "renderBlockAsItem", at = @At(value = "INVOKE", target = ""))
+    private void test2(Block block, int iItemDamage, float fBrightness, CallbackInfo ci) {
+
+    }*/
 }

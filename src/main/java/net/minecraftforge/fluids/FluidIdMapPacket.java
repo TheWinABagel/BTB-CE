@@ -5,6 +5,8 @@ import com.google.common.collect.HashBiMap;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.INetworkManager;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -19,14 +21,13 @@ public class FluidIdMapPacket /*extends ForgePacket */{
 
       while(i$.hasNext()) {
          Entry<String, Integer> entry = (Entry)i$.next();
-         dat.writeUTF((String)entry.getKey());
-         dat.writeInt((Integer)entry.getValue());
+         dat.writeUTF(entry.getKey());
+         dat.writeInt(entry.getValue());
       }
 
       return dat.toByteArray();
    }
-/*
-   public ForgePacket consumePacket(byte[] data) {
+/*   public ForgePacket consumePacket(byte[] data) {
       ByteArrayDataInput dat = ByteStreams.newDataInput(data);
       int listSize = dat.readInt();
 
@@ -37,9 +38,9 @@ public class FluidIdMapPacket /*extends ForgePacket */{
       }
 
       return this;
-   }
+   }*/
 
    public void execute(INetworkManager network, EntityPlayer player) {
       FluidRegistry.initFluidIDs(this.fluidIds);
-   }*/
+   }
 }

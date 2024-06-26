@@ -52,11 +52,6 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 
 		data.writeBoolean(forceStackRefresh);
 
-		int i = 0;
-/*		if (i == 0) {
-			data.writeInt(30);
-//			System.out.println("sent data " + data.writeInt(30));
-		}*/
 	}
 
 	@Override

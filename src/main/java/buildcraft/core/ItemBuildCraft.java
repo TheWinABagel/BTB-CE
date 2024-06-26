@@ -18,13 +18,13 @@ public class ItemBuildCraft extends Item {
 
 	public ItemBuildCraft(int i) {
 		super(i);
-//		setCreativeTab(CreativeTabBuildCraft.MACHINES.get());
+		setCreativeTab(CreativeTabs.tabRedstone);
 	}
 
 	@Override
 	public String getItemDisplayName(ItemStack itemstack) {
-		return StatCollector.translateToLocal(this.getUnlocalizedName(itemstack));
-//		return StringUtils.localize(getUnlocalizedName(itemstack));
+//		return StatCollector.translateToLocal(this.getUnlocalizedName(itemstack));
+		return StringUtils.localize(getUnlocalizedName(itemstack));
 	}
 
 	@Override

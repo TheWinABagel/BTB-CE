@@ -170,7 +170,7 @@ public class TilePump extends TileBuildCraft implements IMachine, IPowerReceptor
 
 	private void createTube() {
 		if (tube == null) {
-			tube = FactoryProxy.proxy.newPumpTube(worldObj);
+			tube = FactoryProxy.getProxy().newPumpTube(worldObj);
 
 			if (!Double.isNaN(tubeY)) {
 				tube.posY = tubeY;

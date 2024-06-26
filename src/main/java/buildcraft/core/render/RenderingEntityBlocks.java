@@ -21,6 +21,8 @@ public class RenderingEntityBlocks implements ISimpleBlockRenderingHandler {
 	private static final ResourceLocation BLOCK_TEXTURE = TextureMap.locationBlocksTexture;
 
 	public static class EntityRenderIndex {
+		Block block;
+		int damage;
 
 		public EntityRenderIndex(Block block, int damage) {
 			this.block = block;
@@ -34,15 +36,11 @@ public class RenderingEntityBlocks implements ISimpleBlockRenderingHandler {
 
 		@Override
 		public boolean equals(Object o) {
-			if (!(o instanceof EntityRenderIndex))
+			if (!(o instanceof EntityRenderIndex idx))
 				return false;
 
-			EntityRenderIndex i = (EntityRenderIndex) o;
-
-			return i.block == block && i.damage == damage;
+            return idx.block == block && idx.damage == damage;
 		}
-		Block block;
-		int damage;
 	}
 	public static HashMap<EntityRenderIndex, IInventoryRenderer> blockByEntityRenders = new HashMap<EntityRenderIndex, IInventoryRenderer>();
 

@@ -18,13 +18,8 @@ import buildcraft.core.proxy.CoreProxy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.ArrayList;
-import net.minecraft.src.Material;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 
 public class BlockAutoWorkbench extends BlockBuildCraft {
 
@@ -74,6 +69,11 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
 	}*/
+
+	@Override
+	public String getLocalizedName() {
+		return StatCollector.translateToLocal(this.getUnlocalizedName());
+	}
 
 	@Override
 	@Environment(EnvType.CLIENT)

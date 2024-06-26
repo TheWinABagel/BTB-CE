@@ -7,6 +7,7 @@
  */
 package buildcraft.core.proxy;
 
+import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
 import buildcraft.core.ItemBlockBuildCraft;
@@ -15,6 +16,7 @@ import buildcraft.core.network.BuildCraftPacket;
 import java.util.List;
 import java.util.Random;
 
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Block;
@@ -37,7 +39,7 @@ import net.minecraft.src.World;
 public class CoreProxy {
 
 	public static CoreProxy getProxy() {
-		if (MinecraftServer.getIsServer()) {
+		if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.SERVER)) {
 			return proxy;
 		}
 		else {

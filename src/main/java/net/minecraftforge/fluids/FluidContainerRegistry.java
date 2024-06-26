@@ -10,12 +10,9 @@ public abstract class FluidContainerRegistry {
    private static Map<List, FluidContainerData> filledContainerMap = new HashMap();
    private static Set<List> emptyContainers = new HashSet();
    public static final int BUCKET_VOLUME = 1000;
-   public static final ItemStack EMPTY_BUCKET;
-   public static final ItemStack EMPTY_BOTTLE;
-   private static final ItemStack NULL_EMPTYCONTAINER;
-
-   private FluidContainerRegistry() {
-   }
+   public static final ItemStack EMPTY_BUCKET = new ItemStack(Item.bucketEmpty);
+   public static final ItemStack EMPTY_BOTTLE = new ItemStack(Item.glassBottle);
+   private static final ItemStack NULL_EMPTYCONTAINER = new ItemStack(Item.bucketEmpty);
 
    public static boolean registerFluidContainer(FluidStack stack, ItemStack filledContainer, ItemStack emptyContainer) {
       return registerFluidContainer(new FluidContainerData(stack, filledContainer, emptyContainer));
@@ -30,7 +27,7 @@ public abstract class FluidContainerRegistry {
    }
 
    public static boolean registerFluidContainer(FluidStack stack, ItemStack filledContainer) {
-      return registerFluidContainer(new FluidContainerData(stack, filledContainer, (ItemStack)null, true));
+      return registerFluidContainer(new FluidContainerData(stack, filledContainer, null, true));
    }
 
    public static boolean registerFluidContainer(Fluid fluid, ItemStack filledContainer) {
@@ -60,14 +57,14 @@ public abstract class FluidContainerRegistry {
       if (container == null) {
          return null;
       } else {
-         FluidContainerData data = (FluidContainerData)containerFluidMap.get(Arrays.asList(container.itemID, container.getItemDamage()));
+         FluidContainerData data = containerFluidMap.get(Arrays.asList(container.itemID, container.getItemDamage()));
          return data == null ? null : data.fluid.copy();
       }
    }
 
    public static ItemStack fillFluidContainer(FluidStack fluid, ItemStack container) {
       if (container != null && fluid != null) {
-         FluidContainerData data = (FluidContainerData)filledContainerMap.get(Arrays.asList(container.itemID, container.getItemDamage(), fluid.fluidID));
+         FluidContainerData data = filledContainerMap.get(Arrays.asList(container.itemID, container.getItemDamage(), fluid.fluidID));
          return data != null && fluid.amount >= data.fluid.amount ? data.filledContainer.copy() : null;
       } else {
          return null;
@@ -76,7 +73,7 @@ public abstract class FluidContainerRegistry {
 
    public static boolean containsFluid(ItemStack container, FluidStack fluid) {
       if (container != null && fluid != null) {
-         FluidContainerData data = (FluidContainerData)filledContainerMap.get(Arrays.asList(container.itemID, container.getItemDamage(), fluid.fluidID));
+         FluidContainerData data = filledContainerMap.get(Arrays.asList(container.itemID, container.getItemDamage(), fluid.fluidID));
          return data == null ? false : data.fluid.isFluidEqual(fluid);
       } else {
          return false;
@@ -89,7 +86,7 @@ public abstract class FluidContainerRegistry {
       } else if (container.isItemEqual(EMPTY_BUCKET)) {
          return true;
       } else {
-         FluidContainerData data = (FluidContainerData)containerFluidMap.get(Arrays.asList(container.itemID, container.getItemDamage()));
+         FluidContainerData data = containerFluidMap.get(Arrays.asList(container.itemID, container.getItemDamage()));
          return data != null && data.emptyContainer.isItemEqual(EMPTY_BUCKET);
       }
    }
@@ -107,13 +104,10 @@ public abstract class FluidContainerRegistry {
    }
 
    public static FluidContainerData[] getRegisteredFluidContainerData() {
-      return (FluidContainerData[])containerFluidMap.values().toArray(new FluidContainerData[containerFluidMap.size()]);
+      return containerFluidMap.values().toArray(new FluidContainerData[containerFluidMap.size()]);
    }
 
    static {
-      EMPTY_BUCKET = new ItemStack(Item.bucketEmpty);
-      EMPTY_BOTTLE = new ItemStack(Item.glassBottle);
-      NULL_EMPTYCONTAINER = new ItemStack(Item.bucketEmpty);
       registerFluidContainer(FluidRegistry.WATER, new ItemStack(Item.bucketWater), EMPTY_BUCKET);
       registerFluidContainer(FluidRegistry.LAVA, new ItemStack(Item.bucketLava), EMPTY_BUCKET);
       registerFluidContainer(FluidRegistry.WATER, new ItemStack(Item.potion), EMPTY_BOTTLE);

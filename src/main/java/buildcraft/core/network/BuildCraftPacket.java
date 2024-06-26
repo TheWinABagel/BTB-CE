@@ -31,12 +31,6 @@ public abstract class BuildCraftPacket {
 		packet.data = bytes.toByteArray();
 		packet.length = packet.data.length;
 		packet.isChunkDataPacket = this.isChunkDataPacket;
-		if (getID() == PacketIds.PIPE_TRAVELER) {
-//			packet = new Packet250CustomPayload();
-			System.out.println("sent data     " + Arrays.toString(packet.data) + " channel " + channel);
-//			packet.channel = channel;
-//			return new Packet250CustomPayload();
-		}
 		return packet;
 	}
 

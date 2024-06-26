@@ -9,6 +9,7 @@ import net.minecraft.src.World;
 public class BlockEngineWood extends BlockEngine {
     public BlockEngineWood(int i) {
         super(i);
+        setUnlocalizedName("engineWood");
     }
 
     @Override

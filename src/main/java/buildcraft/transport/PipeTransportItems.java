@@ -394,7 +394,6 @@ public class PipeTransportItems extends PipeTransport {
 		}
 
 		if (item.getContainer() != container) {
-			System.out.println("item container not eq");
 			items.add(item);
 		}
 

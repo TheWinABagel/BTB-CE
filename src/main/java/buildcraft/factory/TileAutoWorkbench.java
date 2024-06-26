@@ -175,11 +175,6 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 		return CraftingHelper.findMatchingRecipe(craftMatrix, worldObj);
 	}
 
-/*	@Override
-	public boolean canUpdate() {
-		return true;
-	}*/
-
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
