@@ -1,5 +1,6 @@
 package buildcraft.silicon;
 
+import buildcraft.BuildCraftCore;
 import buildcraft.core.recipes.AssemblyRecipeManager;
 import buildcraft.api.gates.IAction;
 import buildcraft.core.DefaultProps;
@@ -14,6 +15,8 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
+import net.fabricmc.api.EnvType;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
@@ -49,7 +52,7 @@ public class TileAssemblyTable extends TileLaserTableBase implements IMachine, I
 	}
 
 	public List<AssemblyRecipe> getPotentialOutputs() {
-		List<AssemblyRecipe> result = new LinkedList<AssemblyRecipe>();
+		List<AssemblyRecipe> result = new LinkedList<>();
 
 		for (AssemblyRecipe recipe : AssemblyRecipeManager.INSTANCE.getRecipes()) {
 			if (recipe.canBeDone(this))
@@ -66,6 +69,7 @@ public class TileAssemblyTable extends TileLaserTableBase implements IMachine, I
 
 	@Override
 	public void updateEntity() { // WARNING: run only server-side, see canUpdate()
+		if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.CLIENT)) return;
 		if (currentRecipe == null)
 			return;
 

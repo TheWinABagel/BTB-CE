@@ -67,8 +67,11 @@ public class BuildCraftSilicon extends BuildcraftAddon {
 		CoreProxy.getProxy().registerBlock(laserBlock);
 
 		assemblyTableBlock = new BlockLaserTableAssembly(DefaultProps.ASSEMBLY_TABLE_ID);
+		assemblyTableBlock.setUnlocalizedName("assemblyTableBlock");
 		advancedCraftingTableBlock = new BlockLaserTableAdvancedCrafting(DefaultProps.ADVANCED_CRAFTING_TABLE_ID);
+		advancedCraftingTableBlock.setUnlocalizedName("assemblyWorkbenchBlock");
 		integrationTableBlock = new BlockLaserTableIntegration(DefaultProps.INTEGRATION_TABLE_ID);
+		integrationTableBlock.setUnlocalizedName("autoWorkbenchBlock");
 
 		CoreProxy.getProxy().registerBlock(assemblyTableBlock, ItemLaserTable.class);
 

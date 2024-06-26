@@ -309,6 +309,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 
 	private void craftItem() {
 		ItemStack recipeOutput = getRecipeOutput();
+		craftSlot.setRecipe(this.currentRecipe);
 		craftSlot.onPickupFromSlot(internalPlayer, recipeOutput);
 		ItemStack[] tempStorage = internalInventoryCrafting.tempStacks;
 		for (int i = 0; i < tempStorage.length; i++) {

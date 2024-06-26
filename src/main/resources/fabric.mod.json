@@ -22,6 +22,9 @@
       "buildcraft.BuildCraftSilicon",
       "buildcraft.BuildCraftFactory",
       "cpw.mods.fml.common.network.NetworkRegistry"
+    ],
+    "emi": [
+      "btw.community.example.emi.BuildcraftEmiCompat"
     ]
   },
   "custom": {

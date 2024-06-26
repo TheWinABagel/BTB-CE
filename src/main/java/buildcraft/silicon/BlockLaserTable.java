@@ -18,10 +18,10 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
-public class BlockLaserTable extends BlockContainer {
+public abstract class BlockLaserTable extends BlockContainer {
 
 	@Environment(EnvType.CLIENT)
-	private Icon[][] icons;
+	protected Icon[][] icons;
 
 	public BlockLaserTable(int i) {
 		super(i, Material.iron);
@@ -52,16 +52,12 @@ public class BlockLaserTable extends BlockContainer {
 			return false;
 
 		if (!CoreProxy.getProxy().isRenderWorld(world)) {
-			int meta = world.getBlockMetadata(i, j, k);
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.instance.getModId(), meta, world, i, j, k);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.instance.getModId(), getOldMeta(), world, i, j, k);
 		}
 		return true;
 	}
 
-	@Override
-	public TileEntity createNewTileEntity(World world) {
-		return null;
-	}
+	protected abstract int getOldMeta();
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
@@ -69,20 +65,14 @@ public class BlockLaserTable extends BlockContainer {
 		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
-	@Override
-	public Icon getIcon(int side, int meta) {
-		int s = side > 1 ? 2 : side;
-		return icons[meta][s];
-	}
-
-	@SuppressWarnings({"rawtypes", "unchecked"})
+/*	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
 		par3List.add(new ItemStack(this, 1, 0));
 		par3List.add(new ItemStack(this, 1, 1));
 		par3List.add(new ItemStack(this, 1, 2));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

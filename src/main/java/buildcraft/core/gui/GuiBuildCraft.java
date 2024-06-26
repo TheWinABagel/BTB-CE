@@ -263,10 +263,10 @@ public abstract class GuiBuildCraft extends GuiContainer {
 		}
 	}
 
-	protected class LedgerManager {
+	public class LedgerManager {
 
 		private GuiBuildCraft gui;
-		protected ArrayList<Ledger> ledgers = new ArrayList<Ledger>();
+		public ArrayList<Ledger> ledgers = new ArrayList<>();
 
 		public LedgerManager(GuiBuildCraft gui) {
 			this.gui = gui;
@@ -362,7 +362,7 @@ public abstract class GuiBuildCraft extends GuiContainer {
 	/**
 	 * Side ledger for guis
 	 */
-	protected abstract class Ledger {
+	public abstract class Ledger {
 
 		private boolean open;
 		protected int overlayColor = 0xffffff;
@@ -390,6 +390,10 @@ public abstract class GuiBuildCraft extends GuiContainer {
 			} else if (!open && currentHeight > minHeight) {
 				currentHeight -= 4;
 			}
+		}
+
+		public int getCurrentWidth() {
+			return currentWidth;
 		}
 
 		public int getHeight() {
