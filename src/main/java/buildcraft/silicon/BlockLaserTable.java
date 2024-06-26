@@ -26,7 +26,7 @@ public class BlockLaserTable extends BlockContainer {
 	public BlockLaserTable(int i) {
 		super(i, Material.iron);
 
-		setBlockBounds(0, 0, 0, 1, 9F / 16F, 1);
+		initBlockBounds(0, 0, 0, 1, 9F / 16F, 1);
 		setHardness(10F);
 		setCreativeTab(CreativeTabs.tabRedstone);
 	}

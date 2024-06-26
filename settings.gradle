@@ -14,7 +14,8 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = name
+
+rootProject.name = "Better Then Buildcraft"
 
 gradle.rootProject {
 	group = group

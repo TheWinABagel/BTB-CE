@@ -54,7 +54,7 @@ public abstract class BlockEngine extends BlockBuildCraft {
 
 	@Override
 	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
-		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, BuildCraftCore.blockByEntityModel);
+		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
 	}
 
 /*	@Override

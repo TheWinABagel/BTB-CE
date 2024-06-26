@@ -71,23 +71,22 @@ public class RenderingRegistry {
         }
     }
 
-    public void renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID) {
+    public boolean renderInventoryBlock(RenderBlocks renderer, Block block, int metadata, int modelID) {
         if (this.blockRenderers.containsKey(modelID)) {
             ISimpleBlockRenderingHandler bri = this.blockRenderers.get(modelID);
             bri.renderInventoryBlock(block, metadata, modelID, renderer);
+            return true;
         }
+        return false;
     }
 
     public boolean renderItemAsFull3DBlock(int modelId) {
-        ISimpleBlockRenderingHandler bri = (ISimpleBlockRenderingHandler)this.blockRenderers.get(modelId);
+        ISimpleBlockRenderingHandler bri = this.blockRenderers.get(modelId);
         return bri != null && bri.shouldRender3DInInventory();
     }
 
     public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
-        Iterator i$ = this.entityRenderers.iterator();
-
-        while(i$.hasNext()) {
-            RenderingRegistry.EntityRendererInfo info = (RenderingRegistry.EntityRendererInfo)i$.next();
+        for (EntityRendererInfo info : this.entityRenderers) {
             rendererMap.put(info.target, info.renderer);
             info.renderer.setRenderManager(RenderManager.instance);
         }

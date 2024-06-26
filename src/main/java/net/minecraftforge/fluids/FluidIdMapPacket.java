@@ -10,20 +10,18 @@ import net.minecraft.src.INetworkManager;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
-
+//todocore Fluid map packet
 public class FluidIdMapPacket /*extends ForgePacket */{
-   private BiMap<String, Integer> fluidIds = HashBiMap.create();
+   private final BiMap<String, Integer> fluidIds = HashBiMap.create();
 
    public byte[] generatePacket() {
       ByteArrayDataOutput dat = ByteStreams.newDataOutput();
       dat.writeInt(FluidRegistry.maxID);
-      Iterator i$ = FluidRegistry.fluidIDs.entrySet().iterator();
 
-      while(i$.hasNext()) {
-         Entry<String, Integer> entry = (Entry)i$.next();
-         dat.writeUTF(entry.getKey());
-         dat.writeInt(entry.getValue());
-      }
+       for (Entry<String, Integer> stringIntegerEntry : FluidRegistry.fluidIDs.entrySet()) {
+           dat.writeUTF(stringIntegerEntry.getKey());
+           dat.writeInt(stringIntegerEntry.getValue());
+       }
 
       return dat.toByteArray();
    }

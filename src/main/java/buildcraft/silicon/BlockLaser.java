@@ -47,6 +47,11 @@ public class BlockLaser extends BlockContainer {
 	}
 
 	@Override
+	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
+		super.renderBlockAsItem(renderBlocks, iItemDamage, fBrightness);
+	}
+
+	@Override
 	public TileEntity createNewTileEntity(World world) {
 		return new TileLaser();
 	}

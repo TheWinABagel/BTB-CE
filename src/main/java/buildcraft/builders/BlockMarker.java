@@ -7,6 +7,7 @@
  */
 package buildcraft.builders;
 
+import btw.community.example.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.CreativeTabBuildCraft;
@@ -67,7 +68,7 @@ public class BlockMarker extends BlockContainer {
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x, y, z);
 		AxisAlignedBB bb = getBoundingBox(meta);
-		setBlockBounds((float) bb.minX, (float) bb.minY, (float) bb.minZ, (float) bb.maxX, (float) bb.maxY, (float) bb.maxZ);
+		((BlockAccessor) this).getFixedBlockBounds().setBounds((float) bb.minX, (float) bb.minY, (float) bb.minZ, (float) bb.maxX, (float) bb.maxY, (float) bb.maxZ);
 	}
 
 	@Override
@@ -142,11 +143,11 @@ public class BlockMarker extends BlockContainer {
 		}
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

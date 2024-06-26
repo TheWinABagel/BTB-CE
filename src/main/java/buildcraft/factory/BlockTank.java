@@ -28,7 +28,7 @@ public class BlockTank extends BlockContainer {
 
 	public BlockTank(int i) {
 		super(i, Material.glass);
-		setBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1F, 0.875F);
+		initBlockBounds(0.125F, 0F, 0.125F, 0.875F, 1F, 0.875F);
 		setHardness(0.5F);
 		setCreativeTab(CreativeTabs.tabRedstone);
 	}

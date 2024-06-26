@@ -7,14 +7,14 @@
  */
 package buildcraft;
 
-import btw.BTWAddon;
-import btw.client.network.packet.handler.CustomEntityPacketHandler;
+import btw.community.example.mixin.accessors.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.*;
 import buildcraft.core.blueprints.BptItem;
+import buildcraft.core.network.EntityIds;
 import buildcraft.core.network.PacketHandler;
 import buildcraft.core.network.PacketUpdate;
 import buildcraft.core.proxy.CoreProxy;
@@ -24,7 +24,6 @@ import buildcraft.core.recipes.RefineryRecipeManager;
 import buildcraft.core.triggers.*;
 import buildcraft.core.triggers.ActionMachineControl.Mode;
 import buildcraft.core.utils.BCLog;
-import buildcraft.core.utils.Localization;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
@@ -243,22 +242,21 @@ public class BuildCraftCore extends BuildcraftAddon {
 		}
 		this.modID = "buildcraft";
 		initPackets();
-		//todocore registering entities...?
-/*		EntityRegistry.registerModEntity(EntityRobot.class, "bcRobot", EntityIds.ROBOT, instance, 50, 1, true);
-		EntityRegistry.registerModEntity(EntityPowerLaser.class, "bcLaser", EntityIds.LASER, instance, 50, 1, true);
-		EntityRegistry.registerModEntity(EntityEnergyLaser.class, "bcEnergyLaser", EntityIds.ENERGY_LASER, instance, 50, 1, true);
+
+		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
+		EntityList.addMapping(EntityPowerLaser.class, "bcLaser", EntityIds.LASER);
+		EntityList.addMapping(EntityEnergyLaser.class, "bcEnergyLaser", EntityIds.ENERGY_LASER);
 		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityPowerLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityEnergyLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcRobot");
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcLaser");
-		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");*/
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");
 
 		CoreProxy.getProxy().initializeRendering();
 		CoreProxy.getProxy().initializeEntityRendering();
 
-//		Localization.addLocalization("/lang/btb/", DefaultProps.DEFAULT_LANGUAGE);
-
+		registerCommand();
 	}
 
 	@Override
@@ -282,7 +280,7 @@ public class BuildCraftCore extends BuildcraftAddon {
 	}
 
 
-	public void serverStarting() {
+	public void registerCommand() {
 		registerAddonCommand(new CommandBuildCraft());
 	}
 

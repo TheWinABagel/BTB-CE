@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class RenderBlocksMixin {
     @Shadow public IBlockAccess blockAccess;
 
-/*    @Inject(method = "doesRenderIDRenderItemIn3D", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "doesRenderIDRenderItemIn3D", at = @At("HEAD"), cancellable = true)
     private static void custom3dBlockRendering(int par0, CallbackInfoReturnable<Boolean> cir) {
-        switch (par0) {
-            case 0, 31, 39, 13, 10, 11, 27, 22, 21, 16, 26, 32, 34, 35 -> cir.setReturnValue(true);
-            default -> FMLRenderAccessLibrary
-        }
+/*        switch (par0) {
+            case 0, 31, 39, 13, 10, 11, 27, 22, 21, 16, 26, 32, 34, 35 -> cir.setReturnValue(cir.getReturnValue());
+            default -> RenderingRegistry.instance().renderItemAsFull3DBlock(par0);
+        }*/
 
-    }*/
+    }
 
     @Inject(method = "renderBlockByRenderType", at = @At(value = "HEAD", shift = At.Shift.AFTER), cancellable = true)
     private void test(Block block, int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
@@ -33,8 +33,11 @@ public abstract class RenderBlocksMixin {
         }
     }
 
-/*    @Inject(method = "renderBlockAsItem", at = @At(value = "INVOKE", target = ""))
+    @Inject(method = "renderBlockAsItem", at = @At(value = "HEAD"), cancellable = true)
     private void test2(Block block, int iItemDamage, float fBrightness, CallbackInfo ci) {
-
-    }*/
+        if (RenderingRegistry.instance().renderInventoryBlock((RenderBlocks)(Object) this, block, iItemDamage, block.getRenderType())) {
+            ci.cancel();
+            System.out.println(block);
+        }
+    }
 }

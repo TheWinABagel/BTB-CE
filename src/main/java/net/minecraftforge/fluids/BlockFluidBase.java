@@ -30,7 +30,7 @@ public abstract class BlockFluidBase extends Block implements IFluidBlock {
 
    public BlockFluidBase(int id, Fluid fluid, Material material) {
       super(id, material);
-      this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+      this.initBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
       this.setTickRandomly(true);
       this.disableStats();
       this.fluidName = fluid.getName();
