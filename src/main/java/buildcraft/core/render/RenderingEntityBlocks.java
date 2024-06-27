@@ -57,7 +57,7 @@ public class RenderingEntityBlocks implements ISimpleBlockRenderingHandler {
 		} else if (block.getRenderType() == BuildCraftCore.legacyPipeModel) {
 			Tessellator tessellator = Tessellator.instance;
 
-			((BlockAccessor) block).callSetBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, 0.0F, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0F, CoreConstants.PIPE_MAX_POS);
 			renderer.setRenderBoundsFromBlock(block);
 			block.setBlockBoundsForItemRender();
 			GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -86,7 +86,7 @@ public class RenderingEntityBlocks implements ISimpleBlockRenderingHandler {
 			renderer.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, metadata));
 			tessellator.draw();
 			GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-			((BlockAccessor) block).callSetBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
 
@@ -119,46 +119,46 @@ public class RenderingEntityBlocks implements ISimpleBlockRenderingHandler {
 		float minSize = CoreConstants.PIPE_MIN_POS;
 		float maxSize = CoreConstants.PIPE_MAX_POS;
 
-		((BlockAccessor) block).callSetBlockBounds(minSize, minSize, minSize, maxSize, maxSize, maxSize);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(minSize, minSize, minSize, maxSize, maxSize, maxSize);
 		renderblocks.setRenderBoundsFromBlock(block);
 		renderblocks.renderStandardBlock(block, i, j, k);
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i - 1, j, k)) {
-			((BlockAccessor) block).callSetBlockBounds(0.0F, minSize, minSize, minSize, maxSize, maxSize);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, minSize, minSize, minSize, maxSize, maxSize);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i + 1, j, k)) {
-			((BlockAccessor) block).callSetBlockBounds(maxSize, minSize, minSize, 1.0F, maxSize, maxSize);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(maxSize, minSize, minSize, 1.0F, maxSize, maxSize);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i, j - 1, k)) {
-			((BlockAccessor) block).callSetBlockBounds(minSize, 0.0F, minSize, maxSize, minSize, maxSize);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(minSize, 0.0F, minSize, maxSize, minSize, maxSize);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i, j + 1, k)) {
-			((BlockAccessor) block).callSetBlockBounds(minSize, maxSize, minSize, maxSize, 1.0F, maxSize);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(minSize, maxSize, minSize, maxSize, 1.0F, maxSize);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i, j, k - 1)) {
-			((BlockAccessor) block).callSetBlockBounds(minSize, minSize, 0.0F, maxSize, maxSize, minSize);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(minSize, minSize, 0.0F, maxSize, maxSize, minSize);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
 		if (Utils.checkLegacyPipesConnections(iblockaccess, i, j, k, i, j, k + 1)) {
-			((BlockAccessor) block).callSetBlockBounds(minSize, minSize, maxSize, maxSize, maxSize, 1.0F);
+			((BlockAccessor) block).getFixedBlockBounds().setBounds(minSize, minSize, maxSize, maxSize, maxSize, 1.0F);
 			renderblocks.setRenderBoundsFromBlock(block);
 			renderblocks.renderStandardBlock(block, i, j, k);
 		}
 
-		((BlockAccessor) block).callSetBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 }

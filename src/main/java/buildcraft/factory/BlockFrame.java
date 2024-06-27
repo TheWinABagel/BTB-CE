@@ -14,19 +14,10 @@ import buildcraft.BuildCraftCore;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.IFramePipeConnection;
 import buildcraft.core.utils.Utils;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Entity;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
 import java.util.List;
 import java.util.Random;
@@ -58,6 +49,16 @@ public class BlockFrame extends Block implements IFramePipeConnection {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+
+	@Override
+	public boolean doesItemRenderAsBlock(int iItemDamage) {
+		return true;
+	}
+
+	@Override
+	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
+		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
 	}
 
 	@Override

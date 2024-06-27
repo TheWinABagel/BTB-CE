@@ -9,6 +9,7 @@
 
 package buildcraft.energy;
 
+import btw.item.items.PlaceAsBlockItem;
 import buildcraft.core.ItemBlockBuildCraft;
 import net.minecraft.src.ItemStack;
 
@@ -33,5 +34,10 @@ public class ItemEngine extends ItemBlockBuildCraft {
 			return "tile.engineStone";
 		else
 			return "tile.engineIron";
+	}
+
+	@Override
+	public PlaceAsBlockItem setAssociatedBlockID(int iBlockID) {
+		return super.setAssociatedBlockID(iBlockID);
 	}
 }

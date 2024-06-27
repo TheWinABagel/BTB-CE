@@ -11,20 +11,15 @@ import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
 import buildcraft.api.tools.IToolWrench;
-import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.GuiIds;
 import buildcraft.core.fluids.FluidUtils;
 import buildcraft.core.utils.Utils;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import java.util.ArrayList;
 
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
-import static net.minecraftforge.common.ForgeDirection.EAST;
-import static net.minecraftforge.common.ForgeDirection.NORTH;
-import static net.minecraftforge.common.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.ForgeDirection.WEST;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public class BlockRefinery extends BlockContainer {
@@ -46,6 +41,16 @@ public class BlockRefinery extends BlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+
+	@Override
+	public boolean doesItemRenderAsBlock(int iItemDamage) {
+		return true;
+	}
+
+	@Override
+	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
+		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
 	}
 
 	public boolean isACube() {
@@ -120,7 +125,7 @@ public class BlockRefinery extends BlockContainer {
 		}
 
 		if (!world.isRemote) {
-			((EntityPlayerExtension) player).openGui(BuildCraftFactory.instance.getModId(), GuiIds.REFINERY, world, x, y, z);
+			((EntityPlayerExtension) player).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.REFINERY, world, x, y, z);
 		}
 
 		return true;

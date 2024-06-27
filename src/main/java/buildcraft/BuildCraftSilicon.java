@@ -13,12 +13,9 @@ import buildcraft.api.bptblocks.BptBlockRotateMeta;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.api.transport.PipeWire;
 import buildcraft.core.DefaultProps;
-import buildcraft.core.InterModComms;
-import buildcraft.core.Version;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.silicon.*;
 import buildcraft.silicon.ItemRedstoneChipset.Chipset;
-import buildcraft.silicon.network.PacketHandlerSilicon;
 import buildcraft.silicon.recipes.GateExpansionRecipe;
 import buildcraft.silicon.recipes.GateLogicSwapRecipe;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
@@ -28,65 +25,63 @@ import buildcraft.transport.gates.GateExpansionRedstoneFader;
 import buildcraft.transport.gates.GateExpansionTimer;
 import buildcraft.transport.gates.ItemGate;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import emi.shims.java.net.minecraft.util.DyeColor;
 import net.minecraft.src.Block;
 import net.minecraft.src.Item;
-import net.minecraft.src.ItemDye;
 import net.minecraft.src.ItemStack;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class BuildCraftSilicon extends BuildcraftAddon {
-
+public class BuildCraftSilicon implements IBuildcraftModule {
 	public static ItemRedstoneChipset redstoneChipset;
-	public static BlockLaser laserBlock;
 	public static BlockLaserTable assemblyTableBlock;
 	public static BlockLaserTable advancedCraftingTableBlock;
 	public static BlockLaserTable integrationTableBlock;
 
-	public static BuildCraftSilicon instance = new BuildCraftSilicon();
+	public static BuildCraftSilicon INSTANCE = new BuildCraftSilicon();
 
-	public BuildCraftSilicon() {
-		super("bcsilicon");
+	private static int laserId = DefaultProps.LASER_ID;
+
+	public static BlockLaser laserBlock /*= (BlockLaser) new BlockLaser(laserId).setUnlocalizedName("laserBlock")*/;
+
+	@Override
+	public void registerConfigProps(BuildCraftAddon addon) {
+		addon.registerProp("LaserId", String.valueOf(DefaultProps.LASER_ID));
+		addon.registerProp("AssemblyTableId", String.valueOf(DefaultProps.ASSEMBLY_TABLE_ID));
+		addon.registerProp("AdvancedCraftingTableId", String.valueOf(DefaultProps.ADVANCED_CRAFTING_TABLE_ID));
+		addon.registerProp("IntegrationTableId", String.valueOf(DefaultProps.INTEGRATION_TABLE_ID));
+		addon.registerProp("RedstoneChipsetId", String.valueOf(DefaultProps.REDSTONE_CHIPSET));
 	}
 
 	@Override
-	public void preInitialize() {
-/*		Property laserId = BuildCraftCore.mainConfiguration.getBlock("laser.id", DefaultProps.LASER_ID);
+	public void preInit() {
 
-		Property assemblyTableId = BuildCraftCore.mainConfiguration.getBlock("assemblyTable.id", DefaultProps.ASSEMBLY_TABLE_ID);
+	}
 
-		Property redstoneChipsetId = BuildCraftCore.mainConfiguration.getItem("redstoneChipset.id", DefaultProps.REDSTONE_CHIPSET);
+	@Override
+	public void handleConfigProps() {
+		laserId = BuildcraftConfig.getInt("LaserId");
+	}
 
-		BuildCraftCore.mainConfiguration.save();*/
+	@Override
+	public void init() {
+		laserBlock = (BlockLaser) new BlockLaser(laserId).setUnlocalizedName("laserBlock");
+		Block.blocksList[laserBlock.blockID] = laserBlock;
+/*		laserBlock.setUnlocalizedName("laserBlock");*/
 
-		laserBlock = new BlockLaser(DefaultProps.LASER_ID);
-		CoreProxy.getProxy().addName(laserBlock.setUnlocalizedName("laserBlock"), "Laser");
-		CoreProxy.getProxy().registerBlock(laserBlock);
-
-		assemblyTableBlock = new BlockLaserTableAssembly(DefaultProps.ASSEMBLY_TABLE_ID);
+		assemblyTableBlock = new BlockLaserTableAssembly(BuildcraftConfig.getInt("AssemblyTableId"));
 		assemblyTableBlock.setUnlocalizedName("assemblyTableBlock");
-		advancedCraftingTableBlock = new BlockLaserTableAdvancedCrafting(DefaultProps.ADVANCED_CRAFTING_TABLE_ID);
+
+		advancedCraftingTableBlock = new BlockLaserTableAdvancedCrafting(BuildcraftConfig.getInt("AdvancedCraftingTableId"));
 		advancedCraftingTableBlock.setUnlocalizedName("assemblyWorkbenchBlock");
-		integrationTableBlock = new BlockLaserTableIntegration(DefaultProps.INTEGRATION_TABLE_ID);
+
+		integrationTableBlock = new BlockLaserTableIntegration(BuildcraftConfig.getInt("IntegrationTableId"));
 		integrationTableBlock.setUnlocalizedName("autoWorkbenchBlock");
 
-		CoreProxy.getProxy().registerBlock(assemblyTableBlock, ItemLaserTable.class);
-
-/*		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 0), "Assembly Table");
-		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 1), "Advanced Crafting Table");
-		LanguageRegistry.addName(new ItemStack(assemblyTableBlock, 0, 2), "Integration Table");*/
-
-		redstoneChipset = new ItemRedstoneChipset(DefaultProps.REDSTONE_CHIPSET);
+		redstoneChipset = new ItemRedstoneChipset(BuildcraftConfig.getInt("RedstoneChipsetId"));
 		redstoneChipset.setUnlocalizedName("redstoneChipset");
-		CoreProxy.getProxy().registerItem(redstoneChipset);
-		redstoneChipset.registerItemStacks();
-	}
 
-	@Override
-	public void initialize() {
 		NetworkRegistry.instance().registerGuiHandler("bcsilicon", new GuiHandler());
 		CoreProxy.getProxy().registerTileEntity(TileLaser.class, "net.minecraft.src.buildcraft.factory.TileLaser");
 		CoreProxy.getProxy().registerTileEntity(TileAssemblyTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyTable");
@@ -96,11 +91,17 @@ public class BuildCraftSilicon extends BuildcraftAddon {
 		new BptBlockRotateMeta(laserBlock.blockID, new int[]{2, 5, 3, 4}, true);
 		new BptBlockInventory(assemblyTableBlock.blockID);
 
-		if (BuildCraftCore.loadDefaultRecipes) {
-			loadRecipes();
-		}
-
 		SiliconProxy.proxy.registerRenderers();
+	}
+
+	@Override
+	public void initRecipes() {
+		loadRecipes();
+	}
+
+	@Override
+	public String getModId() {
+		return "bcsilicon";
 	}
 
 	public static void loadRecipes() {

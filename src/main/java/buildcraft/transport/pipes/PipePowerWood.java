@@ -47,7 +47,7 @@ public class PipePowerWood extends Pipe<PipeTransportPower> implements IPowerRec
 	@Override
 	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
-		return BuildCraftTransport.instance.pipeIconProvider;
+		return BuildCraftTransport.INSTANCE.pipeIconProvider;
 	}
 
 	@Override

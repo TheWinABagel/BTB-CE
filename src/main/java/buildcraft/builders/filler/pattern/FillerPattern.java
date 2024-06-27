@@ -118,7 +118,7 @@ public abstract class FillerPattern implements IFillerPattern {
 
 		if (found && stackToPlace != null) {
 			breakBlock(world, lastX, lastY, lastZ);
-			stackToPlace.getItem().onItemUse(stackToPlace, CoreProxy.proxy.getBuildCraftPlayer(world), world, lastX, lastY - 1, lastZ, 1, 0.0f, 0.0f, 0.0f);
+			stackToPlace.getItem().onItemUse(stackToPlace, CoreProxy.getProxy().getBuildCraftPlayer(world), world, lastX, lastY - 1, lastZ, 1, 0.0f, 0.0f, 0.0f);
 		}
 
 		return found;
@@ -190,7 +190,7 @@ public abstract class FillerPattern implements IFillerPattern {
 
 		if (found && stackToPlace != null) {
 			breakBlock(world, lastX, lastY, lastZ);
-			stackToPlace.getItem().onItemUse(stackToPlace, CoreProxy.proxy.getBuildCraftPlayer(world), world, lastX, lastY - 1, lastZ, 1, 0.0f, 0.0f, 0.0f);
+			stackToPlace.getItem().onItemUse(stackToPlace, CoreProxy.getProxy().getBuildCraftPlayer(world), world, lastX, lastY - 1, lastZ, 1, 0.0f, 0.0f, 0.0f);
 		}
 		return found;
 	}

@@ -50,9 +50,9 @@ public class BlockQuarry extends BlockBuildCraft {
 		ForgeDirection orientation = Utils.get2dOrientation(entityliving);
 
 		world.setBlockMetadataWithNotify(i, j, k, orientation.getOpposite().ordinal(), 1);
-		if (entityliving instanceof EntityPlayer) {
+		if (entityliving instanceof EntityPlayer player) {
 			TileQuarry tq = (TileQuarry) world.getBlockTileEntity(i, j, k);
-			tq.placedBy = (EntityPlayer) entityliving;
+			tq.placedBy = player;
 		}
 	}
 
@@ -78,42 +78,42 @@ public class BlockQuarry extends BlockBuildCraft {
 		return new TileQuarry();
 	}
 
-	public void searchFrames(World world, int i, int j, int k) {
-		int width2 = 1;
-		if (!world.checkChunksExist(i - width2, j - width2, k - width2, i + width2, j + width2, k + width2))
-			return;
-
-		int blockID = world.getBlockId(i, j, k);
-
-		if (blockID != BuildCraftFactory.frameBlock.blockID)
-			return;
-
-		int meta = world.getBlockMetadata(i, j, k);
-
-		if ((meta & 8) == 0) {
-			world.setBlockMetadataWithNotify(i, j, k, meta | 8, 0);
-
-			ForgeDirection[] dirs = ForgeDirection.VALID_DIRECTIONS;
-
-			for (ForgeDirection dir : dirs) {
-				switch (dir) {
-					case UP:
-						searchFrames(world, i, j + 1, k);
-					case DOWN:
-						searchFrames(world, i, j - 1, k);
-					case SOUTH:
-						searchFrames(world, i, j, k + 1);
-					case NORTH:
-						searchFrames(world, i, j, k - 1);
-					case EAST:
-						searchFrames(world, i + 1, j, k);
-					case WEST:
-					default:
-						searchFrames(world, i - 1, j, k);
-				}
-			}
-		}
-	}
+//	public void searchFrames(World world, int i, int j, int k) {
+//		int width2 = 1;
+//		if (!world.checkChunksExist(i - width2, j - width2, k - width2, i + width2, j + width2, k + width2))
+//			return;
+//
+//		int blockID = world.getBlockId(i, j, k);
+//
+//		if (blockID != BuildCraftFactory.frameBlock.blockID)
+//			return;
+//
+//		int meta = world.getBlockMetadata(i, j, k);
+//
+//		if ((meta & 8) == 0) {
+//			world.setBlockMetadataWithNotify(i, j, k, meta | 8, 0);
+//
+//			ForgeDirection[] dirs = ForgeDirection.VALID_DIRECTIONS;
+//
+//			for (ForgeDirection dir : dirs) {
+//				switch (dir) {
+//					case UP:
+//						searchFrames(world, i, j + 1, k);
+//					case DOWN:
+//						searchFrames(world, i, j - 1, k);
+//					case SOUTH:
+//						searchFrames(world, i, j, k + 1);
+//					case NORTH:
+//						searchFrames(world, i, j, k - 1);
+//					case EAST:
+//						searchFrames(world, i + 1, j, k);
+//					case WEST:
+//					default:
+//						searchFrames(world, i - 1, j, k);
+//				}
+//			}
+//		}
+//	}
 
 	private void markFrameForDecay(World world, int x, int y, int z) {
 		if (world.getBlockId(x, y, z) == BuildCraftFactory.frameBlock.blockID) {
@@ -137,13 +137,12 @@ public class BlockQuarry extends BlockBuildCraft {
 	@Override
 	public void breakBlock(World world, int i, int j, int k, int par5, int par6) {
 
-		if (!CoreProxy.proxy.isSimulating(world))
+		if (!CoreProxy.getProxy().isSimulating(world))
 			return;
 
 		TileEntity tile = world.getBlockTileEntity(i, j, k);
-		if (tile instanceof TileQuarry) {
-			TileQuarry quarry = (TileQuarry) tile;
-			Box box = quarry.box;
+		if (tile instanceof TileQuarry quarry) {
+            Box box = quarry.box;
 			if (box.isInitialized() && Integer.MAX_VALUE != box.xMax) {
 				// X - Axis
 				for (int x = box.xMin; x <= box.xMax; x++) {
@@ -216,10 +215,10 @@ public class BlockQuarry extends BlockBuildCraft {
 
 		// Restart the quarry if its a wrench
 		Item equipped = entityplayer.getCurrentEquippedItem() != null ? entityplayer.getCurrentEquippedItem().getItem() : null;
-		if (equipped instanceof IToolWrench && ((IToolWrench) equipped).canWrench(entityplayer, i, j, k)) {
+		if (equipped instanceof IToolWrench wrench && wrench.canWrench(entityplayer, i, j, k)) {
 
 			tile.reinitalize();
-			((IToolWrench) equipped).wrenchUsed(entityplayer, i, j, k);
+			wrench.wrenchUsed(entityplayer, i, j, k);
 			return true;
 
 		}

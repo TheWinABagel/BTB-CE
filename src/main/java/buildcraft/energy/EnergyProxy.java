@@ -2,7 +2,6 @@ package buildcraft.energy;
 
 import buildcraft.BuildCraftCore;
 import net.fabricmc.api.EnvType;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.TileEntity;
 
 public class EnergyProxy {
@@ -10,7 +9,7 @@ public class EnergyProxy {
 	public static EnergyProxy proxy = new EnergyProxy();
 
 	public static EnergyProxy getProxy() {
-		if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.SERVER)) {
+		if (BuildCraftCore.INSTANCE.getEffectiveSide().equals(EnvType.SERVER)) {
 			return proxy;
 		}
 		else {

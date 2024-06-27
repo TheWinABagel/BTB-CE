@@ -8,6 +8,7 @@
 package buildcraft.silicon;
 
 import buildcraft.core.CreativeTabBuildCraft;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
@@ -47,9 +48,19 @@ public class BlockLaser extends BlockContainer {
 	}
 
 	@Override
+	public boolean doesItemRenderAsBlock(int iItemDamage) {
+		return true;
+	}
+
+	@Override
+	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
+		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
+	}
+
+/*	@Override
 	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
 		super.renderBlockAsItem(renderBlocks, iItemDamage, fBrightness);
-	}
+	}*/
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {

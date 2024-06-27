@@ -1,5 +1,6 @@
 package btw.community.example.mixin.client;
 
+import buildcraft.BuildCraftAddon;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftEnergy;
 import buildcraft.BuildCraftFactory;
@@ -15,9 +16,7 @@ public abstract class TextureMapMixin {
 
     @Inject(method = "loadTextureAtlas", at = @At(value = "INVOKE", target = "Ljava/util/List;clear()V", shift = At.Shift.AFTER))
     private void btb$hookRegisterTextures(ResourceManager par1ResourceManager, CallbackInfo ci) {
-        BuildCraftCore.textureHook((TextureMap) (Object) this);
-        BuildCraftEnergy.textureHook((TextureMap) (Object) this);
-        BuildCraftFactory.loadTextures((TextureMap) (Object) this);
+        BuildCraftAddon.textureHook((TextureMap) (Object) this);
     }
 
 }

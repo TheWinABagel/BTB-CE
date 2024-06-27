@@ -42,7 +42,6 @@ import net.minecraft.src.EntityItem;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
-import net.minecraft.src.Timer;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -197,7 +196,7 @@ public class PipeRendererTESR extends TileEntitySpecialRenderer {
 		initialized = true;
 
 		RenderInfo block = new RenderInfo();
-		block.texture = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Power_Normal.ordinal());
+		block.texture = BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Power_Normal.ordinal());
 
 		float size = CoreConstants.PIPE_MAX_POS - CoreConstants.PIPE_MIN_POS;
 
@@ -223,7 +222,7 @@ public class PipeRendererTESR extends TileEntitySpecialRenderer {
 			GL11.glEndList();
 		}
 
-		block.texture = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Power_Overload.ordinal());
+		block.texture = BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Power_Overload.ordinal());
 
 		size = CoreConstants.PIPE_MAX_POS - CoreConstants.PIPE_MIN_POS;
 
@@ -412,7 +411,7 @@ public class PipeRendererTESR extends TileEntitySpecialRenderer {
 		bindTexture(TextureMap.locationBlocksTexture);
 
 		RenderInfo box = new RenderInfo();
-		box.texture = BuildCraftTransport.instance.wireIconProvider.getIcon(state.wireMatrix.getWireIconIndex(color));
+		box.texture = BuildCraftTransport.INSTANCE.wireIconProvider.getIcon(state.wireMatrix.getWireIconIndex(color));
 
 		// Z render
 

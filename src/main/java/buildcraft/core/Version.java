@@ -3,6 +3,8 @@ package buildcraft.core;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
+import net.fabricmc.loader.api.FabricLoader;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -17,7 +19,7 @@ public class Version implements Runnable {
 
 		CURRENT, OUTDATED, CONNECTION_ERROR
 	}
-	public static final String VERSION = "@VERSION@";
+	public static final String VERSION = FabricLoader.getInstance().getModContainer("buildcraft").get().getMetadata().getVersion().getFriendlyString();
 	public static final String BUILD_NUMBER = "@BUILD_NUMBER@";
 	private static final String REMOTE_VERSION_FILE = "http://bit.ly/buildcraftversion";
 	private static final String REMOTE_CHANGELOG_ROOT = "https://dl.dropboxusercontent.com/u/38558957/Minecraft/Buildcraft/changelogs/";
@@ -29,7 +31,7 @@ public class Version implements Runnable {
 	private static String[] cachedChangelog;
 
 	public static String getVersion() {
-		return VERSION + " (:" + BUILD_NUMBER + ")";
+		return VERSION /*+ " (:" + BUILD_NUMBER + ")"*/;
 	}
 
 	public static boolean isOutdated() {

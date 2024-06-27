@@ -1,10 +1,17 @@
 package buildcraft.transport;
 
+import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
+import net.fabricmc.api.EnvType;
 import net.minecraft.src.TileEntity;
 
 public class TransportProxy {
-
+	public static TransportProxy getProxy() {
+		if (BuildCraftCore.INSTANCE.getEffectiveSide().equals(EnvType.CLIENT)) {
+			return TransportProxyClient.PROXY_CLIENT;
+		}
+		else return proxy;
+	}
 	public static TransportProxy proxy = new TransportProxy();
 	public static int pipeModel = -1;
 

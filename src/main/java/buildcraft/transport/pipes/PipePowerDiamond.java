@@ -26,7 +26,7 @@ public class PipePowerDiamond extends Pipe<PipeTransportPower> {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
-		return BuildCraftTransport.instance.pipeIconProvider;
+		return BuildCraftTransport.INSTANCE.pipeIconProvider;
 	}
 
 	@Override

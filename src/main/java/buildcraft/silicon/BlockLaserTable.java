@@ -2,19 +2,15 @@ package buildcraft.silicon;
 
 import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftSilicon;
-import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import java.util.List;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 
@@ -52,7 +48,7 @@ public abstract class BlockLaserTable extends BlockContainer {
 			return false;
 
 		if (!CoreProxy.getProxy().isRenderWorld(world)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.instance.getModId(), getOldMeta(), world, i, j, k);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.INSTANCE.getModId(), getOldMeta(), world, i, j, k);
 		}
 		return true;
 	}

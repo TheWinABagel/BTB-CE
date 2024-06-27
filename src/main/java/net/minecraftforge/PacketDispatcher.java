@@ -22,7 +22,6 @@ public class PacketDispatcher {
         if (player instanceof EntityPlayerMP) {
             ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(packet);
         }
-
     }
 
     public static void sendPacketToAllAround(double X, double Y, double Z, double range, int dimensionId, Packet packet) {

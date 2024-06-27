@@ -17,8 +17,6 @@ import java.util.EnumSet;
 import java.util.Map;
 
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -74,7 +72,7 @@ public final class TravelingItem {
 
 
 	public static TravelingItemCache getCache() {
-		if (BuildCraftCore.instance.getEffectiveSide() == EnvType.CLIENT)
+		if (BuildCraftCore.INSTANCE.getEffectiveSide() == EnvType.CLIENT)
 			return clientCache;
 		return serverCache;
 	}

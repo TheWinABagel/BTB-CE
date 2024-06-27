@@ -8,6 +8,7 @@ public class ItemBlockBuildCraft extends ItemBlock {
 
 	public ItemBlockBuildCraft(int id) {
 		super(id);
+		this.setFull3D();
 	}
 
 	@Override
@@ -18,5 +19,11 @@ public class ItemBlockBuildCraft extends ItemBlock {
 	@Override
 	public String getItemDisplayName(ItemStack itemstack) {
 		return StringUtils.localize(getUnlocalizedName(itemstack));
+	}
+
+	@Override
+	public boolean requiresMultipleRenderPasses() {
+
+		return super.requiresMultipleRenderPasses();
 	}
 }

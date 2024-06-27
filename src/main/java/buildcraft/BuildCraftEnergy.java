@@ -11,7 +11,6 @@ import buildcraft.api.fuels.IronEngineCoolant;
 import buildcraft.api.fuels.IronEngineFuel;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.BlockIndex;
-import buildcraft.core.BlockSpring;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.fluids.BCFluid;
 import buildcraft.core.proxy.CoreProxy;
@@ -20,8 +19,6 @@ import buildcraft.energy.*;
 import buildcraft.energy.triggers.TriggerEngineHeat;
 import buildcraft.energy.worldgen.BiomeGenOilDesert;
 import buildcraft.energy.worldgen.BiomeGenOilOcean;
-import buildcraft.energy.worldgen.BiomeInitializer;
-import buildcraft.energy.worldgen.OilPopulate;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -33,7 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.TreeMap;
 
-public class BuildCraftEnergy extends BuildcraftAddon {
+public class BuildCraftEnergy implements IBuildcraftModule {
 
 	public final static int ENERGY_REMOVE_BLOCK = 25;
 	public final static int ENERGY_EXTRACT_ITEM = 2;
@@ -61,16 +58,21 @@ public class BuildCraftEnergy extends BuildcraftAddon {
 	public static BCTrigger triggerYellowEngineHeat = new TriggerEngineHeat(TileEngine.EnergyStage.YELLOW);
 	public static BCTrigger triggerRedEngineHeat = new TriggerEngineHeat(TileEngine.EnergyStage.RED);
 
-	public static BuildCraftEnergy instance = new BuildCraftEnergy();
+	public static BuildCraftEnergy INSTANCE = new BuildCraftEnergy();
 
-	public BuildCraftEnergy() {
-		super("bcenergy");
+	@Override
+	public void registerConfigProps(BuildCraftAddon addon) {
+
 	}
 
 	@Override
-	public void preInitialize() {//todoenergy config
-		this.modID = "bcenergy";
-/*		Property engineId = BuildCraftCore.mainConfiguration.getBlock("engine.id", DefaultProps.ENGINE_ID);
+	public void handleConfigProps() {
+
+	}
+
+	@Override
+	public void init() { //todoenergy config
+		/*		Property engineId = BuildCraftCore.mainConfiguration.getBlock("engine.id", DefaultProps.ENGINE_ID);
 
 		// Update oil tag
 		int defaultOilId = DefaultProps.OIL_ID;
@@ -208,24 +210,23 @@ public class BuildCraftEnergy extends BuildcraftAddon {
 		IronEngineCoolant.addCoolant(FluidRegistry.getFluid("water"), 0.0023F);
 		IronEngineCoolant.addCoolant(Block.ice.blockID, 0, FluidRegistry.getFluidStack("water", FluidContainerRegistry.BUCKET_VOLUME * 2));
 
-	}
 
-
-	@Override
-	public void initialize() {
-		NetworkRegistry.instance().registerGuiHandler(this.modID, new GuiHandler());
+		NetworkRegistry.instance().registerGuiHandler("bcenergy", new GuiHandler());
 
 		/*new BptBlockEngine(engineBlock.blockID);*/
 
-		if (BuildCraftCore.loadDefaultRecipes) {
-			loadRecipes();
-		}
+
 		EnergyProxy.getProxy().registerBlockRenderers();
 		EnergyProxy.getProxy().registerTileEntities();
 	}
 
 	@Override
-	public void postInitialize() {
+	public void initRecipes() {
+		loadRecipes();
+	}
+
+	@Override
+	public void postInit() {
 /*		if (BuildCraftCore.modifyWorld) {
 			MinecraftForge.EVENT_BUS.register(OilPopulate.INSTANCE);
 			MinecraftForge.TERRAIN_GEN_BUS.register(new BiomeInitializer());
@@ -234,7 +235,8 @@ public class BuildCraftEnergy extends BuildcraftAddon {
 
 
 	@Environment(EnvType.CLIENT)
-	public static void textureHook(TextureMap map) {
+	@Override
+	public void textureHook(TextureMap map) {
 		if (blockOil == null || blockFuel == null) return;
 		if (map.getTextureType() == 0) {
 			buildcraftFluidOil.setIcons(blockOil.getBlockTextureFromSide(1), blockOil.getBlockTextureFromSide(2));
@@ -242,7 +244,13 @@ public class BuildCraftEnergy extends BuildcraftAddon {
 		}
 	}
 
+	@Override
+	public String getModId() {
+		return "bcenergy";
+	}
+
 	public static void loadRecipes() {
+		//todoenergy recipes
 /*		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodEngineBlock),
                 "www", " g ", "GpG", 'w', "plankWood", 'g', Block.glass, 'G',
                 BuildCraftCore.woodenGearItem, 'p', Block.pistonBase);
@@ -251,110 +259,4 @@ public class BuildCraftEnergy extends BuildcraftAddon {
 		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironEngineBlock), "www", " g ", "GpG", 'w', Item.ingotIron,
                 'g', Block.glass, 'G', BuildCraftCore.ironGearItem, 'p', Block.pistonBase);*/
 	}
-
-
-/*	@EventHandler
-	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
-		InterModComms.processIMC(event);
-	}*/
-	// public static int createPollution (World world, int i, int j, int k, int
-	// saturation) {
-	// int remainingSaturation = saturation;
-	//
-	// if (world.rand.nextFloat() > 0.7) {
-	// // Try to place an item on the sides
-	//
-	// LinkedList<BlockIndex> orientations = new LinkedList<BlockIndex>();
-	//
-	// for (int id = -1; id <= 1; id += 2) {
-	// for (int kd = -1; kd <= 1; kd += 2) {
-	// if (canPollute(world, i + id, j, k + kd)) {
-	// orientations.add(new BlockIndex(i + id, j, k + kd));
-	// }
-	// }
-	// }
-	//
-	// if (orientations.size() > 0) {
-	// BlockIndex toPollute =
-	// orientations.get(world.rand.nextInt(orientations.size()));
-	//
-	// int x = toPollute.i;
-	// int y = toPollute.j;
-	// int z = toPollute.k;
-	//
-	// if (world.getBlockId(x, y, z) == 0) {
-	// world.setBlock(x, y, z,
-	// BuildCraftEnergy.pollution.blockID,
-	// saturation * 16 / 100);
-	//
-	// saturationStored.put(new BlockIndex(x, y, z), new Integer(
-	// saturation));
-	// remainingSaturation = 0;
-	// } else if (world.getBlockTileEntity(z, y, z) instanceof TilePollution) {
-	// remainingSaturation = updateExitingPollution(world, x, y, z, saturation);
-	// }
-	// }
-	// }
-	//
-	// if (remainingSaturation > 0) {
-	// if (world.getBlockId(i, j + 1, k) == 0) {
-	// if (j + 1 < 128) {
-	// world.setBlock(i, j + 1, k,
-	// BuildCraftEnergy.pollution.blockID,
-	// saturation * 16 / 100);
-	// saturationStored.put(new BlockIndex(i, j + 1, k),
-	// new Integer(remainingSaturation));
-	// }
-	//
-	// remainingSaturation = 0;
-	// } else if (world.getBlockTileEntity(i, j + 1, k) instanceof
-	// TilePollution) {
-	// remainingSaturation = updateExitingPollution(world, i, j + 1,
-	// k, remainingSaturation);
-	// }
-	// }
-	//
-	// if (remainingSaturation == 0) {
-	// System.out.println ("EXIT 1");
-	// return 0;
-	// } else if (remainingSaturation == saturation) {
-	// System.out.println ("EXIT 2");
-	// return saturation;
-	// } else {
-	// System.out.println ("EXIT 3");
-	// return createPollution (world, i, j, k, remainingSaturation);
-	// }
-	// }
-	//
-	// private static int updateExitingPollution (World world, int i, int j, int
-	// k, int saturation) {
-	// int remainingSaturation = saturation;
-	//
-	// TilePollution tile = (TilePollution) world.getBlockTileEntity(
-	// i, j, k);
-	//
-	// if (tile.saturation + saturation <= 100) {
-	// remainingSaturation = 0;
-	// tile.saturation += saturation;
-	// } else {
-	// remainingSaturation = (tile.saturation + saturation) - 100;
-	// tile.saturation += saturation - remainingSaturation;
-	// }
-	//
-	// world.setBlockMetadata(i, j, k, saturation * 16 / 100);
-	// world.markBlockNeedsUpdate(i, j, k);
-	//
-	// return remainingSaturation;
-	// }
-	//
-	// private static boolean canPollute (World world, int i, int j, int k) {
-	// if (world.getBlockId(i, j, k) == 0) {
-	// return true;
-	// } else {
-	// TileEntity tile = world.getBlockTileEntity(i, j, k);
-	//
-	// return (tile instanceof TilePollution && ((TilePollution)
-	// tile).saturation < 100);
-	// }
-	// }*/
 }

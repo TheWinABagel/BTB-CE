@@ -69,7 +69,7 @@ public class TileFiller extends TileBuildCraft implements IInventory, IPowerRece
 	public void initialize() {
 		super.initialize();
 
-		if (!CoreProxy.proxy.isRenderWorld(worldObj)) {
+		if (!CoreProxy.getProxy().isRenderWorld(worldObj)) {
 			IAreaProvider a = Utils.getNearbyAreaProvider(worldObj, xCoord, yCoord, zCoord);
 
 			if (a != null) {
@@ -79,7 +79,7 @@ public class TileFiller extends TileBuildCraft implements IInventory, IPowerRece
 					((TileMarker) a).removeFromWorld();
 				}
 
-				if (!CoreProxy.proxy.isRenderWorld(worldObj) && box.isInitialized()) {
+				if (!CoreProxy.getProxy().isRenderWorld(worldObj) && box.isInitialized()) {
 					box.createLasers(worldObj, LaserKind.Stripes);
 				}
 				sendNetworkUpdate();
@@ -99,7 +99,7 @@ public class TileFiller extends TileBuildCraft implements IInventory, IPowerRece
 
 	@Override
 	public void doWork(PowerHandler workProvider) {
-		if (CoreProxy.proxy.isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(worldObj))
 			return;
 		if (done)
 			return;

@@ -69,7 +69,7 @@ public class TileAssemblyTable extends TileLaserTableBase implements IMachine, I
 
 	@Override
 	public void updateEntity() { // WARNING: run only server-side, see canUpdate()
-		if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.CLIENT)) return;
+		if (BuildCraftCore.INSTANCE.getEffectiveSide().equals(EnvType.CLIENT)) return;
 		if (currentRecipe == null)
 			return;
 
@@ -275,7 +275,7 @@ public class TileAssemblyTable extends TileLaserTableBase implements IMachine, I
 			packet.posY = yCoord;
 			packet.posZ = zCoord;
 			// FIXME: This needs to be switched over to new synch system.
-			CoreProxy.proxy.sendToPlayers(packet.getPacket(), worldObj, (int) player.posX, (int) player.posY, (int) player.posZ,
+			CoreProxy.getProxy().sendToPlayers(packet.getPacket(), worldObj, (int) player.posX, (int) player.posY, (int) player.posZ,
 					DefaultProps.NETWORK_UPDATE_RANGE);
 		}
 	}

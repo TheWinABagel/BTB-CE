@@ -7,6 +7,7 @@
  */
 package buildcraft;
 
+import btw.AddonHandler;
 import btw.community.example.mixin.accessors.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
@@ -29,17 +30,11 @@ import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
 
-import java.util.Map;
 import java.util.TreeMap;
 
-public class BuildCraftCore extends BuildcraftAddon {
+public class BuildCraftCore implements IBuildcraftModule {
 
-	public BuildCraftCore() {
-		super("buildcraft");
-	}
-
-	public static enum RenderMode {
-
+	public enum RenderMode {
 		Full, NoDynamic
 	};
 	public static RenderMode render = RenderMode.Full;
@@ -100,34 +95,23 @@ public class BuildCraftCore extends BuildcraftAddon {
 	public static boolean consumeWaterSources = false;
 	public static BptItem[] itemBptProps = new BptItem[Item.itemsList.length];
 
-	public static BuildCraftCore instance = new BuildCraftCore();
+	public static BuildCraftCore INSTANCE = new BuildCraftCore();
+
 
 	@Override
-	public void handleConfigProperties(Map<String, String> propertyValues) {
-		super.handleConfigProperties(propertyValues);
+	public void registerConfigProps(BuildCraftAddon addon) {
+
 	}
 
 	@Override
-	public void postSetup() {
-		this.addonName = "Better Then Buildcraft: CE";
-		this.modID = "buildcraft";
+	public void handleConfigProps() {
+
 	}
 
 	@Override
-	public void preInitialize() {
+	public void preInit() {
 		BCLog.initLog();
 
-		BuildcraftRecipes.assemblyTable = AssemblyRecipeManager.INSTANCE;
-		BuildcraftRecipes.integrationTable = IntegrationRecipeManager.INSTANCE;
-		BuildcraftRecipes.refinery = RefineryRecipeManager.INSTANCE;
-
-		woodenGearItem = (new ItemBuildCraft(DefaultProps.WOODEN_GEAR_ID)).setUnlocalizedName("woodenGearItem").setTextureName("woodenGearItem");
-		stoneGearItem = (new ItemBuildCraft(DefaultProps.STONE_GEAR_ID)).setUnlocalizedName("stoneGearItem");
-		ironGearItem = (new ItemBuildCraft(DefaultProps.IRON_GEAR_ID)).setUnlocalizedName("ironGearItem");
-		goldGearItem = (new ItemBuildCraft(DefaultProps.GOLDEN_GEAR_ID)).setUnlocalizedName("goldGearItem");
-		diamondGearItem = (new ItemBuildCraft(DefaultProps.DIAMOND_GEAR_ID)).setUnlocalizedName("diamondGearItem");
-
-		wrenchItem = (new ItemWrench(DefaultProps.WRENCH_ID)).setUnlocalizedName("wrenchItem");
 		//todocore config
 /*
 		mainConfiguration = new BuildCraftConfiguration(new File(evt.getModConfigurationDirectory(), "buildcraft/main.conf"));
@@ -231,16 +215,23 @@ public class BuildCraftCore extends BuildcraftAddon {
 	}
 
 	@Override
-	public void initialize() {
+	public void init() {
+		BuildcraftRecipes.assemblyTable = AssemblyRecipeManager.INSTANCE;
+		BuildcraftRecipes.integrationTable = IntegrationRecipeManager.INSTANCE;
+		BuildcraftRecipes.refinery = RefineryRecipeManager.INSTANCE;
+
+		woodenGearItem = (new ItemBuildCraft(DefaultProps.WOODEN_GEAR_ID)).setUnlocalizedName("woodenGearItem").setTextureName("woodenGearItem");
+		stoneGearItem = (new ItemBuildCraft(DefaultProps.STONE_GEAR_ID)).setUnlocalizedName("stoneGearItem");
+		ironGearItem = (new ItemBuildCraft(DefaultProps.IRON_GEAR_ID)).setUnlocalizedName("ironGearItem");
+		goldGearItem = (new ItemBuildCraft(DefaultProps.GOLDEN_GEAR_ID)).setUnlocalizedName("goldGearItem");
+		diamondGearItem = (new ItemBuildCraft(DefaultProps.DIAMOND_GEAR_ID)).setUnlocalizedName("diamondGearItem");
+
+		wrenchItem = (new ItemWrench(DefaultProps.WRENCH_ID)).setUnlocalizedName("wrenchItem");
+
 		// MinecraftForge.registerConnectionHandler(new ConnectionHandler());
 		ActionManager.registerTriggerProvider(new DefaultTriggerProvider());
 		ActionManager.registerActionProvider(new DefaultActionProvider());
 
-
-		if (BuildCraftCore.loadDefaultRecipes) {
-			loadRecipes();
-		}
-		this.modID = "buildcraft";
 		initPackets();
 
 		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
@@ -260,7 +251,12 @@ public class BuildCraftCore extends BuildcraftAddon {
 	}
 
 	@Override
-	public void postInitialize() {
+	public void initRecipes() {
+		loadRecipes();
+	}
+
+	@Override
+	public void postInit() {
 		for (Block block : Block.blocksList) {
 			if (block instanceof BlockFluid || block instanceof IFluidBlock /*|| block instanceof IPlantable*/) {
 				BuildCraftAPI.softBlocks[block.blockID] = true;
@@ -272,8 +268,14 @@ public class BuildCraftCore extends BuildcraftAddon {
 		BuildCraftAPI.softBlocks[Block.fire.blockID] = true;
 	}
 
+	@Override
+	public String getModId() {
+		return "bccore";
+	}
+
 	private static void initPackets() {
-		BuildCraftCore.instance.registerPacketHandler("buildcraft|CR", new PacketHandler());
+		AddonHandler.registerPacketHandler("buildcraft|CR", new PacketHandler());
+//		BuildCraftAddon.INSTANCE.registerPacketHandler("buildcraft|CR", new PacketHandler());
 		//todocore packet handling is a total mess atm
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
@@ -281,11 +283,12 @@ public class BuildCraftCore extends BuildcraftAddon {
 
 
 	public void registerCommand() {
-		registerAddonCommand(new CommandBuildCraft());
+		BuildCraftAddon.INSTANCE.registerAddonCommand(new CommandBuildCraft());
 	}
 
 	@Environment(EnvType.CLIENT)
-	public static void textureHook(TextureMap map) {
+	@Override
+	public void textureHook(TextureMap map) {
 		if (map.getTextureType() == 1) {
 			iconProvider = new CoreIconProvider();
 			iconProvider.registerIcons(map);

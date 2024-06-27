@@ -195,7 +195,7 @@ public class TilePump extends TileBuildCraft implements IMachine, IPowerReceptor
 
 	private void destroyTube() {
 		if (tube != null) {
-			CoreProxy.proxy.removeEntity(tube);
+			CoreProxy.getProxy().removeEntity(tube);
 			tube = null;
 			tubeY = Double.NaN;
 			aimY = 0;

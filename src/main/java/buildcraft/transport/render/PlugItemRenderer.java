@@ -19,9 +19,9 @@ public class PlugItemRenderer implements IItemRenderer {
 		Tessellator tessellator = Tessellator.instance;
 
 		block = BuildCraftTransport.genericPipeBlock;
-		Icon textureID = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure pipe
+		Icon textureID = BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure pipe
 
-		((BlockAccessor) block).callSetBlockBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.375F, 0.75F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.25F, 0.25F, 0.25F, 0.75F, 0.375F, 0.75F);
 		block.setBlockBoundsForItemRender();
 		render.setRenderBoundsFromBlock(block);
 		GL11.glTranslatef(translateX, translateY, translateZ + 0.25F);

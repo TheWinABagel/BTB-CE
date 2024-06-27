@@ -69,7 +69,7 @@ public class PipeItemsEmzuli extends PipeItemsWood implements IGuiReturnHandler 
 		}
 
 		if (!CoreProxy.getProxy().isRenderWorld(container.worldObj)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_LOGEMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.INSTANCE.getModId(), GuiIds.PIPE_LOGEMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;

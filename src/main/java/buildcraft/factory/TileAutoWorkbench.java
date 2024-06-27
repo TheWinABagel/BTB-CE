@@ -178,7 +178,7 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (CoreProxy.proxy.isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
 			return;
 		}
 

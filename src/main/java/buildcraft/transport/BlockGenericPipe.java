@@ -25,7 +25,6 @@ import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.gates.ItemGate;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
 import net.minecraft.src.Minecraft;
@@ -35,7 +34,6 @@ import net.minecraft.src.IconRegister;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLivingBase;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
@@ -946,12 +944,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		Pipe dummyPipe = createPipe(item.itemID);
 		if (dummyPipe != null) {
 			item.setPipeIconIndex(dummyPipe.getIconIndexForItem());
-			if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)){
-				TransportProxyClient.PROXY_CLIENT.setIconProviderFromPipe(item, dummyPipe);
-			}
-			else {
-				TransportProxy.proxy.setIconProviderFromPipe(item, dummyPipe);
-			}
+			TransportProxy.getProxy().setIconProviderFromPipe(item, dummyPipe);
 		}
 		return item;
 	}
@@ -1017,7 +1010,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 			skippedFirstIconRegister = true;
 			return;
 		}*/
-		BuildCraftTransport.instance.wireIconProvider.registerIcons(iconRegister);
+		BuildCraftTransport.INSTANCE.wireIconProvider.registerIcons(iconRegister);
 		for (int i : pipes.keySet()) {
 			Pipe dummyPipe = createPipe(i);
 			if (dummyPipe != null) {
@@ -1042,7 +1035,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public Icon getIcon(int par1, int par2) {
-		return BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Stripes.ordinal());
+		return BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.Stripes.ordinal());
 	}
 
 	/**

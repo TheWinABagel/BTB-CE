@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Random;
 
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Block;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.Entity;
@@ -39,7 +37,7 @@ import net.minecraft.src.World;
 public class CoreProxy {
 
 	public static CoreProxy getProxy() {
-		if (BuildCraftCore.instance.getEffectiveSide().equals(EnvType.SERVER)) {
+		if (BuildCraftCore.INSTANCE.getEffectiveSide().equals(EnvType.SERVER)) {
 			return proxy;
 		}
 		else {

@@ -17,7 +17,6 @@ import buildcraft.core.IItemPipe;
 import buildcraft.core.proxy.CoreProxy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import java.util.ArrayList;
 
 import net.minecraft.src.*;
 
@@ -52,8 +51,8 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 				return false;
 		}
 		//todofactory opengui
-		if (!CoreProxy.proxy.isRenderWorld(world)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.instance.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
+		if (!CoreProxy.getProxy().isRenderWorld(world)) {
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
 		}
 
 		return true;

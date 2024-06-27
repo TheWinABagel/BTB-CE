@@ -12,12 +12,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
-
-import java.util.ArrayList;
 
 public class BlockHopper extends BlockBuildCraft {
 
@@ -62,8 +59,8 @@ public class BlockHopper extends BlockBuildCraft {
 			}
 		}
 
-		if (!CoreProxy.proxy.isRenderWorld(world)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.instance.getModId(), GuiIds.HOPPER, world, x, y, z);
+		if (!CoreProxy.getProxy().isRenderWorld(world)) {
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.HOPPER, world, x, y, z);
 		}
 
 		return true;

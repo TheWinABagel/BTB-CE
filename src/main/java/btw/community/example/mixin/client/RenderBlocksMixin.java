@@ -35,9 +35,9 @@ public abstract class RenderBlocksMixin {
 
     @Inject(method = "renderBlockAsItem", at = @At(value = "HEAD"), cancellable = true)
     private void test2(Block block, int iItemDamage, float fBrightness, CallbackInfo ci) {
-        if (RenderingRegistry.instance().renderInventoryBlock((RenderBlocks)(Object) this, block, iItemDamage, block.getRenderType())) {
+/*        if (RenderingRegistry.instance().renderInventoryBlock((RenderBlocks)(Object) this, block, iItemDamage, block.getRenderType())) {
             ci.cancel();
-            System.out.println(block);
-        }
+            System.out.println("THIS BLOCK IS RENDERING IN A NEW WAY: "+ block);
+        }*/
     }
 }

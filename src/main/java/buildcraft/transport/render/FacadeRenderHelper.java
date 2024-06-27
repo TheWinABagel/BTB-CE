@@ -179,7 +179,7 @@ public class FacadeRenderHelper {
 		state.textureArray = null;
 		block.setRenderAllSides();
 
-		state.currentTexture = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure Pipe
+		state.currentTexture = BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure Pipe
 
 		for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS) {
 			if (state.facadeMatrix.getFacadeBlockId(direction) != 0 && !state.pipeConnectionMatrix.isConnected(direction)) {

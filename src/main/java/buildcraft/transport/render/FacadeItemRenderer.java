@@ -26,6 +26,9 @@ public class FacadeItemRenderer implements IItemRenderer {
 			int color = Item.itemsList[decodedBlockId].getColorFromItemStack(new ItemStack(decodedBlockId, 1, decodedMeta), 0);
 			RenderUtils.setGLColorFromInt(color);
 		} catch (Throwable error) {
+			System.out.println("Facade Item Renderer brokeded?");
+			error.printStackTrace();
+
 		}
 
 		Tessellator tessellator = Tessellator.instance;
@@ -36,7 +39,7 @@ public class FacadeItemRenderer implements IItemRenderer {
 
 		// Render Facade
 		GL11.glPushMatrix();
-		((BlockAccessor) block).callSetBlockBounds(0F, 0F, 1F - 1F / 16F, 1F, 1F, 1F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0F, 0F, 1F - 1F / 16F, 1F, 1F, 1F);
 		render.setRenderBoundsFromBlock(block);
 		GL11.glTranslatef(translateX, translateY, translateZ);
 
@@ -64,14 +67,14 @@ public class FacadeItemRenderer implements IItemRenderer {
 		tessellator.setNormal(1.0F, 0.0F, 0.0F);
 		render.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(5, decodedMeta));
 		tessellator.draw();
-		((BlockAccessor) block).callSetBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glPopMatrix();
 
 		// Render StructurePipe
 		block = BuildCraftTransport.genericPipeBlock;
-		Icon textureID = BuildCraftTransport.instance.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure pipe
+		Icon textureID = BuildCraftTransport.INSTANCE.pipeIconProvider.getIcon(PipeIconProvider.TYPE.PipeStructureCobblestone.ordinal()); // Structure pipe
 
-		((BlockAccessor) block).callSetBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS - 1F / 16F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS - 1F / 16F);
 		block.setBlockBoundsForItemRender();
 		render.setRenderBoundsFromBlock(block);
 		GL11.glTranslatef(translateX, translateY, translateZ + 0.25F);
@@ -101,7 +104,7 @@ public class FacadeItemRenderer implements IItemRenderer {
 		render.renderFaceXPos(block, 0.0D, 0.0D, 0.0D, textureID);
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-		((BlockAccessor) block).callSetBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class TileBlueprintLibrary extends TileBuildCraft implements IInventory {
 	@Override
 	public void initialize() {
 		super.initialize();
-		if (CoreProxy.proxy.isSimulating(worldObj)) {
+		if (CoreProxy.getProxy().isSimulating(worldObj)) {
 			setCurrentPage(getNextPage(null));
 		}
 	}
@@ -250,7 +250,7 @@ public class TileBlueprintLibrary extends TileBuildCraft implements IInventory {
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (CoreProxy.proxy.isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(worldObj))
 			return;
 
 		if (progressIn > 0 && progressIn < 100) {

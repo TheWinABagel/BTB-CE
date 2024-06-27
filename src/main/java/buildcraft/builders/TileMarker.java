@@ -90,7 +90,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 	boolean showSignals = false;
 
 	public void updateSignals() {
-		if (CoreProxy.proxy.isSimulating(worldObj)) {
+		if (CoreProxy.getProxy().isSimulating(worldObj)) {
 			showSignals = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
 			sendNetworkUpdate();
 		}
@@ -100,7 +100,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 		if (signals != null) {
 			for (EntityBlock b : signals) {
 				if (b != null) {
-					CoreProxy.proxy.removeEntity(b);
+					CoreProxy.getProxy().removeEntity(b);
 				}
 			}
 			signals = null;
@@ -152,7 +152,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 	}
 
 	public void tryConnection() {
-		if (CoreProxy.proxy.isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(worldObj))
 			return;
 
 		for (int j = 0; j < 3; ++j) {
@@ -236,7 +236,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 		if (lasers != null) {
 			for (EntityBlock entity : lasers) {
 				if (entity != null) {
-					CoreProxy.proxy.removeEntity(entity);
+					CoreProxy.getProxy().removeEntity(entity);
 				}
 			}
 		}
@@ -391,7 +391,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 
 		signals = null;
 
-		if (CoreProxy.proxy.isSimulating(worldObj) && markerOrigin != null && markerOrigin != this) {
+		if (CoreProxy.getProxy().isSimulating(worldObj) && markerOrigin != null && markerOrigin != this) {
 			markerOrigin.sendNetworkUpdate();
 		}
 	}

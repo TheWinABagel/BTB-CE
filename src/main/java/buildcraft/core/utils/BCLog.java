@@ -21,7 +21,7 @@ public class BCLog {
 	public static final Logger logger = Logger.getLogger("Buildcraft");
 
 	public static void initLog() {
-		logger.info("Starting BuildCraft " + Version.getVersion());
+		logger.info("Starting Better Then BuildCraft " + Version.getVersion());
 		logger.info("Copyright (c) SpaceToad, 2011");
 		logger.info("http://www.mod-buildcraft.com");
 	}

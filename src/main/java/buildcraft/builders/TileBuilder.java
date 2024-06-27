@@ -177,7 +177,7 @@ public class TileBuilder extends TileBuildCraft implements IBuilderInventory, IP
 	public void initialize() {
 		super.initialize();
 
-		if (CoreProxy.proxy.isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(worldObj))
 			return;
 
 		for (int x = xCoord - 1; x <= xCoord + 1; ++x) {
@@ -264,7 +264,7 @@ public class TileBuilder extends TileBuildCraft implements IBuilderInventory, IP
 
 	@Override
 	public void doWork(PowerHandler workProvider) {
-		if (CoreProxy.proxy.isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isRenderWorld(worldObj))
 			return;
 
 		if (done)
@@ -566,7 +566,7 @@ public class TileBuilder extends TileBuildCraft implements IBuilderInventory, IP
 			box.deleteLasers();
 			box.reset();
 
-			if (CoreProxy.proxy.isSimulating(worldObj)) {
+			if (CoreProxy.getProxy().isSimulating(worldObj)) {
 				sendNetworkUpdate();
 			}
 

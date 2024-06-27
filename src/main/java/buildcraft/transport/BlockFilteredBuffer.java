@@ -18,12 +18,9 @@ import net.fabricmc.api.Environment;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -60,7 +57,7 @@ public class BlockFilteredBuffer extends BlockBuildCraft {
 		}
 
 		if (!CoreProxy.getProxy().isRenderWorld(world)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.FILTERED_BUFFER, world, x, y, z);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.INSTANCE.getModId(), GuiIds.FILTERED_BUFFER, world, x, y, z);
 		}
 
 		return true;

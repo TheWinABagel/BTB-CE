@@ -51,7 +51,7 @@ public class ContainerRefinery extends BuildCraftContainer {
 
 		refinery.setFilter(slot, filter);
 
-		if (CoreProxy.proxy.isRenderWorld(refinery.worldObj)) {
+		if (CoreProxy.getProxy().isRenderWorld(refinery.worldObj)) {
 			PacketPayloadStream payload = new PacketPayloadStream(new PacketPayloadStream.StreamWriter() {
 				@Override
 				public void writeData(DataOutputStream data) throws IOException {
@@ -59,7 +59,7 @@ public class ContainerRefinery extends BuildCraftContainer {
 					data.writeShort(filter != null ? filter.getID() : -1);
 				}
 			});
-			CoreProxy.proxy.sendToServer(new PacketUpdate(PacketIds.REFINERY_FILTER_SET, refinery.xCoord, refinery.yCoord, refinery.zCoord, payload)
+			CoreProxy.getProxy().sendToServer(new PacketUpdate(PacketIds.REFINERY_FILTER_SET, refinery.xCoord, refinery.yCoord, refinery.zCoord, payload)
 					.getPacket());
 		}
 	}

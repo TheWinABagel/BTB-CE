@@ -48,7 +48,7 @@ public class BlockBlueprintLibrary extends BlockContainer {
 		TileBlueprintLibrary tile = (TileBlueprintLibrary) world.getBlockTileEntity(i, j, k);
 
 		if (!tile.locked || entityplayer.username.equals(tile.owner))
-			if (!CoreProxy.proxy.isRenderWorld(world)) {
+			if (!CoreProxy.getProxy().isRenderWorld(world)) {
 				entityplayer.openGui(BuildCraftBuilders.instance, GuiIds.BLUEPRINT_LIBRARY, world, i, j, k);
 			}
 
@@ -73,7 +73,7 @@ public class BlockBlueprintLibrary extends BlockContainer {
 
 	@Override
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityliving, ItemStack stack) {
-		if (CoreProxy.proxy.isSimulating(world) && entityliving instanceof EntityPlayer) {
+		if (CoreProxy.getProxy().isSimulating(world) && entityliving instanceof EntityPlayer) {
 			TileBlueprintLibrary tile = (TileBlueprintLibrary) world.getBlockTileEntity(i, j, k);
 			tile.owner = ((EntityPlayer) entityliving).username;
 		}

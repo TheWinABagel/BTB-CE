@@ -81,7 +81,7 @@ public class PipeFluidsIron extends Pipe<PipeTransportFluids> {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
-		return BuildCraftTransport.instance.pipeIconProvider;
+		return BuildCraftTransport.INSTANCE.pipeIconProvider;
 	}
 
 	@Override

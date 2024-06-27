@@ -86,7 +86,7 @@ public class GuiTemplate extends GuiBuildCraft {
 			PacketPayloadArrays payload = new PacketPayloadArrays();
 			payload.intPayload = new int[]{c};
 			PacketUpdate packet = new PacketUpdate(PacketIds.ARCHITECT_NAME, template.xCoord, template.yCoord, template.zCoord, payload);
-			CoreProxy.proxy.sendToServer(packet.getPacket());
+			CoreProxy.getProxy().sendToServer(packet.getPacket());
 		} else {
 			super.keyTyped(c, i);
 		}

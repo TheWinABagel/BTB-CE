@@ -135,11 +135,11 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 	@Override
 	public void updateEntity() {
-		if (!isAlive && CoreProxy.proxy.isSimulating(worldObj)) {
+		if (!isAlive && CoreProxy.getProxy().isSimulating(worldObj)) {
 			super.updateEntity();
 			return;
 		}
-		if (!CoreProxy.proxy.isSimulating(worldObj) && isAlive) {
+		if (!CoreProxy.getProxy().isSimulating(worldObj) && isAlive) {
 			super.updateEntity();
 			return;
 		}
@@ -154,7 +154,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 			}
 		}
 
-		if (CoreProxy.proxy.isSimulating(worldObj) && inProcess) {
+		if (CoreProxy.getProxy().isSimulating(worldObj) && inProcess) {
 			sendNetworkUpdate();
 		}
 		if (inProcess || !isDigging)
@@ -447,7 +447,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 				if (mineable.stackSize <= 0) {
 					continue;
 				}
-				CoreProxy.proxy.removeEntity(entity);
+				CoreProxy.getProxy().removeEntity(entity);
 				mineStack(mineable);
 			}
 		}
@@ -525,7 +525,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 		if (chunkTicket == null) {
 			isAlive = false;
-			if (placedBy != null && CoreProxy.proxy.isSimulating(worldObj)) {
+			if (placedBy != null && CoreProxy.getProxy().isSimulating(worldObj)) {
 				PacketDispatcher.sendPacketToPlayer(
 						new Packet3Chat(ChatMessageComponent.createFromText(String.format("[BUILDCRAFT] The quarry at %d, %d, %d will not work because there are no more chunkloaders available",
 						xCoord, yCoord, zCoord))), placedBy);
@@ -563,6 +563,9 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 			useDefault = true;
 		}*/
+		a = new DefaultAreaProvider(xCoord, yCoord, zCoord, xCoord + 10, yCoord + 4, zCoord + 10);
+
+		useDefault = true;
 
 		xSize = a.xMax() - a.xMin() + 1;
 		int ySize = a.yMax() - a.yMin() + 1;
@@ -604,6 +607,8 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 
 		a.removeFromWorld();
+
+		forceChunkLoading();
 		/*forceChunkLoading(chunkTicket);*/
 	}
 
@@ -662,7 +667,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	public void initialize() {
 		super.initialize();
 
-		if (CoreProxy.proxy.isSimulating(this.worldObj) && !box.initialized) {
+		if (CoreProxy.getProxy().isSimulating(this.worldObj) && !box.initialized) {
 			setBoundaries(false);
 		}
 
@@ -824,6 +829,30 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		this.targetX = x;
 		this.targetY = y;
 		this.targetZ = z;
+	}
+
+	//todofactory quarry forced chunks nyi
+	public void forceChunkLoading() {
+
+		Set<ChunkCoordIntPair> chunks = Sets.newHashSet();
+		isAlive = true;
+		ChunkCoordIntPair quarryChunk = new ChunkCoordIntPair(xCoord >> 4, zCoord >> 4);
+		chunks.add(quarryChunk);
+		/*ForgeChunkManager.forceChunk(ticket, quarryChunk);*/
+
+		for (int chunkX = box.xMin >> 4; chunkX <= box.xMax >> 4; chunkX++) {
+			for (int chunkZ = box.zMin >> 4; chunkZ <= box.zMax >> 4; chunkZ++) {
+				ChunkCoordIntPair chunk = new ChunkCoordIntPair(chunkX, chunkZ);
+				/*ForgeChunkManager.forceChunk(ticket, chunk);*/
+				chunks.add(chunk);
+			}
+		}
+		if (placedBy != null) {
+			PacketDispatcher.sendPacketToPlayer(
+					new Packet3Chat(ChatMessageComponent.createFromText(String.format("[BUILDCRAFT] The quarry at %d %d %d will keep %d chunks loaded", xCoord, yCoord, zCoord, chunks.size()))),
+					placedBy);
+		}
+		sendNetworkUpdate();
 	}
 
 /*	public void forceChunkLoading(Ticket ticket) {

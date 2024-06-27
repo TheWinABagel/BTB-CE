@@ -8,7 +8,6 @@ public class SiliconProxyClient extends SiliconProxy {
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerRenderers() {
-		SiliconProxy.laserBlockModel = RenderingRegistry.getNextAvailableRenderId();
-		RenderingRegistry.registerBlockHandler(new SiliconRenderBlock());
+
 	}
 }

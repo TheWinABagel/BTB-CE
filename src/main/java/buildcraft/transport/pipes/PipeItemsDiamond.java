@@ -50,7 +50,7 @@ public class PipeItemsDiamond extends Pipe<PipeTransportItems> implements IClien
 	@Override
 	@Environment(EnvType.CLIENT)
 	public IIconProvider getIconProvider() {
-		return BuildCraftTransport.instance.pipeIconProvider;
+		return BuildCraftTransport.INSTANCE.pipeIconProvider;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class PipeItemsDiamond extends Pipe<PipeTransportItems> implements IClien
 				return false;
 
 		if (!CoreProxy.getProxy().isRenderWorld(container.worldObj)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.instance.getModId(), GuiIds.PIPE_DIAMOND, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.INSTANCE.getModId(), GuiIds.PIPE_DIAMOND, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;
