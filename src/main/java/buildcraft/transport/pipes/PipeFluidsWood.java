@@ -119,10 +119,9 @@ public class PipeFluidsWood extends Pipe<PipeTransportFluids> implements IPowerR
 			ForgeDirection side = ForgeDirection.getOrientation(meta);
 			TileEntity tile = container.getTile(side);
 
-			if (tile instanceof IFluidHandler) {
-				IFluidHandler fluidHandler = (IFluidHandler) tile;
+			if (tile instanceof IFluidHandler fluidHandler) {
 
-				int flowRate = transport.flowRate;
+                int flowRate = transport.flowRate;
 
 				FluidStack extracted = fluidHandler.drain(side.getOpposite(), liquidToExtract > flowRate ? flowRate : liquidToExtract, false);
 

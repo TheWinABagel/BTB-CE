@@ -8,7 +8,9 @@
 package buildcraft;
 
 import btw.AddonHandler;
+import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import btw.community.example.mixin.accessors.EntityListAccessor;
+import btw.entity.CanvasEntity;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -27,9 +29,11 @@ import buildcraft.core.triggers.ActionMachineControl.Mode;
 import buildcraft.core.utils.BCLog;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import java.io.DataInputStream;
 import java.util.TreeMap;
 
 public class BuildCraftCore implements IBuildcraftModule {
@@ -237,17 +241,27 @@ public class BuildCraftCore implements IBuildcraftModule {
 		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
 		EntityList.addMapping(EntityPowerLaser.class, "bcLaser", EntityIds.LASER);
 		EntityList.addMapping(EntityEnergyLaser.class, "bcEnergyLaser", EntityIds.ENERGY_LASER);
-		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
+/*		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityPowerLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityEnergyLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcRobot");
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcLaser");
-		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");*/
 
 		CoreProxy.getProxy().initializeRendering();
 		CoreProxy.getProxy().initializeEntityRendering();
 
 		registerCommand();
+
+		if (!MinecraftServer.getIsServer()) {
+			CustomEntityPacketHandler.entryMap.put(EntityIds.ROBOT, ((world, data, packet) -> {
+				Box box = new Box();
+				box.initialize(data);
+				var robot = new EntityRobot(world, box);
+
+				return robot;
+			}));
+		}
 	}
 
 	@Override

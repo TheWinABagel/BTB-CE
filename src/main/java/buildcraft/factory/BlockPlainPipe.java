@@ -13,12 +13,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.List;
 import java.util.Random;
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.IBlockAccess;
+
+import net.minecraft.src.*;
 
 public class BlockPlainPipe extends Block implements IFramePipeConnection {
 
@@ -72,5 +68,10 @@ public class BlockPlainPipe extends Block implements IFramePipeConnection {
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon("buildcraft:blockPlainPipe");
+	}
+
+	@Override
+	public String getLocalizedName() {
+		return StatCollector.translateToLocal(this.getUnlocalizedName());
 	}
 }

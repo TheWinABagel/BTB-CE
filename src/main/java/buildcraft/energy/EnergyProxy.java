@@ -22,6 +22,7 @@ public class EnergyProxy {
 		TileEntity.addMapping(TileEngineWood.class, "net.minecraft.src.buildcraft.energy.TileEngineWood");
 		TileEntity.addMapping(TileEngineStone.class, "net.minecraft.src.buildcraft.energy.TileEngineStone");
 		TileEntity.addMapping(TileEngineIron.class, "net.minecraft.src.buildcraft.energy.TileEngineIron");
+		TileEntity.addMapping(TileEngineCreative.class, "net.minecraft.src.buildcraft.energy.TileEngineCreative");
 	}
 
 	public void registerBlockRenderers() {

@@ -37,10 +37,10 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 	public static boolean spawnOilSprings = true;
 	public static BiomeGenOilDesert biomeOilDesert;
 	public static BiomeGenOilOcean biomeOilOcean;
-	public static BlockEngine engineBlock;
 	public static BlockEngineWood woodEngineBlock;
 	public static BlockEngineStone stoneEngineBlock;
 	public static BlockEngineIron ironEngineBlock;
+	public static BlockEngineCreative creativeEngineBlock;
 	private static Fluid buildcraftFluidOil;
 	private static Fluid buildcraftFluidFuel;
 	public static Fluid fluidOil;
@@ -128,6 +128,7 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 		woodEngineBlock = new BlockEngineWood(DefaultProps.WOOD_ENGINE_ID);
 		stoneEngineBlock = new BlockEngineStone(DefaultProps.STONE_ENGINE_ID);
 		ironEngineBlock = new BlockEngineIron(DefaultProps.IRON_ENGINE_ID);
+		creativeEngineBlock = new BlockEngineCreative(DefaultProps.CREATIVE_ENGINE_ID);
 
 /*		LanguageRegistry.addName(new ItemStack(engineBlock, 1, 0), "Redstone Engine");
 		LanguageRegistry.addName(new ItemStack(engineBlock, 1, 1), "Steam Engine");

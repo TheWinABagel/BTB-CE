@@ -22,9 +22,13 @@ public class ItemBuildCraft extends Item {
 	}
 
 	@Override
-	public String getItemDisplayName(ItemStack itemstack) {
-//		return StatCollector.translateToLocal(this.getUnlocalizedName(itemstack));
-		return StringUtils.localize(getUnlocalizedName(itemstack));
+	public String getItemDisplayName(ItemStack par1ItemStack) {
+		return StringUtils.localize(this.getUnlocalizedNameInefficiently(par1ItemStack)).trim();
+	}
+
+	@Override
+	public String getItemStackDisplayName(ItemStack itemstack) {
+		return StringUtils.localize(this.getUnlocalizedName(itemstack));
 	}
 
 	@Override
@@ -45,11 +49,6 @@ public class ItemBuildCraft extends Item {
 	}
 
 	//todocore implement shouldPassSneakingClickToBlock and onItemUseFirst
-
-	@Override
-	public String getItemStackDisplayName(ItemStack itemstack) {
-		return StatCollector.translateToLocal(this.getUnlocalizedName(itemstack));
-	}
 
 
 	//	@Override

@@ -10,10 +10,7 @@ package buildcraft.transport.gui;
 import buildcraft.core.gui.BuildCraftContainer;
 import buildcraft.core.gui.slots.SlotPhantom;
 import buildcraft.transport.pipes.PipeItemsDiamond;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Slot;
+import net.minecraft.src.*;
 
 public class ContainerDiamondPipe extends BuildCraftContainer {
 
@@ -44,9 +41,9 @@ public class ContainerDiamondPipe extends BuildCraftContainer {
 		}
 	}
 
+
 	@Override
 	public boolean canInteractWith(EntityPlayer entityplayer) {
 		return pipe.container.isUseableByPlayer(entityplayer);
 	}
-
 }

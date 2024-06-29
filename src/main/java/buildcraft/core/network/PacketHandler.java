@@ -23,11 +23,10 @@ public class PacketHandler implements BuildcraftCustomPacketHandler {
 			return;
 
 		TileEntity entity = packet.getTarget(world);
-		if (!(entity instanceof ISynchronizedTile))
+		if (!(entity instanceof ISynchronizedTile tile))
 			return;
 
-		ISynchronizedTile tile = (ISynchronizedTile) entity;
-		tile.handleUpdatePacket(packet);
+        tile.handleUpdatePacket(packet);
 		tile.postPacketHandling(packet);
 	}
 

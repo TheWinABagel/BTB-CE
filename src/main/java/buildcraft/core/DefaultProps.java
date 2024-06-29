@@ -92,6 +92,7 @@ public class DefaultProps {
 	public static int PIPE_LIQUIDS_SANDSTONE_ID = 3223;
 	public static int PIPE_STRUCTURE_COBBLESTONE_ID = 3224;
 
+	public static int CREATIVE_ENGINE_ID = 1496;
 	public static int WOOD_ENGINE_ID = 1497;
 	public static int STONE_ENGINE_ID = 1498;
 	public static int IRON_ENGINE_ID = 1499;

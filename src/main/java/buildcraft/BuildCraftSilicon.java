@@ -115,7 +115,7 @@ public class BuildCraftSilicon implements IBuildcraftModule {
 				'R', Item.redstone,
 				'D', Item.diamond);
 
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 0),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1),
 				"ORO",
 				"ODO",
 				"OGO",
@@ -124,7 +124,7 @@ public class BuildCraftSilicon implements IBuildcraftModule {
 				'D', Item.diamond,
 				'G', BuildCraftCore.diamondGearItem);
 
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 1),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(advancedCraftingTableBlock, 1),
 				"OWO",
 				"OCO",
 				"ORO",
@@ -133,7 +133,7 @@ public class BuildCraftSilicon implements IBuildcraftModule {
 				'C', Block.chest,
 				'R', new ItemStack(redstoneChipset, 1, 0));
 
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(assemblyTableBlock, 1, 2),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(integrationTableBlock, 1),
 				"ORO",
 				"OCO",
 				"OGO",

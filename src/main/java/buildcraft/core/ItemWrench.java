@@ -14,7 +14,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class ItemWrench extends ItemBuildCraft implements IToolWrench {
 
-	private final Set<Class<? extends Block>> shiftRotations = new HashSet<Class<? extends Block>>();
+	private final Set<Class<? extends Block>> shiftRotations = new HashSet<>();
 
 	public ItemWrench(int i) {
 		super(i);
@@ -66,4 +66,16 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
 	public boolean shouldPassSneakingClickToBlock(World par2World, int par4, int par5, int par6) {
 		return true;
 	}
+
+/*	@Override
+	public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int i, int j, int k, int iFacing, float fClickX, float fClickY, float fClickZ) {
+		var box = new Box();
+		box.initialize(i, j, k, 10);
+		var robot = new EntityRobot(par3World, box);
+		par3World.spawnEntityInWorld(robot);
+		robot.setPosition(i,j + 2,k);
+
+
+		return super.onItemUse(par1ItemStack, par2EntityPlayer, par3World, i, j, k, iFacing, fClickX, fClickY, fClickZ);
+	}*/
 }

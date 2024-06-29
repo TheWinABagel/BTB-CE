@@ -127,7 +127,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 	private void checkDone() {
 		recomputeNeededItems();
 
-		if (clearList.size() == 0 && primaryList.size() == 0 && secondaryList.size() == 0) {
+		if (clearList.isEmpty() && primaryList.isEmpty() && secondaryList.isEmpty()) {
 			done = true;
 		} else {
 			done = false;
@@ -136,7 +136,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 
 	@Override
 	public BptSlot getNextBlock(World world, IBuilderInventory inv) {
-		if (clearList.size() != 0) {
+		if (!clearList.isEmpty()) {
 			BptSlot slot = internalGetNextBlock(world, inv, clearList);
 			checkDone();
 
@@ -146,7 +146,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 				return null;
 		}
 
-		if (primaryList.size() != 0) {
+		if (!primaryList.isEmpty()) {
 			BptSlot slot = internalGetNextBlock(world, inv, primaryList);
 			checkDone();
 
@@ -156,7 +156,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 				return null;
 		}
 
-		if (secondaryList.size() != 0) {
+		if (!secondaryList.isEmpty()) {
 			BptSlot slot = internalGetNextBlock(world, inv, secondaryList);
 			checkDone();
 
@@ -176,7 +176,7 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 
 		BptSlot result = null;
 
-		while (list.size() > 0) {
+		while (!list.isEmpty()) {
 			BptSlot slot = list.removeFirst();
 
 			boolean getNext = false;
@@ -221,8 +221,8 @@ public class BptBuilderBlueprint extends BptBuilderBase {
 		if (slot.blockId == 0)
 			return true;
 
-		LinkedList<ItemStack> tmpReq = new LinkedList<ItemStack>();
-		LinkedList<ItemStack> tmpInv = new LinkedList<ItemStack>();
+		LinkedList<ItemStack> tmpReq = new LinkedList<>();
+		LinkedList<ItemStack> tmpInv = new LinkedList<>();
 
 		try {
 			for (ItemStack stk : slot.getRequirements(context))

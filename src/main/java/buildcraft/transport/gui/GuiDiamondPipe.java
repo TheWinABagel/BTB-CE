@@ -7,8 +7,7 @@
  */
 package buildcraft.transport.gui;
 
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.*;
 
 import org.lwjgl.opengl.GL11;
 
@@ -54,4 +53,29 @@ public class GuiDiamondPipe extends GuiBuildCraft {
 		int k = (height - ySize) / 2;
 		drawTexturedModalRect(j, k, 0, 0, xSize, ySize);
 	}
+
+/*	@Override
+	public void mouseUpEarly(int mouseX, int mouseY, int eventType) {
+		Slot slot = getSlotAtPosition(mouseX, mouseY);
+		if (slot instanceof IPhantomSlot) {
+			System.out.println("event type is " + eventType);
+			ItemStack stack = container.slotClickPhantom(slot, eventType, 0, this.mc.thePlayer);
+			if (stack != null) {
+				mc.playerController.getNetClientHandler().addToSendQueue(new Packet103SetSlot(this, , stack));
+			}
+
+			container.detectAndSendChanges();
+		}
+	}*/
+
+/*	@Override
+	protected void mouseMovedOrUp(int mouseX, int mouseY, int eventType) {
+
+		Slot slot = getSlotAtPosition(mouseX, mouseY);
+		if (slot instanceof IPhantomSlot) {
+			System.out.println("event type is " + eventType);
+			container.slotClickPhantom(slot, eventType, 0, this.mc.thePlayer);
+		}
+		super.mouseMovedOrUp(mouseX, mouseY, eventType);
+	}*/
 }

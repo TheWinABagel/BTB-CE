@@ -9,6 +9,7 @@ package buildcraft.core.gui.slots;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.ItemStack;
 
 /**
  *
@@ -30,4 +31,9 @@ public class SlotPhantom extends SlotBase implements IPhantomSlot {
     {
         return false;
     }
+
+	@Override
+	public void putStack(ItemStack par1ItemStack) {
+		super.putStack(par1ItemStack);
+	}
 }

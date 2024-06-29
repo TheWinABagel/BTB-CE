@@ -24,6 +24,9 @@ public interface IAssemblyRecipeManager {
 
 		Object[] getInputs();
 
+		Object[] getProcessedInputs();
+
+
 		double getEnergyCost();
 	}
 

@@ -9,14 +9,16 @@
 
 package buildcraft.core;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import btw.community.example.extensions.IEntityAdditionalSpawnData;
-import net.minecraft.src.Entity;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
+import btw.entity.EntityWithCustomPacket;
+import btw.network.packet.BTWPacketManager;
+import buildcraft.core.network.EntityIds;
+import net.minecraft.src.*;
 import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.core.Position;
 import buildcraft.core.blueprints.BptBuilderBase;
@@ -27,17 +29,14 @@ import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import buildcraft.core.utils.BlockUtil;
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-
-public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
+public class EntityRobot extends Entity implements EntityWithCustomPacket {
 
 	private Box box;
 	private int destX, destY, destZ;
 
 	EntityEnergyLaser laser;
 
-	public LinkedList<Action> targets = new LinkedList<Action>();
+	public LinkedList<Action> targets = new LinkedList<>();
 	public static int MAX_TARGETS = 20;
 	public int wait = 0;
 
@@ -62,9 +61,7 @@ public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 	}
 
 	public EntityRobot(World world, Box box) {
-
 		super(world);
-
 		this.box = box;
 		init();
 	}
@@ -82,36 +79,51 @@ public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 		setLocationAndAngles(destX, destY, destZ, 0, 0);
 
 		laser = new EntityEnergyLaser(worldObj, new Position(posX, posY, posZ), new Position(posX, posY, posZ));
+//		System.out.println("creating new laser at " + new Position(posX, posY, posZ) + " in world " + worldObj);
 		worldObj.spawnEntityInWorld(laser);
 	}
 
 	@Override
-	public void writeSpawnData(ByteArrayDataOutput data) {
-
-		if (box == null) {
-			box = new Box();
+	public Packet getSpawnPacketForThisEntity() {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream data = new DataOutputStream(byteStream);
+		try {
+			if (this.box == null) {
+				int i = 5;
+			}
+			data.writeInt(EntityIds.ROBOT);
+			data.writeInt(this.entityId);
+			data.writeInt(box.xMin);
+			data.writeInt(box.yMin);
+			data.writeInt(box.zMin);
+			data.writeInt(box.xMax);
+			data.writeInt(box.yMax);
+			data.writeInt(box.zMax);
+			System.out.println("making a new entity robot spawn packet");
+		} catch (Exception exception) {
+			exception.printStackTrace();
 		}
-
-		data.writeInt(box.xMin);
-		data.writeInt(box.yMin);
-		data.writeInt(box.zMin);
-		data.writeInt(box.xMax);
-		data.writeInt(box.yMax);
-		data.writeInt(box.zMax);
+		return new Packet250CustomPayload(BTWPacketManager.SPAWN_CUSTOM_ENTITY_PACKET_CHANNEL, byteStream.toByteArray());
 	}
 
 	@Override
-	public void readSpawnData(ByteArrayDataInput data) {
+	public int getTrackerViewDistance() {
+		return 50;
+	}
 
-		box = new Box();
-		box.xMin = data.readInt();
-		box.yMin = data.readInt();
-		box.zMin = data.readInt();
-		box.xMax = data.readInt();
-		box.yMax = data.readInt();
-		box.zMax = data.readInt();
+	@Override
+	public int getTrackerUpdateFrequency() {
+		return 1;
+	}
 
-		init();
+	@Override
+	public boolean getTrackMotion() {
+		return true;
+	}
+
+	@Override
+	public boolean shouldServerTreatAsOversized() {
+		return false;
 	}
 
 	@Override
@@ -142,6 +154,7 @@ public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 
 			BlockIndex newDesination = getNewDestination();
 			if (newDesination != null) {
+				System.out.printf("robot pos is now %d %d %d\n", newDesination.x, newDesination.y, newDesination.z);
 				setDestination(newDesination.x, newDesination.y, newDesination.z);
 			}
 
@@ -198,7 +211,7 @@ public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 
 		updateWait();
 
-		if (targets.size() > 0) {
+		if (!targets.isEmpty()) {
 
 			Action a = targets.getFirst();
 			if (a.slot != null) {
@@ -259,7 +272,7 @@ public class EntityRobot extends Entity implements IEntityAdditionalSpawnData {
 		if (laser == null)
 			return;
 
-		if (targets.size() > 0) {
+		if (!targets.isEmpty()) {
 
 			Action a = targets.getFirst();
 			BptSlotInfo target = a.slot;

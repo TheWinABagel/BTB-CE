@@ -3,12 +3,16 @@ package buildcraft.core;
 import buildcraft.core.utils.Utils;
 import java.util.Random;
 
+import buildcraft.energy.TileEngine;
 import net.minecraft.src.*;
+import net.minecraftforge.common.ForgeDirection;
 
 public abstract class BlockBuildCraft extends BlockContainer {
 
 	protected static boolean keepInventory = false;
 	protected final Random rand = new Random();
+	protected boolean canBePistonPushed = true;
+	protected boolean canBePistonPulled = true;
 
 	protected BlockBuildCraft(int id, Material material) {
 		super(id, material);
@@ -39,8 +43,30 @@ public abstract class BlockBuildCraft extends BlockContainer {
 		return super.getLightValue(world, x, y, z);
 	}
 
-	@Override
+/*	@Override
 	public String getLocalizedName() {
-		return StatCollector.translateToLocal(this.getUnlocalizedName());
+		return I18n.getString(this.getUnlocalizedName());
+	}*/
+
+	//todocore block solid and rotate block
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
+		return true;
 	}
+
+
+	public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
+		return false;
+	}
+
+	@Override
+	public boolean canBlockBePulledByPiston(World world, int i, int j, int k, int iToFacing) {
+		return canBePistonPulled;
+	}
+
+	@Override
+	public boolean canBlockBePushedByPiston(World world, int i, int j, int k, int iToFacing) {
+		return canBePistonPushed;
+	}
+
+
 }

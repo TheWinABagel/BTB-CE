@@ -62,7 +62,7 @@ public abstract class BlockEngine extends BlockBuildCraft {
 		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
 	}
 
-/*	@Override
+	@Override
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if (tile instanceof TileEngine) {
@@ -78,7 +78,7 @@ public abstract class BlockEngine extends BlockBuildCraft {
 			return ((TileEngine) tile).switchOrientation(false);
 		}
 		return false;
-	}*/
+	}
 
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer player, int side, float par7, float par8, float par9) {
@@ -135,14 +135,6 @@ public abstract class BlockEngine extends BlockBuildCraft {
 		world.spawnParticle("reddust", f + f4, f1, f2 - f3, 0.0D, 0.0D, 0.0D);
 		world.spawnParticle("reddust", f + f4, f1, f2 + f3, 0.0D, 0.0D, 0.0D);
 	}
-
-/*	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public void getSubBlocks(int blockid, CreativeTabs par2CreativeTabs, List itemList) {
-*//*		itemList.add(new ItemStack(this, 1, 0));
-		itemList.add(new ItemStack(this, 1, 1));
-		itemList.add(new ItemStack(this, 1, 2));*//*
-	}*/
 
 	@Override
 	public void onNeighborBlockChange(World world, int i, int j, int k, int l) {

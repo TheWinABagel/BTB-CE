@@ -83,6 +83,18 @@ public class Box implements IBox {
 
 	}
 
+	public void initialize(DataInputStream data) {
+		try {
+			initialize(data.readInt(), data.readInt(), data.readInt(), data.readInt(), data.readInt(), data.readInt());
+		}
+		catch (IOException e) {
+			System.err.println("Failed to initialize box");
+			e.printStackTrace();
+		}
+	}
+
+
+
 	public List<BlockIndex> getBlocksInArea() {
 
 		List<BlockIndex> blocks = new ArrayList<BlockIndex>();

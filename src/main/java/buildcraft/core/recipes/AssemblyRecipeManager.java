@@ -44,9 +44,6 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 
 			processedInput = new Object[inputs.length];
 			for (int i = 0; i < inputs.length; i++) {
-				/*if (inputs[i] instanceof String)
-					processedInput[i] = OreDictionary.getOres((String) inputs[i]);
-				else */
 					if (inputs[i] instanceof ItemStack)
 					processedInput[i] = inputs[i];
 				else if (inputs[i] instanceof Item)
@@ -68,6 +65,11 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 		@Override
 		public Object[] getInputs() {
 			return originalInput;
+		}
+
+		@Override
+		public Object[] getProcessedInputs() {
+			return processedInput.clone();
 		}
 
 		@Override

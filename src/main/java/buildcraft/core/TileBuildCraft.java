@@ -64,9 +64,8 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 			init = true;
 		}
 
-		if (this instanceof IPowerReceptor) {
-			IPowerReceptor receptor = ((IPowerReceptor) this);
-			receptor.getPowerReceiver(null).update();
+		if (this instanceof IPowerReceptor receptor) {
+            receptor.getPowerReceiver(null).update();
 		}
 	}
 
@@ -111,14 +110,14 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 
 	@Override
 	public void handleDescriptionPacket(PacketUpdate packet) throws IOException {
-		if (packet.payload instanceof PacketPayloadArrays)
-			descriptionPacket.fromPayload(this, (PacketPayloadArrays) packet.payload);
+		if (packet.payload instanceof PacketPayloadArrays payloadArrays)
+			descriptionPacket.fromPayload(this, payloadArrays);
 	}
 
 	@Override
 	public void handleUpdatePacket(PacketUpdate packet) throws IOException {
-		if (packet.payload instanceof PacketPayloadArrays)
-			updatePacket.fromPayload(this, (PacketPayloadArrays) packet.payload);
+		if (packet.payload instanceof PacketPayloadArrays payloadArrays)
+			updatePacket.fromPayload(this, payloadArrays);
 	}
 
 	@Override
@@ -137,6 +136,8 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 		if (nbt.hasKey("owner"))
 			owner = nbt.getString("owner");
 	}
+
+
 
 	public boolean isInvNameLocalized() {
 		// TODO Auto-generated method stub

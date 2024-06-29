@@ -190,6 +190,7 @@ public class TileLaser extends TileBuildCraft implements IPowerReceptor, IAction
 
 		laser = new EntityEnergyLaser(worldObj, new Position(xCoord, yCoord, zCoord), new Position(xCoord, yCoord, zCoord));
 		worldObj.spawnEntityInWorld(laser);
+		System.out.println("creating a power laser! world is " + worldObj + " and laser is " + laser);
 	}
 
 	protected void updateLaser() {

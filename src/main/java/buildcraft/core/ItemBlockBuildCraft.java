@@ -22,8 +22,8 @@ public class ItemBlockBuildCraft extends ItemBlock {
 	}
 
 	@Override
-	public boolean requiresMultipleRenderPasses() {
-
-		return super.requiresMultipleRenderPasses();
+	public String getItemStackDisplayName(ItemStack itemstack) {
+		return StringUtils.localize(getUnlocalizedName(itemstack));
 	}
+
 }

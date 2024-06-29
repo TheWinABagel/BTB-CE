@@ -15,7 +15,7 @@ public class EntityEnergyLaser extends EntityLaser {
 
 	public static final short POWER_AVERAGING = 100;
 	public int displayStage = 0;
-	private final double power[] = new double[POWER_AVERAGING];
+	private final double[] power = new double[POWER_AVERAGING];
 	private int powerIndex = 0;
 	private double powerAverage = 0;
 
@@ -25,6 +25,7 @@ public class EntityEnergyLaser extends EntityLaser {
 
 	public EntityEnergyLaser(World world, Position head, Position tail) {
 		super(world, head, tail);
+		System.out.println("LASER constructor called");
 	}
 
 	public void pushPower(double received) {
@@ -64,12 +65,12 @@ public class EntityEnergyLaser extends EntityLaser {
 	@Override
 	protected void updateDataServer() {
 		super.updateDataServer();
-		dataWatcher.updateObject(15, Integer.valueOf(encodeDouble(powerAverage)));
+		dataWatcher.updateObject(15, encodeDouble(powerAverage));
 	}
 
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		dataWatcher.addObject(15, Integer.valueOf(0));
+		dataWatcher.addObject(15, 0);
 	}
 }

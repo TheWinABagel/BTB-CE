@@ -15,6 +15,7 @@
     "NBTTagListMixin",
     "RenderManagerAccessor",
     "TileEntityMixin",
+    "WorldMixin",
     "accessors.BlockAccessor",
     "accessors.ChunkTrackerEntryAccessor",
     "accessors.EntityListAccessor",
@@ -34,7 +35,6 @@
   ],
   "client": [
     "MinecraftMixin",
-    "WorldMixin",
     "client.ItemMixin",
     "client.TextureMapMixin"
   ],

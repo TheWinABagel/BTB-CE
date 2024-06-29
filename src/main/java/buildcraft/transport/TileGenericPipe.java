@@ -7,6 +7,7 @@
  */
 package buildcraft.transport;
 
+import btw.community.example.extensions.BlockUnloadExtension;
 import btw.community.example.mixin.ChunkTrackerAccessor;
 import btw.community.example.mixin.accessors.ChunkTrackerEntryAccessor;
 import buildcraft.BuildCraftCore;
@@ -54,7 +55,7 @@ import java.util.logging.Level;
 import btw.world.chunk.ChunkTrackerEntry;
 
 public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFluidHandler, IPipeTile, IOverrideDefaultTriggers, ITileBufferHolder,
-		IDropControlInventory, ISyncedTile, ISolidSideTile, IGuiReturnHandler {
+		IDropControlInventory, ISyncedTile, ISolidSideTile, IGuiReturnHandler, BlockUnloadExtension {
 
 	public class CoreState implements IClientState {
 
@@ -519,11 +520,11 @@ public class TileGenericPipe extends TileEntity implements IPowerReceptor, IFlui
 			return false;
 	}
 
-/*	@Override
+	@Override
 	public void onChunkUnload() {
 		if (pipe != null)
 			pipe.onChunkUnload();
-	}*/
+	}
 
 	/**
 	 * ITankContainer implementation *

@@ -41,6 +41,8 @@ public class BlockQuarry extends BlockBuildCraft {
 		setHardness(10F);
 		setResistance(10F);
 		setStepSound(soundAnvilFootstep);
+		canBePistonPushed = false;
+		canBePistonPulled = false;
 	}
 
 	@Override

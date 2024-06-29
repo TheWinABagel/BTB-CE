@@ -50,7 +50,6 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 			if (entityplayer.getCurrentEquippedItem().getItem() instanceof IItemPipe)
 				return false;
 		}
-		//todofactory opengui
 		if (!CoreProxy.getProxy().isRenderWorld(world)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
 		}
@@ -69,10 +68,10 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 		itemList.add(new ItemStack(this));
 	}*/
 
-	@Override
+/*	@Override
 	public String getLocalizedName() {
 		return StatCollector.translateToLocal(this.getUnlocalizedName());
-	}
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

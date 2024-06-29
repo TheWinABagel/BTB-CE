@@ -12,6 +12,8 @@ import buildcraft.core.gui.slots.SlotBase;
 import buildcraft.core.gui.widgets.Widget;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.network.PacketGuiWidget;
+import emi.dev.emi.emi.api.stack.EmiStack;
+import emi.dev.emi.emi.screen.EmiScreenManager;
 import net.minecraft.src.*;
 
 import java.io.DataInputStream;
@@ -21,8 +23,8 @@ import java.util.List;
 
 public abstract class BuildCraftContainer extends Container {
 
-	private List<Widget> widgets = new ArrayList<Widget>();
-	private int inventorySize;
+	private final List<Widget> widgets = new ArrayList<>();
+	private final int inventorySize;
 
 	public BuildCraftContainer(int inventorySize) {
 		this.inventorySize = inventorySize;
@@ -78,10 +80,10 @@ public abstract class BuildCraftContainer extends Container {
 		}
 		return super.slotClick(slotNum, mouseButton, modifier, player);
 	}
-
-	private ItemStack slotClickPhantom(Slot slot, int mouseButton, int modifier, EntityPlayer player) {
+//todocore better emi stack support
+	public ItemStack slotClickPhantom(Slot slot, int mouseButton, int modifier, EntityPlayer player) {
 		ItemStack stack = null;
-
+		System.out.println("emi dragged slot is " + EmiScreenManager.draggedStack.getEmiStacks().get(0).getItemStack());
 		if (mouseButton == 2) {
 			if (((IPhantomSlot) slot).canAdjust()) {
 				slot.putStack(null);
@@ -91,7 +93,11 @@ public abstract class BuildCraftContainer extends Container {
 			slot.onSlotChanged();
 			ItemStack stackSlot = slot.getStack();
 			ItemStack stackHeld = playerInv.getItemStack();
-
+			System.out.println("stack slot is pre " + stackSlot + " stack held is " + stackHeld);
+			if (stackHeld == null && !EmiScreenManager.draggedStack.isEmpty()) {
+				stackHeld = EmiScreenManager.draggedStack.getEmiStacks().get(0).getItemStack();
+			}
+			System.out.println("stack held is now post " + stackHeld);
 			if (stackSlot != null) {
 				stack = stackSlot.copy();
 			}

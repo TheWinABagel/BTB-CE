@@ -15,13 +15,8 @@ import buildcraft.core.utils.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import java.util.ArrayList;
-import net.minecraft.src.Material;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.EntityLivingBase;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
-import net.minecraft.src.World;
+
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 public class BlockMiningWell extends BlockBuildCraft {
@@ -34,6 +29,7 @@ public class BlockMiningWell extends BlockBuildCraft {
 		setHardness(5F);
 		setResistance(10F);
 		setStepSound(soundStoneFootstep);
+		setUnlocalizedName("miningWellBlock");
 	}
 
 	@Override

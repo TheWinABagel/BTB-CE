@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import btw.community.example.extensions.BlockUnloadExtension;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
@@ -48,7 +50,7 @@ import buildcraft.core.utils.Utils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-public class TileQuarry extends TileBuildCraft implements IMachine, IPowerReceptor, IBuilderInventory {
+public class TileQuarry extends TileBuildCraft implements IMachine, IPowerReceptor, IBuilderInventory, BlockUnloadExtension {
 
 	public @TileNetworkData
 	Box box = new Box();
@@ -63,7 +65,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	public @TileNetworkData
 	boolean builderDone = false;
 	public EntityRobot builder;
-	BptBuilderBase bluePrintBuilder;
+	private BptBuilderBase bluePrintBuilder;
 	public EntityMechanicalArm arm;
 	public PowerHandler powerHandler;
 	boolean isDigging = false;
@@ -136,15 +138,18 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	@Override
 	public void updateEntity() {
 		if (!isAlive && CoreProxy.getProxy().isSimulating(worldObj)) {
+//			System.out.println("is not alive, and is server world");
 			super.updateEntity();
 			return;
 		}
 		if (!CoreProxy.getProxy().isSimulating(worldObj) && isAlive) {
+//			System.out.println("is alive, and is client world");
 			super.updateEntity();
 			return;
 		}
 		super.updateEntity();
 		if (inProcess) {
+			//todo
 			double energyToUse = 2 + powerHandler.getEnergyStored() / 500;
 
 			double energy = powerHandler.useEnergy(energyToUse, energyToUse, true);
@@ -157,21 +162,27 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		if (CoreProxy.getProxy().isSimulating(worldObj) && inProcess) {
 			sendNetworkUpdate();
 		}
+//		System.out.println("1 world is " +worldObj);
 		if (inProcess || !isDigging)
 			return;
 
 		createUtilsIfNeeded();
+//		System.out.println("2 world is " +worldObj);
+		/*System.out.printf("bluePrintBuilder != null %b%n", bluePrintBuilder != null);*/
 
 		if (bluePrintBuilder != null) {
 
 			builderDone = bluePrintBuilder.done;
 			if (!builderDone) {
-
+//				System.out.println("building frame!");
 				buildFrame();
 				return;
 
 			} else {
-
+				boolean test1, test2 = false;
+				test1 = builder != null;
+				if (test1) test2 =builder.done();
+//				System.out.printf("builder != null %b, builder.done() %b%n", test1, test2);
 				if (builder != null && builder.done()) {
 
 					box.deleteLasers();
@@ -182,6 +193,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 
 		if (builder == null) {
+//			System.out.println("DIGGING");
 			dig();
 		}
 
@@ -192,14 +204,19 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	}
 
 	protected void buildFrame() {
-		float mj = 25 * BuildCraftFactory.miningMultiplier;
+//		float mj = 25 * BuildCraftFactory.miningMultiplier;
+		float mj = 1;
 		powerHandler.configure(50 * BuildCraftFactory.miningMultiplier, 100 * BuildCraftFactory.miningMultiplier, mj, MAX_ENERGY * BuildCraftFactory.miningMultiplier);
-		if (powerHandler.useEnergy(mj, mj, true) != mj)
+		if (powerHandler.useEnergy(mj, mj, true) != mj) {
+//			System.out.println("use energy failed " + worldObj);
 			return;
+		}
 
+//		System.out.println("builder is null on world " + worldObj + ": " + (builder == null));
 		if (builder == null) {
 			builder = new EntityRobot(worldObj, box);
 			worldObj.spawnEntityInWorld(builder);
+//			System.out.printf("robot is at %s %s %s \n", builder.posX, builder.posY, builder.posZ);
 		}
 
 		if (builder.readyToBuild()) {
@@ -494,10 +511,10 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		destroy();
 	}
 
-/*	@Override
+	@Override
 	public void onChunkUnload() {
 		destroy();
-	}*/
+	}
 
 	@Override
 	public void destroy() {
@@ -563,9 +580,6 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 			useDefault = true;
 		}*/
-		a = new DefaultAreaProvider(xCoord, yCoord, zCoord, xCoord + 10, yCoord + 4, zCoord + 10);
-
-		useDefault = true;
 
 		xSize = a.xMax() - a.xMin() + 1;
 		int ySize = a.yMax() - a.yMin() + 1;
@@ -607,8 +621,8 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 
 		a.removeFromWorld();
-
 		forceChunkLoading();
+
 		/*forceChunkLoading(chunkTicket);*/
 	}
 
@@ -673,6 +687,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 		createUtilsIfNeeded();
 
+		forceChunkLoading();
 		sendNetworkUpdate();
 	}
 

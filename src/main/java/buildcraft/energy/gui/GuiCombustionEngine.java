@@ -68,7 +68,9 @@ public class GuiCombustionEngine extends GuiEngine {
 		}
 		mc.renderEngine.bindTexture(BLOCK_TEXTURE);
 		RenderUtils.setGLColorFromInt(tank.colorRenderCache);
-
+		if (liquidIcon == null) {
+			int test = 0;
+		}
 		if (liquidIcon != null) {
 			while (true) {
 				int x;

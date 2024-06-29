@@ -85,12 +85,21 @@ public class BlockPump extends BlockBuildCraft {
 	public void onNeighborBlockChange(World world, int x, int y, int z, int id) {
 		super.onNeighborBlockChange(world, x, y, z, id);
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
-		if (tile instanceof TilePump) {
-			((TilePump) tile).onNeighborBlockChange(id);
+		if (tile instanceof TilePump pump) {
+			pump.onNeighborBlockChange(id);
 		}
 	}
 
-/*	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public boolean canBlockBePulledByPiston(World world, int i, int j, int k, int iToFacing) {
+		return super.canBlockBePulledByPiston(world, i, j, k, iToFacing);
+	}
+
+	@Override
+	public boolean canBlockBePushedByPiston(World world, int i, int j, int k, int iToFacing) {
+		return super.canBlockBePushedByPiston(world, i, j, k, iToFacing);
+	}
+	/*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
