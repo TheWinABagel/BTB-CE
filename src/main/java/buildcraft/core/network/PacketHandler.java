@@ -15,7 +15,7 @@ import net.minecraft.src.*;
 
 
 public class PacketHandler implements BuildcraftCustomPacketHandler {
-
+	public static final PacketHandler INSTANCE = new PacketHandler();
 	private void onTileUpdate(EntityPlayer player, PacketTileUpdate packet) throws IOException {
 		World world = player.worldObj;
 

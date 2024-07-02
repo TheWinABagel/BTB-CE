@@ -3,6 +3,7 @@ package buildcraft;
 import btw.BTWAddon;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.ItemBlockBuildCraft;
+import buildcraft.core.network.PacketHandler;
 import buildcraft.transport.network.PacketGateExpansionMap;
 import net.minecraft.src.*;
 import net.minecraftforge.PacketDispatcher;
@@ -80,6 +81,18 @@ public class BuildCraftAddon extends BTWAddon {
         PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), playerMP);
     }
 
+    @Override
+    public boolean serverCustomPacketReceived(NetServerHandler handler, Packet250CustomPayload packet) {
+        PacketHandler.INSTANCE.onPacketData(handler.playerEntity, packet);
+        return super.serverCustomPacketReceived(handler, packet);
+    }
+
+    @Override
+    public boolean clientCustomPacketReceived(Minecraft mcInstance, Packet250CustomPayload packet) {
+        PacketHandler.INSTANCE.onPacketData(mcInstance.thePlayer, packet);
+        return super.clientCustomPacketReceived(mcInstance, packet);
+    }
+
     public static void textureHook(TextureMap map) {
         MODULES.forEach(module -> module.textureHook(map));
     }
@@ -91,15 +104,5 @@ public class BuildCraftAddon extends BTWAddon {
 
     public void registerProp(String propertyName, Object defaultValue) {
         this.registerProperty(propertyName, defaultValue.toString(), "");
-    }
-
-    public void registerClampedProp(String propertyName, int min, int defaultValue, int max, String comment) {
-        defaultValue = MathHelper.clamp_int(defaultValue, min, max);
-        this.registerProperty(propertyName, String.valueOf(defaultValue), comment);
-    }
-
-    public void registerClampedProp(String propertyName, float min, float defaultValue, float max, String comment) {
-        defaultValue = MathHelper.clamp_float(defaultValue, min, max);
-        this.registerProperty(propertyName, String.valueOf(defaultValue), comment);
     }
 }
