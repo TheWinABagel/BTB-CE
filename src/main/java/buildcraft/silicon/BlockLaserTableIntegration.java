@@ -7,6 +7,7 @@ import net.minecraft.src.World;
 public class BlockLaserTableIntegration extends BlockLaserTable {
     public BlockLaserTableIntegration(int i) {
         super(i);
+        setUnlocalizedName("autoWorkbenchBlock");
     }
 
     @Override

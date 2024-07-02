@@ -26,6 +26,7 @@ public class BlockLaser extends BlockContainer {
 		super(i, Material.iron);
 		setHardness(10F);
 		setCreativeTab(CreativeTabs.tabRedstone);
+		setUnlocalizedName("laserBlock");
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package buildcraft;
 
 import btw.BTWAddon;
-import btw.item.BTWItems;
+import buildcraft.core.DefaultProps;
 import buildcraft.core.ItemBlockBuildCraft;
 import buildcraft.transport.network.PacketGateExpansionMap;
 import net.minecraft.src.*;
@@ -39,7 +39,8 @@ public class BuildCraftAddon extends BTWAddon {
 
     @Override
     public void preInitialize() {
-        MODULES.forEach(module -> module.registerConfigProps(this));
+        MODULES.forEach(module -> module.registerConfigForSettings(this));
+        MODULES.forEach(module -> module.registerConfigForIds(this));
         MODULES.forEach(IBuildcraftModule::preInit);
     }
 
@@ -83,11 +84,22 @@ public class BuildCraftAddon extends BTWAddon {
         MODULES.forEach(module -> module.textureHook(map));
     }
 
-    public void registerProp(String propertyName, String defaultValue, String comment) {
-        this.registerProperty(propertyName, defaultValue, comment);
+    public void registerProp(String propertyName, Object defaultValue, String comment) {
+        this.registerProperty(propertyName, defaultValue.toString(), comment);
     }
 
-    public void registerProp(String propertyName, String defaultValue) {
-        this.registerProperty(propertyName, defaultValue, "");
+
+    public void registerProp(String propertyName, Object defaultValue) {
+        this.registerProperty(propertyName, defaultValue.toString(), "");
+    }
+
+    public void registerClampedProp(String propertyName, int min, int defaultValue, int max, String comment) {
+        defaultValue = MathHelper.clamp_int(defaultValue, min, max);
+        this.registerProperty(propertyName, String.valueOf(defaultValue), comment);
+    }
+
+    public void registerClampedProp(String propertyName, float min, float defaultValue, float max, String comment) {
+        defaultValue = MathHelper.clamp_float(defaultValue, min, max);
+        this.registerProperty(propertyName, String.valueOf(defaultValue), comment);
     }
 }

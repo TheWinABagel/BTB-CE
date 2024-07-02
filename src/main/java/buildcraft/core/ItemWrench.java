@@ -20,6 +20,7 @@ public class ItemWrench extends ItemBuildCraft implements IToolWrench {
 		super(i);
 		setFull3D();
 		setMaxStackSize(1);
+		setUnlocalizedName("wrenchItem");
 		shiftRotations.add(BlockLever.class);
 		shiftRotations.add(BlockButton.class);
 		shiftRotations.add(BlockChest.class);

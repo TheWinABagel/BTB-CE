@@ -7,12 +7,11 @@ import net.minecraft.src.Block;
 import net.minecraft.src.StatCollector;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public abstract class FluidRegistry {
    static int maxID = 0;
-   static HashMap<String, Fluid> fluids = new HashMap();
+   static HashMap<String, Fluid> fluids = new HashMap<>();
    static BiMap<String, Integer> fluidIDs = HashBiMap.create();
    static BiMap<Block, Fluid> fluidBlocks;
    public static final Fluid WATER;
@@ -34,7 +33,6 @@ public abstract class FluidRegistry {
       } else {
          fluids.put(fluid.getName(), fluid);
          fluidIDs.put(fluid.getName(), ++maxID);
-//         MinecraftForge.EVENT_BUS.post(new FluidRegisterEvent(fluid.getName(), maxID));
          return true;
       }
    }
@@ -48,7 +46,7 @@ public abstract class FluidRegistry {
    }
 
    public static Fluid getFluid(String fluidName) {
-      return (Fluid)fluids.get(fluidName);
+      return fluids.get(fluidName);
    }
 
    public static Fluid getFluid(int fluidID) {
@@ -82,17 +80,15 @@ public abstract class FluidRegistry {
    public static Fluid lookupFluidForBlock(Block block) {
       if (fluidBlocks == null) {
          fluidBlocks = HashBiMap.create();
-         Iterator i$ = fluids.values().iterator();
 
-         while(i$.hasNext()) {
-            Fluid fluid = (Fluid)i$.next();
-            if (fluid.canBePlacedInWorld() && Block.blocksList[fluid.getBlockID()] != null) {
-               fluidBlocks.put(Block.blocksList[fluid.getBlockID()], fluid);
-            }
-         }
+          for (Fluid fluid : fluids.values()) {
+              if (fluid.canBePlacedInWorld() && Block.blocksList[fluid.getBlockID()] != null) {
+                  fluidBlocks.put(Block.blocksList[fluid.getBlockID()], fluid);
+              }
+          }
       }
 
-      return (Fluid)fluidBlocks.get(block);
+      return fluidBlocks.get(block);
    }
 
    static {
@@ -116,14 +112,4 @@ public abstract class FluidRegistry {
       registerFluid(WATER);
       registerFluid(LAVA);
    }
-
-/*   public static class FluidRegisterEvent extends Event {
-      public final String fluidName;
-      public final int fluidID;
-
-      public FluidRegisterEvent(String fluidName, int fluidID) {
-         this.fluidName = fluidName;
-         this.fluidID = fluidID;
-      }
-   }*/
 }

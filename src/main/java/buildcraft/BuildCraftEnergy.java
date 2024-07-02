@@ -49,10 +49,9 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 	public static Block blockFuel;
 	public static Item bucketOil;
 	public static Item bucketFuel;
-	public static Item fuel;
 	public static boolean canOilBurn;
 	public static double oilWellScalar = 1.0;
-	public static TreeMap<BlockIndex, Integer> saturationStored = new TreeMap<BlockIndex, Integer>();
+	public static TreeMap<BlockIndex, Integer> saturationStored = new TreeMap<>();
 	public static BCTrigger triggerBlueEngineHeat = new TriggerEngineHeat(TileEngine.EnergyStage.BLUE);
 	public static BCTrigger triggerGreenEngineHeat = new TriggerEngineHeat(TileEngine.EnergyStage.GREEN);
 	public static BCTrigger triggerYellowEngineHeat = new TriggerEngineHeat(TileEngine.EnergyStage.YELLOW);
@@ -61,58 +60,86 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 	public static BuildCraftEnergy INSTANCE = new BuildCraftEnergy();
 
 	@Override
-	public void registerConfigProps(BuildCraftAddon addon) {
+	public void registerConfigForSettings(BuildCraftAddon addon) {
+		addon.registerProp("CanOilBurn", true, "Energy\n\n# If oil is able to be lit on fire in world. Default: true (Boolean)");
+		addon.registerProp("OilWellGenerationRate", 1.0, "Probability of oil well generation. Default: 1.0 (Double)");
+		addon.registerProp("OilCombustionRate", 1.0, "Energy generation multiplier for oil in a Combustion Engine. Default: 1.0 (Double)");
+		addon.registerProp("FuelCombustionRate", 1.0, "Energy generation multiplier for Fuel in a Combustion Engine. Default: 1.0 (Double)");
+	}
 
+	@Override
+	public void registerConfigForIds(BuildCraftAddon addon) {
+		addon.registerProp("RedstoneEngineBlockId", DefaultProps.WOOD_ENGINE_ID, "Energy\n");
+		addon.registerProp("StirlingEngineBlockId", DefaultProps.STONE_ENGINE_ID);
+		addon.registerProp("CombustionEngineBlockId", DefaultProps.IRON_ENGINE_ID);
+		addon.registerProp("CreativeEngineBlockId", DefaultProps.CREATIVE_ENGINE_ID);
+		addon.registerProp("OilFluidBlockId", DefaultProps.OIL_ID);
+		addon.registerProp("FuelFluidBlockId", DefaultProps.FUEL_ID);
+
+		addon.registerProp("OilBucketItemId", DefaultProps.BUCKET_OIL_ID);
+		addon.registerProp("FuelBucketItemId", DefaultProps.BUCKET_FUEL_ID);
+
+		addon.registerProp("OilDesertBiomeId", DefaultProps.BIOME_OIL_DESERT);
+		addon.registerProp("OilOceanBiomeId", DefaultProps.BIOME_OIL_OCEAN);
 	}
 
 	@Override
 	public void handleConfigProps() {
+		canOilBurn = BuildcraftConfig.getBoolean("CanOilBurn");
+		oilWellScalar = BuildcraftConfig.getDouble("OilWellGenerationRate");
 
+		double fuelOilMultiplier = BuildcraftConfig.getDouble("OilCombustionRate");
+		double fuelFuelMultiplier = BuildcraftConfig.getDouble("FuelCombustionRate");
+		IronEngineFuel.addFuel("oil", 3, (int) (5000 * fuelOilMultiplier));
+		IronEngineFuel.addFuel("fuel", 6, (int) (25000 * fuelFuelMultiplier));
+
+		BuildcraftConfig.woodenEngineBlockId = BuildcraftConfig.getInt("RedstoneEngineBlockId");
+		BuildcraftConfig.stoneEngineBlockId = BuildcraftConfig.getInt("StirlingEngineBlockId");
+		BuildcraftConfig.ironEngineBlockId = BuildcraftConfig.getInt("CombustionEngineBlockId");
+		BuildcraftConfig.creativeEngineBlockId = BuildcraftConfig.getInt("CreativeEngineBlockId");
+		BuildcraftConfig.oilBlockId = BuildcraftConfig.getInt("OilFluidBlockId");
+		BuildcraftConfig.fuelBlockId = BuildcraftConfig.getInt("FuelFluidBlockId");
+
+		BuildcraftConfig.bucketOilItemId = BuildcraftConfig.getInt("OilBucketItemId");
+		BuildcraftConfig.bucketFuelItemId = BuildcraftConfig.getInt("FuelBucketItemId");
+
+		BuildcraftConfig.oilDesertBiomeId = BuildcraftConfig.getInt("OilDesertBiomeId");
+		BuildcraftConfig.oilOceanBiomeId = BuildcraftConfig.getInt("OilOceanBiomeId");
 	}
 
 	@Override
 	public void init() { //todoenergy config
-		/*		Property engineId = BuildCraftCore.mainConfiguration.getBlock("engine.id", DefaultProps.ENGINE_ID);
 
-		// Update oil tag
-		int defaultOilId = DefaultProps.OIL_ID;
-		if (BuildCraftCore.mainConfiguration.hasKey(Configuration.CATEGORY_BLOCK, "oilStill.id")) {
-			defaultOilId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "oilStill.id", defaultOilId).getInt(defaultOilId);
-			BuildCraftCore.mainConfiguration.getCategory(Configuration.CATEGORY_BLOCK).remove("oilStill.id");
-		}
-		int blockOilId = BuildCraftCore.mainConfiguration.getBlock("oil.id", defaultOilId).getInt(defaultOilId);
+		woodEngineBlock = new BlockEngineWood(BuildcraftConfig.woodenEngineBlockId);
+		stoneEngineBlock = new BlockEngineStone(BuildcraftConfig.stoneEngineBlockId);
+		ironEngineBlock = new BlockEngineIron(BuildcraftConfig.ironEngineBlockId);
+		creativeEngineBlock = new BlockEngineCreative(BuildcraftConfig.creativeEngineBlockId);
 
-		int blockFuelId = BuildCraftCore.mainConfiguration.getBlock("fuel.id", DefaultProps.FUEL_ID).getInt(DefaultProps.FUEL_ID);
-		int bucketOilId = BuildCraftCore.mainConfiguration.getItem("bucketOil.id", DefaultProps.BUCKET_OIL_ID).getInt(DefaultProps.BUCKET_OIL_ID);
-		int bucketFuelId = BuildCraftCore.mainConfiguration.getItem("bucketFuel.id", DefaultProps.BUCKET_FUEL_ID).getInt(DefaultProps.BUCKET_FUEL_ID);
-		int oilDesertBiomeId = BuildCraftCore.mainConfiguration.get("biomes", "oilDesert", DefaultProps.BIOME_OIL_DESERT).getInt(DefaultProps.BIOME_OIL_DESERT);
-		int oilOceanBiomeId = BuildCraftCore.mainConfiguration.get("biomes", "oilOcean", DefaultProps.BIOME_OIL_OCEAN).getInt(DefaultProps.BIOME_OIL_OCEAN);
-		canOilBurn = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "burnOil", true, "Can oil burn?").getBoolean(true);
-		oilWellScalar = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "oilWellGenerationRate", 1.0, "Probability of oil well generation").getDouble(1.0);
+		// Oil and fuel
+		buildcraftFluidOil = new BCFluid("oil").setDensity(800).setViscosity(1500);
 
-		double fuelOilMultiplier = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "fuel.oil.combustion", 1.0F, "adjust energy value of Oil in Combustion Engines").getDouble(1.0F);
-		double fuelFuelMultiplier = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "fuel.fuel.combustion", 1.0F, "adjust energy value of Fuel in Combustion Engines").getDouble(1.0F);
-		BuildCraftCore.mainConfiguration.save();
+		FluidRegistry.registerFluid(buildcraftFluidOil);
 
-		if (oilDesertBiomeId > 0) {
-			if (BiomeGenBase.biomeList[oilDesertBiomeId] != null) {
-				throw new BiomeIdException("oilDesert", oilDesertBiomeId);
-			}
-			biomeOilDesert = BiomeGenOilDesert.makeBiome(oilDesertBiomeId);
+		buildcraftFluidFuel = new BCFluid("fuel");
+		FluidRegistry.registerFluid(buildcraftFluidFuel);
+
+		fluidOil = FluidRegistry.getFluid("oil");
+		if (BuildcraftConfig.oilBlockId > 0) {
+			blockOil = new BlockBuildcraftFluid(BuildcraftConfig.oilBlockId, fluidOil, Material.water).setFlammable(canOilBurn).setFlammability(0);
+			blockOil.setUnlocalizedName("blockOil");
+			CoreProxy.getProxy().addName(blockOil, "Oil");
+			CoreProxy.getProxy().registerBlock(blockOil);
+			fluidOil.setBlockID(blockOil);
 		}
 
-		if (oilOceanBiomeId > 0) {
-			if (BiomeGenBase.biomeList[oilOceanBiomeId] != null) {
-				throw new BiomeIdException("oilOcean", oilOceanBiomeId);
-			}
-			biomeOilOcean = BiomeGenOilOcean.makeBiome(oilOceanBiomeId);
-		}*/
-
-		int blockOilId = DefaultProps.OIL_ID;
-		int blockFuelId = DefaultProps.FUEL_ID;
-		int bucketOilId = DefaultProps.BUCKET_OIL_ID;
-		int bucketFuelId = DefaultProps.BUCKET_FUEL_ID;
-		canOilBurn = true;
+		fluidFuel = FluidRegistry.getFluid("fuel");
+		if (BuildcraftConfig.fuelBlockId > 0) {
+			blockFuel = new BlockBuildcraftFluid(BuildcraftConfig.fuelBlockId, fluidFuel, Material.water).setFlammable(true).setFlammability(5).setParticleColor(0.7F, 0.7F, 0.0F);
+			blockFuel.setUnlocalizedName("blockFuel");
+			CoreProxy.getProxy().addName(blockFuel, "Fuel");
+			CoreProxy.getProxy().registerBlock(blockFuel);
+			fluidFuel.setBlockID(blockFuel);
+		}
 
 		class BiomeIdException extends RuntimeException {
 
@@ -121,91 +148,41 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 			}
 		}
 
-
-
-
-		/*engineBlock = new BlockEngine(DefaultProps.ENGINE_ID);*/
-		woodEngineBlock = new BlockEngineWood(DefaultProps.WOOD_ENGINE_ID);
-		stoneEngineBlock = new BlockEngineStone(DefaultProps.STONE_ENGINE_ID);
-		ironEngineBlock = new BlockEngineIron(DefaultProps.IRON_ENGINE_ID);
-		creativeEngineBlock = new BlockEngineCreative(DefaultProps.CREATIVE_ENGINE_ID);
-
-/*		LanguageRegistry.addName(new ItemStack(engineBlock, 1, 0), "Redstone Engine");
-		LanguageRegistry.addName(new ItemStack(engineBlock, 1, 1), "Steam Engine");
-		LanguageRegistry.addName(new ItemStack(engineBlock, 1, 2), "Combustion Engine");*/
-
-
-		// Oil and fuel
-		buildcraftFluidOil = new BCFluid("oil").setDensity(800).setViscosity(1500);
-
-		FluidRegistry.registerFluid(buildcraftFluidOil);
-		fluidOil = FluidRegistry.getFluid("oil");
-
-		buildcraftFluidFuel = new BCFluid("fuel");
-		FluidRegistry.registerFluid(buildcraftFluidFuel);
-		fluidFuel = FluidRegistry.getFluid("fuel");
-
-		if (fluidOil.getBlockID() == -1) {
-			if (blockOilId > 0) {
-				blockOil = new BlockBuildcraftFluid(blockOilId, fluidOil, Material.water).setFlammable(canOilBurn).setFlammability(0);
-				blockOil.setUnlocalizedName("blockOil");
-				CoreProxy.getProxy().addName(blockOil, "Oil");
-				CoreProxy.getProxy().registerBlock(blockOil);
-				fluidOil.setBlockID(blockOil);
+		if (BuildcraftConfig.oilDesertBiomeId > 0) {
+			if (BiomeGenBase.biomeList[BuildcraftConfig.oilDesertBiomeId] != null) {
+				throw new BiomeIdException("oilDesert", BuildcraftConfig.oilDesertBiomeId);
 			}
-		} else {
-			blockOil = Block.blocksList[fluidOil.getBlockID()];
+			biomeOilDesert = BiomeGenOilDesert.makeBiome(BuildcraftConfig.oilDesertBiomeId);
 		}
 
-/*		if (blockOil != null) {
-			spawnOilSprings = BuildCraftCore.mainConfiguration.get("worldgen", "oilSprings", true).getBoolean(true);
-			BlockSpring.EnumSpring.OIL.canGen = spawnOilSprings;
-			BlockSpring.EnumSpring.OIL.liquidBlock = blockOil;
-		}*/
-
-		if (fluidFuel.getBlockID() == -1) {
-			if (blockFuelId > 0) {
-				blockFuel = new BlockBuildcraftFluid(blockFuelId, fluidFuel, Material.water).setFlammable(true).setFlammability(5).setParticleColor(0.7F, 0.7F, 0.0F);
-				blockFuel.setUnlocalizedName("blockFuel");
-				CoreProxy.getProxy().addName(blockFuel, "Fuel");
-				CoreProxy.getProxy().registerBlock(blockFuel);
-				fluidFuel.setBlockID(blockFuel);
+		if (BuildcraftConfig.oilOceanBiomeId > 0) {
+			if (BiomeGenBase.biomeList[BuildcraftConfig.oilOceanBiomeId] != null) {
+				throw new BiomeIdException("oilOcean", BuildcraftConfig.oilOceanBiomeId);
 			}
-		} else {
-			blockFuel = Block.blocksList[fluidFuel.getBlockID()];
+			biomeOilOcean = BiomeGenOilOcean.makeBiome(BuildcraftConfig.oilOceanBiomeId);
 		}
 
 		// Buckets
 
-		if (blockOil != null && bucketOilId > 0) {
-			bucketOil = new ItemBucketBuildcraft(bucketOilId, blockOil.blockID);
+		if (blockOil != null && BuildcraftConfig.bucketOilItemId > 0) {
+			bucketOil = new ItemBucketBuildcraft(BuildcraftConfig.bucketOilItemId, blockOil.blockID);
 			bucketOil.setUnlocalizedName("bucketOil").setContainerItem(Item.bucketEmpty);
-			/*LanguageRegistry.addName(bucketOil, "Oil Bucket");*/
 			CoreProxy.getProxy().registerItem(bucketOil);
 			FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("oil", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(bucketOil), new ItemStack(Item.bucketEmpty));
 		}
 
-		if (blockFuel != null && bucketFuelId > 0) {
-			bucketFuel = new ItemBucketBuildcraft(bucketFuelId, blockFuel.blockID);
+		if (blockFuel != null && BuildcraftConfig.bucketFuelItemId > 0) {
+			bucketFuel = new ItemBucketBuildcraft(BuildcraftConfig.bucketFuelItemId, blockFuel.blockID);
 			bucketFuel.setUnlocalizedName("bucketFuel").setContainerItem(Item.bucketEmpty);
-			/*LanguageRegistry.addName(bucketFuel, "Fuel Bucket");*/
 			CoreProxy.getProxy().registerItem(bucketFuel);
 			FluidContainerRegistry.registerFluidContainer(FluidRegistry.getFluidStack("fuel", FluidContainerRegistry.BUCKET_VOLUME), new ItemStack(bucketFuel), new ItemStack(Item.bucketEmpty));
 		}
 
 		BucketHandler.INSTANCE.buckets.put(blockOil, bucketOil);
 		BucketHandler.INSTANCE.buckets.put(blockFuel, bucketFuel);
-		/*MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);*/
+//		MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
 
 		BuildcraftRecipes.refinery.addRecipe(new FluidStack(fluidOil, 1), new FluidStack(fluidFuel, 1), 12, 1);
-
-		float fuelOilMultiplier = 1.0f; //normally config
-		float fuelFuelMultiplier = 1.0f;
-
-		// Iron Engine Fuels
-//		IronEngineFuel.addFuel("lava", 1, 20000);
-		IronEngineFuel.addFuel("oil", 3, (int) (5000 * fuelOilMultiplier));
-		IronEngineFuel.addFuel("fuel", 6, (int) (25000 * fuelFuelMultiplier));
 
 		// Iron Engine Coolants
 		IronEngineCoolant.addCoolant(FluidRegistry.getFluid("water"), 0.0023F);
@@ -214,7 +191,10 @@ public class BuildCraftEnergy implements IBuildcraftModule {
 
 		NetworkRegistry.instance().registerGuiHandler("bcenergy", new GuiHandler());
 
-		/*new BptBlockEngine(engineBlock.blockID);*/
+		new BptBlockEngine(woodEngineBlock.blockID);
+		new BptBlockEngine(stoneEngineBlock.blockID);
+		new BptBlockEngine(ironEngineBlock.blockID);
+		new BptBlockEngine(creativeEngineBlock.blockID);
 
 
 		EnergyProxy.getProxy().registerBlockRenderers();

@@ -1,5 +1,6 @@
 package buildcraft.energy.worldgen;
 
+import btw.community.example.mixin.BiomeGenBaseAccessor;
 import net.minecraft.src.BiomeGenOcean;
 
 /**
@@ -7,12 +8,10 @@ import net.minecraft.src.BiomeGenOcean;
  * @author CovertJaguar <http://www.railcraft.info/>
  */
 public class BiomeGenOilOcean extends BiomeGenOcean {
-	//todoenergy world gen
 	public static BiomeGenOilOcean makeBiome(int id) {
 		BiomeGenOilOcean biome = new BiomeGenOilOcean(id);
-		/*BiomeDictionary.registerBiomeType(biome, BiomeDictionary.Type.WATER);
 		OilPopulate.INSTANCE.excessiveBiomes.add(biome.biomeID);
-		OilPopulate.INSTANCE.surfaceDepositBiomes.add(biome.biomeID);*/
+		OilPopulate.INSTANCE.surfaceDepositBiomes.add(biome.biomeID);
 		return biome;
 	}
 
@@ -20,6 +19,6 @@ public class BiomeGenOilOcean extends BiomeGenOcean {
 		super(id);
 		setBiomeName("Ocean Oil Field");
 		setColor(112);
-		/*setMinMaxHeight(-1.0F, 0.4F);*/
+		((BiomeGenBaseAccessor) this).callSetMinMaxHeight(-1.0F, 0.4F);
 	}
 }

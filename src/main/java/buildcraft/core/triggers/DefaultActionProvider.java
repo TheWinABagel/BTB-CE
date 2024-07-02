@@ -14,14 +14,13 @@ public class DefaultActionProvider implements IActionProvider {
 
 	@Override
 	public LinkedList<IAction> getNeighborActions(Block block, TileEntity tile) {
-		LinkedList<IAction> res = new LinkedList<IAction>();
+		LinkedList<IAction> res = new LinkedList<>();
 
 		res.add(BuildCraftCore.actionRedstone);
 
 		try {
-			if (tile instanceof IMachine) {
-				IMachine machine = (IMachine) tile;
-				if (machine.allowAction(BuildCraftCore.actionOn))
+			if (tile instanceof IMachine machine) {
+                if (machine.allowAction(BuildCraftCore.actionOn))
 					res.add(BuildCraftCore.actionOn);
 				if (machine.allowAction(BuildCraftCore.actionOff))
 					res.add(BuildCraftCore.actionOff);

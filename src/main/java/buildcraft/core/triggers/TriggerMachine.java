@@ -31,10 +31,9 @@ public class TriggerMachine extends BCTrigger implements ITileTrigger {
 
 	@Override
 	public boolean isTriggerActive(ForgeDirection side, TileEntity tile, ITriggerParameter parameter) {
-		if (tile instanceof IMachine) {
-			IMachine machine = (IMachine) tile;
+		if (tile instanceof IMachine machine) {
 
-			if (active)
+            if (active)
 				return machine.isActive();
 			else
 				return !machine.isActive();

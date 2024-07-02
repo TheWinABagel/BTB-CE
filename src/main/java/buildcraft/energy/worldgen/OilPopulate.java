@@ -27,17 +27,16 @@ import java.util.Set;
 public class OilPopulate { //todoenergy WORLD GEN (big)
 
 	public static final OilPopulate INSTANCE = new OilPopulate();
-	/*public static final EventType EVENT_TYPE = EnumHelper.addEnum(EventType.class, "BUILDCRAFT_OIL", new Class[0], new Object[0]);
-	private static final byte LARGE_WELL_HEIGHT = 16;
-	private static final byte MEDIUM_WELL_HEIGHT = 6;
 	public final Set<Integer> excessiveBiomes = new HashSet<Integer>();
 	public final Set<Integer> surfaceDepositBiomes = new HashSet<Integer>();
-	public final Set<Integer> excludedBiomes = new HashSet<Integer>();
+	private static final byte LARGE_WELL_HEIGHT = 16;
+	private static final byte MEDIUM_WELL_HEIGHT = 6;
+
+	public final Set<Integer> excludedBiomes = new HashSet<>();
 
 	private enum GenType {
-
 		LARGE, MEDIUM, LAKE, NONE
-	};
+	}
 
 	private OilPopulate() {
 //		BuildCraftCore.debugMode = true;
@@ -46,17 +45,6 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 
 		excludedBiomes.add(BiomeGenBase.sky.biomeID);
 		excludedBiomes.add(BiomeGenBase.hell.biomeID);
-	}
-
-	@ForgeSubscribe
-	public void populate(PopulateChunkEvent.Pre event) {
-		boolean doGen = TerrainGen.populate(event.chunkProvider, event.world, event.rand, event.chunkX, event.chunkX, event.hasVillageGenerated, EVENT_TYPE);
-
-		if (!doGen) {
-			return;
-		}
-
-		generateOil(event.world, event.rand, event.chunkX, event.chunkZ);
 	}
 
 	public void generateOil(World world, Random rand, int chunkX, int chunkZ) {
@@ -72,10 +60,10 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 			return;
 		}
 
-		boolean oilBiome = surfaceDepositBiomes.contains(biome.biomeID)
-				|| BiomeDictionary.isBiomeOfType(biome, DESERT)
+		boolean oilBiome = surfaceDepositBiomes.contains(biome.biomeID);
+				/*|| BiomeDictionary.isBiomeOfType(biome, DESERT)
 				|| (BiomeDictionary.isBiomeOfType(biome, WASTELAND) && !BiomeDictionary.isBiomeOfType(biome, FROZEN))
-				|| (BiomeDictionary.isBiomeOfType(biome, FOREST) && BiomeDictionary.isBiomeOfType(biome, FROZEN));
+				|| (BiomeDictionary.isBiomeOfType(biome, FOREST) && BiomeDictionary.isBiomeOfType(biome, FROZEN));*/
 
 		double bonus = oilBiome ? 3.0 : 1.0;
 		bonus *= BuildCraftEnergy.oilWellScalar;
@@ -267,9 +255,9 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 		if (!block.blockMaterial.blocksMovement()) {
 			return true;
 		}
-		if (block.isGenMineableReplaceable(world, x, y, z, Block.stone.blockID)) {
+		/*if (block.isGenMineableReplaceable(world, x, y, z, Block.stone.blockID)) {
 			return true;
-		}
+		}*/
 		if (block instanceof BlockFlower) {
 			return true;
 		}
@@ -306,7 +294,7 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 			if (!world.isAirBlock(x, y + 2, z)) {
 				return;
 			}
-			if (isReplaceableFluid(world, x, y, z) || world.isBlockSolidOnSide(x, y - 1, z, ForgeDirection.UP)) {
+			if (isReplaceableFluid(world, x, y, z) || world.doesBlockHaveSolidTopSurface(x, y - 1, z)) {
 				world.setBlock(x, y, z, BuildCraftEnergy.blockOil.blockID, 0, update);
 			} else {
 				return;
@@ -316,7 +304,7 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 			}
 
 			for (int d = 1; d <= depth - 1; d++) {
-				if (isReplaceableFluid(world, x, y - d, z) || !world.isBlockSolidOnSide(x, y - d - 1, z, ForgeDirection.UP)) {
+				if (isReplaceableFluid(world, x, y - d, z) || !world.doesBlockHaveSolidTopSurface(x, y - d - 1, z)) {
 					return;
 				}
 				world.setBlock(x, y - d, z, BuildCraftEnergy.blockOil.blockID, 0, 2);
@@ -365,5 +353,5 @@ public class OilPopulate { //todoenergy WORLD GEN (big)
 			}
 		}
 		return Math.abs(deviation / centralTendancy);
-	}*/
+	}
 }

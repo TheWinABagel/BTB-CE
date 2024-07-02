@@ -71,133 +71,107 @@ public class BuildCraftFactory implements IBuildcraftModule {
 	}*/
 
 	@Override
-	public void registerConfigProps(BuildCraftAddon addon) {
+	public void registerConfigForSettings(BuildCraftAddon addon) {
+		addon.registerProp("AllowMiningMachines", true, "Factory\n\n# Set to false to disable the crafting recipes for mining machines. Default: true (Boolean)");
+		addon.registerProp("QuarryOneTimeUse", false, "Set to true to disable the ability to pick up quarries after placement. Default: false (Boolean)");
+		addon.registerProp("QuarryCostMultiplier", 1.0, "Cost multiplier for mining operations.\n# High values may render engines incapable of powering machines directly. Range (1.0 - 10.0), Default: 1.0 (Float)");
+		addon.registerProp("MiningDepth", 256, "Set to true to disable the ability to pick up quarries after placement. Range (2 - 256), Default: 256 (Integer)");
 
+		String pumpListComment = "Allows admins to whitelist or blacklist pumping of specific fluids in specific dimensions.\n"
+				+ "# E.g. \"-/-1/Lava\" will disable lava in the nether. \"-/*/Lava\" will disable lava in any dimension. \"+/0/*\" will enable any fluid in the overworld.\n"
+				+ "# Entries are comma seperated, banned fluids have precedence over allowed ones."
+				+ "Default is \"+/*/*,+/-1/Lava\" - the second redundant entry (\"+/-1/lava\") is there to show the format.";
+		addon.registerProp("PumpList", DefaultProps.PUMP_DIMENSION_LIST, pumpListComment);
+	}
+
+	@Override
+	public void registerConfigForIds(BuildCraftAddon addon) {
+		addon.registerProp("MiningWellBlockId", DefaultProps.MINING_WELL_ID, "Factory\n");
+		addon.registerProp("PlainPipeBlockId", DefaultProps.DRILL_ID);
+		addon.registerProp("AutoWorkbenchBlockId", DefaultProps.AUTO_WORKBENCH_ID);
+		addon.registerProp("FrameBlockId", DefaultProps.FRAME_ID);
+		addon.registerProp("QuarryBlockId", DefaultProps.QUARRY_ID);
+		addon.registerProp("FloodGateBlockId", DefaultProps.FLOOD_GATE_ID);
+		addon.registerProp("TankBlockId", DefaultProps.TANK_ID);
+		addon.registerProp("RefineryBlockId", DefaultProps.REFINERY_ID);
+		addon.registerProp("HopperBlockId", DefaultProps.HOPPER_ID);
 	}
 
 	@Override
 	public void handleConfigProps() {
+		allowMining = BuildcraftConfig.getBoolean("AllowMiningMachines");
+		quarryOneTimeUse = BuildcraftConfig.getBoolean("QuarryOneTimeUse");
+		miningMultiplier = BuildcraftConfig.getClampedFloat("QuarryCostMultiplier", 1f, 10f);
+		miningDepth = BuildcraftConfig.getClampedInt("MiningDepth", 2, 256);
 
-	}
+		pumpDimensionList = new PumpDimensionList(BuildcraftConfig.getString("PumpList"));
 
-	@Override
-	public void preInit() {
-		int miningWellId = (DefaultProps.MINING_WELL_ID);
-		int plainPipeId = (DefaultProps.DRILL_ID);
-		int autoWorkbenchId = (DefaultProps.AUTO_WORKBENCH_ID);
-		int frameId = (DefaultProps.FRAME_ID);
-		int quarryId = (DefaultProps.QUARRY_ID);
-		int pumpId = (DefaultProps.PUMP_ID);
-		int floodGateId = (DefaultProps.FLOOD_GATE_ID);
-		int tankId = DefaultProps.TANK_ID;
-		int refineryId = (DefaultProps.REFINERY_ID);
-//		int hopperId = (DefaultProps.HOPPER_ID);
-		int hopperId = 0;
-
-		if (miningWellId > 0) {
-			miningWellBlock = new BlockMiningWell(miningWellId);
-			CoreProxy.getProxy().registerBlock(miningWellBlock.setUnlocalizedName("miningWellBlock"));
-			CoreProxy.getProxy().addName(miningWellBlock, "Mining Well");
-		}
-		if (plainPipeId > 0) {
-			plainPipeBlock = new BlockPlainPipe(plainPipeId);
-			CoreProxy.getProxy().registerBlock(plainPipeBlock.setUnlocalizedName("plainPipeBlock"));
-			CoreProxy.getProxy().addName(plainPipeBlock, "Mining Pipe");
-		}
-		if (autoWorkbenchId > 0) {
-			autoWorkbenchBlock = new BlockAutoWorkbench(autoWorkbenchId);
-			CoreProxy.getProxy().registerBlock(autoWorkbenchBlock.setUnlocalizedName("autoWorkbenchBlock"));
-			CoreProxy.getProxy().addName(autoWorkbenchBlock, "Automatic Crafting Table");
-		}
-		if (frameId > 0) {
-			frameBlock = new BlockFrame(frameId);
-			CoreProxy.getProxy().registerBlock(frameBlock.setUnlocalizedName("frameBlock"));
-			CoreProxy.getProxy().addName(frameBlock, "Frame");
-		}
-		if (quarryId > 0) {
-			quarryBlock = new BlockQuarry(quarryId);
-			CoreProxy.getProxy().registerBlock(quarryBlock.setUnlocalizedName("machineBlock"));
-			CoreProxy.getProxy().addName(quarryBlock, "Quarry");
-		}
-		if (tankId > 0) {
-			tankBlock = new BlockTank(DefaultProps.TANK_ID);
-			tankBlock.setUnlocalizedName("tankBlock");
-			System.out.println("tank " + tankBlock);
-		}
-		if (pumpId > 0) {
-			pumpBlock = new BlockPump(pumpId);
-			CoreProxy.getProxy().registerBlock(pumpBlock.setUnlocalizedName("pumpBlock"));
-			CoreProxy.getProxy().addName(pumpBlock, "Pump");
-		}
-		if (floodGateId > 0) {
-			floodGateBlock = new BlockFloodGate(floodGateId);
-			CoreProxy.getProxy().registerBlock(floodGateBlock.setUnlocalizedName("floodGateBlock"));
-			CoreProxy.getProxy().addName(floodGateBlock, "Flood Gate");
-		}
-		if (refineryId > 0) {
-			refineryBlock = new BlockRefinery(refineryId);
-			CoreProxy.getProxy().registerBlock(refineryBlock.setUnlocalizedName("refineryBlock"));
-			CoreProxy.getProxy().addName(refineryBlock, "Refinery");
-		}
-		if (hopperId > 0) {
-			hopperBlock = new BlockHopper(hopperId);
-			CoreProxy.getProxy().registerBlock(hopperBlock.setUnlocalizedName("blockHopper"));
-			CoreProxy.getProxy().addName(hopperBlock, "Hopper");
-		}
+		BuildcraftConfig.miningWellId = BuildcraftConfig.getInt("MiningWellBlockId");
+		BuildcraftConfig.plainPipeId = BuildcraftConfig.getInt("PlainPipeBlockId");
+		BuildcraftConfig.autoWorkbenchId = BuildcraftConfig.getInt("AutoWorkbenchBlockId");
+		BuildcraftConfig.frameId = BuildcraftConfig.getInt("FrameBlockId");
+		BuildcraftConfig.quarryId = BuildcraftConfig.getInt("QuarryBlockId");
+		BuildcraftConfig.floodGateId = BuildcraftConfig.getInt("FloodGateBlockId");
+		BuildcraftConfig.tankId = BuildcraftConfig.getInt("TankBlockId");
+		BuildcraftConfig.refineryId = BuildcraftConfig.getInt("RefineryBlockId");
+		BuildcraftConfig.hopperId = BuildcraftConfig.getInt("HopperBlockId");
 	}
 
 	@Override
 	public void init() {
-		/*ConfigUtils genCat = new ConfigUtils(BuildCraftCore.mainConfiguration, Configuration.CATEGORY_GENERAL);*/
-
-/*		allowMining = genCat.get("mining.enabled", true, "disables the recipes for automated mining machines");
-		quarryOneTimeUse = genCat.get("quarry.one.time.use", false, "Quarry cannot be picked back up after placement");
-		miningMultiplier = genCat.get("mining.cost.multipler", 1F, 1F, 10F, "cost multiplier for mining operations, range (1.0 - 10.0)\nhigh values may render engines incapable of powering machines directly");
-		miningDepth = genCat.get("mining.depth", 2, 256, 256, "how far below the machine can mining machines dig, range (2 - 256), default 256");*/
-
-		allowMining = true;
-		quarryOneTimeUse = false;
-		miningMultiplier = 1f;
-		miningDepth = 256;
-
-		//this is not normally commented out
-//		Property pumpList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pumping.controlList", DefaultProps.PUMP_DIMENSION_LIST);
-//		pumpList.comment = "Allows admins to whitelist or blacklist pumping of specific fluids in specific dimensions.\n"
-//				+ "Eg. \"-/-1/Lava\" will disable lava in the nether. \"-/*/Lava\" will disable lava in any dimension. \"+/0/*\" will enable any fluid in the overworld.\n"
-//				+ "Entries are comma seperated, banned fluids have precedence over allowed ones."
-//				+ "Default is \"+/*/*,+/-1/Lava\" - the second redundant entry (\"+/-1/lava\") is there to show the format.";
-//		pumpDimensionList = new PumpDimensionList(pumpList.getString());
-
-		pumpDimensionList = new PumpDimensionList(DefaultProps.PUMP_DIMENSION_LIST);
-
-/*		int miningWellId = BuildCraftCore.mainConfiguration.getBlock("miningWell.id", DefaultProps.MINING_WELL_ID).getInt(DefaultProps.MINING_WELL_ID);
-		int plainPipeId = BuildCraftCore.mainConfiguration.getBlock("drill.id", DefaultProps.DRILL_ID).getInt(DefaultProps.DRILL_ID);
-		int autoWorkbenchId = BuildCraftCore.mainConfiguration.getBlock("autoWorkbench.id", DefaultProps.AUTO_WORKBENCH_ID).getInt(DefaultProps.AUTO_WORKBENCH_ID);
-		int frameId = BuildCraftCore.mainConfiguration.getBlock("frame.id", DefaultProps.FRAME_ID).getInt(DefaultProps.FRAME_ID);
-		int quarryId = BuildCraftCore.mainConfiguration.getBlock("quarry.id", DefaultProps.QUARRY_ID).getInt(DefaultProps.QUARRY_ID);
-		int pumpId = BuildCraftCore.mainConfiguration.getBlock("pump.id", DefaultProps.PUMP_ID).getInt(DefaultProps.PUMP_ID);
-		int floodGateId = BuildCraftCore.mainConfiguration.getBlock("floodGate.id", DefaultProps.FLOOD_GATE_ID).getInt(DefaultProps.FLOOD_GATE_ID);
-		int tankId = BuildCraftCore.mainConfiguration.getBlock("tank.id", DefaultProps.TANK_ID).getInt(DefaultProps.TANK_ID);
-		int refineryId = BuildCraftCore.mainConfiguration.getBlock("refinery.id", DefaultProps.REFINERY_ID).getInt(DefaultProps.REFINERY_ID);
-		int hopperId = BuildCraftCore.mainConfiguration.getBlock("hopper.id", DefaultProps.HOPPER_ID).getInt(DefaultProps.HOPPER_ID);*/
-
-
-
-/*		if (BuildCraftCore.mainConfiguration.hasChanged()) {
-			BuildCraftCore.mainConfiguration.save();
-		}*/
-
-
+		if (BuildcraftConfig.miningWellId > 0) {
+			miningWellBlock = new BlockMiningWell(BuildcraftConfig.miningWellId);
+			CoreProxy.getProxy().registerBlock(miningWellBlock.setUnlocalizedName("miningWellBlock"));
+			CoreProxy.getProxy().addName(miningWellBlock, "Mining Well");
+		}
+		if (BuildcraftConfig.plainPipeId > 0) {
+			plainPipeBlock = new BlockPlainPipe(BuildcraftConfig.plainPipeId);
+			CoreProxy.getProxy().registerBlock(plainPipeBlock.setUnlocalizedName("plainPipeBlock"));
+			CoreProxy.getProxy().addName(plainPipeBlock, "Mining Pipe");
+		}
+		if (BuildcraftConfig.autoWorkbenchId > 0) {
+			autoWorkbenchBlock = new BlockAutoWorkbench(BuildcraftConfig.autoWorkbenchId);
+			CoreProxy.getProxy().registerBlock(autoWorkbenchBlock.setUnlocalizedName("autoWorkbenchBlock"));
+			CoreProxy.getProxy().addName(autoWorkbenchBlock, "Automatic Crafting Table");
+		}
+		if (BuildcraftConfig.frameId > 0) {
+			frameBlock = new BlockFrame(BuildcraftConfig.frameId);
+			CoreProxy.getProxy().registerBlock(frameBlock.setUnlocalizedName("frameBlock"));
+			CoreProxy.getProxy().addName(frameBlock, "Frame");
+		}
+		if (BuildcraftConfig.quarryId > 0) {
+			quarryBlock = new BlockQuarry(BuildcraftConfig.quarryId);
+			CoreProxy.getProxy().registerBlock(quarryBlock.setUnlocalizedName("machineBlock"));
+			CoreProxy.getProxy().addName(quarryBlock, "Quarry");
+		}
+		if (BuildcraftConfig.tankId > 0) {
+			tankBlock = new BlockTank(BuildcraftConfig.tankId);
+			tankBlock.setUnlocalizedName("tankBlock");
+			System.out.println("tank " + tankBlock);
+		}
+		if (BuildcraftConfig.pumpId > 0) {
+			pumpBlock = new BlockPump(BuildcraftConfig.pumpId);
+			CoreProxy.getProxy().registerBlock(pumpBlock.setUnlocalizedName("pumpBlock"));
+			CoreProxy.getProxy().addName(pumpBlock, "Pump");
+		}
+		if (BuildcraftConfig.floodGateId > 0) {
+			floodGateBlock = new BlockFloodGate(BuildcraftConfig.floodGateId);
+			CoreProxy.getProxy().registerBlock(floodGateBlock.setUnlocalizedName("floodGateBlock"));
+			CoreProxy.getProxy().addName(floodGateBlock, "Flood Gate");
+		}
+		if (BuildcraftConfig.refineryId > 0) {
+			refineryBlock = new BlockRefinery(BuildcraftConfig.refineryId);
+			CoreProxy.getProxy().registerBlock(refineryBlock.setUnlocalizedName("refineryBlock"));
+			CoreProxy.getProxy().addName(refineryBlock, "Refinery");
+		}
+		if (BuildcraftConfig.hopperId > 0) {
+			hopperBlock = new BlockHopper(BuildcraftConfig.hopperId);
+			CoreProxy.getProxy().registerBlock(hopperBlock.setUnlocalizedName("blockHopper"));
+			CoreProxy.getProxy().addName(hopperBlock, "Hopper");
+		}
 
 		FactoryProxy.getProxy().initializeEntityRenders();
-
-/*		if (BuildCraftCore.mainConfiguration.hasChanged()) {
-			BuildCraftCore.mainConfiguration.save();
-		}*/
-
 		NetworkRegistry.instance().registerGuiHandler("bcfactory", new GuiHandler());
-
-		// EntityRegistry.registerModEntity(EntityMechanicalArm.class, "bcMechanicalArm", EntityIds.MECHANICAL_ARM, instance, 50, 1, true);
 
 		CoreProxy.getProxy().registerTileEntity(TileQuarry.class, "Machine");
 		CoreProxy.getProxy().registerTileEntity(TileMiningWell.class, "MiningWell");

@@ -1,6 +1,7 @@
 package btw.community.example.mixin;
 
 import buildcraft.core.SpringPopulate;
+import buildcraft.energy.worldgen.OilPopulate;
 import net.minecraft.src.ChunkProviderGenerate;
 import net.minecraft.src.IChunkProvider;
 import net.minecraft.src.World;
@@ -22,5 +23,10 @@ public class ChunkProviderGenerateMixin {
     @Inject(method = "populate", at = @At("TAIL"))
     private void generateStructures(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
         SpringPopulate.populate(chunkProvider, worldObj, rand, chunkX, chunkZ);
+    }
+
+    @Inject(method = "populate", at = @At(value = "INVOKE", target = "Ljava/util/Random;setSeed(J)V", ordinal = 1, shift = At.Shift.AFTER))
+    private void generateOil(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
+        OilPopulate.INSTANCE.generateOil(this.worldObj, this.rand, chunkX, chunkZ);
     }
 }

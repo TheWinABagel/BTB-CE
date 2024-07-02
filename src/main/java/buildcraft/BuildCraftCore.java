@@ -10,7 +10,6 @@ package buildcraft;
 import btw.AddonHandler;
 import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import btw.community.example.mixin.accessors.EntityListAccessor;
-import btw.entity.CanvasEntity;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -27,13 +26,14 @@ import buildcraft.core.recipes.RefineryRecipeManager;
 import buildcraft.core.triggers.*;
 import buildcraft.core.triggers.ActionMachineControl.Mode;
 import buildcraft.core.utils.BCLog;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fluids.RenderBlockFluid;
 
-import java.io.DataInputStream;
 import java.util.TreeMap;
 
 public class BuildCraftCore implements IBuildcraftModule {
@@ -50,10 +50,7 @@ public class BuildCraftCore implements IBuildcraftModule {
 	public static int itemLifespan = 1200;
 	public static int updateFactor = 10;
 	public static long longUpdateFactor = 40;
-	public static BuildCraftConfiguration mainConfiguration;
-	public static TreeMap<BlockIndex, PacketUpdate> bufferedDescriptions = new TreeMap<BlockIndex, PacketUpdate>();
-	public static final int trackedPassiveEntityId = 156;
-	public static boolean continuousCurrentModel;
+	public static TreeMap<BlockIndex, PacketUpdate> bufferedDescriptions = new TreeMap<>();
 	public static Block springBlock;
 	public static Item woodenGearItem;
 	public static Item stoneGearItem;
@@ -101,121 +98,58 @@ public class BuildCraftCore implements IBuildcraftModule {
 
 	public static BuildCraftCore INSTANCE = new BuildCraftCore();
 
+	@Override
+	public void registerConfigForIds(BuildCraftAddon addon) {
+		addon.registerProp("WrenchItemId", DefaultProps.WRENCH_ID, "***IDs***\n\n# Core\n");
+
+		addon.registerProp("WoodenGearItemId", DefaultProps.WOODEN_GEAR_ID);
+		addon.registerProp("StoneGearItemId", DefaultProps.STONE_GEAR_ID);
+		addon.registerProp("IronGearItemId", DefaultProps.IRON_GEAR_ID);
+		addon.registerProp("GoldenGearItemId", DefaultProps.GOLDEN_GEAR_ID);
+		addon.registerProp("DiamondGearItemId", DefaultProps.DIAMOND_GEAR_ID);
+
+		addon.registerProp("SpringBlockId", DefaultProps.SPRING_ID);
+	}
 
 	@Override
-	public void registerConfigProps(BuildCraftAddon addon) {
-
+	public void registerConfigForSettings(BuildCraftAddon addon) {
+		addon.registerProp("TrackNetworkUsage", false, "Main Buildcraft Configuration\n\n# Core\n\n# Tracks network usage. Used for debugging, not useful in normal play. Default: false (Boolean)");
+		addon.registerProp("FillersDropBrokenBlocks", true, "Set to false to prevent fillers from dropping blocks. Default: true (Boolean)");
+		addon.registerProp("ItemLifespan", 1200, "The lifespan in ticks of items dropped on the ground by pipes and machines. Vanilla: 6000, Default: 1200 (Integer)");
+		addon.registerProp("NetworkUpdateFactor", 10, "Network update frequency, higher numbers are less frequent. Default: 10 (Integer)");
+		addon.registerProp("NetworkStateRefreshPeriod", 40, "Delay between full client sync packets, higher numbers save bandwidth, lower numbers make for better client synchronization. Default: 40 (Integer)");
+		addon.registerProp("ModifyWorld", true, "Set to false to disable worldgen (ie oil). Default: true (Boolean)");
+		addon.registerProp("GenerateWaterSprings", true, "Set to false to disable water spring generation. Default: true (Boolean)");
+		addon.registerProp("ConsumeWater", true, "Set to false to disable the pump consuming water sources. Default: true (Boolean)");
+		addon.registerProp("ColorBlindMode", false, "Set to true to enable alternate, colorblind friendly textures. Default: false (Boolean)");
 	}
 
 	@Override
 	public void handleConfigProps() {
+		trackNetworkUsage = BuildcraftConfig.getBoolean("TrackNetworkUsage");
+		dropBrokenBlocks = BuildcraftConfig.getBoolean("FillersDropBrokenBlocks");
+		itemLifespan = BuildcraftConfig.getInt("ItemLifespan");
+		if (itemLifespan < 100) itemLifespan = 100;
+		updateFactor = BuildcraftConfig.getInt("NetworkUpdateFactor");
+		longUpdateFactor = BuildcraftConfig.getInt("NetworkStateRefreshPeriod");
+		modifyWorld = BuildcraftConfig.getBoolean("ModifyWorld");
+		BlockSpring.EnumSpring.WATER.canGen = BuildcraftConfig.getBoolean("GenerateWaterSprings");
+		consumeWaterSources = BuildcraftConfig.getBoolean("ConsumeWater");
+		colorBlindMode = BuildcraftConfig.getBoolean("ColorBlindMode");
 
+		BuildcraftConfig.gearWoodItemId = BuildcraftConfig.getInt("WoodenGearItemId");
+		BuildcraftConfig.gearStoneItemId = BuildcraftConfig.getInt("StoneGearItemId");
+		BuildcraftConfig.gearIronItemId = BuildcraftConfig.getInt("IronGearItemId");
+		BuildcraftConfig.gearGoldItemId = BuildcraftConfig.getInt("GoldenGearItemId");
+		BuildcraftConfig.gearDiamondItemId = BuildcraftConfig.getInt("DiamondGearItemId");
+
+		BuildcraftConfig.wrenchItemId = BuildcraftConfig.getInt("WrenchItemId");
+		BuildcraftConfig.springBlockId = BuildcraftConfig.getInt("SpringBlockId");
 	}
 
 	@Override
 	public void preInit() {
 		BCLog.initLog();
-
-		//todocore config
-/*
-		mainConfiguration = new BuildCraftConfiguration(new File(evt.getModConfigurationDirectory(), "buildcraft/main.conf"));
-		try {
-			mainConfiguration.load();
-
-			Property updateCheck = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "update.check", true);
-			updateCheck.comment = "set to true for version check on startup";
-			if (updateCheck.getBoolean(true)) {
-				Version.check();
-			}
-
-			Property continuousCurrent = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "current.continuous",
-					DefaultProps.CURRENT_CONTINUOUS);
-			continuousCurrent.comment = "set to true for allowing machines to be driven by continuous current";
-			continuousCurrentModel = continuousCurrent.getBoolean(DefaultProps.CURRENT_CONTINUOUS);
-
-			Property trackNetwork = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "trackNetworkUsage", false);
-			trackNetworkUsage = trackNetwork.getBoolean(false);
-
-			Property dropBlock = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "dropBrokenBlocks", true);
-			dropBlock.comment = "set to false to prevent fillers from dropping blocks.";
-			dropBrokenBlocks = dropBlock.getBoolean(true);
-
-			Property lifespan = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "itemLifespan", itemLifespan);
-			lifespan.comment = "the lifespan in ticks of items dropped on the ground by pipes and machines, vanilla = 6000, default = 1200";
-			itemLifespan = lifespan.getInt(itemLifespan);
-			if (itemLifespan < 100) {
-				itemLifespan = 100;
-			}
-
-			Property factor = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "network.updateFactor", 10);
-			factor.comment = "increasing this number will decrease network update frequency, useful for overloaded servers";
-			updateFactor = factor.getInt(10);
-
-			Property longFactor = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "network.stateRefreshPeriod", 40);
-			longFactor.comment = "delay between full client sync packets, increasing it saves bandwidth, decreasing makes for better client syncronization.";
-			longUpdateFactor = longFactor.getInt(40);
-
-			Property wrenchId = BuildCraftCore.mainConfiguration.getItem("wrench.id", DefaultProps.WRENCH_ID);
-
-			wrenchItem = (new ItemWrench(wrenchId.getInt(DefaultProps.WRENCH_ID))).setUnlocalizedName("wrenchItem");
-			LanguageRegistry.addName(wrenchItem, "Wrench");
-			CoreProxy.getProxy().registerItem(wrenchItem);
-
-			int springId = BuildCraftCore.mainConfiguration.getBlock("springBlock.id", DefaultProps.SPRING_ID).getInt(DefaultProps.SPRING_ID);
-
-			Property woodenGearId = BuildCraftCore.mainConfiguration.getItem("woodenGearItem.id", DefaultProps.WOODEN_GEAR_ID);
-			Property stoneGearId = BuildCraftCore.mainConfiguration.getItem("stoneGearItem.id", DefaultProps.STONE_GEAR_ID);
-			Property ironGearId = BuildCraftCore.mainConfiguration.getItem("ironGearItem.id", DefaultProps.IRON_GEAR_ID);
-			Property goldenGearId = BuildCraftCore.mainConfiguration.getItem("goldenGearItem.id", DefaultProps.GOLDEN_GEAR_ID);
-			Property diamondGearId = BuildCraftCore.mainConfiguration.getItem("diamondGearItem.id", DefaultProps.DIAMOND_GEAR_ID);
-			Property modifyWorldProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "modifyWorld", true);
-			modifyWorldProp.comment = "set to false if BuildCraft should not generate custom blocks (e.g. oil)";
-			modifyWorld = modifyWorldProp.getBoolean(true);
-
-			if (BuildCraftCore.modifyWorld && springId > 0) {
-				BlockSpring.EnumSpring.WATER.canGen = BuildCraftCore.mainConfiguration.get("worldgen", "waterSpring", true).getBoolean(true);
-				springBlock = new BlockSpring(springId).setUnlocalizedName("eternalSpring");
-				CoreProxy.getProxy().registerBlock(springBlock, ItemSpring.class);
-			}
-
-			Property consumeWater = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "consumeWater", consumeWaterSources);
-			consumeWaterSources = consumeWater.getBoolean(consumeWaterSources);
-			consumeWater.comment = "set to true if the Pump should consume water";
-
-			woodenGearItem = (new ItemBuildCraft(woodenGearId.getInt())).setUnlocalizedName("woodenGearItem");
-			LanguageRegistry.addName(woodenGearItem, "Wooden Gear");
-			CoreProxy.getProxy().registerItem(woodenGearItem);
-			OreDictionary.registerOre("gearWood", new ItemStack(woodenGearItem));
-
-			stoneGearItem = (new ItemBuildCraft(stoneGearId.getInt())).setUnlocalizedName("stoneGearItem");
-			LanguageRegistry.addName(stoneGearItem, "Stone Gear");
-			CoreProxy.getProxy().registerItem(stoneGearItem);
-			OreDictionary.registerOre("gearStone", new ItemStack(stoneGearItem));
-
-			ironGearItem = (new ItemBuildCraft(ironGearId.getInt())).setUnlocalizedName("ironGearItem");
-			LanguageRegistry.addName(ironGearItem, "Iron Gear");
-			CoreProxy.getProxy().registerItem(ironGearItem);
-			OreDictionary.registerOre("gearIron", new ItemStack(ironGearItem));
-
-			goldGearItem = (new ItemBuildCraft(goldenGearId.getInt())).setUnlocalizedName("goldGearItem");
-			LanguageRegistry.addName(goldGearItem, "Gold Gear");
-			CoreProxy.getProxy().registerItem(goldGearItem);
-			OreDictionary.registerOre("gearGold", new ItemStack(goldGearItem));
-
-			diamondGearItem = (new ItemBuildCraft(diamondGearId.getInt())).setUnlocalizedName("diamondGearItem");
-			LanguageRegistry.addName(diamondGearItem, "Diamond Gear");
-			CoreProxy.getProxy().registerItem(diamondGearItem);
-			OreDictionary.registerOre("gearDiamond", new ItemStack(diamondGearItem));
-
-			Property colorBlindProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "client.colorblindmode", false);
-			colorBlindProp.comment = "Set to true to enable alternate textures";
-			colorBlindMode = colorBlindProp.getBoolean(false);
-
-		} finally {
-			if (mainConfiguration.hasChanged()) {
-				mainConfiguration.save();
-			}
-		}*/
 	}
 
 	@Override
@@ -224,15 +158,18 @@ public class BuildCraftCore implements IBuildcraftModule {
 		BuildcraftRecipes.integrationTable = IntegrationRecipeManager.INSTANCE;
 		BuildcraftRecipes.refinery = RefineryRecipeManager.INSTANCE;
 
-		woodenGearItem = (new ItemBuildCraft(DefaultProps.WOODEN_GEAR_ID)).setUnlocalizedName("woodenGearItem").setTextureName("woodenGearItem");
-		stoneGearItem = (new ItemBuildCraft(DefaultProps.STONE_GEAR_ID)).setUnlocalizedName("stoneGearItem");
-		ironGearItem = (new ItemBuildCraft(DefaultProps.IRON_GEAR_ID)).setUnlocalizedName("ironGearItem");
-		goldGearItem = (new ItemBuildCraft(DefaultProps.GOLDEN_GEAR_ID)).setUnlocalizedName("goldGearItem");
-		diamondGearItem = (new ItemBuildCraft(DefaultProps.DIAMOND_GEAR_ID)).setUnlocalizedName("diamondGearItem");
+		woodenGearItem = new ItemBuildCraft(BuildcraftConfig.gearWoodItemId).setUnlocalizedName("woodenGearItem").setTextureName("woodenGearItem");
+		stoneGearItem = new ItemBuildCraft(BuildcraftConfig.gearStoneItemId).setUnlocalizedName("stoneGearItem");
+		ironGearItem = new ItemBuildCraft(BuildcraftConfig.gearIronItemId).setUnlocalizedName("ironGearItem");
+		goldGearItem = new ItemBuildCraft(BuildcraftConfig.gearGoldItemId).setUnlocalizedName("goldGearItem");
+		diamondGearItem = new ItemBuildCraft(BuildcraftConfig.gearDiamondItemId).setUnlocalizedName("diamondGearItem");
 
-		wrenchItem = (new ItemWrench(DefaultProps.WRENCH_ID)).setUnlocalizedName("wrenchItem");
+		wrenchItem = new ItemWrench(BuildcraftConfig.wrenchItemId);
 
-		// MinecraftForge.registerConnectionHandler(new ConnectionHandler());
+		if (BuildcraftConfig.springBlockId > 0) {
+			springBlock = new BlockSpring(BuildcraftConfig.springBlockId).setUnlocalizedName("eternalSpring");
+		}
+
 		ActionManager.registerTriggerProvider(new DefaultTriggerProvider());
 		ActionManager.registerActionProvider(new DefaultActionProvider());
 
@@ -241,25 +178,25 @@ public class BuildCraftCore implements IBuildcraftModule {
 		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
 		EntityList.addMapping(EntityPowerLaser.class, "bcLaser", EntityIds.LASER);
 		EntityList.addMapping(EntityEnergyLaser.class, "bcEnergyLaser", EntityIds.ENERGY_LASER);
-/*		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
+		EntityListAccessor.getClassToStringMapping().remove(EntityRobot.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityPowerLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove(EntityEnergyLaser.class);
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcRobot");
 		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcLaser");
-		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");*/
+		EntityListAccessor.getClassToStringMapping().remove("BuildCraft|Core.bcEnergyLaser");
 
 		CoreProxy.getProxy().initializeRendering();
 		CoreProxy.getProxy().initializeEntityRendering();
 
 		registerCommand();
+		RenderingRegistry.registerBlockHandler(RenderBlockFluid.instance);
 
 		if (!MinecraftServer.getIsServer()) {
 			CustomEntityPacketHandler.entryMap.put(EntityIds.ROBOT, ((world, data, packet) -> {
 				Box box = new Box();
 				box.initialize(data);
-				var robot = new EntityRobot(world, box);
 
-				return robot;
+                return new EntityRobot(world, box);
 			}));
 		}
 	}
@@ -289,7 +226,6 @@ public class BuildCraftCore implements IBuildcraftModule {
 
 	private static void initPackets() {
 		AddonHandler.registerPacketHandler("buildcraft|CR", new PacketHandler());
-//		BuildCraftAddon.INSTANCE.registerPacketHandler("buildcraft|CR", new PacketHandler());
 		//todocore packet handling is a total mess atm
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
@@ -317,13 +253,42 @@ public class BuildCraftCore implements IBuildcraftModule {
 	}
 
 	public void loadRecipes() {
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(wrenchItem), "I I", " G ", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodenGearItem), " S ", "S S", " S ", 'S', Item.stick);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneGearItem), " I ", "IGI", " I ", 'I', Block.cobblestone, 'G',
-				woodenGearItem);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironGearItem), " I ", "IGI", " I ", 'I', Item.ingotIron, 'G', stoneGearItem);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(goldGearItem), " I ", "IGI", " I ", 'I', Item.ingotGold, 'G', ironGearItem);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(diamondGearItem), " I ", "IGI", " I ", 'I', Item.diamond, 'G', goldGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(wrenchItem),
+				"I I",
+				" G ",
+				" I ",
+				'I', Item.ingotIron,
+				'G', stoneGearItem);
+
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodenGearItem),
+				" S ",
+				"S S",
+				" S ",
+				'S', Item.stick);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneGearItem),
+				" I ",
+				"IGI",
+				" I ",
+				'I', Block.cobblestone,
+				'G', woodenGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironGearItem),
+				" I ",
+				"IGI",
+				" I ",
+				'I', Item.ingotIron,
+				'G', stoneGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(goldGearItem),
+				" I ",
+				"IGI",
+				" I ",
+				'I', Item.ingotGold,
+				'G', ironGearItem);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(diamondGearItem),
+				" I ",
+				"IGI",
+				" I ",
+				'I', Item.diamond,
+				'G', goldGearItem);
 	}
 
 

@@ -7,6 +7,7 @@ import net.minecraft.src.World;
 public class BlockLaserTableAssembly extends BlockLaserTable {
     public BlockLaserTableAssembly(int i) {
         super(i);
+        setUnlocalizedName("assemblyTableBlock");
     }
 
     @Override

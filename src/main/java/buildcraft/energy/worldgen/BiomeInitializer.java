@@ -1,6 +1,8 @@
 package buildcraft.energy.worldgen;
 
 import buildcraft.BuildCraftEnergy;
+import net.minecraft.src.GenLayer;
+import net.minecraft.src.WorldType;
 
 /**
  *
@@ -10,22 +12,22 @@ public class BiomeInitializer {
 	//todoenergy world gen
 	public BiomeInitializer() {
 	}
-
-/*	@ForgeSubscribe
-	public void initBiomes(WorldTypeEvent.InitBiomeGens event) {
+	
+	public static GenLayer[] initBcBiomes(WorldType worldType, long seed, GenLayer[] original) {
 		if (BuildCraftEnergy.biomeOilDesert != null) {
-			event.newBiomeGens[0] = new GenLayerAddOilDesert(event.seed, 1500L, event.newBiomeGens[0]);
-			event.newBiomeGens[1] = new GenLayerAddOilDesert(event.seed, 1500L, event.newBiomeGens[1]);
-			event.newBiomeGens[2] = new GenLayerAddOilDesert(event.seed, 1500L, event.newBiomeGens[2]);
+			original[0] = new GenLayerAddOilDesert(seed, 1500L, original[0]);
+			original[1] = new GenLayerAddOilDesert(seed, 1500L, original[1]);
+			original[2] = new GenLayerAddOilDesert(seed, 1500L, original[2]);
 		}
 		if (BuildCraftEnergy.biomeOilOcean != null) {
-			event.newBiomeGens[0] = new GenLayerAddOilOcean(event.seed, 1500L, event.newBiomeGens[0]);
-			event.newBiomeGens[1] = new GenLayerAddOilOcean(event.seed, 1500L, event.newBiomeGens[1]);
-			event.newBiomeGens[2] = new GenLayerAddOilOcean(event.seed, 1500L, event.newBiomeGens[2]);
+			original[0] = new GenLayerAddOilOcean(seed, 1500L, original[0]);
+			original[1] = new GenLayerAddOilOcean(seed, 1500L, original[1]);
+			original[2] = new GenLayerAddOilOcean(seed, 1500L, original[2]);
 		}
-	}*/
+		return original;
+	}
 //		int range = GenLayerBiomeReplacer.OFFSET_RANGE;
-//		Random rand = new Random(event.seed);
+//		Random rand = new Random(seed);
 //		double xOffset = rand.nextInt(range) - (range / 2);
 //		double zOffset = rand.nextInt(range) - (range / 2);
 //		double noiseScale = GenLayerAddOilOcean.NOISE_FIELD_SCALE;

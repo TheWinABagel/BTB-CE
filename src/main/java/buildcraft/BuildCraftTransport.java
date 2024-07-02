@@ -8,6 +8,7 @@
 package buildcraft;
 
 import btw.crafting.recipe.RecipeManager;
+import btw.util.color.Color;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.gates.GateExpansions;
@@ -109,46 +110,6 @@ public class BuildCraftTransport implements IBuildcraftModule {
 		ItemStack result;
 		Object[] input;
 	}
-
-	private static class ExtractionHandler implements IExtractionHandler {
-
-		private final String[] items;
-		private final String[] liquids;
-
-		public ExtractionHandler(String[] items, String[] liquids) {
-			this.items = items;
-			this.liquids = liquids;
-		}
-
-		@Override
-		public boolean canExtractItems(Object extractor, World world, int i, int j, int k) {
-			return testStrings(items, world, i, j, k);
-		}
-
-		@Override
-		public boolean canExtractFluids(Object extractor, World world, int i, int j, int k) {
-			return testStrings(liquids, world, i, j, k);
-		}
-
-		private boolean testStrings(String[] excludedBlocks, World world, int i, int j, int k) {
-			int id = world.getBlockId(i, j, k);
-			Block block = Block.blocksList[id];
-			if (block == null)
-				return false;
-
-			int meta = world.getBlockMetadata(i, j, k);
-
-			for (String excluded : excludedBlocks) {
-				if (excluded.equals(block.getUnlocalizedName()))
-					return false;
-
-				String[] tokens = excluded.split(":");
-				if (tokens[0].equals(Integer.toString(id)) && (tokens.length == 1 || tokens[1].equals(Integer.toString(meta))))
-					return false;
-			}
-			return true;
-		}
-	}
 	private static final LinkedList<PipeRecipe> pipeRecipes = new LinkedList<>();
 
 	@Override
@@ -157,72 +118,73 @@ public class BuildCraftTransport implements IBuildcraftModule {
 	}
 
 	@Override
-	public void registerConfigProps(BuildCraftAddon addon) {
+	public void registerConfigForSettings(BuildCraftAddon addon) {
+		addon.registerProp("PipeDurability", String.valueOf(DefaultProps.PIPES_DURABILITY), "Transport\n\n# How long a pipe will take to break. Default: 0.25 (Float)");
+		addon.registerProp("GroupItemsTriggerAmount", String.valueOf(32), "Amount required before pipes automatically group items. Default: 32 (Integer)");
+		addon.registerProp("PipeItemExclusionList", "itemName1, itemName2", "List of unlocalized names of items excluded from being pumped with a pipe. Default: none (Comma and space delimited list)");
+		addon.registerProp("PipeFluidExclusionList", "fluidName1, fluidName2", "List of unlocalized names of fluids excluded from being pumped with a pipe. Default: none (Comma and space delimited list)");
+	}
+
+	@Override
+	public void registerConfigForIds(BuildCraftAddon addon) {
+		addon.registerProp("FilteredBufferBlockId", String.valueOf(DefaultProps.FILTERED_BUFFER_ID), "Transport\n");
+		addon.registerProp("GenericPipeBlockId", String.valueOf(DefaultProps.GENERIC_PIPE_ID));
+		addon.registerProp("PipeWaterproofItemId", String.valueOf(DefaultProps.PIPE_WATERPROOF_ID));
+		addon.registerProp("PipeWireItemId", String.valueOf(DefaultProps.PIPE_WIRE));
+		addon.registerProp("PipeGateItemId", String.valueOf(DefaultProps.GATE_ID));
+		addon.registerProp("PipeFacadeItemId", String.valueOf(DefaultProps.PIPE_FACADE_ID));
+		addon.registerProp("PipePlugItemId", String.valueOf(DefaultProps.PIPE_PLUG_ID));
 
 	}
 
 	@Override
 	public void handleConfigProps() {
+		pipeDurability = BuildcraftConfig.getFloat("PipeDurability");
 
+		BuildcraftConfig.filteredBufferBlockId = BuildcraftConfig.getInt("FilteredBufferBlockId");
+		BuildcraftConfig.genericPipeBlockId = BuildcraftConfig.getInt("GenericPipeBlockId");
+		BuildcraftConfig.pipeWaterproofItemId = BuildcraftConfig.getInt("PipeWaterproofItemId");
+		BuildcraftConfig.pipeWireItemId = BuildcraftConfig.getInt("PipeWireItemId");
+		BuildcraftConfig.pipeGateItemId = BuildcraftConfig.getInt("PipeGateItemId");
+		BuildcraftConfig.pipeFacadeItemId = BuildcraftConfig.getInt("PipeFacadeItemId");
+		BuildcraftConfig.pipePlugItemId = BuildcraftConfig.getInt("PipePlugItemId");
+
+		groupItemsTrigger = BuildcraftConfig.getInt("GroupItemsTriggerAmount");
+
+		String[] excludedItemBlocks = BuildcraftConfig.getStringList("PipeItemExclusionList");
+		if (excludedItemBlocks != null) {
+			for (int j = 0; j < excludedItemBlocks.length; ++j) {
+				excludedItemBlocks[j] = excludedItemBlocks[j].trim();
+			}
+		} else
+			excludedItemBlocks = new String[0];
+
+		String[] excludedFluidBlocks = BuildcraftConfig.getStringList("PipeFluidExclusionList");
+		if (excludedFluidBlocks != null) {
+			for (int j = 0; j < excludedFluidBlocks.length; ++j) {
+				excludedFluidBlocks[j] = excludedFluidBlocks[j].trim();
+			}
+		} else
+			excludedFluidBlocks = new String[0];
+
+
+		PipeManager.registerExtractionHandler(new ExtractionHandler(excludedItemBlocks, excludedFluidBlocks));
 	}
 
 	@Override
 	public void init() {
-		//todotransport Config
-
-		//			Property filteredBufferId = BuildCraftCore.mainConfiguration.getBlock("filteredBuffer.id", DefaultProps.FILTERED_BUFFER_ID);
-
-		filteredBufferBlock = new BlockFilteredBuffer(DefaultProps.FILTERED_BUFFER_ID);
+		filteredBufferBlock = new BlockFilteredBuffer(BuildcraftConfig.filteredBufferBlockId);
 		filteredBufferBlock.setUnlocalizedName("filteredBufferBlock");
 		try {
-		/*	Property durability = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.durability", DefaultProps.PIPES_DURABILITY);
-			durability.comment = "How long a pipe will take to break";
-			pipeDurability = (float) durability.getDouble(DefaultProps.PIPES_DURABILITY);*/
-			pipeDurability = (float) DefaultProps.PIPES_DURABILITY;
-
-			/*Property exclusionItemList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.item.exclusion", new String[0]);
-
-			String[] excludedItemBlocks = exclusionItemList.getStringList();
-			if (excludedItemBlocks != null) {
-				for (int j = 0; j < excludedItemBlocks.length; ++j) {
-					excludedItemBlocks[j] = excludedItemBlocks[j].trim();
-				}
-			} else*/
-			String[] excludedItemBlocks = new String[0];
-
-			/*Property exclusionFluidList = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_BLOCK, "woodenPipe.liquid.exclusion", new String[0]);
-
-			String[] excludedFluidBlocks = exclusionFluidList.getStringList();
-			if (excludedFluidBlocks != null) {
-				for (int j = 0; j < excludedFluidBlocks.length; ++j) {
-					excludedFluidBlocks[j] = excludedFluidBlocks[j].trim();
-				}
-			} else*/
-			String[] excludedFluidBlocks = new String[0];
-
-			PipeManager.registerExtractionHandler(new ExtractionHandler(excludedItemBlocks, excludedFluidBlocks));
-
 			GateExpansions.registerExpansion(GateExpansionPulsar.INSTANCE);
 			GateExpansions.registerExpansion(GateExpansionTimer.INSTANCE);
 			GateExpansions.registerExpansion(GateExpansionRedstoneFader.INSTANCE);
 
-			/*Property groupItemsTriggerProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "pipes.groupItemsTrigger", 32);
-			groupItemsTriggerProp.comment = "when reaching this amount of objects in a pipes, items will be automatically grouped";
-			groupItemsTrigger = groupItemsTriggerProp.getInt();*/
-			groupItemsTrigger = 32;
-
-
-
-
-//			Property pipeWaterproofId = BuildCraftCore.mainConfiguration.getItem("pipeWaterproof.id", DefaultProps.PIPE_WATERPROOF_ID);
-
-			pipeWaterproof = new ItemBuildCraft(DefaultProps.PIPE_WATERPROOF_ID);
+			pipeWaterproof = new ItemBuildCraft(BuildcraftConfig.pipeWaterproofItemId);
 			pipeWaterproof.setUnlocalizedName("pipeWaterproof");
 			CoreProxy.getProxy().registerItem(pipeWaterproof);
 
-//			Property genericPipeId = BuildCraftCore.mainConfiguration.getBlock("pipe.id", DefaultProps.GENERIC_PIPE_ID);
-
-			genericPipeBlock = new BlockGenericPipe(DefaultProps.GENERIC_PIPE_ID);
+			genericPipeBlock = new BlockGenericPipe(BuildcraftConfig.genericPipeBlockId);
 			CoreProxy.getProxy().registerBlock(genericPipeBlock.setUnlocalizedName("pipeBlock"), ItemBlock.class);
 
 			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", Block.planks, Block.glass, Block.planks);
@@ -237,7 +199,7 @@ public class BuildCraftTransport implements IBuildcraftModule {
 			pipeItemsLapis = buildPipe(DefaultProps.PIPE_ITEMS_LAPIS_ID, PipeItemsLapis.class, "Lapis Transport Pipe", Block.blockLapis, Block.glass, Block.blockLapis);
 			pipeItemsDaizuli = buildPipe(DefaultProps.PIPE_ITEMS_DAIZULI_ID, PipeItemsDaizuli.class, "Daizuli Transport Pipe", Block.blockLapis, Block.glass, Item.diamond);
 			pipeItemsSandstone = buildPipe(DefaultProps.PIPE_ITEMS_SANDSTONE_ID, PipeItemsSandstone.class, "Sandstone Transport Pipe", Block.sandStone, Block.glass, Block.sandStone);
-			pipeItemsVoid = buildPipe(DefaultProps.PIPE_ITEMS_VOID_ID, PipeItemsVoid.class, "Void Transport Pipe", new ItemStack(Item.dyePowder, 1, 0), Block.glass, Item.redstone);
+			pipeItemsVoid = buildPipe(DefaultProps.PIPE_ITEMS_VOID_ID, PipeItemsVoid.class, "Void Transport Pipe", new ItemStack(Item.dyePowder, 1, Color.BLACK.colorID), Block.glass, Item.redstone);
 			pipeItemsEmzuli = buildPipe(DefaultProps.PIPE_ITEMS_EMZULI_ID, PipeItemsEmzuli.class, "Emzuli Transport Pipe", Block.blockLapis, Block.glass, Item.emerald);
 
 			pipeFluidsWood = buildPipe(DefaultProps.PIPE_LIQUIDS_WOOD_ID, PipeFluidsWood.class, "Wooden Waterproof Pipe", pipeWaterproof, pipeItemsWood);
@@ -259,57 +221,29 @@ public class BuildCraftTransport implements IBuildcraftModule {
 
 			pipeStructureCobblestone = buildPipe(DefaultProps.PIPE_STRUCTURE_COBBLESTONE_ID, PipeStructureCobblestone.class, "Cobblestone Structure Pipe", Block.gravel, pipeItemsCobblestone);
 
-			// Fix the recipe
-			// pipeItemsStipes = createPipe(DefaultProps.PIPE_ITEMS_STRIPES_ID, PipeItemsStripes.class, "Stripes Transport Pipe", new ItemStack(Item.dyePowder,
-			// 1, 0), Block.glass, new ItemStack(Item.dyePowder, 1, 11));
-
-//			int pipeWireId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeWire.id", DefaultProps.PIPE_WIRE).getInt(DefaultProps.PIPE_WIRE);
-
-			pipeWire = new ItemPipeWire(DefaultProps.PIPE_WIRE);
+			pipeWire = new ItemPipeWire(BuildcraftConfig.pipeWireItemId);
 			CoreProxy.getProxy().registerItem(pipeWire);
 			PipeWire.item = pipeWire;
 
-//			Property pipeGateId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeGate.id", DefaultProps.GATE_ID);
-			pipeGate = new ItemGate(DefaultProps.GATE_ID);
+			pipeGate = new ItemGate(BuildcraftConfig.pipeGateItemId);
 			pipeGate.setUnlocalizedName("pipeGate");
 			CoreProxy.getProxy().registerItem(pipeGate);
 
-//			Property pipeFacadeId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipeFacade.id", DefaultProps.PIPE_FACADE_ID);
-			facadeItem = new ItemFacade(DefaultProps.PIPE_FACADE_ID);
+			facadeItem = new ItemFacade(BuildcraftConfig.pipeFacadeItemId);
 			facadeItem.setUnlocalizedName("pipeFacade");
 			CoreProxy.getProxy().registerItem(facadeItem);
 
-//			Property pipePlugId = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_ITEM, "pipePlug.id", DefaultProps.PIPE_PLUG_ID);
-			plugItem = new ItemPlug(DefaultProps.PIPE_PLUG_ID);
+			plugItem = new ItemPlug(BuildcraftConfig.pipePlugItemId);
 			plugItem.setUnlocalizedName("pipePlug");
 			CoreProxy.getProxy().registerItem(plugItem);
-
-
 
 		}
 		catch (Throwable e){
 			e.printStackTrace();
 			System.out.println("idk what happened but something broke");
-//			BuildCraftCore.mainConfiguration.save();
 		}
 
-
-		// Register connection handler
-		// MinecraftForge.registerConnectionHandler(new ConnectionHandler());
-
-		// Register GUI handler
-		// MinecraftForge.setGuiHandler(mod_BuildCraftTransport.instance, new GuiHandler());
 		TransportProxy.getProxy().registerTileEntities();
-
-		initPackets();
-		// dockingStationBlock = new
-		// BlockDockingStation(Integer.parseInt(dockingStationId.value));
-		// ModLoader.registerBlock(dockingStationBlock);
-		// CoreProxy.addName(dockingStationBlock.setBlockName("dockingStation"),
-		// "Docking Station");
-
-		// ModLoader.RegisterTileEntity(TileDockingStation.class,
-		// "net.minecraft.src.buildcraft.TileDockingStation");
 
 		new BptBlockPipe(genericPipeBlock.blockID);
 
@@ -381,7 +315,9 @@ public class BuildCraftTransport implements IBuildcraftModule {
 	public void loadRecipes() {
 
 		// Add base recipe for pipe waterproof.
-		RecipeManager.addShapelessRecipe(new ItemStack(pipeWaterproof, 1), new ItemStack[]{new ItemStack(Item.dyePowder, 1, 2)});
+		RecipeManager.addShapelessRecipe(new ItemStack(pipeWaterproof, 1), new ItemStack[] {
+				new ItemStack(Item.dyePowder, 1, Color.GREEN.colorID)
+		});
 
 		// Add pipe recipes
 		for (PipeRecipe pipe : pipeRecipes) {
@@ -392,28 +328,19 @@ public class BuildCraftTransport implements IBuildcraftModule {
 			}
 		}
 
-/*		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(filteredBufferBlock),
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(filteredBufferBlock),
 				"wdw",
 				"wcw",
 				"wpw",
 				'w', Block.planks,
 				'd', BuildCraftTransport.pipeItemsDiamond,
 				'c', Block.chest,
-				'p', Block.pistonBase);*/
+				'p', Block.pistonBase);
 
 		//Facade turning helper
 		CraftingManager.getInstance().getRecipes().add(facadeItem.new FacadeRecipe());
 
 		BuildcraftRecipes.assemblyTable.addRecipe(1000, new ItemStack(plugItem, 8), new ItemStack(pipeStructureCobblestone));
-	}
-
-/*	@EventHandler
-	public void processIMCRequests(IMCEvent event) {
-		InterModComms.processIMC(event);
-	}*/
-
-	private static void initPackets() {
-
 	}
 
 	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {
@@ -452,4 +379,36 @@ public class BuildCraftTransport implements IBuildcraftModule {
 
 		return res;
 	}
+
+	private record ExtractionHandler(String[] items, String[] liquids) implements IExtractionHandler {
+
+		@Override
+			public boolean canExtractItems(Object extractor, World world, int i, int j, int k) {
+				return testStrings(items, world, i, j, k);
+			}
+
+			@Override
+			public boolean canExtractFluids(Object extractor, World world, int i, int j, int k) {
+				return testStrings(liquids, world, i, j, k);
+			}
+
+			private boolean testStrings(String[] excludedBlocks, World world, int i, int j, int k) {
+				int id = world.getBlockId(i, j, k);
+				Block block = Block.blocksList[id];
+				if (block == null)
+					return false;
+
+				int meta = world.getBlockMetadata(i, j, k);
+
+				for (String excluded : excludedBlocks) {
+					if (excluded.equals(block.getUnlocalizedName()))
+						return false;
+
+					String[] tokens = excluded.split(":");
+					if (tokens[0].equals(Integer.toString(id)) && (tokens.length == 1 || tokens[1].equals(Integer.toString(meta))))
+						return false;
+				}
+				return true;
+			}
+		}
 }

@@ -28,7 +28,9 @@ public interface IBuildcraftModule {
 
     void handleConfigProps();
 
-    void registerConfigProps(BuildCraftAddon addon);
+    void registerConfigForSettings(BuildCraftAddon addon);
+
+    void registerConfigForIds(BuildCraftAddon addon);
 
     @Environment(EnvType.CLIENT)
     default void textureHook(TextureMap map) {

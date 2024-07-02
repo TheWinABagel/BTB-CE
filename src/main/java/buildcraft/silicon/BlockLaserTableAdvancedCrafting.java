@@ -7,6 +7,7 @@ import net.minecraft.src.World;
 public class BlockLaserTableAdvancedCrafting extends BlockLaserTable {
     public BlockLaserTableAdvancedCrafting(int i) {
         super(i);
+        setUnlocalizedName("assemblyWorkbenchBlock");
     }
 
     @Override

@@ -48,6 +48,7 @@ public class ItemRedstoneChipset extends ItemBuildCraft {
 		super(i);
 		setHasSubtypes(true);
 		setMaxDamage(0);
+		setUnlocalizedName("redstoneChipset");
 	}
 
 	@Override

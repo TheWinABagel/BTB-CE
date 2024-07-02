@@ -7,11 +7,7 @@
  */
 package buildcraft.energy;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,18 +20,18 @@ public class BucketHandler {
 	private BucketHandler() {
 	}
 
-//todoenergy bucket fill event
 
-/*	public void onBucketFill(FillBucketEvent event) {
+	public ItemStack onBucketFill(EntityPlayer player, ItemStack currentStack, World world, MovingObjectPosition target) {
 
-		ItemStack result = fillCustomBucket(event.world, event.target);
+		ItemStack result = fillCustomBucket(world, target);
 
 		if (result == null)
-			return;
+			return null;
 
-		event.result = result;
-		event.setResult(Result.ALLOW);
-	}*/
+		if (player.capabilities.isCreativeMode) return currentStack;
+
+		return result;
+	}
 
 	private ItemStack fillCustomBucket(World world, MovingObjectPosition pos) {
 
