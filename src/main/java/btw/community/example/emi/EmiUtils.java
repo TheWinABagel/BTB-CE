@@ -1,6 +1,8 @@
 package btw.community.example.emi;
 
 import buildcraft.core.gui.GuiBuildCraft;
+import buildcraft.core.gui.slots.SlotPhantom;
+import buildcraft.transport.gui.GuiDiamondPipe;
 import emi.dev.emi.emi.api.EmiRegistry;
 import emi.dev.emi.emi.api.recipe.EmiRecipe;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -9,7 +11,9 @@ import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.runtime.EmiReloadLog;
 import emi.dev.emi.emi.screen.Bounds;
 import net.minecraft.src.IRecipe;
+import net.minecraft.src.Minecraft;
 import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.Slot;
 
 import java.util.Comparator;
 import java.util.function.Supplier;
@@ -35,6 +39,18 @@ public class EmiUtils {
                 bounds.accept(new Bounds( screen.getGuiLeft() + screen.getxSize(), screen.getGuiTop() + (8 * i), ledger.getCurrentWidth(), ledger.getHeight()));
                 i++;
             }
+        });
+    }
+
+    public static <T extends GuiBuildCraft> void addClickStackHandler(Class<T> clazz, EmiRegistry reg) {
+        reg.addDragDropHandler(clazz, (gui, stack, x, y) -> {
+            Slot slot = gui.getSlotAtPosition(x, y);
+            if (slot instanceof SlotPhantom phantom) {
+                gui.container.slotClickPhantom(phantom, 0, 0, Minecraft.getMinecraft().thePlayer, stack.getEmiStacks().get(0).getItemStack());
+                System.out.println("clicked a phantom slot");
+                return true;
+            }
+            return false;
         });
     }
 

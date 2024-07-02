@@ -1,5 +1,6 @@
 package btw.community.example.mixin;
 
+import btw.community.example.mixin.accessors.RenderManagerAccessor;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.RenderManager;

@@ -76,14 +76,13 @@ public abstract class BuildCraftContainer extends Container {
 	public ItemStack slotClick(int slotNum, int mouseButton, int modifier, EntityPlayer player) {
 		Slot slot = slotNum < 0 ? null : (Slot) this.inventorySlots.get(slotNum);
 		if (slot instanceof IPhantomSlot) {
-			return slotClickPhantom(slot, mouseButton, modifier, player);
+			return slotClickPhantom(slot, mouseButton, modifier, player, player.inventory.getItemStack());
 		}
 		return super.slotClick(slotNum, mouseButton, modifier, player);
 	}
-//todocore better emi stack support
-	public ItemStack slotClickPhantom(Slot slot, int mouseButton, int modifier, EntityPlayer player) {
+
+	public ItemStack slotClickPhantom(Slot slot, int mouseButton, int modifier, EntityPlayer player, ItemStack stackHeld) {
 		ItemStack stack = null;
-		System.out.println("emi dragged slot is " + EmiScreenManager.draggedStack.getEmiStacks().get(0).getItemStack());
 		if (mouseButton == 2) {
 			if (((IPhantomSlot) slot).canAdjust()) {
 				slot.putStack(null);
@@ -92,12 +91,6 @@ public abstract class BuildCraftContainer extends Container {
 			InventoryPlayer playerInv = player.inventory;
 			slot.onSlotChanged();
 			ItemStack stackSlot = slot.getStack();
-			ItemStack stackHeld = playerInv.getItemStack();
-			System.out.println("stack slot is pre " + stackSlot + " stack held is " + stackHeld);
-			if (stackHeld == null && !EmiScreenManager.draggedStack.isEmpty()) {
-				stackHeld = EmiScreenManager.draggedStack.getEmiStacks().get(0).getItemStack();
-			}
-			System.out.println("stack held is now post " + stackHeld);
 			if (stackSlot != null) {
 				stack = stackSlot.copy();
 			}

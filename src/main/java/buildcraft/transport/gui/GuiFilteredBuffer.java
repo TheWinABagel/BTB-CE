@@ -8,6 +8,7 @@
 package buildcraft.transport.gui;
 
 import buildcraft.core.DefaultProps;
+import buildcraft.core.gui.GuiBuildCraft;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.transport.TileFilteredBuffer;
 import net.minecraft.src.GuiContainer;
@@ -20,14 +21,14 @@ import org.lwjgl.opengl.GL11;
  *
  * @author SandGrainOne
  */
-public class GuiFilteredBuffer extends GuiContainer {
+public class GuiFilteredBuffer extends GuiBuildCraft {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation("buildcraft", DefaultProps.TEXTURE_PATH_GUI + "/filteredBuffer_gui.png");
 	IInventory playerInventory;
 	TileFilteredBuffer filteredBuffer;
 
 	public GuiFilteredBuffer(InventoryPlayer playerInventory, TileFilteredBuffer filteredBuffer) {
-		super(new ContainerFilteredBuffer(playerInventory, filteredBuffer));
+		super(new ContainerFilteredBuffer(playerInventory, filteredBuffer), playerInventory, TEXTURE);
 
 		this.playerInventory = playerInventory;
 		this.filteredBuffer = filteredBuffer;

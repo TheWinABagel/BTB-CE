@@ -1,4 +1,4 @@
-package btw.community.example.mixin;
+package btw.community.example.mixin.accessors;
 
 import btw.AddonHandler;
 import btw.network.packet.handler.CustomPacketHandler;
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 import java.util.Map;
 
-@Mixin(AddonHandler.class)
+@Mixin(value = AddonHandler.class, remap = false)
 public interface AddonHandlerAccessor {
     @Accessor
     static Map<String, CustomPacketHandler> getPacketHandlers() {

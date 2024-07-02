@@ -1,4 +1,4 @@
-package btw.community.example.mixin;
+package btw.community.example.mixin.accessors;
 
 import btw.world.chunk.ChunkTracker;
 import btw.world.chunk.ChunkTrackerEntry;
@@ -7,6 +7,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ChunkTracker.class)
 public interface ChunkTrackerAccessor {
-    @Invoker
+    @Invoker(remap = false)
     ChunkTrackerEntry callGetOrCreateTrackerEntry(int iChunkX, int iChunkZ);
 }

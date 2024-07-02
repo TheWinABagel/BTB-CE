@@ -2,6 +2,7 @@ package btw.community.example.mixin;
 
 import btw.AddonHandler;
 import btw.community.example.extensions.BuildcraftCustomPacketHandler;
+import btw.community.example.mixin.accessors.AddonHandlerAccessor;
 import btw.network.packet.handler.CustomPacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.IOException;
 import java.util.Map;
 
-@Mixin(AddonHandler.class)
+@Mixin(value = AddonHandler.class, remap = false)
 public class AddonHandlerMixin {
 
     @Shadow private static Map<String, CustomPacketHandler> packetHandlers;

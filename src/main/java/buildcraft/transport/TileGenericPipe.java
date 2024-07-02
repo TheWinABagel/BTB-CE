@@ -8,7 +8,7 @@
 package buildcraft.transport;
 
 import btw.community.example.extensions.BlockUnloadExtension;
-import btw.community.example.mixin.ChunkTrackerAccessor;
+import btw.community.example.mixin.accessors.ChunkTrackerAccessor;
 import btw.community.example.mixin.accessors.ChunkTrackerEntryAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
