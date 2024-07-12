@@ -3,10 +3,9 @@ package buildcraft.core.network;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import btw.community.example.extensions.BuildcraftCustomPacketHandler;
-import btw.network.packet.handler.CustomPacketHandler;
+import buildcraft.builders.network.PacketHandlerBuilders;
 import buildcraft.silicon.network.PacketHandlerSilicon;
 import buildcraft.transport.network.PacketHandlerTransport;
 import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
@@ -35,12 +34,6 @@ public class PacketHandler implements BuildcraftCustomPacketHandler {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
 			int packetID = data.readByte();
-/*			if (packetID == PacketIds.PIPE_TRAVELER) {
-				System.out.println("traveller received");
-			} else if (packetID == PacketIds.PIPE_ITEMSTACK_REQUEST) {
-				System.out.println("itemstack request received");
-			}*/
-
 			switch (packetID) {
 				case PacketIds.TILE_UPDATE: {
 					PacketTileUpdate pkt = new PacketTileUpdate();
@@ -85,6 +78,7 @@ public class PacketHandler implements BuildcraftCustomPacketHandler {
 				default: {
 					PacketHandlerTransport.INSTANCE.onPacketDataExtra(player, packet, packetID, data);
 					PacketHandlerSilicon.INSTANCE.onPacketDataExtra(player, packet, packetID, data);
+					PacketHandlerBuilders.INSTANCE.onPacketDataExtra(player, packet, packetID, data);
 					break;
 				}
 			}

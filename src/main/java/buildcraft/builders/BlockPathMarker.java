@@ -51,12 +51,6 @@ public class BlockPathMarker extends BlockMarker {
 			return super.getBlockTexture(iblockaccess, i, j, k, l);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
-	}
-
 	@Override
 	@Environment(EnvType.CLIENT)
 	public void registerIcons(IconRegister par1IconRegister)

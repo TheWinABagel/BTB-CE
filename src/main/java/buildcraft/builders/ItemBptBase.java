@@ -53,7 +53,7 @@ public abstract class ItemBptBase extends ItemBuildCraft {
 		return itemStack;
 	}
 
-	@Override
+/*	@Override
 	public void onUpdate(ItemStack itemstack, World world, Entity entity, int i, boolean flag) {
-	}
+	}*/
 }

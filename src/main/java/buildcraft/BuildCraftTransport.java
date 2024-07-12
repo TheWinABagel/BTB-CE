@@ -41,7 +41,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 import java.util.LinkedList;
 
-public class BuildCraftTransport implements IBuildcraftModule {
+public class BuildCraftTransport implements IBuildCraftModule {
 
 	public static BlockGenericPipe genericPipeBlock;
 	public static float pipeDurability;

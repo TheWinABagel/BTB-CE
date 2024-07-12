@@ -9,6 +9,7 @@
 
 package buildcraft.builders;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.GuiIds;
@@ -28,8 +29,6 @@ import net.minecraft.src.Icon;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
-
-import java.util.ArrayList;
 
 public class BlockArchitect extends BlockContainer {
 
@@ -84,7 +83,7 @@ public class BlockArchitect extends BlockContainer {
 		} else {
 
 			if (!CoreProxy.getProxy().isRenderWorld(world)) {
-				entityplayer.openGui(BuildCraftBuilders.instance, GuiIds.ARCHITECT_TABLE, world, i, j, k);
+				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.ARCHITECT_TABLE, world, i, j, k);
 			}
 			return true;
 
@@ -129,12 +128,6 @@ public class BlockArchitect extends BlockContainer {
 			return blockTextureFront;
 
 		return blockTextureSides;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
 	}
 
 	@Override

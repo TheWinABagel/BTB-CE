@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import java.util.TreeMap;
 
-public class BuildCraftEnergy implements IBuildcraftModule {
+public class BuildCraftEnergy implements IBuildCraftModule {
 
 	public final static int ENERGY_REMOVE_BLOCK = 25;
 	public final static int ENERGY_EXTRACT_ITEM = 2;

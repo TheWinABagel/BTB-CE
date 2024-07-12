@@ -18,7 +18,7 @@ import net.minecraft.src.TextureMap;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 
-public class BuildCraftFactory implements IBuildcraftModule {
+public class BuildCraftFactory implements IBuildCraftModule {
 	public static final int MINING_MJ_COST_PER_BLOCK = 64;
 	public static BlockQuarry quarryBlock;
 	public static BlockMiningWell miningWellBlock;

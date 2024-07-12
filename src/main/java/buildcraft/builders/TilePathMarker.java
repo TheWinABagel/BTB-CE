@@ -1,5 +1,6 @@
 package buildcraft.builders;
 
+import btw.community.example.injected.TileEntityExtension;
 import buildcraft.api.core.Position;
 import buildcraft.core.BlockIndex;
 import buildcraft.core.EntityLaser;
@@ -15,7 +16,7 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
-public class TilePathMarker extends TileMarker {
+public class TilePathMarker extends TileMarker implements TileEntityExtension {
 
 	public EntityLaser lasers[] = new EntityLaser[2];
 	public int x0, y0, z0, x1, y1, z1;

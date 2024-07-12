@@ -9,6 +9,7 @@
 
 package buildcraft.builders;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.core.GuiIds;
 import buildcraft.core.proxy.CoreProxy;
@@ -23,8 +24,6 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.World;
-
-import java.util.ArrayList;
 
 public class BlockBlueprintLibrary extends BlockContainer {
 
@@ -47,9 +46,9 @@ public class BlockBlueprintLibrary extends BlockContainer {
 
 		TileBlueprintLibrary tile = (TileBlueprintLibrary) world.getBlockTileEntity(i, j, k);
 
-		if (!tile.locked || entityplayer.username.equals(tile.owner))
+		if (!tile.locked || entityplayer.getEntityName().equals(tile.owner))
 			if (!CoreProxy.getProxy().isRenderWorld(world)) {
-				entityplayer.openGui(BuildCraftBuilders.instance, GuiIds.BLUEPRINT_LIBRARY, world, i, j, k);
+				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BLUEPRINT_LIBRARY, world, i, j, k);
 			}
 
 		return true;
@@ -75,14 +74,8 @@ public class BlockBlueprintLibrary extends BlockContainer {
 	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityliving, ItemStack stack) {
 		if (CoreProxy.getProxy().isSimulating(world) && entityliving instanceof EntityPlayer) {
 			TileBlueprintLibrary tile = (TileBlueprintLibrary) world.getBlockTileEntity(i, j, k);
-			tile.owner = ((EntityPlayer) entityliving).username;
+			tile.owner = ((EntityPlayer) entityliving).getEntityName();
 		}
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
 	}
 
 	@Override

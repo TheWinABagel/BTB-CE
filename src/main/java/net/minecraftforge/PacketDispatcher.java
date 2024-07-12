@@ -20,7 +20,7 @@ public class PacketDispatcher {
 
     public static void sendPacketToPlayer(Packet packet, EntityPlayer player) {
         if (player instanceof EntityPlayerMP) {
-            ((EntityPlayerMP)player).playerNetServerHandler.sendPacketToPlayer(packet);
+            ((EntityPlayerMP) player).playerNetServerHandler.sendPacketToPlayer(packet);
         }
     }
 

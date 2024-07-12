@@ -46,6 +46,11 @@ public class GuiHandler implements IGuiHandler {
 	}
 
 	@Override
+	public int getId() {
+		return 4;
+	}
+
+	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 
 		if (!world.blockExists(x, y, z))

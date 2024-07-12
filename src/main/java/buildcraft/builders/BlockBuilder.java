@@ -7,6 +7,7 @@
  */
 package buildcraft.builders;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.GuiIds;
@@ -14,7 +15,6 @@ import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import java.util.ArrayList;
 import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
@@ -94,7 +94,7 @@ public class BlockBuilder extends BlockContainer {
 		} else {
 
 			if (!CoreProxy.getProxy().isRenderWorld(world)) {
-				entityplayer.openGui(BuildCraftBuilders.instance, GuiIds.BUILDER, world, i, j, k);
+				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BUILDER, world, i, j, k);
 			}
 			return true;
 
@@ -113,12 +113,6 @@ public class BlockBuilder extends BlockContainer {
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 		Utils.preDestroyBlock(world, x, y, z);
 		super.breakBlock(world, x, y, z, par5, par6);
-	}
-
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
 	}
 
 	@Override

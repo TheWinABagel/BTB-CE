@@ -59,6 +59,16 @@ public class BuildcraftConfig {
     public static int bucketOilItemId;
     public static int bucketFuelItemId;
 
+    //Builder
+    public static int templateItemId;
+    public static int blueprintItemId;
+    public static int markerBlockId;
+    public static int pathMarkerBlockId;
+    public static int fillerBlockId;
+    public static int builderBlockId;
+    public static int architectBlockId;
+    public static int blueprintLibraryBlockId;
+
 
     public static void putAll(Map<String, String> newProps) {
         propertyValues.putAll(newProps);

@@ -8,28 +8,25 @@
 
 package buildcraft.builders;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import buildcraft.BuildCraftCore;
 import net.fabricmc.api.EnvType;
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraft.src.World;
 
 public class EventHandlerBuilders {
 
-	@ForgeSubscribe
-	public void handleWorldLoad(WorldEvent.Load event) {
+	public static void handleWorldLoad(World world) {
 		// Temporary solution
 		// Please remove the world Load event when world Unload event gets implimented
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-			TilePathMarker.clearAvailableMarkersList(event.world);
+		if (BuildCraftCore.INSTANCE.getEffectiveSide() == EnvType.SERVER) {
+			TilePathMarker.clearAvailableMarkersList(world);
 		}
 	}
 
-	@ForgeSubscribe
-	public void handleWorldUnload(WorldEvent.Unload event) {
+	public static void handleWorldUnload(World world) {
 		// When a world unloads clean from the list of available markers the ones
 		// that were on the unloaded world
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-			TilePathMarker.clearAvailableMarkersList(event.world);
+		if (BuildCraftCore.INSTANCE.getEffectiveSide() == EnvType.SERVER) {
+			TilePathMarker.clearAvailableMarkersList(world);
 		}
 	}
 

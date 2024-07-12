@@ -37,7 +37,6 @@ public class PacketUpdate extends BuildCraftPacket {
 
 	@Override
 	public void writeData(DataOutputStream data) throws IOException {
-
 		data.writeInt(posX);
 		data.writeInt(posY);
 		data.writeInt(posZ);

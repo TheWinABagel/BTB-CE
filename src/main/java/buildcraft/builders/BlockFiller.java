@@ -9,6 +9,7 @@
 
 package buildcraft.builders;
 
+import btw.community.example.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.api.filler.IFillerPattern;
 import buildcraft.core.CreativeTabBuildCraft;
@@ -21,13 +22,10 @@ import net.minecraft.src.BlockContainer;
 import net.minecraft.src.Material;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.Icon;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.World;
-
-import java.util.ArrayList;
 
 public class BlockFiller extends BlockContainer {
 
@@ -51,7 +49,7 @@ public class BlockFiller extends BlockContainer {
 			return false;
 
 		if (!CoreProxy.getProxy().isRenderWorld(world)) {
-			entityplayer.openGui(BuildCraftBuilders.instance, GuiIds.FILLER, world, i, j, k);
+			((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.FILLER, world, i, j, k);
 		}
 		return true;
 
@@ -95,12 +93,6 @@ public class BlockFiller extends BlockContainer {
 	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 		Utils.preDestroyBlock(world, x, y, z);
 		super.breakBlock(world, x, y, z, par5, par6);
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
 	}
 
 	@Override

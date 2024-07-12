@@ -154,7 +154,6 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 
 			BlockIndex newDesination = getNewDestination();
 			if (newDesination != null) {
-				System.out.printf("robot pos is now %d %d %d\n", newDesination.x, newDesination.y, newDesination.z);
 				setDestination(newDesination.x, newDesination.y, newDesination.z);
 			}
 

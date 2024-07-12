@@ -40,7 +40,7 @@ public class GuiBlueprintLibrary extends GuiBuildCraft {
 		this.library = library;
 		container = (ContainerBlueprintLibrary) inventorySlots;
 
-		index = BuildCraftBuilders.getPlayerIndex(player.username);
+		index = BuildCraftBuilders.getPlayerIndex(player.getEntityName());
 	}
 	private GuiButton nextPageButton;
 	private GuiButton prevPageButton;

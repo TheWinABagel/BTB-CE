@@ -104,7 +104,7 @@ jar {
 //				exclude 'buildcraft/energy/**'
 //				exclude 'buildcraft/silicon/**'
 //				exclude 'buildcraft/factory/**'
-				exclude 'buildcraft/builders/**'
+//				exclude 'buildcraft/builders/**'
 			}
 		}
 	}

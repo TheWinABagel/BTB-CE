@@ -6,7 +6,7 @@
  * http://www.mod-buildcraft.com/MMPL-1.0.txt
  */
 package buildcraft;
-/*
+
 import buildcraft.api.blueprints.BptBlock;
 import buildcraft.api.bptblocks.*;
 import buildcraft.api.filler.FillerManager;
@@ -15,47 +15,23 @@ import buildcraft.api.gates.ActionManager;
 import buildcraft.builders.*;
 import buildcraft.builders.filler.FillerRegistry;
 import buildcraft.builders.filler.pattern.*;
-import buildcraft.builders.network.PacketHandlerBuilders;
 import buildcraft.builders.triggers.ActionFiller;
 import buildcraft.builders.triggers.BuildersActionProvider;
 import buildcraft.core.DefaultProps;
-import buildcraft.core.InterModComms;
-import buildcraft.core.Version;
 import buildcraft.core.blueprints.BptPlayerIndex;
 import buildcraft.core.blueprints.BptRootIndex;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.src.Block;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Property;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraft.src.*;
+
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.TreeMap;
-*/
-//@Mod(name = "BuildCraft Builders", version = Version.VERSION, useMetadata = false, modid = "BuildCraft|Builders", dependencies = DefaultProps.DEPENDENCY_CORE)
-//@NetworkMod(channels = {DefaultProps.NET_CHANNEL_NAME}, packetHandler = PacketHandlerBuilders.class, clientSideRequired = true, serverSideRequired = true)
-public class BuildCraftBuilders {
-/*
+
+public class BuildCraftBuilders implements IBuildCraftModule {
+
 	public static final int LIBRARY_PAGE_SIZE = 12;
 	public static final int MAX_BLUEPRINTS_NAME_SIZE = 14;
 	public static BlockMarker markerBlock;
@@ -72,17 +48,69 @@ public class BuildCraftBuilders {
 	public static ActionFiller[] fillerActions;
 	private static BptRootIndex rootBptIndex;
 	public static TreeMap<String, BptPlayerIndex> playerLibrary = new TreeMap<String, BptPlayerIndex>();
-	private static LinkedList<IBuilderHook> hooks = new LinkedList<IBuilderHook>();
-	@Instance("BuildCraft|Builders")
-	public static BuildCraftBuilders instance;
+	private static LinkedList<IBuilderHook> hooks = new LinkedList<>();
 
-	@EventHandler
-	public void init(FMLInitializationEvent evt) {
+	public static BuildCraftBuilders INSTANCE = new BuildCraftBuilders();
+
+    @Override
+	public void init() {
 		// Register gui handler
-		NetworkRegistry.instance().registerGuiHandler(instance, new GuiHandler());
+		NetworkRegistry.instance().registerGuiHandler(getModId(), new GuiHandler());
+
+		templateItem = new ItemBptTemplate(BuildcraftConfig.templateItemId);
+		templateItem.setUnlocalizedName("templateItem");
+		CoreProxy.getProxy().registerItem(templateItem);
+
+		blueprintItem = new ItemBptBluePrint(BuildcraftConfig.blueprintItemId);
+		blueprintItem.setUnlocalizedName("blueprintItem");
+		CoreProxy.getProxy().registerItem(blueprintItem);
+
+		markerBlock = new BlockMarker(BuildcraftConfig.markerBlockId);
+		CoreProxy.getProxy().registerBlock(markerBlock.setUnlocalizedName("markerBlock"));
+		CoreProxy.getProxy().addName(markerBlock, "Land Mark");
+
+		pathMarkerBlock = new BlockPathMarker(BuildcraftConfig.pathMarkerBlockId);
+		CoreProxy.getProxy().registerBlock(pathMarkerBlock.setUnlocalizedName("pathMarkerBlock"));
+		CoreProxy.getProxy().addName(pathMarkerBlock, "Path Mark");
+
+		fillerBlock = new BlockFiller(BuildcraftConfig.fillerBlockId);
+		CoreProxy.getProxy().registerBlock(fillerBlock.setUnlocalizedName("fillerBlock"));
+		CoreProxy.getProxy().addName(fillerBlock, "Filler");
+
+		builderBlock = new BlockBuilder(BuildcraftConfig.builderBlockId);
+		CoreProxy.getProxy().registerBlock(builderBlock.setUnlocalizedName("builderBlock"));
+		CoreProxy.getProxy().addName(builderBlock, "Builder");
+
+		architectBlock = new BlockArchitect(BuildcraftConfig.architectBlockId);
+		CoreProxy.getProxy().registerBlock(architectBlock.setUnlocalizedName("architectBlock"));
+		CoreProxy.getProxy().addName(architectBlock, "Architect Table");
+
+		libraryBlock = new BlockBlueprintLibrary(BuildcraftConfig.blueprintLibraryBlockId);
+		CoreProxy.getProxy().registerBlock(libraryBlock.setUnlocalizedName("libraryBlock"));
+		CoreProxy.getProxy().addName(libraryBlock, "Blueprint Library");
+
+
+		// Create filler registry
+		try {
+			FillerManager.registry = new FillerRegistry();
+
+			// INIT FILLER PATTERNS
+			FillerManager.registry.addPattern(PatternFill.INSTANCE);
+			FillerManager.registry.addPattern(new PatternFlatten());
+			FillerManager.registry.addPattern(new PatternHorizon());
+			FillerManager.registry.addPattern(new PatternClear());
+			FillerManager.registry.addPattern(new PatternBox());
+			FillerManager.registry.addPattern(new PatternPyramid());
+			FillerManager.registry.addPattern(new PatternStairs());
+			FillerManager.registry.addPattern(new PatternCylinder());
+		} catch (Error error) {
+			BCLog.logErrorAPI("Buildcraft", error, IFillerPattern.class);
+			throw error;
+		}
+
+		ActionManager.registerActionProvider(new BuildersActionProvider());
 
 		// Register save handler
-		MinecraftForge.EVENT_BUS.register(new EventHandlerBuilders());
 
 		new BptBlock(0); // default bpt block
 
@@ -171,101 +199,49 @@ public class BuildCraftBuilders {
 		new BptBlockWallSide(markerBlock.blockID);
 		new BptBlockWallSide(pathMarkerBlock.blockID);
 
-		if (BuildCraftCore.loadDefaultRecipes) {
-			loadRecipes();
-		}
 
+        TileEntity.addMapping(TileMarker.class, "Marker");
+        TileEntity.addMapping(TileFiller.class, "Filler");
+        TileEntity.addMapping(TileBuilder.class, "net.minecraft.src.builders.TileBuilder");
+        TileEntity.addMapping(TileArchitect.class, "net.minecraft.src.builders.TileTemplate");
+        TileEntity.addMapping(TilePathMarker.class, "net.minecraft.src.builders.TilePathMarker");
+        TileEntity.addMapping(TileBlueprintLibrary.class, "net.minecraft.src.builders.TileBlueprintLibrary");
 	}
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent evt) {
-		Property templateItemId = BuildCraftCore.mainConfiguration.getItem("templateItem.id", DefaultProps.TEMPLATE_ITEM_ID);
-		Property blueprintItemId = BuildCraftCore.mainConfiguration.getItem("blueprintItem.id", DefaultProps.BLUEPRINT_ITEM_ID);
-		Property markerId = BuildCraftCore.mainConfiguration.getBlock("marker.id", DefaultProps.MARKER_ID);
-		Property pathMarkerId = BuildCraftCore.mainConfiguration.getBlock("pathMarker.id", DefaultProps.PATH_MARKER_ID);
-		Property fillerId = BuildCraftCore.mainConfiguration.getBlock("filler.id", DefaultProps.FILLER_ID);
-		Property builderId = BuildCraftCore.mainConfiguration.getBlock("builder.id", DefaultProps.BUILDER_ID);
-		Property architectId = BuildCraftCore.mainConfiguration.getBlock("architect.id", DefaultProps.ARCHITECT_ID);
-		Property libraryId = BuildCraftCore.mainConfiguration.getBlock("blueprintLibrary.id", DefaultProps.BLUEPRINT_LIBRARY_ID);
+    @Override
+    public void handleConfigProps() {
+		fillerDestroy = BuildcraftConfig.getBoolean("FillerDestroysBlocks");
+		fillerLifespanTough = BuildcraftConfig.getInt("FillerItemLifespanTough");
+		fillerLifespanNormal = BuildcraftConfig.getInt("FillerItemLifespanNormal");
 
-		Property fillerDestroyProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "filler.destroy", DefaultProps.FILLER_DESTROY);
-		fillerDestroyProp.comment = "If true, Filler will destroy blocks instead of breaking them.";
-		fillerDestroy = fillerDestroyProp.getBoolean(DefaultProps.FILLER_DESTROY);
+		BuildcraftConfig.templateItemId = BuildcraftConfig.getInt("TemplateItemId");
+		BuildcraftConfig.blueprintItemId = BuildcraftConfig.getInt("BlueprintItemId");
+		BuildcraftConfig.markerBlockId = BuildcraftConfig.getInt("MarkerBlockId");
+		BuildcraftConfig.pathMarkerBlockId = BuildcraftConfig.getInt("PathMarkerBlockId");
+		BuildcraftConfig.fillerBlockId = BuildcraftConfig.getInt("FillerBlockId");
+		BuildcraftConfig.builderBlockId = BuildcraftConfig.getInt("BuilderBlockId");
+		BuildcraftConfig.architectBlockId = BuildcraftConfig.getInt("ArchitectBlockId");
+		BuildcraftConfig.blueprintLibraryBlockId = BuildcraftConfig.getInt("BlueprintLibraryBlockId");
+	}
 
-		Property fillerLifespanToughProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "filler.lifespan.tough", DefaultProps.FILLER_LIFESPAN_TOUGH);
-		fillerLifespanToughProp.comment = "Lifespan in ticks of items dropped by the filler from 'tough' blocks (those that can't be broken by hand)";
-		fillerLifespanTough = fillerLifespanToughProp.getInt(DefaultProps.FILLER_LIFESPAN_TOUGH);
+    @Override
+    public void registerConfigForSettings(BuildCraftAddon addon) {
+		addon.registerProp("FillerDestroysBlocks", DefaultProps.FILLER_DESTROY, "Builders\n\n# If true, Filler will destroy blocks instead of breaking them. Default: false (Boolean)");
+		addon.registerProp("FillerItemLifespanTough", 20, "Lifespan in ticks of items dropped by the filler from 'tough' blocks (those that can't be broken by hand). Default: 20 (Integer)");
+		addon.registerProp("FillerItemLifespanNormal", 6000, "Lifespan in ticks of items dropped by the filler from non-tough blocks (those that can be broken by hand). Default: 6000 (Integer)");
+	}
 
-		Property fillerLifespanNormalProp = BuildCraftCore.mainConfiguration.get(Configuration.CATEGORY_GENERAL, "filler.lifespan.other", DefaultProps.FILLER_LIFESPAN_NORMAL);
-		fillerLifespanNormalProp.comment = "Lifespan in ticks of items dropped by the filler from non-tough blocks (those that can be broken by hand)";
-		fillerLifespanNormal = fillerLifespanNormalProp.getInt(DefaultProps.FILLER_LIFESPAN_NORMAL);
+    @Override
+    public void registerConfigForIds(BuildCraftAddon addon) {
+		addon.registerProp("TemplateItemId", DefaultProps.TEMPLATE_ITEM_ID, "Builders\n");
+		addon.registerProp("BlueprintItemId", DefaultProps.BLUEPRINT_ITEM_ID);
 
-		templateItem = new ItemBptTemplate(templateItemId.getInt());
-		templateItem.setUnlocalizedName("templateItem");
-		LanguageRegistry.addName(templateItem, "Template");
-		CoreProxy.getProxy().registerItem(templateItem);
-
-		blueprintItem = new ItemBptBluePrint(blueprintItemId.getInt());
-		blueprintItem.setUnlocalizedName("blueprintItem");
-		LanguageRegistry.addName(blueprintItem, "Blueprint");
-		CoreProxy.getProxy().registerItem(blueprintItem);
-
-		markerBlock = new BlockMarker(markerId.getInt());
-		CoreProxy.getProxy().registerBlock(markerBlock.setUnlocalizedName("markerBlock"));
-		CoreProxy.getProxy().addName(markerBlock, "Land Mark");
-
-		pathMarkerBlock = new BlockPathMarker(pathMarkerId.getInt());
-		CoreProxy.getProxy().registerBlock(pathMarkerBlock.setUnlocalizedName("pathMarkerBlock"));
-		CoreProxy.getProxy().addName(pathMarkerBlock, "Path Mark");
-
-		fillerBlock = new BlockFiller(fillerId.getInt());
-		CoreProxy.getProxy().registerBlock(fillerBlock.setUnlocalizedName("fillerBlock"));
-		CoreProxy.getProxy().addName(fillerBlock, "Filler");
-
-		builderBlock = new BlockBuilder(builderId.getInt());
-		CoreProxy.getProxy().registerBlock(builderBlock.setUnlocalizedName("builderBlock"));
-		CoreProxy.getProxy().addName(builderBlock, "Builder");
-
-		architectBlock = new BlockArchitect(architectId.getInt());
-		CoreProxy.getProxy().registerBlock(architectBlock.setUnlocalizedName("architectBlock"));
-		CoreProxy.getProxy().addName(architectBlock, "Architect Table");
-
-		libraryBlock = new BlockBlueprintLibrary(libraryId.getInt());
-		CoreProxy.getProxy().registerBlock(libraryBlock.setUnlocalizedName("libraryBlock"));
-		CoreProxy.getProxy().addName(libraryBlock, "Blueprint Library");
-
-		GameRegistry.registerTileEntity(TileMarker.class, "Marker");
-		GameRegistry.registerTileEntity(TileFiller.class, "Filler");
-		GameRegistry.registerTileEntity(TileBuilder.class, "net.minecraft.src.builders.TileBuilder");
-		GameRegistry.registerTileEntity(TileArchitect.class, "net.minecraft.src.builders.TileTemplate");
-		GameRegistry.registerTileEntity(TilePathMarker.class, "net.minecraft.src.builders.TilePathMarker");
-		GameRegistry.registerTileEntity(TileBlueprintLibrary.class, "net.minecraft.src.builders.TileBlueprintLibrary");
-
-		if (BuildCraftCore.mainConfiguration.hasChanged()) {
-			BuildCraftCore.mainConfiguration.save();
-		}
-
-		MinecraftForge.EVENT_BUS.register(this);
-
-		// Create filler registry
-		try {
-			FillerManager.registry = new FillerRegistry();
-
-			// INIT FILLER PATTERNS
-			FillerManager.registry.addPattern(PatternFill.INSTANCE);
-			FillerManager.registry.addPattern(new PatternFlatten());
-			FillerManager.registry.addPattern(new PatternHorizon());
-			FillerManager.registry.addPattern(new PatternClear());
-			FillerManager.registry.addPattern(new PatternBox());
-			FillerManager.registry.addPattern(new PatternPyramid());
-			FillerManager.registry.addPattern(new PatternStairs());
-			FillerManager.registry.addPattern(new PatternCylinder());
-		} catch (Error error) {
-			BCLog.logErrorAPI("Buildcraft", error, IFillerPattern.class);
-			throw error;
-		}
-
-		ActionManager.registerActionProvider(new BuildersActionProvider());
+		addon.registerProp("MarkerBlockId", DefaultProps.MARKER_ID);
+		addon.registerProp("PathMarkerBlockId", DefaultProps.PATH_MARKER_ID);
+		addon.registerProp("FillerBlockId", DefaultProps.FILLER_ID);
+		addon.registerProp("BuilderBlockId", DefaultProps.BUILDER_ID);
+		addon.registerProp("ArchitectBlockId", DefaultProps.ARCHITECT_ID);
+		addon.registerProp("BlueprintLibraryBlockId", DefaultProps.BLUEPRINT_LIBRARY_ID);
 	}
 
 	public static void loadRecipes() {
@@ -297,11 +273,6 @@ public class BuildCraftBuilders {
 
 //		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(libraryBlock, 1), new Object[]{"bbb", "bBb", "bbb", 'b',
 //			new ItemStack(blueprintItem), 'B', Block.bookShelf});
-	}
-
-	@EventHandler
-	public void processIMCRequests(FMLInterModComms.IMCEvent event) {
-		InterModComms.processIMC(event);
 	}
 
 	public static BptPlayerIndex getPlayerIndex(String name) {
@@ -354,18 +325,27 @@ public class BuildCraftBuilders {
 		}
 	}
 
-	@EventHandler
+/*	@EventHandler
 	public void ServerStop(FMLServerStoppingEvent event) {
 		TilePathMarker.clearAvailableMarkersList();
-	}
-
-	@ForgeSubscribe
-	@Environment(EnvType.CLIENT)
-	public void loadTextures(TextureStitchEvent.Pre evt) {
-		if (evt.map.textureType == 0) {
-			for (FillerPattern pattern : FillerPattern.patterns) {
-				pattern.registerIcon(evt.map);
-			}
-		}
 	}*/
+
+    @Override
+    public void textureHook(TextureMap map) {
+        if (map.getTextureType() == 0) {
+            for (FillerPattern pattern : FillerPattern.patterns) {
+                pattern.registerIcon(map);
+            }
+        }
+    }
+
+    @Override
+    public String getModId() {
+        return "bcbuilders";
+    }
+
+    @Override
+    public void initRecipes() {
+        loadRecipes();
+    }
 }

@@ -36,7 +36,7 @@ import net.minecraftforge.fluids.RenderBlockFluid;
 
 import java.util.TreeMap;
 
-public class BuildCraftCore implements IBuildcraftModule {
+public class BuildCraftCore implements IBuildCraftModule {
 
 	public enum RenderMode {
 		Full, NoDynamic

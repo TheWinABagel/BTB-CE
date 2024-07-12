@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.TextureMap;
 
-public interface IBuildcraftModule {
+public interface IBuildCraftModule {
 
     default void preInit() {
 
@@ -14,13 +14,12 @@ public interface IBuildcraftModule {
 
     }
 
-
-
-    default void initRecipes() {
+    default void postSetup() {
 
     }
 
-    default void postSetup() {
+    @Environment(EnvType.CLIENT)
+    default void textureHook(TextureMap map) {
 
     }
 
@@ -32,10 +31,7 @@ public interface IBuildcraftModule {
 
     void registerConfigForIds(BuildCraftAddon addon);
 
-    @Environment(EnvType.CLIENT)
-    default void textureHook(TextureMap map) {
-
-    }
+    void initRecipes();
 
     String getModId();
 }

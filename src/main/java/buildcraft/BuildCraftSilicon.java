@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class BuildCraftSilicon implements IBuildcraftModule {
+public class BuildCraftSilicon implements IBuildCraftModule {
 	public static ItemRedstoneChipset redstoneChipset;
 	public static BlockLaserTable assemblyTableBlock;
 	public static BlockLaserTable advancedCraftingTableBlock;

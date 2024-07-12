@@ -1,9 +1,7 @@
 package buildcraft;
 
 import btw.BTWAddon;
-import buildcraft.core.DefaultProps;
 import buildcraft.core.ItemBlockBuildCraft;
-import buildcraft.core.network.PacketHandler;
 import buildcraft.transport.network.PacketGateExpansionMap;
 import net.minecraft.src.*;
 import net.minecraftforge.PacketDispatcher;
@@ -15,7 +13,7 @@ import java.util.Map;
 public class BuildCraftAddon extends BTWAddon {
 
     public static final BuildCraftAddon INSTANCE = new BuildCraftAddon();
-    public static final List<IBuildcraftModule> MODULES = new LinkedList<>();
+    public static final List<IBuildCraftModule> MODULES = new LinkedList<>();
 
     static {
         MODULES.add(BuildCraftCore.INSTANCE);
@@ -23,31 +21,27 @@ public class BuildCraftAddon extends BTWAddon {
         MODULES.add(BuildCraftEnergy.INSTANCE);
         MODULES.add(BuildCraftFactory.INSTANCE);
         MODULES.add(BuildCraftSilicon.INSTANCE);
-//        MODULES.add(BuildCraftBuilders.INSTANCE);
+        MODULES.add(BuildCraftBuilders.INSTANCE);
     }
 
-    public BuildCraftAddon() {
-
-    }
-
-
+    public BuildCraftAddon() {}
 
     @Override
     public void postSetup() {
         this.modID = "buildcraft";
-        MODULES.forEach(IBuildcraftModule::postSetup);
+        MODULES.forEach(IBuildCraftModule::postSetup);
     }
 
     @Override
     public void preInitialize() {
         MODULES.forEach(module -> module.registerConfigForSettings(this));
         MODULES.forEach(module -> module.registerConfigForIds(this));
-        MODULES.forEach(IBuildcraftModule::preInit);
+        MODULES.forEach(IBuildCraftModule::preInit);
     }
 
     @Override
     public void initialize() {
-        MODULES.forEach(IBuildcraftModule::init);
+        MODULES.forEach(IBuildCraftModule::init);
         createAssociatedItemsForModBlocks();
     }
 
@@ -61,16 +55,14 @@ public class BuildCraftAddon extends BTWAddon {
     @Override
     public void handleConfigProperties(Map<String, String> propertyValues) {
         BuildcraftConfig.putAll(propertyValues);
-        MODULES.forEach(IBuildcraftModule::handleConfigProps);
+        MODULES.forEach(IBuildCraftModule::handleConfigProps);
     }
-
-
 
     @Override
     public void postInitialize() {
-        MODULES.forEach(IBuildcraftModule::postInit);
+        MODULES.forEach(IBuildCraftModule::postInit);
         if (BuildCraftCore.loadDefaultRecipes) {
-            MODULES.forEach(IBuildcraftModule::initRecipes);
+            MODULES.forEach(IBuildCraftModule::initRecipes);
         }
     }
 
@@ -78,19 +70,8 @@ public class BuildCraftAddon extends BTWAddon {
     @Override
     public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
         PacketGateExpansionMap pkt = new PacketGateExpansionMap();
+        System.out.println("sending packet gate expansion map to players");
         PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), playerMP);
-    }
-
-    @Override
-    public boolean serverCustomPacketReceived(NetServerHandler handler, Packet250CustomPayload packet) {
-        PacketHandler.INSTANCE.onPacketData(handler.playerEntity, packet);
-        return super.serverCustomPacketReceived(handler, packet);
-    }
-
-    @Override
-    public boolean clientCustomPacketReceived(Minecraft mcInstance, Packet250CustomPayload packet) {
-        PacketHandler.INSTANCE.onPacketData(mcInstance.thePlayer, packet);
-        return super.clientCustomPacketReceived(mcInstance, packet);
     }
 
     public static void textureHook(TextureMap map) {
@@ -100,7 +81,6 @@ public class BuildCraftAddon extends BTWAddon {
     public void registerProp(String propertyName, Object defaultValue, String comment) {
         this.registerProperty(propertyName, defaultValue.toString(), comment);
     }
-
 
     public void registerProp(String propertyName, Object defaultValue) {
         this.registerProperty(propertyName, defaultValue.toString(), "");
