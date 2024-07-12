@@ -88,7 +88,7 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 	}
 
 	public void sendNetworkUpdate() {
-		if (CoreProxy.getProxy().isSimulating(worldObj)) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj)) {
 			CoreProxy.getProxy().sendToPlayers(getUpdatePacket(), worldObj, xCoord, yCoord, zCoord, DefaultProps.NETWORK_UPDATE_RANGE);
 		}
 	}

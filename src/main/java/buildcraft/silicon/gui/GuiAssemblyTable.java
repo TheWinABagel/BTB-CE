@@ -112,7 +112,7 @@ public class GuiAssemblyTable extends GuiAdvancedInterface {
 		updateRecipes();
 
 		// Request current selection from server
-		if (CoreProxy.getProxy().isRenderWorld(assemblyTable.worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(assemblyTable.worldObj)) {
 			CoreProxy.getProxy().sendToServer(new PacketCoordinates(PacketIds.SELECTION_ASSEMBLY_GET, assemblyTable.xCoord, assemblyTable.yCoord,
 					assemblyTable.zCoord).getPacket());
 		}
@@ -194,7 +194,7 @@ public class GuiAssemblyTable extends GuiAdvancedInterface {
 
 			message.stack = slot.recipe.output;
 
-			if (CoreProxy.getProxy().isRenderWorld(table.worldObj)) {
+			if (CoreProxy.getProxy().isClientWorld(table.worldObj)) {
 
 				PacketNBT packet = new PacketNBT(PacketIds.SELECTION_ASSEMBLY, message.getNBT(), table.xCoord, table.yCoord, table.zCoord);
 

@@ -26,7 +26,6 @@ import net.minecraft.src.Icon;
 import net.minecraft.src.World;
 import net.minecraftforge.common.ForgeDirection;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockQuarry extends BlockBuildCraft {
@@ -139,7 +138,7 @@ public class BlockQuarry extends BlockBuildCraft {
 	@Override
 	public void breakBlock(World world, int i, int j, int k, int par5, int par6) {
 
-		if (!CoreProxy.getProxy().isSimulating(world))
+		if (!CoreProxy.getProxy().isServerWorld(world))
 			return;
 
 		TileEntity tile = world.getBlockTileEntity(i, j, k);

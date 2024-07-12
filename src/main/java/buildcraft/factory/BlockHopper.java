@@ -59,7 +59,7 @@ public class BlockHopper extends BlockBuildCraft {
 			}
 		}
 
-		if (!CoreProxy.getProxy().isRenderWorld(world)) {
+		if (!CoreProxy.getProxy().isClientWorld(world)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.HOPPER, world, x, y, z);
 		}
 

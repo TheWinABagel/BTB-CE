@@ -180,7 +180,7 @@ public final class TravelingItem {
 	}
 
 	public EntityItem toEntityItem() {
-		if (container != null && !CoreProxy.getProxy().isRenderWorld(container.worldObj)) {
+		if (container != null && !CoreProxy.getProxy().isClientWorld(container.worldObj)) {
 			if (getItemStack().stackSize <= 0)
 				return null;
 

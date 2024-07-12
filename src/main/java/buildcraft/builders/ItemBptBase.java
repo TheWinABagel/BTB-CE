@@ -14,7 +14,6 @@ import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.blueprints.BptBase;
 import buildcraft.core.proxy.CoreProxy;
-import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Icon;
@@ -45,7 +44,7 @@ public abstract class ItemBptBase extends ItemBuildCraft {
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		if (CoreProxy.getProxy().isSimulating(world)) {
+		if (CoreProxy.getProxy().isServerWorld(world)) {
 			BptBase bpt = BuildCraftBuilders.getBptRootIndex().getBluePrint(itemStack.getItemDamage());
 			if (bpt != null)
 				return BuildCraftBuilders.getBptItemStack(itemStack.itemID, itemStack.getItemDamage(), bpt.getName());

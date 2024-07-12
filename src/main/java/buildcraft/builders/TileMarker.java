@@ -90,7 +90,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 	boolean showSignals = false;
 
 	public void updateSignals() {
-		if (CoreProxy.getProxy().isSimulating(worldObj)) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj)) {
 			showSignals = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
 			sendNetworkUpdate();
 		}
@@ -152,7 +152,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 	}
 
 	public void tryConnection() {
-		if (CoreProxy.getProxy().isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isClientWorld(worldObj))
 			return;
 
 		for (int j = 0; j < 3; ++j) {
@@ -391,7 +391,7 @@ public class TileMarker extends TileBuildCraft implements IAreaProvider {
 
 		signals = null;
 
-		if (CoreProxy.getProxy().isSimulating(worldObj) && markerOrigin != null && markerOrigin != this) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj) && markerOrigin != null && markerOrigin != this) {
 			markerOrigin.sendNetworkUpdate();
 		}
 	}

@@ -68,12 +68,12 @@ public abstract class EntityLaser extends Entity {
 		if (head == null || tail == null)
 			return;
 
-		if (CoreProxy.getProxy().isSimulating(worldObj) && needsUpdate) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj) && needsUpdate) {
 			updateDataServer();
 			needsUpdate = false;
 		}
 
-		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(worldObj)) {
 			updateDataClient();
 		}
 

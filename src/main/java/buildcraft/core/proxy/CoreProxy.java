@@ -61,11 +61,11 @@ public class CoreProxy {
 	}
 
 	/* SIMULATION */
-	public boolean isSimulating(World world) {
+	public boolean isServerWorld(World world) {
 		return !world.isRemote;
 	}
 
-	public boolean isRenderWorld(World world) {
+	public boolean isClientWorld(World world) {
 		return world.isRemote;
 	}
 

@@ -41,7 +41,7 @@ public class TileTank extends TileBuildCraft implements IFluidHandler {
 	/* UPDATING */
 	@Override
 	public void updateEntity() {
-		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(worldObj)) {
 			int lightValue = getFluidLightLevel();
 			if (prevLightValue != lightValue) {
 				prevLightValue = lightValue;

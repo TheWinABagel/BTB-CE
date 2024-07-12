@@ -127,7 +127,7 @@ public class PipeTransportPower extends PipeTransport {
 
 	@Override
 	public void updateEntity() {
-		if (CoreProxy.getProxy().isRenderWorld(container.worldObj))
+		if (CoreProxy.getProxy().isClientWorld(container.worldObj))
 			return;
 
 		step();

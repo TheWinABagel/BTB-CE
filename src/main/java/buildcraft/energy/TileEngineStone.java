@@ -44,7 +44,7 @@ public class TileEngineStone extends TileEngineWithInventory {
 
 	@Override
 	public boolean onBlockActivated(EntityPlayer player, ForgeDirection side) {
-		if (!CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (!CoreProxy.getProxy().isClientWorld(worldObj)) {
 			((EntityPlayerExtension) player).openGui(BuildCraftEnergy.INSTANCE.getModId(), GuiIds.ENGINE_STONE, worldObj, xCoord, yCoord, zCoord);
 		}
 		return true;

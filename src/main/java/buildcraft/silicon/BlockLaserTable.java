@@ -47,7 +47,7 @@ public abstract class BlockLaserTable extends BlockContainer {
 		if (entityplayer.isSneaking())
 			return false;
 
-		if (!CoreProxy.getProxy().isRenderWorld(world)) {
+		if (!CoreProxy.getProxy().isClientWorld(world)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftSilicon.INSTANCE.getModId(), getOldMeta(), world, i, j, k);
 		}
 		return true;

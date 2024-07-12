@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Set;
 
 import btw.community.example.extensions.BlockUnloadExtension;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
@@ -137,12 +136,12 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 	@Override
 	public void updateEntity() {
-		if (!isAlive && CoreProxy.getProxy().isSimulating(worldObj)) {
+		if (!isAlive && CoreProxy.getProxy().isServerWorld(worldObj)) {
 //			System.out.println("is not alive, and is server world");
 			super.updateEntity();
 			return;
 		}
-		if (!CoreProxy.getProxy().isSimulating(worldObj) && isAlive) {
+		if (!CoreProxy.getProxy().isServerWorld(worldObj) && isAlive) {
 //			System.out.println("is alive, and is client world");
 			super.updateEntity();
 			return;
@@ -159,7 +158,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 			}
 		}
 
-		if (CoreProxy.getProxy().isSimulating(worldObj) && inProcess) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj) && inProcess) {
 			sendNetworkUpdate();
 		}
 //		System.out.println("1 world is " +worldObj);
@@ -681,7 +680,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	public void initialize() {
 		super.initialize();
 
-		if (CoreProxy.getProxy().isSimulating(this.worldObj) && !box.initialized) {
+		if (CoreProxy.getProxy().isServerWorld(this.worldObj) && !box.initialized) {
 			setBoundaries(false);
 		}
 

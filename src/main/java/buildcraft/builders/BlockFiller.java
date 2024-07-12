@@ -48,7 +48,7 @@ public class BlockFiller extends BlockContainer {
 		if (entityplayer.isSneaking())
 			return false;
 
-		if (!CoreProxy.getProxy().isRenderWorld(world)) {
+		if (!CoreProxy.getProxy().isClientWorld(world)) {
 			((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.FILLER, world, i, j, k);
 		}
 		return true;

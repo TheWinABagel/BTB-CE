@@ -294,7 +294,7 @@ public class Utils {
 	public static void preDestroyBlock(World world, int i, int j, int k) {
 		TileEntity tile = world.getBlockTileEntity(i, j, k);
 
-		if (tile instanceof IInventory && !CoreProxy.getProxy().isRenderWorld(world)) {
+		if (tile instanceof IInventory && !CoreProxy.getProxy().isClientWorld(world)) {
 			if (!(tile instanceof IDropControlInventory) || ((IDropControlInventory) tile).doDrop()) {
 				InvUtils.dropItems(world, (IInventory) tile, i, j, k);
 				InvUtils.wipeInventory((IInventory) tile);

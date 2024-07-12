@@ -120,7 +120,7 @@ public class TileRefinery extends TileBuildCraft implements IFluidHandler, IPowe
 
 	@Override
 	public void updateEntity() {
-		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(worldObj)) {
 			simpleAnimationIterate();
 			return;
 		}

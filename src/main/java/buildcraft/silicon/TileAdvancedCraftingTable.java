@@ -236,7 +236,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 			craftSlot = new SlotCrafting(internalPlayer, internalInventoryCrafting, craftResult, 0, 0, 0);
 			updateRecipe();
 		}
-		if (!CoreProxy.getProxy().isSimulating(worldObj))
+		if (!CoreProxy.getProxy().isServerWorld(worldObj))
 			return;
 		if (lastMode == ActionMachineControl.Mode.Off)
 			return;
@@ -364,7 +364,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	public void updateCraftingMatrix(int slot, ItemStack stack) {
 		craftingSlots.setInventorySlotContents(slot, stack);
 		updateRecipe();
-		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(worldObj)) {
 			PacketSlotChange packet = new PacketSlotChange(PacketIds.ADVANCED_WORKBENCH_SETSLOT, xCoord, yCoord, zCoord, slot, stack);
 			CoreProxy.getProxy().sendToServer(packet.getPacket());
 		}

@@ -72,7 +72,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 
 	@Override
 	public void initialize() {
-		if (!CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (!CoreProxy.getProxy().isClientWorld(worldObj)) {
 			powerHandler.configure(minEnergyReceived(), maxEnergyReceived(), 1, getMaxEnergy());
 			checkRedstonePower();
 		}
@@ -103,7 +103,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	}
 
 	public final EnergyStage getEnergyStage() {
-		if (CoreProxy.getProxy().isSimulating(worldObj)) {
+		if (CoreProxy.getProxy().isServerWorld(worldObj)) {
 			if (energyStage == EnergyStage.OVERHEAT)
 				return energyStage;
 			EnergyStage newStage = computeEnergyStage();
@@ -134,7 +134,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	}
 
 	public float getPistonSpeed() {
-		if (CoreProxy.getProxy().isSimulating(worldObj))
+		if (CoreProxy.getProxy().isServerWorld(worldObj))
 			return Math.max(0.16f * getHeatLevel(), 0.01f);
 		switch (getEnergyStage()) {
 			case BLUE:
@@ -154,7 +154,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	public void updateEntity() {
 		super.updateEntity();
 
-		if (CoreProxy.getProxy().isRenderWorld(worldObj)) {
+		if (CoreProxy.getProxy().isClientWorld(worldObj)) {
 			if (progressPart != 0) {
 				progress += getPistonSpeed();
 
@@ -369,7 +369,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 
 	@Override
 	public void doWork(PowerHandler workProvider) {
-		if (CoreProxy.getProxy().isRenderWorld(worldObj))
+		if (CoreProxy.getProxy().isClientWorld(worldObj))
 			return;
 
 		addEnergy(powerHandler.useEnergy(1, maxEnergyReceived(), true) * 0.95F);

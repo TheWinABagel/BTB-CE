@@ -219,7 +219,7 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 				//System.out.printf("RobotChanging %d %d %d %s\n",target.x, target.y, target.z, target.mode);
 				if (wait <= 0 && BlockUtil.canChangeBlock(worldObj, target.x, target.y, target.z)) {
 
-					if (!CoreProxy.getProxy().isRenderWorld(worldObj)) {
+					if (!CoreProxy.getProxy().isClientWorld(worldObj)) {
 
 						if (target.mode == Mode.ClearIfInvalid) {
 

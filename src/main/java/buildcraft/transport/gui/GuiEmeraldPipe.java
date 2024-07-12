@@ -51,7 +51,7 @@ public class GuiEmeraldPipe extends GuiBuildCraft {
 
 	@Override
 	public void onGuiClosed() {
-		if (CoreProxy.getProxy().isRenderWorld(pipe.getWorld())) {
+		if (CoreProxy.getProxy().isClientWorld(pipe.getWorld())) {
 			pipe.getStateController().setCurrentState(button.getController().getCurrentState());
 			PacketGuiReturn pkt = new PacketGuiReturn(pipe.getContainer());
 			pkt.sendPacket();
