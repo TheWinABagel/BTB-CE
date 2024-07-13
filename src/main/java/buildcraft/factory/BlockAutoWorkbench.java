@@ -9,7 +9,7 @@
 
 package buildcraft.factory;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftFactory;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.GuiIds;

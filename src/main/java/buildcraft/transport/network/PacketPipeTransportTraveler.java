@@ -1,5 +1,6 @@
 package buildcraft.transport.network;
 
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.BuildCraftPacket;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.utils.EnumColor;
@@ -27,6 +28,7 @@ public class PacketPipeTransportTraveler extends BuildCraftPacket {
 	public int posZ;
 
 	public PacketPipeTransportTraveler() {
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	//sent from server to client

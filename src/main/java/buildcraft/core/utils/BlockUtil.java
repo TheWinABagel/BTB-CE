@@ -7,17 +7,14 @@
  */
 package buildcraft.core.utils;
 
-import btw.community.example.injected.BlockExtension;
+import dev.bagel.btb.injected.BlockExtension;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftEnergy;
 import buildcraft.api.core.BuildCraftAPI;
-import buildcraft.core.proxy.CoreProxy;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockFluid;
 import net.minecraft.src.EntityItem;

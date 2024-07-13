@@ -7,7 +7,7 @@
  */
 package buildcraft.transport;
 
-import btw.community.example.mixin.accessors.BlockAccessor;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.GateExpansions;
 import buildcraft.api.gates.IGateExpansion;

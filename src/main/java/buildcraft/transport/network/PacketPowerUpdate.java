@@ -1,5 +1,6 @@
 package buildcraft.transport.network;
 
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.PacketCoordinates;
 import buildcraft.core.network.PacketIds;
 import java.io.DataInputStream;
@@ -12,12 +13,12 @@ public class PacketPowerUpdate extends PacketCoordinates {
 	public short[] displayPower;
 
 	public PacketPowerUpdate() {
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	public PacketPowerUpdate(int x, int y, int z) {
 		super(PacketIds.PIPE_POWER, x, y, z);
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	@Override

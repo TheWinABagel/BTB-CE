@@ -1,6 +1,7 @@
 package buildcraft.transport.network;
 
 import buildcraft.api.gates.GateExpansions;
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.BuildCraftPacket;
 import buildcraft.core.network.PacketIds;
 import com.google.common.collect.BiMap;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class PacketGateExpansionMap extends BuildCraftPacket {
 
 	public PacketGateExpansionMap() {
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	@Override

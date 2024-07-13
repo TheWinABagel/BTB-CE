@@ -1,5 +1,6 @@
 package buildcraft.transport.network;
 
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.PacketCoordinates;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.proxy.CoreProxy;
@@ -31,10 +32,11 @@ public class PacketFluidUpdate extends PacketCoordinates {
 	public PacketFluidUpdate(int xCoord, int yCoord, int zCoord, boolean chunkPacket) {
 		super(PacketIds.PIPE_LIQUID, xCoord, yCoord, zCoord);
 		this.isChunkDataPacket = chunkPacket;
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	public PacketFluidUpdate() {
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	@Override
@@ -46,19 +48,16 @@ public class PacketFluidUpdate extends PacketCoordinates {
 			return;
 
 		TileEntity entity = world.getBlockTileEntity(posX, posY, posZ);
-		if (!(entity instanceof TileGenericPipe))
+		if (!(entity instanceof TileGenericPipe pipe))
 			return;
 
-		TileGenericPipe pipe = (TileGenericPipe) entity;
-		if (pipe.pipe == null)
+        if (pipe.pipe == null)
 			return;
 
-		if (!(pipe.pipe.transport instanceof PipeTransportFluids))
+		if (!(pipe.pipe.transport instanceof PipeTransportFluids transLiq))
 			return;
 
-		PipeTransportFluids transLiq = ((PipeTransportFluids) pipe.pipe.transport);
-
-		renderCache = transLiq.renderCache;
+        renderCache = transLiq.renderCache;
 		colorRenderCache = transLiq.colorRenderCache;
 
 		byte[] dBytes = new byte[2];

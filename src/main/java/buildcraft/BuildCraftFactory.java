@@ -7,9 +7,11 @@
  */
 package buildcraft;
 import buildcraft.core.DefaultProps;
+import buildcraft.core.network.PacketHandler;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.factory.*;
 
+import buildcraft.factory.network.PacketHandlerFactory;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -189,6 +191,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		new BptBlockRefinery(refineryBlock.blockID);
 		new BptBlockTank(tankBlock.blockID);
 
+		BuildCraftAddon.registerBCPacketHandler(DefaultProps.FACTORY_CHANNEL_NAME, new PacketHandlerFactory());
 	}
 
 	@Override

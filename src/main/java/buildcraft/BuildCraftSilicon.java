@@ -16,6 +16,7 @@ import buildcraft.core.DefaultProps;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.silicon.*;
 import buildcraft.silicon.ItemRedstoneChipset.Chipset;
+import buildcraft.silicon.network.PacketHandlerSilicon;
 import buildcraft.silicon.recipes.GateExpansionRecipe;
 import buildcraft.silicon.recipes.GateLogicSwapRecipe;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
@@ -84,6 +85,7 @@ public class BuildCraftSilicon implements IBuildCraftModule {
 		new BptBlockInventory(assemblyTableBlock.blockID);
 
 		SiliconProxy.proxy.registerRenderers();
+		BuildCraftAddon.registerBCPacketHandler(DefaultProps.SILICON_CHANNEL_NAME, new PacketHandlerSilicon());
 	}
 
 	@Override

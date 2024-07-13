@@ -17,7 +17,11 @@ public class DefaultProps {
 	public static final String DEPENDENCY_TRANSPORT = "required-after:BuildCraft|Transport@" + Version.VERSION;
 
 	public static int WORLD_HEIGHT = 256;
-	public static final String NET_CHANNEL_NAME = "buildcraft|CR";
+	public static final String CORE_CHANNEL_NAME = "buildcraft|CR";
+	public static final String BUILDERS_CHANNEL_NAME = "buildcraft|BLD";
+	public static final String TRANSPORT_CHANNEL_NAME = "buildcraft|TSP";
+	public static final String SILICON_CHANNEL_NAME = "buildcraft|SLC";
+	public static final String FACTORY_CHANNEL_NAME = "buildcraft|FCT";
 	public static int NETWORK_UPDATE_RANGE = 128;
 	public static int PIPE_CONTENTS_RENDER_DIST = 24;
 

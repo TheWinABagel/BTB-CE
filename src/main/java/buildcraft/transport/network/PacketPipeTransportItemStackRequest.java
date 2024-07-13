@@ -1,5 +1,6 @@
 package buildcraft.transport.network;
 
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.BuildCraftPacket;
 import buildcraft.core.network.PacketIds;
 import buildcraft.transport.TravelingItem;
@@ -18,12 +19,12 @@ public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 
 	public PacketPipeTransportItemStackRequest(EntityPlayer player) {
 		this.player = player;
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	public PacketPipeTransportItemStackRequest(int travelerID) {
 		this.travelerID = travelerID;
-//		this.channel = "buildcraft|TP";
+		this.channel = DefaultProps.TRANSPORT_CHANNEL_NAME;
 	}
 
 	@Override

@@ -10,9 +10,9 @@ public class TransportProxy {
 		if (BuildCraftCore.INSTANCE.getEffectiveSide().equals(EnvType.CLIENT)) {
 			return TransportProxyClient.PROXY_CLIENT;
 		}
-		else return proxy;
+		else return INSTANCE;
 	}
-	public static TransportProxy proxy = new TransportProxy();
+	public static TransportProxy INSTANCE = new TransportProxy();
 	public static int pipeModel = -1;
 
 	public void registerTileEntities() {

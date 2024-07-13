@@ -7,7 +7,7 @@
  */
 package buildcraft.transport;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.GuiIds;

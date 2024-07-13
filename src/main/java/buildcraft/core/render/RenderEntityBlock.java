@@ -7,7 +7,7 @@
  */
 package buildcraft.core.render;
 
-import btw.community.example.mixin.accessors.TessellatorAccessor;
+import dev.bagel.btb.mixin.accessors.TessellatorAccessor;
 import buildcraft.core.EntityBlock;
 import java.util.Arrays;
 import net.minecraft.src.Block;

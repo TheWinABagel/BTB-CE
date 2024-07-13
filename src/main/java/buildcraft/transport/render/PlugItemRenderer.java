@@ -1,6 +1,6 @@
 package buildcraft.transport.render;
 
-import btw.community.example.mixin.accessors.BlockAccessor;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.transport.PipeIconProvider;
 import net.minecraft.src.Block;

@@ -8,7 +8,7 @@
  */
 package buildcraft.transport.render;
 
-import btw.community.example.mixin.accessors.RenderBlocksAccessor;
+import dev.bagel.btb.mixin.accessors.RenderBlocksAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.utils.MatrixTranformations;

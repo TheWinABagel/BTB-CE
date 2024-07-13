@@ -1,6 +1,6 @@
 package buildcraft.core.render;
 
-import btw.community.example.mixin.accessors.BlockAccessor;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.IInventoryRenderer;

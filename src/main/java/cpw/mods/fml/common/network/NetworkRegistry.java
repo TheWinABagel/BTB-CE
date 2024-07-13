@@ -1,15 +1,13 @@
 package cpw.mods.fml.common.network;
 
 import btw.BTWAddon;
-import btw.community.example.mixin.accessors.EntityPlayerMPAccessor;
+import dev.bagel.btb.mixin.accessors.EntityPlayerMPAccessor;
 import buildcraft.core.utils.BCLog;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import net.minecraft.src.*;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class NetworkRegistry extends BTWAddon {

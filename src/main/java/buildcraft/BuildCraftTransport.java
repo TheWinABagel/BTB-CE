@@ -28,6 +28,7 @@ import buildcraft.transport.gates.GateExpansionPulsar;
 import buildcraft.transport.gates.GateExpansionRedstoneFader;
 import buildcraft.transport.gates.GateExpansionTimer;
 import buildcraft.transport.gates.ItemGate;
+import buildcraft.transport.network.PacketHandlerTransport;
 import buildcraft.transport.pipes.*;
 import buildcraft.transport.pipes.PipePowerIron.PowerMode;
 import buildcraft.transport.triggers.*;
@@ -35,7 +36,6 @@ import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -256,14 +256,10 @@ public class BuildCraftTransport implements IBuildCraftModule {
 
 		ActionManager.registerTriggerProvider(new PipeTriggerProvider());
 
+		TransportProxy.getProxy().registerRenderers();
 
-		if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)){
-			TransportProxyClient.PROXY_CLIENT.registerRenderers();
-		}
-		else {
-			TransportProxy.proxy.registerRenderers();
-		}
 		NetworkRegistry.instance().registerGuiHandler("bctransport", new GuiHandler());
+		BuildCraftAddon.registerBCPacketHandler(DefaultProps.TRANSPORT_CHANNEL_NAME, new PacketHandlerTransport());
 	}
 
 	@Override

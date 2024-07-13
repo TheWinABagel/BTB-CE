@@ -9,7 +9,7 @@ package buildcraft.energy;
 
 import java.util.LinkedList;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ICrafting;
 import net.minecraft.src.ItemStack;
@@ -40,6 +40,7 @@ public class TileEngineStone extends TileEngineWithInventory {
 
 	public TileEngineStone() {
 		super(1);
+		needsRedstonePower = true;
 	}
 
 	@Override

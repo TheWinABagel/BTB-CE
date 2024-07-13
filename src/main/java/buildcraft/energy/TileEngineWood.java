@@ -14,6 +14,9 @@ import buildcraft.api.transport.IPipeTile.PipeType;
 import buildcraft.core.proxy.CoreProxy;
 
 public class TileEngineWood extends TileEngine {
+	public TileEngineWood() {
+		needsAxlePower = true;
+	}
 
 	public static final float OUTPUT = 0.05F;
 
@@ -70,9 +73,12 @@ public class TileEngineWood extends TileEngine {
 	public void engineUpdate() {
 		super.engineUpdate();
 
-		if (isRedstonePowered)
-			if (worldObj.getTotalWorldTime() % 16 == 0)
+//		if (isRedstonePowered) {
+		if (isAxlePowered) {
+			if (worldObj.getTotalWorldTime() % 16 == 0) {
 				addEnergy(1);
+			}
+		}
 	}
 
 	@Override
@@ -82,7 +88,8 @@ public class TileEngineWood extends TileEngine {
 
 	@Override
 	public boolean isBurning() {
-		return isRedstonePowered;
+		return isAxlePowered;
+//		return isRedstonePowered;
 	}
 
 	@Override

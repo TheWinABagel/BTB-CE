@@ -7,6 +7,8 @@
  */
 package buildcraft.energy;
 
+import btw.block.MechanicalBlock;
+import btw.block.util.MechPowerUtils;
 import buildcraft.BuildCraftEnergy;
 import buildcraft.api.gates.IOverrideDefaultTriggers;
 import buildcraft.api.gates.ITrigger;
@@ -52,6 +54,9 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	protected PowerHandler powerHandler;
 	public double currentOutput = 0;
 	public boolean isRedstonePowered = false;
+	public boolean needsAxlePower = false;
+	public boolean needsRedstonePower = false;
+	public boolean isAxlePowered = false;
 	private boolean checkOrienation = false;
 	private TileBuffer[] tileCache;
 	public float progress;
@@ -174,9 +179,11 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 				switchOrientation(true);
 		}
 
-		if (!isRedstonePowered)
-			if (energy > 1)
+		else if (((needsAxlePower && isAxlePowered) || (needsRedstonePower && isRedstonePowered))) {
+			if (energy > 1) {
 				energy--;
+			}
+		}
 
 		updateHeatLevel();
 		getEnergyStage();
@@ -194,17 +201,21 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 				progress = 0;
 				progressPart = 0;
 			}
-		} else if (isRedstonePowered && isActive())
-			if (isPoweredTile(tile, orientation))
+		}
+		else if (((needsAxlePower && isAxlePowered) || (needsRedstonePower && isRedstonePowered)) && isActive()) {
+			if (isPoweredTile(tile, orientation)) {
 				if (getPowerToExtract() > 0) {
 					progressPart = 1;
 					setPumping(true);
 				} else
 					setPumping(false);
-			else
+			} else {
 				setPumping(false);
-		else
+			}
+		}
+		else {
 			setPumping(false);
+		}
 
 		// Uncomment for constant power
 //		if (isRedstonePowered && isActive()) {
@@ -244,11 +255,14 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	}
 
 	protected void engineUpdate() {
-		if (!isRedstonePowered)
-			if (energy >= 1)
+		if (((needsAxlePower && !isAxlePowered) || (needsRedstonePower && !isRedstonePowered))) {
+			if (energy >= 1) {
 				energy -= 1;
-			else if (energy < 1)
-				energy = 0;
+			}
+		}
+		else if (energy < 1) {
+			energy = 0;
+		}
 	}
 
 	public boolean isActive() {
@@ -469,6 +483,11 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 
 	public void checkRedstonePower() {
 		if (worldObj == null) return;
-		isRedstonePowered = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+		if (needsAxlePower && getBlockType() instanceof MechanicalBlock mechanicalBlock) {
+			isAxlePowered = MechPowerUtils.isBlockPoweredByAxle(worldObj, xCoord, yCoord, zCoord, mechanicalBlock);
+		}
+		else if (needsRedstonePower) {
+			isRedstonePowered = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+		}
 	}
 }

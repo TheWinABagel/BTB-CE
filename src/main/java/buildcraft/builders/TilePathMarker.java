@@ -1,6 +1,6 @@
 package buildcraft.builders;
 
-import btw.community.example.injected.TileEntityExtension;
+import dev.bagel.btb.injected.TileEntityExtension;
 import buildcraft.api.core.Position;
 import buildcraft.core.BlockIndex;
 import buildcraft.core.EntityLaser;

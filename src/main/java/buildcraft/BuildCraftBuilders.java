@@ -15,11 +15,13 @@ import buildcraft.api.gates.ActionManager;
 import buildcraft.builders.*;
 import buildcraft.builders.filler.FillerRegistry;
 import buildcraft.builders.filler.pattern.*;
+import buildcraft.builders.network.PacketHandlerBuilders;
 import buildcraft.builders.triggers.ActionFiller;
 import buildcraft.builders.triggers.BuildersActionProvider;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.blueprints.BptPlayerIndex;
 import buildcraft.core.blueprints.BptRootIndex;
+import buildcraft.core.network.PacketHandler;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -107,6 +109,8 @@ public class BuildCraftBuilders implements IBuildCraftModule {
 			BCLog.logErrorAPI("Buildcraft", error, IFillerPattern.class);
 			throw error;
 		}
+
+		BuildCraftAddon.registerBCPacketHandler(DefaultProps.BUILDERS_CHANNEL_NAME, new PacketHandlerBuilders());
 
 		ActionManager.registerActionProvider(new BuildersActionProvider());
 

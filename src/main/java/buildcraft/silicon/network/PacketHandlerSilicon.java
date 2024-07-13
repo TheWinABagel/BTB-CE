@@ -1,6 +1,6 @@
 package buildcraft.silicon.network;
 
-import btw.community.example.extensions.BuildcraftCustomPacketHandler;
+import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.core.network.PacketCoordinates;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketNBT;
@@ -21,32 +21,29 @@ import net.minecraft.src.World;
 public class PacketHandlerSilicon implements BuildcraftCustomPacketHandler {
 	public static final PacketHandlerSilicon INSTANCE = new PacketHandlerSilicon();
 	@Override
-	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) {
-
-		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet, DataInputStream data, int packetID) {
 		try {
-			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.SELECTION_ASSEMBLY_SEND:
 				PacketNBT packetT = new PacketNBT();
 				packetT.readData(data);
-				onSelectionUpdate((EntityPlayer) player, packetT);
+				onSelectionUpdate(player, packetT);
 				break;
 
 			case PacketIds.SELECTION_ASSEMBLY:
 				PacketNBT packetA = new PacketNBT();
 				packetA.readData(data);
-				onAssemblySelect((EntityPlayer) player, packetA);
+				onAssemblySelect(player, packetA);
 				break;
 			case PacketIds.SELECTION_ASSEMBLY_GET:
 				PacketCoordinates packetC = new PacketCoordinates();
 				packetC.readData(data);
-				onAssemblyGetSelection((EntityPlayer) player, packetC);
+				onAssemblyGetSelection(player, packetC);
 				break;
 			case PacketIds.ADVANCED_WORKBENCH_SETSLOT:
 				PacketSlotChange packet1 = new PacketSlotChange();
 				packet1.readData(data);
-				onAdvancedWorkbenchSet((EntityPlayer) player, packet1);
+				onAdvancedWorkbenchSet(player, packet1);
 				break;
 
 			}
@@ -56,29 +53,29 @@ public class PacketHandlerSilicon implements BuildcraftCustomPacketHandler {
 
 	}
 
-	public void onPacketDataExtra(EntityPlayer player, Packet250CustomPayload packet, int packetID, DataInputStream data) {
+/*	public void onPacketDataExtra(EntityPlayer player, Packet250CustomPayload packet, int packetID, DataInputStream data) {
 		try {
 			switch (packetID) {
 				case PacketIds.SELECTION_ASSEMBLY_SEND:
 					PacketNBT packetT = new PacketNBT();
 					packetT.readData(data);
-					onSelectionUpdate((EntityPlayer) player, packetT);
+					onSelectionUpdate(player, packetT);
 					break;
 
 				case PacketIds.SELECTION_ASSEMBLY:
 					PacketNBT packetA = new PacketNBT();
 					packetA.readData(data);
-					onAssemblySelect((EntityPlayer) player, packetA);
+					onAssemblySelect(player, packetA);
 					break;
 				case PacketIds.SELECTION_ASSEMBLY_GET:
 					PacketCoordinates packetC = new PacketCoordinates();
 					packetC.readData(data);
-					onAssemblyGetSelection((EntityPlayer) player, packetC);
+					onAssemblyGetSelection(player, packetC);
 					break;
 				case PacketIds.ADVANCED_WORKBENCH_SETSLOT:
 					PacketSlotChange packet1 = new PacketSlotChange();
 					packet1.readData(data);
-					onAdvancedWorkbenchSet((EntityPlayer) player, packet1);
+					onAdvancedWorkbenchSet(player, packet1);
 					break;
 
 			}
@@ -86,7 +83,7 @@ public class PacketHandlerSilicon implements BuildcraftCustomPacketHandler {
 			ex.printStackTrace();
 		}
 
-	}
+	}*/
 
 	private void onSelectionUpdate(EntityPlayer player, PacketNBT packet) {
 

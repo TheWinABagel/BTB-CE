@@ -1,6 +1,6 @@
 package buildcraft.factory.network;
 
-import btw.community.example.extensions.BuildcraftCustomPacketHandler;
+import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.core.network.PacketIds;
 import buildcraft.core.network.PacketPayloadStream;
 import buildcraft.core.network.PacketUpdate;
@@ -15,18 +15,14 @@ import net.minecraftforge.fluids.FluidRegistry;
 public class PacketHandlerFactory implements BuildcraftCustomPacketHandler {
 
 	@Override
-	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) throws IOException {
-
-		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet, DataInputStream data, int packetID) throws IOException {
 		try {
-			int packetID = data.read();
 			PacketUpdate packetU = new PacketUpdate();
-
 			switch (packetID) {
 
 				case PacketIds.REFINERY_FILTER_SET:
 					packetU.readData(data);
-					onRefinerySelect((EntityPlayer) player, packetU);
+					onRefinerySelect(player, packetU);
 					break;
 
 			}

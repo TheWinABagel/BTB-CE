@@ -1,5 +1,6 @@
 package buildcraft.builders.network;
 
+import buildcraft.core.DefaultProps;
 import buildcraft.core.network.PacketCoordinates;
 
 import java.io.DataInputStream;
@@ -11,6 +12,7 @@ public class PacketLibraryAction extends PacketCoordinates {
 	public int actionId;
 
 	public PacketLibraryAction() {
+		this.channel = DefaultProps.BUILDERS_CHANNEL_NAME;
 	}
 
 	public PacketLibraryAction(int packetId, int x, int y, int z) {

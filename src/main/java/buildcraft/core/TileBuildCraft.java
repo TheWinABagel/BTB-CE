@@ -7,7 +7,7 @@
  */
 package buildcraft.core;
 
-import btw.community.example.mixin.accessors.EntityPlayerAccessor;
+import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.core.network.ISynchronizedTile;
 import buildcraft.core.network.PacketPayload;

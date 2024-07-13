@@ -1,6 +1,6 @@
 package buildcraft.silicon;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftSilicon;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.Utils;

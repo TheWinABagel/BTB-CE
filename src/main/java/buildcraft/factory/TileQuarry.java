@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import btw.community.example.extensions.BlockUnloadExtension;
+import dev.bagel.btb.extensions.BlockUnloadExtension;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;

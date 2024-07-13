@@ -7,7 +7,7 @@
  */
 package buildcraft.builders;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.GuiIds;

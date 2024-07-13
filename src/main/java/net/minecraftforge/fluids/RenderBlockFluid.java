@@ -1,6 +1,6 @@
 package net.minecraftforge.fluids;
 
-import btw.community.example.mixin.accessors.RenderBlocksAccessor;
+import dev.bagel.btb.mixin.accessors.RenderBlocksAccessor;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;

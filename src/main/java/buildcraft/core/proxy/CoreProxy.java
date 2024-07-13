@@ -129,12 +129,10 @@ public class CoreProxy {
 	@SuppressWarnings("unchecked")
 	public void addCraftingRecipe(ItemStack result, Object... recipe) {
 		CraftingManager.getInstance().addRecipe(result, recipe);
-		//GameRegistry.addRecipe(result, recipe);
 	}
 
 	public void addShapelessRecipe(ItemStack result, Object... recipe) {
 	        CraftingManager.getInstance().addShapelessRecipe(result, recipe);
-	        //GameRegistry.addShapelessRecipe(result, recipe);
 	}
 
 	public void sendToPlayers(Packet packet, World world, int x, int y, int z, int maxDistance) {

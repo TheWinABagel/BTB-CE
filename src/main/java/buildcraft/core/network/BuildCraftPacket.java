@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
@@ -13,7 +12,7 @@ import net.minecraft.src.Packet250CustomPayload;
 public abstract class BuildCraftPacket {
 
 	protected boolean isChunkDataPacket = false;
-	protected String channel = DefaultProps.NET_CHANNEL_NAME;
+	protected String channel = DefaultProps.CORE_CHANNEL_NAME;
 
 	public abstract int getID();
 

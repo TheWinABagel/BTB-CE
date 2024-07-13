@@ -9,7 +9,7 @@
 
 package buildcraft.api.blueprints;
 
-import btw.community.example.injected.BlockExtension;
+import dev.bagel.btb.injected.BlockExtension;
 import buildcraft.api.core.BuildCraftAPI;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;

@@ -196,9 +196,8 @@ public class PipeItemsObsidian extends Pipe<PipeTransportItems> implements IPowe
 
 			double speed = 0.01F;
 
-			if (entity instanceof EntityItem) {
-				EntityItem item = (EntityItem) entity;
-				ItemStack contained = item.getEntityItem();
+			if (entity instanceof EntityItem item) {
+                ItemStack contained = item.getEntityItem();
 
 				CoreProxy.getProxy().obsidianPipePickup(container.worldObj, item, this.container);
 

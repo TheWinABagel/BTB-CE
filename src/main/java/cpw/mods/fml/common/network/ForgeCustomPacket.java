@@ -1,8 +1,7 @@
 package cpw.mods.fml.common.network;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import btw.network.packet.handler.CustomPacketHandler;
-import buildcraft.BuildCraftTransport;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import net.minecraft.src.Minecraft;

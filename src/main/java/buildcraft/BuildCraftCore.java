@@ -9,7 +9,7 @@ package buildcraft;
 
 import btw.AddonHandler;
 import btw.client.network.packet.handler.CustomEntityPacketHandler;
-import btw.community.example.mixin.accessors.EntityListAccessor;
+import dev.bagel.btb.mixin.accessors.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -225,7 +225,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 	}
 
 	private static void initPackets() {
-		AddonHandler.registerPacketHandler("buildcraft|CR", new PacketHandler());
+		BuildCraftAddon.registerBCPacketHandler(DefaultProps.CORE_CHANNEL_NAME, new PacketHandler());
 		//todocore packet handling is a total mess atm
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());

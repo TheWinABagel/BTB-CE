@@ -1,6 +1,6 @@
 package buildcraft.builders.network;
 
-import btw.community.example.extensions.BuildcraftCustomPacketHandler;
+import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import buildcraft.builders.TileArchitect;
 import buildcraft.builders.TileBlueprintLibrary;
 import buildcraft.core.network.PacketIds;
@@ -17,10 +17,8 @@ import java.io.IOException;
 public class PacketHandlerBuilders implements BuildcraftCustomPacketHandler {
 	public static final PacketHandlerBuilders INSTANCE = new PacketHandlerBuilders();
 	@Override
-	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet) throws IOException {
-		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
+	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet, DataInputStream data, int packetID) throws IOException {
 		try {
-			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.ARCHITECT_NAME:
 				PacketUpdate packetA = new PacketUpdate();
@@ -37,31 +35,6 @@ public class PacketHandlerBuilders implements BuildcraftCustomPacketHandler {
 				packetC.readData(data);
 				onLibrarySelect(player, packetC);
 				break;
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-	}
-
-	public void onPacketDataExtra(EntityPlayer player, Packet250CustomPayload packet, int packetID, DataInputStream data) throws IOException {
-		try {
-			switch (packetID) {
-				case PacketIds.ARCHITECT_NAME:
-					PacketUpdate packetA = new PacketUpdate();
-					packetA.readData(data);
-					onArchitectName(player, packetA);
-					break;
-				case PacketIds.LIBRARY_ACTION:
-					PacketLibraryAction packetB = new PacketLibraryAction();
-					packetB.readData(data);
-					onLibraryAction(player, packetB);
-					break;
-				case PacketIds.LIBRARY_SELECT:
-					PacketLibraryAction packetC = new PacketLibraryAction();
-					packetC.readData(data);
-					onLibrarySelect(player, packetC);
-					break;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

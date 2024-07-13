@@ -3,9 +3,11 @@ package buildcraft;
 import btw.BTWAddon;
 import buildcraft.core.ItemBlockBuildCraft;
 import buildcraft.transport.network.PacketGateExpansionMap;
+import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import net.minecraft.src.*;
 import net.minecraftforge.PacketDispatcher;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ public class BuildCraftAddon extends BTWAddon {
 
     public static final BuildCraftAddon INSTANCE = new BuildCraftAddon();
     public static final List<IBuildCraftModule> MODULES = new LinkedList<>();
+
+    public static final Map<String, BuildcraftCustomPacketHandler> BCPacketHandlers = new HashMap<>();
 
     static {
         MODULES.add(BuildCraftCore.INSTANCE);
@@ -70,7 +74,7 @@ public class BuildCraftAddon extends BTWAddon {
     @Override
     public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
         PacketGateExpansionMap pkt = new PacketGateExpansionMap();
-        System.out.println("sending packet gate expansion map to players");
+        System.out.println("Sending packet gate expansion map to " + playerMP.getEntityName());
         PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), playerMP);
     }
 
@@ -84,5 +88,9 @@ public class BuildCraftAddon extends BTWAddon {
 
     public void registerProp(String propertyName, Object defaultValue) {
         this.registerProperty(propertyName, defaultValue.toString(), "");
+    }
+
+    public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
+        BCPacketHandlers.put(channel, handler);
     }
 }

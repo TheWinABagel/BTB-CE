@@ -1,10 +1,10 @@
 package cpw.mods.fml.client.registry;
 
-import btw.community.example.mixin.accessors.RenderBipedAccessor;
+import dev.bagel.btb.mixin.accessors.RenderBipedAccessor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.ObjectArrays;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Map;
 import net.minecraft.src.Block;

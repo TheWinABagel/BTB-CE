@@ -9,7 +9,7 @@
 
 package buildcraft.builders;
 
-import btw.community.example.injected.EntityPlayerExtension;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import buildcraft.BuildCraftBuilders;
 import buildcraft.core.GuiIds;
 import buildcraft.core.proxy.CoreProxy;

@@ -9,7 +9,7 @@
 
 package buildcraft.core.proxy;
 
-import btw.community.example.mixin.accessors.EntityPlayerAccessor;
+import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;

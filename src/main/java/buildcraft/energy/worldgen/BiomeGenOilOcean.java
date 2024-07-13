@@ -1,6 +1,6 @@
 package buildcraft.energy.worldgen;
 
-import btw.community.example.mixin.accessors.BiomeGenBaseAccessor;
+import dev.bagel.btb.mixin.accessors.BiomeGenBaseAccessor;
 import net.minecraft.src.BiomeGenOcean;
 
 /**

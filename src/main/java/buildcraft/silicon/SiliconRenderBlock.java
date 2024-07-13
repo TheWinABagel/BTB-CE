@@ -9,8 +9,8 @@
 
 package buildcraft.silicon;
 
-import btw.community.example.mixin.accessors.BlockAccessor;
-import btw.community.example.mixin.accessors.RenderBlocksAccessor;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
+import dev.bagel.btb.mixin.accessors.RenderBlocksAccessor;
 import buildcraft.core.CoreConstants;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.src.Block;
