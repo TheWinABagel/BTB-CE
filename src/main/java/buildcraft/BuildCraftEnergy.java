@@ -189,7 +189,7 @@ public class BuildCraftEnergy implements IBuildCraftModule {
 		IronEngineCoolant.addCoolant(Block.ice.blockID, 0, FluidRegistry.getFluidStack("water", FluidContainerRegistry.BUCKET_VOLUME * 2));
 
 
-		NetworkRegistry.instance().registerGuiHandler("bcenergy", new GuiHandler());
+        NetworkRegistry.instance().registerGuiHandler("bcenergy", new GuiHandlerEnergy());
 
 		new BptBlockEngine(woodEngineBlock.blockID);
 		new BptBlockEngine(stoneEngineBlock.blockID);

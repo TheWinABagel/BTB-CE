@@ -125,7 +125,7 @@ public class BlockRefinery extends BlockContainer {
 		}
 
 		if (!world.isRemote) {
-			((EntityPlayerExtension) player).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.REFINERY, world, x, y, z);
+            ((EntityPlayerExtension) player).btb$openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.REFINERY, world, x, y, z);
 		}
 
 		return true;

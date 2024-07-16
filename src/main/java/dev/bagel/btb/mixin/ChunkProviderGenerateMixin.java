@@ -21,12 +21,12 @@ public class ChunkProviderGenerateMixin {
     @Shadow private Random rand;
 
     @Inject(method = "populate", at = @At("TAIL"))
-    private void generateStructures(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
+    private void btb$generateSprings(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
         SpringPopulate.populate(chunkProvider, worldObj, rand, chunkX, chunkZ);
     }
 
     @Inject(method = "populate", at = @At(value = "INVOKE", target = "Ljava/util/Random;setSeed(J)V", ordinal = 1, shift = At.Shift.AFTER))
-    private void generateOil(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
+    private void btb$generateOil(IChunkProvider chunkProvider, int chunkX, int chunkZ, CallbackInfo ci) {
         OilPopulate.INSTANCE.generateOil(this.worldObj, this.rand, chunkX, chunkZ);
     }
 }

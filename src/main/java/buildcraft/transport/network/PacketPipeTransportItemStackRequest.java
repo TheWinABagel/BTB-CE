@@ -6,7 +6,6 @@ import buildcraft.core.network.PacketIds;
 import buildcraft.transport.TravelingItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
-import net.minecraftforge.PacketDispatcher;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -37,9 +36,12 @@ public class PacketPipeTransportItemStackRequest extends BuildCraftPacket {
 		travelerID = data.readShort();
 		TravelingItem.TravelingItemCache cache = TravelingItem.serverCache;
 		TravelingItem item = cache.get(travelerID);
-		if (item == null)
+        if (item == null) {
 			return;
-		PacketDispatcher.sendPacketToPlayer(new PacketPipeTransportItemStack(travelerID, item.getItemStack()).getPacket(), player);
+        }
+        if (player instanceof EntityPlayerMP playerMP) {
+            playerMP.playerNetServerHandler.sendPacketToPlayer(new PacketPipeTransportItemStack(travelerID, item.getItemStack()).getPacket());
+        }
 	}
 
 	@Override

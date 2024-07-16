@@ -42,7 +42,7 @@ public class MinecraftServerMixin {
     }
 
     @Inject(method = "run", at = @At(value = "FIELD", target = "net/minecraft/server/MinecraftServer.serverIsRunning : Z", shift = At.Shift.AFTER))
-    private void willThisWorkWtf(CallbackInfo ci) {
+    private void btb$clearAvailableMarkers(CallbackInfo ci) {
         TilePathMarker.clearAvailableMarkersList();
     }
 }

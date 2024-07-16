@@ -21,7 +21,6 @@ import buildcraft.builders.triggers.BuildersActionProvider;
 import buildcraft.core.DefaultProps;
 import buildcraft.core.blueprints.BptPlayerIndex;
 import buildcraft.core.blueprints.BptRootIndex;
-import buildcraft.core.network.PacketHandler;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -57,7 +56,7 @@ public class BuildCraftBuilders implements IBuildCraftModule {
     @Override
 	public void init() {
 		// Register gui handler
-		NetworkRegistry.instance().registerGuiHandler(getModId(), new GuiHandler());
+        NetworkRegistry.instance().registerGuiHandler(getModId(), new GuiHandlerBuilders());
 
 		templateItem = new ItemBptTemplate(BuildcraftConfig.templateItemId);
 		templateItem.setUnlocalizedName("templateItem");

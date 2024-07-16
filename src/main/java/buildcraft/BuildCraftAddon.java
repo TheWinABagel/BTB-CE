@@ -2,15 +2,15 @@ package buildcraft;
 
 import btw.BTWAddon;
 import buildcraft.core.ItemBlockBuildCraft;
+import buildcraft.core.utils.BCLog;
 import buildcraft.transport.network.PacketGateExpansionMap;
 import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import net.minecraft.src.*;
-import net.minecraftforge.PacketDispatcher;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.util.*;
 
 public class BuildCraftAddon extends BTWAddon {
 
@@ -28,7 +28,25 @@ public class BuildCraftAddon extends BTWAddon {
         MODULES.add(BuildCraftBuilders.INSTANCE);
     }
 
-    public BuildCraftAddon() {}
+    public BuildCraftAddon() {
+    }
+
+    private static void createAssociatedItemsForModBlocks() {
+        for (int iTempBlockID = 0; iTempBlockID < 4096; ++iTempBlockID) {
+            if (Block.blocksList[iTempBlockID] == null || Item.itemsList[iTempBlockID] != null) {
+                continue;
+            }
+            Item.itemsList[iTempBlockID] = new ItemBlockBuildCraft(iTempBlockID - 256);
+        }
+    }
+
+    public static void textureHook(TextureMap map) {
+        MODULES.forEach(module -> module.textureHook(map));
+    }
+
+    public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
+        BCPacketHandlers.put(channel, handler);
+    }
 
     @Override
     public void postSetup() {
@@ -47,13 +65,6 @@ public class BuildCraftAddon extends BTWAddon {
     public void initialize() {
         MODULES.forEach(IBuildCraftModule::init);
         createAssociatedItemsForModBlocks();
-    }
-
-    private static void createAssociatedItemsForModBlocks() {
-        for (int iTempBlockID = 0; iTempBlockID < 4096; ++iTempBlockID) {
-            if (Block.blocksList[iTempBlockID] == null || Item.itemsList[iTempBlockID] != null) continue;
-            Item.itemsList[iTempBlockID] = new ItemBlockBuildCraft(iTempBlockID - 256);
-        }
     }
 
     @Override
@@ -75,11 +86,43 @@ public class BuildCraftAddon extends BTWAddon {
     public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
         PacketGateExpansionMap pkt = new PacketGateExpansionMap();
         System.out.println("Sending packet gate expansion map to " + playerMP.getEntityName());
-        PacketDispatcher.sendPacketToPlayer(pkt.getPacket(), playerMP);
+        playerMP.playerNetServerHandler.sendPacketToPlayer(pkt.getPacket());
     }
 
-    public static void textureHook(TextureMap map) {
-        MODULES.forEach(module -> module.textureHook(map));
+    @Override
+    public boolean serverCustomPacketReceived(NetServerHandler handler, Packet250CustomPayload packet) {
+        try {
+            if (BuildCraftAddon.BCPacketHandlers.get(packet.channel) != null) {
+                DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
+                int packetID = data.read();
+                for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
+                    packetHandler.onPacketData(handler.playerEntity, packet, data, packetID);
+                }
+                return true;
+            }
+        } catch (IOException e) {
+            BCLog.logger.severe("Server failed to receive a custom packet!\n" + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean clientCustomPacketReceived(Minecraft mcInstance, Packet250CustomPayload packet) {
+        try {
+            if (BuildCraftAddon.BCPacketHandlers.get(packet.channel) != null) {
+                DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
+                int packetID = data.read();
+                for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
+                    packetHandler.onPacketData(mcInstance.thePlayer, packet, data, packetID);
+                }
+                return true;
+            }
+        } catch (IOException e) {
+            BCLog.logger.severe("Client failed to receive a custom packet!\n" + Arrays.toString(e.getStackTrace()));
+            return false;
+        }
+        return false;
     }
 
     public void registerProp(String propertyName, Object defaultValue, String comment) {
@@ -88,9 +131,5 @@ public class BuildCraftAddon extends BTWAddon {
 
     public void registerProp(String propertyName, Object defaultValue) {
         this.registerProperty(propertyName, defaultValue.toString(), "");
-    }
-
-    public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
-        BCPacketHandlers.put(channel, handler);
     }
 }

@@ -18,11 +18,7 @@ public abstract class BlockMixin implements BlockExtension {
 
     @Shadow public abstract String getUnlocalizedName();
 
-    @Shadow public Material blockMaterial;
-
     @Shadow public abstract boolean renderAsNormalBlock();
-
-    @Shadow public abstract boolean canProvidePower();
 
     @Shadow public abstract int quantityDroppedWithBonus(int par1, Random par2Random);
 
@@ -30,10 +26,6 @@ public abstract class BlockMixin implements BlockExtension {
 
     @Shadow public abstract int damageDropped(int par1);
 
-    @Inject(method = "<init>*", at = @At("TAIL"))
-    private void btb$collect(int par1, Material par2Material, CallbackInfo ci) {
-
-    }
 
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {

@@ -94,7 +94,7 @@ public class BlockBuilder extends BlockContainer {
 		} else {
 
 			if (!CoreProxy.getProxy().isClientWorld(world)) {
-				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BUILDER, world, i, j, k);
+                ((EntityPlayerExtension) entityplayer).btb$openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BUILDER, world, i, j, k);
 			}
 			return true;
 

@@ -18,7 +18,7 @@ public abstract class WorldMixin {
 	@Shadow private List entityRemoval;
 
 	@Inject(method = "updateEntities", at = @At(value = "INVOKE", target = "Ljava/util/List;removeAll(Ljava/util/Collection;)Z", ordinal = 1))
-	private void test(CallbackInfo ci) {
+	private void btb$onEntityUnloadHook(CallbackInfo ci) {
 		this.entityRemoval.forEach(entity -> {
 			if (entity instanceof BlockUnloadExtension unloadExtension) {
 				unloadExtension.onChunkUnload();

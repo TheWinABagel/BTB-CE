@@ -1,6 +1,5 @@
 package dev.bagel.btb.mixin.client;
 
-import dev.bagel.btb.injected.client.ItemRenderExtension;
 import net.minecraft.src.*;
 import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -18,7 +17,7 @@ public abstract class RendererPlayerMixin extends RendererLivingEntity {
         super(par1ModelBase, par2);
     }
 
-    public void renderSpecials(AbstractClientPlayer clientPlayer, float par2) {
+    private void btb$renderSpecials(AbstractClientPlayer clientPlayer, float par2) {
         float f1 = 1.0F;
         GL11.glColor3f(f1, f1, f1);
         super.renderEquippedItems(clientPlayer, par2);
@@ -182,7 +181,7 @@ public abstract class RendererPlayerMixin extends RendererLivingEntity {
             float f12;
             float f13;
             if (itemstack1.getItem().requiresMultipleRenderPasses()) {
-                for (j = 0; j < ((ItemRenderExtension) itemstack1.getItem()).getRenderPasses(itemstack1.getItemDamage()); ++j) {
+                for (j = 0; j < 1; ++j) {
                     int k = itemstack1.getItem().getColorFromItemStack(itemstack1, j);
                     f13 = (float) (k >> 16 & 255) / 255.0F;
                     f12 = (float) (k >> 8 & 255) / 255.0F;
@@ -205,6 +204,7 @@ public abstract class RendererPlayerMixin extends RendererLivingEntity {
 
     @Override
     public void renderEquippedItems(EntityLivingBase entityLivingBase, float par2) {
-        renderSpecials((AbstractClientPlayer) entityLivingBase, par2);
+        //todocore this can be removed, right?
+        btb$renderSpecials((AbstractClientPlayer) entityLivingBase, par2);
     }
 }

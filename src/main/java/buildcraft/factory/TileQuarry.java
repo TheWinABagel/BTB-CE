@@ -12,15 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import dev.bagel.btb.extensions.BlockUnloadExtension;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.Packet3Chat;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.ChatMessageComponent;
-import net.minecraft.src.ChunkCoordIntPair;
-import net.minecraftforge.PacketDispatcher;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
@@ -861,10 +853,9 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 				chunks.add(chunk);
 			}
 		}
-		if (placedBy != null) {
-			PacketDispatcher.sendPacketToPlayer(
-					new Packet3Chat(ChatMessageComponent.createFromText(String.format("[BUILDCRAFT] The quarry at %d %d %d will keep %d chunks loaded", xCoord, yCoord, zCoord, chunks.size()))),
-					placedBy);
+        if (placedBy != null && placedBy instanceof EntityPlayerMP playerMP) {
+            Packet3Chat packet = new Packet3Chat(ChatMessageComponent.createFromText(String.format("[BUILDCRAFT] The quarry at %d %d %d will keep %d chunks loaded", xCoord, yCoord, zCoord, chunks.size())));
+            playerMP.playerNetServerHandler.sendPacketToPlayer(packet);
 		}
 		sendNetworkUpdate();
 	}

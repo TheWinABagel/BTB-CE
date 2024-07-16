@@ -94,7 +94,7 @@ public class PipeItemsEmerald extends PipeItemsWood implements IClientState, IGu
 		}
 
 		if (!CoreProxy.getProxy().isClientWorld(container.worldObj)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftTransport.INSTANCE.getModId(), GuiIds.PIPE_EMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
+            ((EntityPlayerExtension) entityplayer).btb$openGui(BuildCraftTransport.INSTANCE.getModId(), GuiIds.PIPE_EMERALD_ITEM, container.worldObj, container.xCoord, container.yCoord, container.zCoord);
 		}
 
 		return true;

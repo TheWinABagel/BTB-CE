@@ -1,9 +1,7 @@
 package cpw.mods.fml.client.registry;
 
-import dev.bagel.btb.mixin.accessors.RenderBipedAccessor;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.ObjectArrays;
 
 import java.util.List;
 import java.util.Map;
@@ -18,12 +16,7 @@ public class RenderingRegistry {
     private static final RenderingRegistry INSTANCE = new RenderingRegistry();
     private int nextRenderId = 40;
     public Map<Integer, ISimpleBlockRenderingHandler> blockRenderers = Maps.newHashMap();
-    private List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
-
-    public static int addNewArmourRendererPrefix(String armor) {
-        RenderBipedAccessor.setBipedArmorFilenamePrefix(ObjectArrays.concat(RenderBipedAccessor.getBipedArmorFilenamePrefix(), armor));
-        return RenderBipedAccessor.getBipedArmorFilenamePrefix().length - 1;
-    }
+    private final List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
 
     public static void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer) {
         instance().entityRenderers.add(new RenderingRegistry.EntityRendererInfo(entityClass, renderer));
@@ -41,23 +34,6 @@ public class RenderingRegistry {
         return instance().nextRenderId++;
     }
 
-    /** @deprecated */
-    @Deprecated
-    public static int addTextureOverride(String fileToOverride, String fileToAdd) {
-        return -1;
-    }
-
-    public static void addTextureOverride(String path, String overlayPath, int index) {
-    }
-
-    /** @deprecated */
-    @Deprecated
-    public static int getUniqueTextureIndex(String path) {
-        return -1;
-    }
-
-    /** @deprecated */
-    @Deprecated
     public static RenderingRegistry instance() {
         return INSTANCE;
     }
@@ -78,11 +54,6 @@ public class RenderingRegistry {
             return true;
         }
         return false;
-    }
-
-    public boolean renderItemAsFull3DBlock(int modelId) {
-        ISimpleBlockRenderingHandler bri = this.blockRenderers.get(modelId);
-        return bri != null && bri.shouldRender3DInInventory();
     }
 
     public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {

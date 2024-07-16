@@ -57,7 +57,7 @@ public class BlockArchitect extends BlockContainer {
 			return false;
 
 		Item equipped = entityplayer.getCurrentEquippedItem() != null ? entityplayer.getCurrentEquippedItem().getItem() : null;
-		if (equipped instanceof IToolWrench && ((IToolWrench) equipped).canWrench(entityplayer, i, j, k)) {
+        if (equipped instanceof IToolWrench wrench && wrench.canWrench(entityplayer, i, j, k)) {
 
 			int meta = world.getBlockMetadata(i, j, k);
 
@@ -78,12 +78,12 @@ public class BlockArchitect extends BlockContainer {
 			}
 
 			world.markBlockForUpdate(i, j, k);
-			((IToolWrench) equipped).wrenchUsed(entityplayer, i, j, k);
+            wrench.wrenchUsed(entityplayer, i, j, k);
 			return true;
 		} else {
 
 			if (!CoreProxy.getProxy().isClientWorld(world)) {
-				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.ARCHITECT_TABLE, world, i, j, k);
+                ((EntityPlayerExtension) entityplayer).btb$openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.ARCHITECT_TABLE, world, i, j, k);
 			}
 			return true;
 

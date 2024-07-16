@@ -51,7 +51,7 @@ public class BlockAutoWorkbench extends BlockBuildCraft {
 				return false;
 		}
 		if (!CoreProxy.getProxy().isClientWorld(world)) {
-			((EntityPlayerExtension) entityplayer).openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
+			((EntityPlayerExtension) entityplayer).btb$openGui(BuildCraftFactory.INSTANCE.getModId(), GuiIds.AUTO_CRAFTING_TABLE, world, i, j, k);
 		}
 
 		return true;

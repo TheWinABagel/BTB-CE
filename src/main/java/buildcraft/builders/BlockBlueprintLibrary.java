@@ -48,7 +48,7 @@ public class BlockBlueprintLibrary extends BlockContainer {
 
 		if (!tile.locked || entityplayer.getEntityName().equals(tile.owner))
 			if (!CoreProxy.getProxy().isClientWorld(world)) {
-				((EntityPlayerExtension) entityplayer).openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BLUEPRINT_LIBRARY, world, i, j, k);
+                ((EntityPlayerExtension) entityplayer).btb$openGui(BuildCraftBuilders.INSTANCE.getModId(), GuiIds.BLUEPRINT_LIBRARY, world, i, j, k);
 			}
 
 		return true;

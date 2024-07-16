@@ -28,8 +28,8 @@ import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
 import buildcraft.transport.network.PacketPipeTransportTraveler;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.utils.TransportUtils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
-import net.minecraftforge.PacketDispatcher;
 import net.minecraftforge.common.ForgeDirection;
 
 public class PipeTransportItems extends PipeTransport {
@@ -398,7 +398,10 @@ public class PipeTransportItems extends PipeTransport {
 		}
 
 		if (packet.forceStackRefresh() || item.getItemStack() == null) {
-			PacketDispatcher.sendPacketToServer(new PacketPipeTransportItemStackRequest(packet.getTravelingEntityId()).getPacket());
+            Minecraft mc = Minecraft.getMinecraft();
+            if (mc != null && mc.thePlayer != null) {
+                mc.thePlayer.sendQueue.addToSendQueue(new PacketPipeTransportItemStackRequest(packet.getTravelingEntityId()).getPacket());
+            }
 		}
 
 		item.setPosition(packet.getItemX(), packet.getItemY(), packet.getItemZ());
@@ -416,7 +419,12 @@ public class PipeTransportItems extends PipeTransport {
 	private void sendTravelerPacket(TravelingItem data, boolean forceStackRefresh) {
 		PacketPipeTransportTraveler packet = new PacketPipeTransportTraveler(data, forceStackRefresh);
 		int dimension = container.worldObj.provider.dimensionId;
-		PacketDispatcher.sendPacketToAllAround(container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST, dimension, packet.getPacket());
+        MinecraftServer server = MinecraftServer.getServer();
+        if (server != null) {
+            server.getConfigurationManager().sendToAllNear(container.xCoord, container.yCoord, container.zCoord, DefaultProps.PIPE_CONTENTS_RENDER_DIST, dimension, packet.getPacket());
+        } else {
+            BCLog.logger.fine("Attempt to send packet to all around without a server instance available");
+        }
 	}
 
 	public int getNumberOfStacks() {

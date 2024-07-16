@@ -4,17 +4,12 @@
   "package": "dev.bagel.btb.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "AddonHandlerMixin",
     "BlockMixin",
     "ChunkProviderGenerateMixin",
     "EntityPlayerMixin",
     "IntegratedServerMixin",
     "ItemBucketMixin",
-    "ItemMixin",
-    "ItemStackMixin",
     "MinecraftServerMixin",
-    "NBTTagListMixin",
-    "TileEntityMixin",
     "WorldChunkManagerMixin",
     "WorldMixin",
     "accessors.AddonHandlerAccessor",
@@ -28,7 +23,6 @@
     "accessors.ItemStackAccessor",
     "accessors.NBTTagCompoundAccessor",
     "accessors.NBTTagListAccessor",
-    "accessors.RenderBipedAccessor",
     "accessors.RenderBlocksAccessor",
     "accessors.RenderManagerAccessor",
     "accessors.TessellatorAccessor",
@@ -40,7 +34,6 @@
   ],
   "client": [
     "MinecraftMixin",
-    "client.ItemMixin",
     "client.TextureMapMixin"
   ],
   "injectors": {

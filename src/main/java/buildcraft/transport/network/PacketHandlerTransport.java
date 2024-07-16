@@ -28,7 +28,6 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	@Override
 	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet, DataInputStream data, int packetID) {
 		try {
-			System.out.println("on packet data transport " + packet.channel);
 			PacketUpdate packetUpdate = new PacketUpdate();
 			switch (packetID) {
 				case PacketIds.PIPE_POWER:

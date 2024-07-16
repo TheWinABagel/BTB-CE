@@ -85,7 +85,7 @@ public class TileEngineIron extends TileEngineWithInventory implements IFluidHan
 			}
 		}
 		if (!CoreProxy.getProxy().isClientWorld(worldObj)) {
-			((EntityPlayerExtension) player).openGui(BuildCraftEnergy.INSTANCE.getModId(), GuiIds.ENGINE_IRON, worldObj, xCoord, yCoord, zCoord);
+			((EntityPlayerExtension) player).btb$openGui(BuildCraftEnergy.INSTANCE.getModId(), GuiIds.ENGINE_IRON, worldObj, xCoord, yCoord, zCoord);
 		}
 		return true;
 	}

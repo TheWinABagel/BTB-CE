@@ -35,7 +35,6 @@ import buildcraft.transport.triggers.*;
 import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import net.fabricmc.api.EnvType;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -258,7 +257,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 
 		TransportProxy.getProxy().registerRenderers();
 
-		NetworkRegistry.instance().registerGuiHandler("bctransport", new GuiHandler());
+        NetworkRegistry.instance().registerGuiHandler("bctransport", new GuiHandlerTransport());
 		BuildCraftAddon.registerBCPacketHandler(DefaultProps.TRANSPORT_CHANNEL_NAME, new PacketHandlerTransport());
 	}
 

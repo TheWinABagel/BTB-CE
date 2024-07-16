@@ -4,5 +4,5 @@ import net.minecraft.src.World;
 
 public interface EntityPlayerExtension {
 
-    void openGui(String mod, int modGuiId, World world, int x, int y, int z);
+    void btb$openGui(String mod, int modGuiId, World world, int x, int y, int z);
 }

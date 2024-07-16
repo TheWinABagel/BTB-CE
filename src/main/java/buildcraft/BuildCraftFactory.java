@@ -7,7 +7,6 @@
  */
 package buildcraft;
 import buildcraft.core.DefaultProps;
-import buildcraft.core.network.PacketHandler;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.factory.*;
 
@@ -173,7 +172,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		}
 
 		FactoryProxy.getProxy().initializeEntityRenders();
-		NetworkRegistry.instance().registerGuiHandler("bcfactory", new GuiHandler());
+        NetworkRegistry.instance().registerGuiHandler("bcfactory", new GuiHandlerFactory());
 
 		CoreProxy.getProxy().registerTileEntity(TileQuarry.class, "Machine");
 		CoreProxy.getProxy().registerTileEntity(TileMiningWell.class, "MiningWell");

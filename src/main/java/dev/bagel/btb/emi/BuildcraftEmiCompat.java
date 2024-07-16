@@ -1,5 +1,8 @@
 package dev.bagel.btb.emi;
 
+import buildcraft.api.recipes.IIntegrationRecipeManager;
+import buildcraft.core.recipes.IntegrationRecipeManager;
+import buildcraft.core.recipes.RefineryRecipeManager;
 import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
 import buildcraft.BuildCraftFactory;
 import buildcraft.BuildCraftSilicon;
@@ -55,6 +58,14 @@ public class BuildcraftEmiCompat implements EmiPlugin {
 
         for (IAssemblyRecipeManager.IAssemblyRecipe recipe : AssemblyRecipeManager.INSTANCE.getRecipes()) {
             EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
+        }
+
+        for (RefineryRecipeManager.RefineryRecipe recipe : RefineryRecipeManager.INSTANCE.getRecipes()) {
+//            EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
+        }
+
+        for (IIntegrationRecipeManager.IIntegrationRecipe recipe : IntegrationRecipeManager.INSTANCE.getRecipes()) {
+//            EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
         }
 
     }

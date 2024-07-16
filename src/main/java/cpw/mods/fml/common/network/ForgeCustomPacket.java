@@ -35,7 +35,7 @@ public class ForgeCustomPacket implements CustomPacketHandler {
         this.y = dat.readInt();
         this.z = dat.readInt();
 
-        ((EntityPlayerExtension) Minecraft.getMinecraft().thePlayer).openGui(String.valueOf(this.networkId), this.modGuiId, Minecraft.getMinecraft().thePlayer.worldObj, this.x, this.y, this.z);
+        ((EntityPlayerExtension) Minecraft.getMinecraft().thePlayer).btb$openGui(String.valueOf(this.networkId), this.modGuiId, Minecraft.getMinecraft().thePlayer.worldObj, this.x, this.y, this.z);
         Minecraft.getMinecraft().thePlayer.openContainer.windowId = this.windowId;
     }
 }

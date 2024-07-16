@@ -87,7 +87,7 @@ public class ItemGate extends ItemBuildCraft {
 	}
 
 	public static Set<IGateExpansion> getInstalledExpansions(ItemStack stack) {
-		Set<IGateExpansion> expansions = new HashSet<IGateExpansion>();
+        Set<IGateExpansion> expansions = new HashSet<>();
 		NBTTagCompound nbt = getNBT(stack);
 		if (nbt == null)
 			return expansions;
@@ -170,6 +170,11 @@ public class ItemGate extends ItemBuildCraft {
 			}
 		}
 	}
+
+    @Override
+    public Icon getIconIndex(ItemStack stack) {
+        return getLogic(stack).getIconItem();
+    }
 
 	@Override
 	@Environment(EnvType.CLIENT)

@@ -75,7 +75,7 @@ public class BuildCraftSilicon implements IBuildCraftModule {
 
 		redstoneChipset = new ItemRedstoneChipset(BuildcraftConfig.redstoneChipsetId);
 
-		NetworkRegistry.instance().registerGuiHandler("bcsilicon", new GuiHandler());
+        NetworkRegistry.instance().registerGuiHandler("bcsilicon", new GuiHandlerSilicon());
 		CoreProxy.getProxy().registerTileEntity(TileLaser.class, "net.minecraft.src.buildcraft.factory.TileLaser");
 		CoreProxy.getProxy().registerTileEntity(TileAssemblyTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyTable");
 		CoreProxy.getProxy().registerTileEntity(TileAdvancedCraftingTable.class, "net.minecraft.src.buildcraft.factory.TileAssemblyAdvancedWorkbench");

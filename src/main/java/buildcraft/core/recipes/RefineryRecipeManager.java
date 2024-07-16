@@ -17,7 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 public final class RefineryRecipeManager implements IRefineryRecipeManager {
 
 	public static final RefineryRecipeManager INSTANCE = new RefineryRecipeManager();
-	private SortedSet<RefineryRecipe> recipes = new TreeSet<RefineryRecipe>();
+    private final SortedSet<RefineryRecipe> recipes = new TreeSet<>();
 
 	@Override
 	public void addRecipe(FluidStack ingredient, FluidStack result, int energy, int delay) {

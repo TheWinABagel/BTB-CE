@@ -5,6 +5,7 @@ import net.minecraft.src.ResourceLocation;
 
 public class TileEngineCreative extends TileEngine {
     public TileEngineCreative() {
+        needsRedstonePower = true;
     }
 
     @Override
