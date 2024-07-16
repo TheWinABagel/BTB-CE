@@ -226,7 +226,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 
 	private static void initPackets() {
 		BuildCraftAddon.registerBCPacketHandler(DefaultProps.CORE_CHANNEL_NAME, new PacketHandler());
-		//todocore packet handling is a total mess atm
+        //packet handling is a total mess atm...
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
 	}

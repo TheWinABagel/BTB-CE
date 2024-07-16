@@ -3,7 +3,6 @@ package buildcraft.core;
 import buildcraft.core.utils.Utils;
 import java.util.Random;
 
-import buildcraft.energy.TileEngine;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -43,19 +42,9 @@ public abstract class BlockBuildCraft extends BlockContainer {
 		return super.getLightValue(world, x, y, z);
 	}
 
-/*	@Override
-	public String getLocalizedName() {
-		return I18n.getString(this.getUnlocalizedName());
-	}*/
-
-	//todocore block solid and rotate block
+	//todocore block solid?
 	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side) {
 		return true;
-	}
-
-
-	public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
-		return false;
 	}
 
 	@Override

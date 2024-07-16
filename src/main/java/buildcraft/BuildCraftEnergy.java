@@ -108,7 +108,7 @@ public class BuildCraftEnergy implements IBuildCraftModule {
 	}
 
 	@Override
-	public void init() { //todoenergy config
+	public void init() {
 
 		woodEngineBlock = new BlockEngineWood(BuildcraftConfig.woodenEngineBlockId);
 		stoneEngineBlock = new BlockEngineStone(BuildcraftConfig.stoneEngineBlockId);

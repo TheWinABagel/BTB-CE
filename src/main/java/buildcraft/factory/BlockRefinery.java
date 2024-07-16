@@ -76,9 +76,13 @@ public class BlockRefinery extends BlockContainer {
 		world.setBlockMetadataWithNotify(i, j, k, orientation.getOpposite().ordinal(), 1);
 	}
 
-	//todofactory rotate
-//	@Override
-	public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
+	@Override
+	public boolean canRotateOnTurntable(IBlockAccess blockAccess, int i, int j, int k) {
+		return true;
+	}
+
+	@Override
+	public boolean rotateAroundJAxis(World world, int x, int y, int z, boolean bReverse) {
 		int meta = world.getBlockMetadata(x, y, z);
 
 		switch (ForgeDirection.getOrientation(meta)) {
