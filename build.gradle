@@ -118,6 +118,8 @@ jar {
 loom {
 	sourceCompatibility = JavaVersion.VERSION_17
 	targetCompatibility = JavaVersion.VERSION_17
+	runConfigs.named("client").get().programArgs("-Dmixin.debug.export=true")
+//	runConfigs.named("client").get().vmArgs()
 }
 
 runClient {

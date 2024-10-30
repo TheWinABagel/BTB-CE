@@ -21,13 +21,12 @@ public class BlockPlainPipe extends Block implements IFramePipeConnection {
 	public BlockPlainPipe(int i) {
 		super(i, Material.glass);
 
-		minX = CoreConstants.PIPE_MIN_POS;
-		minY = 0.0;
-		minZ = CoreConstants.PIPE_MIN_POS;
+		initBlockBounds(CoreConstants.PIPE_MIN_POS, 0.0, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, 1.0, CoreConstants.PIPE_MAX_POS);
+	}
 
-		maxX = CoreConstants.PIPE_MAX_POS;
-		maxY = 1.0;
-		maxZ = CoreConstants.PIPE_MAX_POS;
+	@Override
+	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int iNeighborI, int iNeighborJ, int iNeighborK, int iSide) {
+		return true;
 	}
 
 	@Override
@@ -50,7 +49,6 @@ public class BlockPlainPipe extends Block implements IFramePipeConnection {
 
 	@Override
 	public boolean isPipeConnected(IBlockAccess blockAccess, int x1, int y1, int z1, int x2, int y2, int z2) {
-
 		return false;
 	}
 

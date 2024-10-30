@@ -22,7 +22,7 @@ public abstract class IntegratedServerMixin extends MinecraftServer {
             target = "Lnet/minecraft/src/ServerConfigurationManager;setPlayerManager([Lnet/minecraft/src/WorldServer;)V",
             shift = At.Shift.AFTER),
             locals = LocalCapture.CAPTURE_FAILHARD)
-    private void btb$onIntegratedWorldLoad(String par1Str, String par2Str, long par3, WorldType par5WorldType, String par6Str, CallbackInfo ci, ISaveHandler var7, int worldId, byte var9) {
+    private void btb$onIntegratedWorldLoad(String par1Str, String par2Str, long par3, WorldType par5WorldType, String par6Str, CallbackInfo ci, ISaveHandler var7, boolean isGlobal, int worldId, byte var9) {
         EventHandlerBuilders.handleWorldLoad(this.worldServers[worldId]);
     }
 }

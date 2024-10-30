@@ -122,7 +122,7 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateActions(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-
+		System.out.println("GATE ACTION ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 
@@ -136,7 +136,7 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateTriggers(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-
+		System.out.println("GATE TRIGGERS ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 
@@ -150,7 +150,7 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateSelection(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-
+		System.out.println("GATE SELECTION ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 

@@ -56,6 +56,11 @@ public class RenderingRegistry {
         return false;
     }
 
+    public boolean renderItemAsFull3DBlock(int modelId) {
+        ISimpleBlockRenderingHandler bri = blockRenderers.get(modelId);
+        return bri != null && bri.shouldRender3DInInventory();
+    }
+
     public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
         for (EntityRendererInfo info : this.entityRenderers) {
             rendererMap.put(info.target, info.renderer);

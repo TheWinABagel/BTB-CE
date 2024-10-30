@@ -1,19 +1,13 @@
 package buildcraft.core.network;
 
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
 import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
-import buildcraft.builders.network.PacketHandlerBuilders;
-import buildcraft.silicon.network.PacketHandlerSilicon;
-import buildcraft.transport.network.PacketHandlerTransport;
-import buildcraft.transport.network.PacketPipeTransportItemStackRequest;
-import buildcraft.transport.network.PacketPipeTransportTraveler;
 import net.minecraft.src.*;
 
 
-public class PacketHandler implements BuildcraftCustomPacketHandler {
+public class PacketHandlerCore implements BuildcraftCustomPacketHandler {
 	@Override
 	public void onPacketData(EntityPlayer player, Packet250CustomPayload packet, DataInputStream data, int packetID) {
 		try {

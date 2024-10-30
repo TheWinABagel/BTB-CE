@@ -15,7 +15,7 @@ public abstract class ItemBucketMixin extends Item {
         super(par1);
     }
 
-    @Inject(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemBucket;getMovingObjectPositionFromPlayer(Lnet/minecraft/src/World;Lnet/minecraft/src/EntityPlayer;Z)Lnet/minecraft/src/MovingObjectPosition;"),
+/*    @Inject(method = "onItemRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/ItemBucket;getMovingObjectPositionFromPlayer(Lnet/minecraft/src/World;Lnet/minecraft/src/EntityPlayer;Z)Lnet/minecraft/src/MovingObjectPosition;"),
             locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     private void btb$bucketHook(ItemStack stack, World world, EntityPlayer player, CallbackInfoReturnable<ItemStack> cir, boolean isFull) {
         if (stack == null) return;
@@ -24,5 +24,5 @@ public abstract class ItemBucketMixin extends Item {
         if (eventStack != null) {
             cir.setReturnValue(eventStack);
         }
-    }
+    }*/
 }

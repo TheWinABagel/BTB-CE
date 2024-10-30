@@ -22,4 +22,11 @@ public abstract class RenderBlocksMixin {
             cir.setReturnValue(true);
         }
     }
+
+    @Inject(method = "doesRenderIDRenderItemIn3D", at = @At(value = "RETURN"), cancellable = true)
+    private static void btb$renderInventoryBlock(int par0, CallbackInfoReturnable<Boolean> cir) {
+        if (RenderingRegistry.instance().renderItemAsFull3DBlock(par0)) {
+            cir.setReturnValue(true);
+        }
+    }
 }

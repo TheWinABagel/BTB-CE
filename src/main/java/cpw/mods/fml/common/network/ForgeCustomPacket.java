@@ -4,6 +4,7 @@ import dev.bagel.btb.injected.EntityPlayerExtension;
 import btw.network.packet.handler.CustomPacketHandler;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Minecraft;
 import net.minecraft.src.Packet250CustomPayload;
 
@@ -26,7 +27,7 @@ public class ForgeCustomPacket implements CustomPacketHandler {
      */
     private int z;
     @Override
-    public void handleCustomPacket(Packet250CustomPayload data) throws IOException {
+    public void handleCustomPacket(Packet250CustomPayload data, EntityPlayer entityPlayer) throws IOException {
         ByteArrayDataInput dat = ByteStreams.newDataInput(data.data);
         this.windowId = dat.readInt();
         this.networkId = dat.readInt();

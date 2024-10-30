@@ -1,6 +1,7 @@
 package buildcraft;
 
 import btw.BTWAddon;
+import btw.network.packet.handler.CustomPacketHandler;
 import buildcraft.core.ItemBlockBuildCraft;
 import buildcraft.core.utils.BCLog;
 import buildcraft.transport.network.PacketGateExpansionMap;
@@ -29,6 +30,7 @@ public class BuildCraftAddon extends BTWAddon {
     }
 
     public BuildCraftAddon() {
+        this.modID = "buildcraft";
     }
 
     private static void createAssociatedItemsForModBlocks() {
@@ -44,13 +46,19 @@ public class BuildCraftAddon extends BTWAddon {
         MODULES.forEach(module -> module.textureHook(map));
     }
 
+    @Override
+    public void registerPacketHandler(String channel, CustomPacketHandler handler) {
+
+        super.registerPacketHandler(channel, handler);
+    }
+
     public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
-        BCPacketHandlers.put(channel, handler);
+        System.out.println("CHANNEL " + channel);
+        INSTANCE.registerPacketHandler(channel, handler);
     }
 
     @Override
     public void postSetup() {
-        this.modID = "buildcraft";
         MODULES.forEach(IBuildCraftModule::postSetup);
     }
 
@@ -96,7 +104,7 @@ public class BuildCraftAddon extends BTWAddon {
                 DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
                 int packetID = data.read();
                 for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
-                    packetHandler.onPacketData(handler.playerEntity, packet, data, packetID);
+//                    packetHandler.onPacketData(handler.playerEntity, packet, data, packetID);
                 }
                 return true;
             }
@@ -114,7 +122,7 @@ public class BuildCraftAddon extends BTWAddon {
                 DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
                 int packetID = data.read();
                 for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
-                    packetHandler.onPacketData(mcInstance.thePlayer, packet, data, packetID);
+//                    packetHandler.onPacketData(mcInstance.thePlayer, packet, data, packetID);
                 }
                 return true;
             }

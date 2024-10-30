@@ -158,7 +158,6 @@ public class PipeRendererWorld implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public boolean shouldRender3DInInventory() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

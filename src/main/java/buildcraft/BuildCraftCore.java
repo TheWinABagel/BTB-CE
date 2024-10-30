@@ -7,7 +7,6 @@
  */
 package buildcraft;
 
-import btw.AddonHandler;
 import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import dev.bagel.btb.mixin.accessors.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
@@ -17,7 +16,7 @@ import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.*;
 import buildcraft.core.blueprints.BptItem;
 import buildcraft.core.network.EntityIds;
-import buildcraft.core.network.PacketHandler;
+import buildcraft.core.network.PacketHandlerCore;
 import buildcraft.core.network.PacketUpdate;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.recipes.AssemblyRecipeManager;
@@ -225,7 +224,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 	}
 
 	private static void initPackets() {
-		BuildCraftAddon.registerBCPacketHandler(DefaultProps.CORE_CHANNEL_NAME, new PacketHandler());
+        BuildCraftAddon.registerBCPacketHandler(DefaultProps.CORE_CHANNEL_NAME, new PacketHandlerCore());
         //packet handling is a total mess atm...
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
 //		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
