@@ -1,10 +1,10 @@
 package buildcraft.core.network;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-
 import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
 import net.minecraft.src.*;
+
+import java.io.DataInputStream;
+import java.io.IOException;
 
 
 public class PacketHandlerCore implements BuildcraftCustomPacketHandler {
@@ -38,6 +38,13 @@ public class PacketHandlerCore implements BuildcraftCustomPacketHandler {
 
 				case PacketIds.GUI_WIDGET: {
 					PacketGuiWidget pkt = new PacketGuiWidget();
+					pkt.readData(data);
+					break;
+				}
+
+				//handled on server
+				case PacketIds.GUI_PHANTOM_EMI: {
+					PacketSetPhantomSlot pkt = new PacketSetPhantomSlot((EntityPlayerMP) player);
 					pkt.readData(data);
 					break;
 				}

@@ -55,6 +55,7 @@ public class BuildCraftAddon extends BTWAddon {
     public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
         System.out.println("CHANNEL " + channel);
         INSTANCE.registerPacketHandler(channel, handler);
+        BuildcraftCustomPacketHandler.ID_MAP.add(handler);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class BuildCraftAddon extends BTWAddon {
                 DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
                 int packetID = data.read();
                 for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
-//                    packetHandler.onPacketData(mcInstance.thePlayer, packet, data, packetID);
+                    packetHandler.onPacketData(mcInstance.thePlayer, packet, data, packetID);
                 }
                 return true;
             }

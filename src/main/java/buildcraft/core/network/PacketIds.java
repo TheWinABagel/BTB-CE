@@ -38,6 +38,7 @@ public class PacketIds {
 
 	public static final int GUI_RETURN = 80;
 	public static final int GUI_WIDGET = 81;
+	public static final int GUI_PHANTOM_EMI = 82;
 
 	public static final int STATE_UPDATE = 100;
 }

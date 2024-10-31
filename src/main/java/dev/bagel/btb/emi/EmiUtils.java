@@ -2,6 +2,7 @@ package dev.bagel.btb.emi;
 
 import buildcraft.core.gui.GuiBuildCraft;
 import buildcraft.core.gui.slots.SlotPhantom;
+import buildcraft.core.network.PacketSetPhantomSlot;
 import emi.dev.emi.emi.api.EmiRegistry;
 import emi.dev.emi.emi.api.recipe.EmiRecipe;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -44,12 +45,23 @@ public class EmiUtils {
         reg.addDragDropHandler(clazz, (gui, stack, x, y) -> {
             Slot slot = gui.getSlotAtPosition(x, y);
             if (slot instanceof SlotPhantom phantom) {
-                gui.container.slotClickPhantom(phantom, 0, 0, Minecraft.getMinecraft().thePlayer, stack.getEmiStacks().get(0).getItemStack());
-                System.out.println("clicked a phantom slot");
+
+                Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new PacketSetPhantomSlot(stack.getEmiStacks().get(0).getItemStack(), phantom.slotNumber, Minecraft.getMinecraft().thePlayer.openContainer.windowId).getPacket());
+
                 return true;
             }
             return false;
         });
+
+//        reg.addDragDropHandler(clazz, (gui, stack, x, y) -> {
+//            Slot slot = gui.getSlotAtPosition(x, y);
+//            if (slot instanceof SlotPhantom phantom) {
+//                gui.container.slotClickPhantom(phantom, 0, 0, Minecraft.getMinecraft().thePlayer, stack.getEmiStacks().get(0).getItemStack());
+//                System.out.println("clicked a phantom slot");
+//                return true;
+//            }
+//            return false;
+//        });
     }
 
     public static void addRecipeSafe(EmiRegistry registry, Supplier<EmiRecipe> supplier) {

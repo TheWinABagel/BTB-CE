@@ -2,7 +2,6 @@ package dev.bagel.btb.mixin;
 
 import buildcraft.core.ItemBuildCraft;
 import net.minecraft.src.*;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,6 +19,11 @@ public class PlayerControllerMPMixin {
         } else {
 //            System.out.println("activate block PlayerControllerMP onItemFirstUse: FALSE");
         }
+    }
+
+    @Inject(method = "windowClick", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void btb$testWhatStackIs(int par1, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, CallbackInfoReturnable<ItemStack> cir, short var6, ItemStack var7) {
+        System.out.println("current stack sent to server: " +var7);
     }
 
     @Redirect(method = "onPlayerRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityPlayer;isSneaking()Z"))

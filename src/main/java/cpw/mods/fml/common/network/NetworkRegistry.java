@@ -1,11 +1,6 @@
 package cpw.mods.fml.common.network;
 
 import btw.BTWAddon;
-import dev.bagel.btb.mixin.accessors.EntityPlayerMPAccessor;
-import buildcraft.core.utils.BCLog;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
-import net.minecraft.src.*;
 
 import java.util.HashMap;
 import java.util.Map;

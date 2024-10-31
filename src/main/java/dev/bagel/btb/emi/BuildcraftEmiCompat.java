@@ -1,13 +1,12 @@
 package dev.bagel.btb.emi;
 
-import buildcraft.api.recipes.IIntegrationRecipeManager;
-import buildcraft.core.recipes.IntegrationRecipeManager;
-import buildcraft.core.recipes.RefineryRecipeManager;
-import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
 import buildcraft.BuildCraftFactory;
 import buildcraft.BuildCraftSilicon;
 import buildcraft.api.recipes.IAssemblyRecipeManager;
+import buildcraft.api.recipes.IIntegrationRecipeManager;
 import buildcraft.core.recipes.AssemblyRecipeManager;
+import buildcraft.core.recipes.IntegrationRecipeManager;
+import buildcraft.core.recipes.RefineryRecipeManager;
 import buildcraft.core.utils.BCLog;
 import buildcraft.energy.gui.GuiCombustionEngine;
 import buildcraft.energy.gui.GuiStoneEngine;
@@ -18,6 +17,7 @@ import buildcraft.transport.gui.GuiDiamondPipe;
 import buildcraft.transport.gui.GuiEmeraldPipe;
 import buildcraft.transport.gui.GuiEmzuliPipe;
 import buildcraft.transport.gui.GuiFilteredBuffer;
+import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
 import emi.dev.emi.emi.api.EmiPlugin;
 import emi.dev.emi.emi.api.EmiRegistry;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
@@ -46,14 +46,7 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         EmiUtils.addClickStackHandler(GuiEmzuliPipe.class, reg);
         EmiUtils.addClickStackHandler(GuiAdvancedCraftingTable.class, reg);
         EmiUtils.addClickStackHandler(GuiFilteredBuffer.class, reg);
-/*        reg.addDragDropHandler(GuiDiamondPipe.class, (gui, stack, x, y) -> {
-            Slot slot = gui.getSlotAtPosition(x, y);
-            if (slot instanceof SlotPhantom phantom) {
-                gui.container.slotClickPhantom(phantom, 1, 0, Minecraft.getMinecraft().thePlayer, stack.getEmiStacks().get(0).getItemStack());
-                return true;
-            }
-            return false;
-        });*/
+
 
 
         for (IAssemblyRecipeManager.IAssemblyRecipe recipe : AssemblyRecipeManager.INSTANCE.getRecipes()) {

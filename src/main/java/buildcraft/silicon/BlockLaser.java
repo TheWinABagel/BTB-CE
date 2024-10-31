@@ -7,20 +7,22 @@
  */
 package buildcraft.silicon;
 
-import buildcraft.core.CreativeTabBuildCraft;
+import btw.block.model.BlockModel;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import dev.bagel.btb.injected.CustomBoundingBoxBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BlockLaser extends BlockContainer {
+public class BlockLaser extends BlockContainer implements CustomBoundingBoxBlock {
 
 	@Environment(EnvType.CLIENT)
 	private Icon textureTop, textureBottom, textureSide;
+
+	public static final LaserModel model = new LaserModel();
 
 	public BlockLaser(int i) {
 		super(i, Material.iron);
@@ -54,14 +56,14 @@ public class BlockLaser extends BlockContainer {
 	}
 
 	@Override
+	public boolean shouldSideBeRendered(IBlockAccess blockAccess, int iNeighborI, int iNeighborJ, int iNeighborK, int iSide) {
+		return true;
+	}
+
+	@Override
 	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
 		RenderingRegistry.instance().renderInventoryBlock(renderBlocks, this, iItemDamage, getRenderType());
 	}
-
-/*	@Override
-	public void renderBlockAsItem(RenderBlocks renderBlocks, int iItemDamage, float fBrightness) {
-		super.renderBlockAsItem(renderBlocks, iItemDamage, fBrightness);
-	}*/
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
@@ -89,12 +91,47 @@ public class BlockLaser extends BlockContainer {
 
 		return meta;
 	}
+
+	@Override
+	public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
+		BlockModel modelCopy = model.makeTemporaryCopy();
+		int iFacing = world.getBlockMetadata(i, j, k);
+		modelCopy.tiltToFacingAlongY(iFacing);
+
+		modelCopy.addIntersectingBoxesToCollisionList(world, i, j ,k, par5AxisAlignedBB, par6List);
+	}
+
+	@Override
+	public MovingObjectPosition collisionRayTrace(World world, int i, int j, int k, Vec3 startRay, Vec3 endRay) {
+		BlockModel modelCopy = model.makeTemporaryCopy();
+		int iFacing = world.getBlockMetadata(i, j, k);
+//		int iFacing = ForgeDirection.getOrientation(world.getBlockMetadata(i,j,k)).getOpposite().ordinal();
+
+		modelCopy.rotateAroundYToFacing(iFacing);
+		modelCopy.tiltToFacingAlongY(iFacing);
+		return modelCopy.collisionRayTrace(world, i, j, k, startRay, endRay);
+	}
+
 /*
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
 		itemList.add(new ItemStack(this));
 	}*/
+
+	@Override
+	public List<AxisAlignedBB> getCustomSelectionBoxes(World world, int x, int y, int z) {
+		return model.boxBase;
+	}
+
+//	@Override
+//	@Environment(value=EnvType.CLIENT)
+//	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int i, int j, int k) {
+//		AxisAlignedBB transformedBox = model.boxBase.makeTemporaryCopy();
+//		transformedBox.rotateAroundYToFacing(this.getFacing(world, i, j, k));
+//		transformedBox.offset(i, j, k);
+//		return transformedBox;
+//	}
 
 	@Override
 	@Environment(EnvType.CLIENT)

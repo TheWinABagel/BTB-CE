@@ -12,8 +12,6 @@ import buildcraft.core.gui.slots.SlotBase;
 import buildcraft.core.gui.widgets.Widget;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.network.PacketGuiWidget;
-import emi.dev.emi.emi.api.stack.EmiStack;
-import emi.dev.emi.emi.screen.EmiScreenManager;
 import net.minecraft.src.*;
 
 import java.io.DataInputStream;
@@ -81,6 +79,8 @@ public abstract class BuildCraftContainer extends Container {
 		return super.slotClick(slotNum, mouseButton, modifier, player);
 	}
 
+
+
 	public ItemStack slotClickPhantom(Slot slot, int mouseButton, int modifier, EntityPlayer player, ItemStack stackHeld) {
 		ItemStack stack = null;
 		if (mouseButton == 2) {
@@ -134,6 +134,7 @@ public abstract class BuildCraftContainer extends Container {
 		if (stackSlot.stackSize <= 0) {
 			slot.putStack((ItemStack) null);
 		}
+		slot.onSlotChanged();
 	}
 
 	protected void fillPhantomSlot(Slot slot, ItemStack stackHeld, int mouseButton, int modifier) {
@@ -146,7 +147,7 @@ public abstract class BuildCraftContainer extends Container {
 		}
 		ItemStack phantomStack = stackHeld.copy();
 		phantomStack.stackSize = stackSize;
-
+		System.out.println("stack is " +phantomStack);
 		slot.putStack(phantomStack);
 	}
 
