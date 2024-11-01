@@ -141,4 +141,8 @@ public class BuildCraftAddon extends BTWAddon {
     public void registerProp(String propertyName, Object defaultValue) {
         this.registerProperty(propertyName, defaultValue.toString(), "");
     }
+
+//    public ItemBuildCraft registerBlockItem() {
+//
+//    }
 }

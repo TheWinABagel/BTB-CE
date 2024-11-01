@@ -8,7 +8,6 @@
 package buildcraft;
 
 import btw.client.network.packet.handler.CustomEntityPacketHandler;
-import dev.bagel.btb.mixin.accessors.EntityListAccessor;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -26,6 +25,7 @@ import buildcraft.core.triggers.*;
 import buildcraft.core.triggers.ActionMachineControl.Mode;
 import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import dev.bagel.btb.mixin.accessors.EntityListAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.server.MinecraftServer;
@@ -225,9 +225,6 @@ public class BuildCraftCore implements IBuildCraftModule {
 
 	private static void initPackets() {
         BuildCraftAddon.registerBCPacketHandler(DefaultProps.CORE_CHANNEL_NAME, new PacketHandlerCore());
-        //packet handling is a total mess atm...
-//		BuildCraftCore.instance.registerPacketHandler("buildcraft|TP", new PacketHandlerTransport());
-//		BuildCraftCore.instance.registerPacketHandler("buildcraft|SC", new PacketHandlerSilicon());
 	}
 
 

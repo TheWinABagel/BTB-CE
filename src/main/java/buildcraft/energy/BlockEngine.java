@@ -7,22 +7,27 @@
  */
 package buildcraft.energy;
 
+import btw.block.model.BlockModel;
 import buildcraft.BuildCraftCore;
 import buildcraft.core.BlockBuildCraft;
 import buildcraft.core.IItemPipe;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import dev.bagel.btb.injected.CustomBoundingBoxBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
+import java.util.List;
 import java.util.Random;
 
-public abstract class BlockEngine extends BlockBuildCraft {
+public abstract class BlockEngine extends BlockBuildCraft implements CustomBoundingBoxBlock {
 
     protected static Icon woodTexture;
     protected static Icon stoneTexture;
     protected static Icon ironTexture;
+
+    public static final EngineModel model = new EngineModel();
 
     public BlockEngine(int i) {
         super(i, Material.iron);
@@ -155,5 +160,37 @@ public abstract class BlockEngine extends BlockBuildCraft {
         if (tile != null) {
             tile.checkRedstonePower();
         }
+    }
+
+    @Override
+    public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
+        BlockModel modelCopy = model.makeTemporaryCopy();
+        int iFacing = this.getFacing(world, i, j, k);
+        modelCopy.tiltToFacingAlongY(iFacing);
+
+        modelCopy.addIntersectingBoxesToCollisionList(world, i, j ,k, par5AxisAlignedBB, par6List);
+    }
+
+    @Override
+    public MovingObjectPosition collisionRayTrace(World world, int i, int j, int k, Vec3 startRay, Vec3 endRay) {
+        BlockModel modelCopy = model.makeTemporaryCopy();
+        int iFacing = this.getFacing(world, i, j, k);
+
+        modelCopy.rotateAroundYToFacing(iFacing);
+        modelCopy.tiltToFacingAlongY(iFacing);
+        return modelCopy.collisionRayTrace(world, i, j, k, startRay, endRay);
+    }
+
+    @Override
+    public List<AxisAlignedBB> getCustomSelectionBoxes(World world, int x, int y, int z) {
+        return model.boxBase;
+    }
+
+    @Override
+    public int getFacing(World world, int x, int y, int z) {
+        if (world.getBlockTileEntity(x, y, z) instanceof TileEngine te) {
+            return te.orientation.ordinal();
+        }
+        return 0;
     }
 }

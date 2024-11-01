@@ -105,33 +105,28 @@ public class BlockLaser extends BlockContainer implements CustomBoundingBoxBlock
 	public MovingObjectPosition collisionRayTrace(World world, int i, int j, int k, Vec3 startRay, Vec3 endRay) {
 		BlockModel modelCopy = model.makeTemporaryCopy();
 		int iFacing = world.getBlockMetadata(i, j, k);
-//		int iFacing = ForgeDirection.getOrientation(world.getBlockMetadata(i,j,k)).getOpposite().ordinal();
 
 		modelCopy.rotateAroundYToFacing(iFacing);
 		modelCopy.tiltToFacingAlongY(iFacing);
 		return modelCopy.collisionRayTrace(world, i, j, k, startRay, endRay);
 	}
 
-/*
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public void addCreativeItems(ArrayList itemList) {
-		itemList.add(new ItemStack(this));
-	}*/
-
 	@Override
 	public List<AxisAlignedBB> getCustomSelectionBoxes(World world, int x, int y, int z) {
 		return model.boxBase;
 	}
 
-//	@Override
-//	@Environment(value=EnvType.CLIENT)
-//	public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int i, int j, int k) {
-//		AxisAlignedBB transformedBox = model.boxBase.makeTemporaryCopy();
-//		transformedBox.rotateAroundYToFacing(this.getFacing(world, i, j, k));
-//		transformedBox.offset(i, j, k);
-//		return transformedBox;
-//	}
+	@Override
+	public int getFacing(World world, int x, int y, int z) {
+		return world.getBlockMetadata(x, y, z);
+	}
+
+	/*
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public void addCreativeItems(ArrayList itemList) {
+		itemList.add(new ItemStack(this));
+	}*/
 
 	@Override
 	@Environment(EnvType.CLIENT)

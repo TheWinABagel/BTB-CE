@@ -26,7 +26,7 @@ public abstract class RenderGlobalMixin {
             for (AxisAlignedBB bb : cbbb.getCustomSelectionBoxes(this.theWorld, pos.blockX, pos.blockY, pos.blockZ)) {
                 bb = bb.makeTemporaryCopy();
 
-                int facing = theWorld.getBlockMetadata(pos.blockX, pos.blockY, pos.blockZ);
+                int facing = cbbb.getFacing(theWorld, pos.blockX, pos.blockY, pos.blockZ);
                 bb.rotateAroundYToFacing(facing);
                 bb.tiltToFacingAlongY(facing);
                 bb = bb.offset(pos.blockX, pos.blockY, pos.blockZ).expand(expand, expand, expand).getOffsetBoundingBox(-posX, -posY, -posZ);
