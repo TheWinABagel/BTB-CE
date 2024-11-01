@@ -15,7 +15,6 @@ import buildcraft.core.GuiIds;
 import buildcraft.core.fluids.FluidUtils;
 import buildcraft.core.utils.Utils;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import dev.bagel.btb.injected.CustomBoundingBoxBlock;
 import dev.bagel.btb.injected.EntityPlayerExtension;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,7 +24,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 
 import java.util.List;
 
-public class BlockRefinery extends BlockContainer implements CustomBoundingBoxBlock {
+public class BlockRefinery extends BlockContainer /*implements CustomBoundingBoxBlock*/ {
 
 	private static Icon icon;
 	public static final RefineryModel model = new RefineryModel();
@@ -143,6 +142,7 @@ public class BlockRefinery extends BlockContainer implements CustomBoundingBoxBl
 	public void addCollisionBoxesToList(World world, int i, int j, int k, AxisAlignedBB par5AxisAlignedBB, List par6List, Entity par7Entity) {
 		BlockModel modelCopy = model.makeTemporaryCopy();
 		int iFacing = world.getBlockMetadata(i, j, k);
+		modelCopy.rotateAroundYToFacing(iFacing);
 		modelCopy.tiltToFacingAlongY(iFacing);
 
 		modelCopy.addIntersectingBoxesToCollisionList(world, i, j ,k, par5AxisAlignedBB, par6List);
@@ -158,15 +158,15 @@ public class BlockRefinery extends BlockContainer implements CustomBoundingBoxBl
 		return modelCopy.collisionRayTrace(world, i, j, k, startRay, endRay);
 	}
 
-	@Override
-	public List<AxisAlignedBB> getCustomSelectionBoxes(World world, int x, int y, int z) {
-		return model.boxBase;
-	}
-
-	@Override
-	public int getFacing(World world, int x, int y, int z) {
-		return world.getBlockMetadata(x, y, z);
-	}
+//	@Override
+//	public List<AxisAlignedBB> getCustomSelectionBoxes(World world, int x, int y, int z) {
+//		return model.boxBase;
+//	}
+//
+//	@Override
+//	public int getFacing(World world, int x, int y, int z) {
+//		return world.getBlockMetadata(x, y, z);
+//	}
 /*	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public void addCreativeItems(ArrayList itemList) {
