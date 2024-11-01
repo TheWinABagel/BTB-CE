@@ -7,12 +7,13 @@
  */
 package buildcraft.core;
 
+import buildcraft.core.utils.BCItem;
 import buildcraft.core.utils.StringUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 
-public class ItemBuildCraft extends Item {
+public class ItemBuildCraft extends Item implements BCItem {
 
 	private boolean passSneakClick = false;
 

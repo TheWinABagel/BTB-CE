@@ -1,10 +1,11 @@
 package buildcraft.core;
 
+import buildcraft.core.utils.BCItem;
 import buildcraft.core.utils.StringUtils;
 import net.minecraft.src.ItemBlock;
 import net.minecraft.src.ItemStack;
 
-public class ItemBlockBuildCraft extends ItemBlock {
+public class ItemBlockBuildCraft extends ItemBlock implements BCItem {
 
 	public ItemBlockBuildCraft(int id) {
 		super(id);

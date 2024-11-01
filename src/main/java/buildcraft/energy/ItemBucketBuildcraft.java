@@ -7,13 +7,13 @@
  */
 package buildcraft.energy;
 
-import buildcraft.core.CreativeTabBuildCraft;
+import buildcraft.core.utils.BCItem;
 import buildcraft.core.utils.StringUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 
-public class ItemBucketBuildcraft extends ItemBucket {
+public class ItemBucketBuildcraft extends ItemBucket implements BCItem {
 
 	private String iconName;
 

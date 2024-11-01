@@ -34,7 +34,11 @@
     "client.RenderBlocksMixin",
     "client.RendererPlayerMixin",
     "client.RenderGlobalMixin",
-    "client.RenderItemMixin"
+    "client.RenderItemMixin",
+    "emi_mod_name.EmiUtilMixin",
+    "emi_mod_name.ItemEmiStackMixin",
+    "emi_mod_name.ItemStackMixin",
+    "emi_mod_name.RetroEmiMixin"
   ],
   "client": [
     "MinecraftMixin",
