@@ -21,11 +21,6 @@ public class PlayerControllerMPMixin {
         }
     }
 
-    @Inject(method = "windowClick", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void btb$testWhatStackIs(int par1, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, CallbackInfoReturnable<ItemStack> cir, short var6, ItemStack var7) {
-        System.out.println("current stack sent to server: " +var7);
-    }
-
     @Redirect(method = "onPlayerRightClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityPlayer;isSneaking()Z"))
     private boolean btb$shouldPassSneakClickToBlockHook(EntityPlayer instance, EntityPlayer par1EntityPlayer, World par2World, ItemStack par3ItemStack, int par4, int par5, int par6, int par7, Vec3 par8Vec3) {
         boolean shouldNotPass = instance.isSneaking() || (par1EntityPlayer.getHeldItem() != null && instance.getHeldItem().getItem() instanceof ItemBuildCraft itemBc && !itemBc.shouldPassSneakingClickToBlock(par2World, par4, par5, par6));

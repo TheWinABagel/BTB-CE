@@ -6,18 +6,18 @@
  * granted by the copyright holder.
  */
 package buildcraft;
+
 import buildcraft.core.DefaultProps;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.factory.*;
-
 import buildcraft.factory.network.PacketHandlerFactory;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.Block;
-import net.minecraft.src.TextureMap;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.TextureMap;
 
 public class BuildCraftFactory implements IBuildCraftModule {
 	public static final int MINING_MJ_COST_PER_BLOCK = 64;
@@ -92,6 +92,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		addon.registerProp("AutoWorkbenchBlockId", DefaultProps.AUTO_WORKBENCH_ID);
 		addon.registerProp("FrameBlockId", DefaultProps.FRAME_ID);
 		addon.registerProp("QuarryBlockId", DefaultProps.QUARRY_ID);
+		addon.registerProp("PumpBlockId", DefaultProps.PUMP_ID);
 		addon.registerProp("FloodGateBlockId", DefaultProps.FLOOD_GATE_ID);
 		addon.registerProp("TankBlockId", DefaultProps.TANK_ID);
 		addon.registerProp("RefineryBlockId", DefaultProps.REFINERY_ID);
@@ -112,6 +113,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		BuildcraftConfig.autoWorkbenchId = BuildcraftConfig.getInt("AutoWorkbenchBlockId");
 		BuildcraftConfig.frameId = BuildcraftConfig.getInt("FrameBlockId");
 		BuildcraftConfig.quarryId = BuildcraftConfig.getInt("QuarryBlockId");
+		BuildcraftConfig.pumpId = BuildcraftConfig.getInt("PumpBlockId");
 		BuildcraftConfig.floodGateId = BuildcraftConfig.getInt("FloodGateBlockId");
 		BuildcraftConfig.tankId = BuildcraftConfig.getInt("TankBlockId");
 		BuildcraftConfig.refineryId = BuildcraftConfig.getInt("RefineryBlockId");

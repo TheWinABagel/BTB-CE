@@ -2,6 +2,7 @@ package buildcraft.transport;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
+import dev.bagel.btb.extensions.TileScrewPump;
 import net.fabricmc.api.EnvType;
 import net.minecraft.src.TileEntity;
 
@@ -20,6 +21,7 @@ public class TransportProxy {
 		TileEntity.addMapping(TileDummyGenericPipe2.class, "net.minecraft.src.buildcraft.transport.TileGenericPipe");
 		TileEntity.addMapping(TileGenericPipe.class, "net.minecraft.src.buildcraft.transport.GenericPipe");
 		TileEntity.addMapping(TileFilteredBuffer.class, "net.minecraft.src.buildcraft.transport.TileFilteredBuffer");
+		TileEntity.addMapping(TileScrewPump.class, "dev.bagel.btb.extensions.TileScrewPump");
 	}
 
 	public void registerRenderers() {
