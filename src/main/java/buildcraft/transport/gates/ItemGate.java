@@ -4,7 +4,6 @@ import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.*;
 import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.inventory.InvUtils;
-import buildcraft.core.utils.Localization;
 import buildcraft.transport.Gate;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
 import buildcraft.transport.gates.GateDefinition.GateMaterial;

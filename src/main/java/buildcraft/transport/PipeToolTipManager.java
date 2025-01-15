@@ -8,16 +8,11 @@
  */
 package buildcraft.transport;
 
-import buildcraft.core.utils.Localization;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.I18n;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -26,7 +21,7 @@ import java.util.Map;
 @Environment(EnvType.CLIENT)
 public class PipeToolTipManager {
 
-	private static final Map<Class<? extends Pipe>, String> toolTips = new HashMap<Class<? extends Pipe>, String>();
+	private static final Map<Class<? extends Pipe>, String> toolTips = new HashMap<>();
 
 	static {
 		for (Map.Entry<Class<? extends Pipe>, Integer> pipe : PipeTransportPower.powerCapacities.entrySet()) {
@@ -39,15 +34,12 @@ public class PipeToolTipManager {
 	}
 
 	public static List<String> getToolTip(Class<? extends Pipe> pipe) {
-		List<String> tips = new ArrayList<String>();
+		List<String> tips = new ArrayList<>();
 		String tipTag = "tip." + pipe.getSimpleName();
-		if (Localization.hasKey(tipTag)) {
-			String localized = I18n.getString(tipTag);
-			if (localized != null) {
-				String[] lines = localized.split("\\n");
-				tips.addAll(Arrays.asList(lines));
-			}
-		}
+		String localized = I18n.getString(tipTag);
+		String[] lines = localized.split("\\\\n");
+		tips.addAll(Arrays.asList(lines));
+
 		String tip = toolTips.get(pipe);
 		if (tip != null)
 			tips.add(tip);
