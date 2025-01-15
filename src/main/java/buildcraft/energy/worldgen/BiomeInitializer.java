@@ -9,7 +9,6 @@ import net.minecraft.src.WorldType;
  * @author CovertJaguar <http://www.railcraft.info/>
  */
 public class BiomeInitializer {
-	//todoenergy world gen
 	public BiomeInitializer() {
 	}
 	

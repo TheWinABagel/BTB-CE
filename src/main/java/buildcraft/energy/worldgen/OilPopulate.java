@@ -9,14 +9,7 @@ package buildcraft.energy.worldgen;
 
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftEnergy;
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockFlower;
-import net.minecraft.src.BlockFluid;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.Chunk;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.HashSet;
@@ -24,7 +17,7 @@ import java.util.Random;
 import java.util.Set;
 
 
-public class OilPopulate { //todoenergy WORLD GEN (big)
+public class OilPopulate {
 
 	public static final OilPopulate INSTANCE = new OilPopulate();
 	public final Set<Integer> excessiveBiomes = new HashSet<Integer>();
