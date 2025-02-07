@@ -1,5 +1,6 @@
 package dev.bagel.btb.emi;
 
+import buildcraft.BuildCraftEnergy;
 import buildcraft.BuildCraftFactory;
 import buildcraft.BuildCraftSilicon;
 import buildcraft.api.recipes.IAssemblyRecipeManager;
@@ -17,11 +18,15 @@ import buildcraft.transport.gui.GuiDiamondPipe;
 import buildcraft.transport.gui.GuiEmeraldPipe;
 import buildcraft.transport.gui.GuiEmzuliPipe;
 import buildcraft.transport.gui.GuiFilteredBuffer;
+import dev.bagel.btb.emi.fluid.FluidEmiStack;
 import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
+import dev.bagel.btb.emi.recipes.RefineryEMIRecipe;
 import emi.dev.emi.emi.api.EmiPlugin;
 import emi.dev.emi.emi.api.EmiRegistry;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
 import emi.dev.emi.emi.api.stack.EmiStack;
+import emi.dev.emi.emi.data.EmiRemoveFromIndex;
+import emi.dev.emi.emi.data.IndexStackData;
 
 public class BuildcraftEmiCompat implements EmiPlugin {
     public static EmiRecipeCategory ASSEMBLY_TABLE = EmiUtils.category("asssembly_table", EmiStack.of(BuildCraftSilicon.assemblyTableBlock));
@@ -47,14 +52,15 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         EmiUtils.addClickStackHandler(GuiAdvancedCraftingTable.class, reg);
         EmiUtils.addClickStackHandler(GuiFilteredBuffer.class, reg);
 
-
+        EmiRemoveFromIndex.added.add(new IndexStackData.Added(FluidEmiStack.of(BuildCraftEnergy.fluidOil, 2500), EmiStack.EMPTY));
+        EmiRemoveFromIndex.added.add(new IndexStackData.Added(FluidEmiStack.of(BuildCraftEnergy.fluidFuel), EmiStack.EMPTY));
 
         for (IAssemblyRecipeManager.IAssemblyRecipe recipe : AssemblyRecipeManager.INSTANCE.getRecipes()) {
             EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
         }
 
         for (RefineryRecipeManager.RefineryRecipe recipe : RefineryRecipeManager.INSTANCE.getRecipes()) {
-//            EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
+            EmiUtils.addRecipeSafe(reg, () -> new RefineryEMIRecipe(recipe));
         }
 
         for (IIntegrationRecipeManager.IIntegrationRecipe recipe : IntegrationRecipeManager.INSTANCE.getRecipes()) {

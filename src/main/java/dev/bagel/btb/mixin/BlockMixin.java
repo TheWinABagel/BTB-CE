@@ -1,19 +1,17 @@
 package dev.bagel.btb.mixin;
 
 import dev.bagel.btb.injected.BlockExtension;
+import dev.bagel.btb.injected.CustomDestroyEffectsBlock;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 @Mixin(Block.class)
-public abstract class BlockMixin implements BlockExtension {
+public abstract class BlockMixin implements BlockExtension, CustomDestroyEffectsBlock {
     @Shadow @Final public int blockID;
 
     @Shadow public abstract String getUnlocalizedName();
@@ -40,6 +38,16 @@ public abstract class BlockMixin implements BlockExtension {
         }
 
         return ret;
+    }
+
+    @Override
+    public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+        return false;
+    }
+
+    @Override
+    public boolean addBlockHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+        return false;
     }
 
 /*    @Inject(method = "renderBlockAsItem", at = @At("HEAD"), cancellable = true)

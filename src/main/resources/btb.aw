@@ -7,3 +7,5 @@ accessible field net/minecraft/src/RenderBlocks renderAllFaces Z
 accessible method net/minecraft/src/BiomeGenBase setDisableRain ()Lnet/minecraft/src/BiomeGenBase;
 accessible method net/minecraft/src/BiomeGenBase setTemperatureRainfall (FF)Lnet/minecraft/src/BiomeGenBase;
 accessible method net/minecraft/src/BiomeGenBase setMinMaxHeight (FF)Lnet/minecraft/src/BiomeGenBase;
+
+accessible field net/minecraft/src/EffectRenderer worldObj Lnet/minecraft/src/World;
