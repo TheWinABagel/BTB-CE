@@ -8,7 +8,9 @@
  */
 package buildcraft.api.recipes;
 
+import dev.bagel.btb.IdentifiableRecipe;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.ResourceLocation;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public interface IAssemblyRecipeManager {
 
-	public static interface IAssemblyRecipe {
+	public static interface IAssemblyRecipe extends IdentifiableRecipe {
 
 		ItemStack getOutput();
 
@@ -38,7 +40,7 @@ public interface IAssemblyRecipeManager {
 	 * @param energyCost MJ cost to produce
 	 * @param output resulting ItemStack
 	 */
-	void addRecipe(double energyCost, ItemStack output, Object... input);
+	void addRecipe(double energyCost, ItemStack output, ResourceLocation id, Object... input);
 
 	List<? extends IAssemblyRecipe> getRecipes();
 }

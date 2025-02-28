@@ -202,9 +202,9 @@ public abstract class RendererPlayerMixin extends RendererLivingEntity {
         }
     }
 
-    @Override
-    public void renderEquippedItems(EntityLivingBase entityLivingBase, float par2) {
-        //todocore this can be removed, right?
-        btb$renderSpecials((AbstractClientPlayer) entityLivingBase, par2);
-    }
+//    @Override
+//    public void renderEquippedItems(EntityLivingBase entityLivingBase, float par2) {
+//        //todocore this can be removed, right?
+//        btb$renderSpecials((AbstractClientPlayer) entityLivingBase, par2);
+//    }
 }

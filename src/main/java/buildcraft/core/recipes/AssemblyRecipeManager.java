@@ -6,10 +6,7 @@ import buildcraft.core.inventory.InventoryIterator;
 import buildcraft.core.inventory.InventoryIterator.IInvSlot;
 import buildcraft.core.inventory.Transactor;
 import buildcraft.core.inventory.filters.ArrayStackFilter;
-import net.minecraft.src.Block;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.LinkedList;
@@ -21,8 +18,8 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 	private List<AssemblyRecipe> assemblyRecipes = new LinkedList<AssemblyRecipe>();
 
 	@Override
-	public void addRecipe(double energyCost, ItemStack output, Object... input) {
-		assemblyRecipes.add(new AssemblyRecipe(output, energyCost, input));
+	public void addRecipe(double energyCost, ItemStack output, ResourceLocation id, Object... input) {
+		assemblyRecipes.add(new AssemblyRecipe(output, energyCost, id, input));
 	}
 
 	@Override
@@ -34,12 +31,14 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 
 		public final ItemStack output;
 		public final double energyCost;
+		private final ResourceLocation id;
 		private final Object[] originalInput;
 		private final Object[] processedInput;
 
-		public AssemblyRecipe(ItemStack output, double energyCost, Object... inputs) {
+		public AssemblyRecipe(ItemStack output, double energyCost, ResourceLocation id, Object... inputs) {
 			this.output = output.copy();
 			this.energyCost = energyCost;
+			this.id = id;
 			this.originalInput = inputs;
 
 			processedInput = new Object[inputs.length];
@@ -154,6 +153,11 @@ public class AssemblyRecipeManager implements IAssemblyRecipeManager {
 					}
 				}
 			}
+		}
+
+		@Override
+		public ResourceLocation getId() {
+			return this.id;
 		}
 	}
 }

@@ -9,10 +9,12 @@ package buildcraft.core.recipes;
 
 import buildcraft.api.recipes.IRefineryRecipeManager;
 import com.google.common.base.Objects;
+import net.minecraft.src.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
+
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import net.minecraftforge.fluids.FluidStack;
 
 public final class RefineryRecipeManager implements IRefineryRecipeManager {
 
@@ -20,13 +22,13 @@ public final class RefineryRecipeManager implements IRefineryRecipeManager {
     private final SortedSet<RefineryRecipe> recipes = new TreeSet<>();
 
 	@Override
-	public void addRecipe(FluidStack ingredient, FluidStack result, int energy, int delay) {
-		addRecipe(ingredient, null, result, energy, delay);
+	public void addRecipe(FluidStack ingredient, FluidStack result, int energy, int delay, ResourceLocation id) {
+		addRecipe(ingredient, null, result, energy, delay, id);
 	}
 
 	@Override
-	public void addRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay) {
-		RefineryRecipe recipe = new RefineryRecipe(ingredient1, ingredient2, result, energy, delay);
+	public void addRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay, ResourceLocation id) {
+		RefineryRecipe recipe = new RefineryRecipe(ingredient1, ingredient2, result, energy, delay, id);
 		recipes.add(recipe);
 	}
 
@@ -55,8 +57,9 @@ public final class RefineryRecipeManager implements IRefineryRecipeManager {
 		public final FluidStack result;
 		public final int energyCost;
 		public final int timeRequired;
+		private final ResourceLocation id;
 
-		private RefineryRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay) {
+		private RefineryRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay, ResourceLocation id) {
 			if (ingredient1 == null)
 				throw new IllegalArgumentException("First Ingredient cannot be null!");
 			this.ingredient1 = ingredient1;
@@ -64,6 +67,7 @@ public final class RefineryRecipeManager implements IRefineryRecipeManager {
 			this.result = result;
 			this.energyCost = energy;
 			this.timeRequired = delay;
+			this.id = id;
 		}
 
 		public boolean matches(FluidStack liquid1, FluidStack liquid2) {
@@ -152,6 +156,11 @@ public final class RefineryRecipeManager implements IRefineryRecipeManager {
 		@Override
 		public int getTimeRequired() {
 			return timeRequired;
+		}
+
+		@Override
+		public ResourceLocation getId() {
+			return this.id;
 		}
 	}
 }

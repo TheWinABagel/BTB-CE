@@ -182,7 +182,7 @@ public class BuildCraftEnergy implements IBuildCraftModule {
 		BucketHandler.INSTANCE.buckets.put(blockFuel, bucketFuel);
 //		MinecraftForge.EVENT_BUS.register(BucketHandler.INSTANCE);
 
-		BuildcraftRecipes.refinery.addRecipe(new FluidStack(fluidOil, 1), new FluidStack(fluidFuel, 1), 12, 1);
+		BuildcraftRecipes.refinery.addRecipe(new FluidStack(fluidOil, 1), new FluidStack(fluidFuel, 1), 12, 1, BuildCraftCore.loc("fuel"));
 
 		// Iron Engine Coolants
 		IronEngineCoolant.addCoolant(FluidRegistry.getFluid("water"), 0.0023F);

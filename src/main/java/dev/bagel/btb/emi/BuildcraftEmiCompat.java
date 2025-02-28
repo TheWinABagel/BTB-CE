@@ -20,6 +20,7 @@ import buildcraft.transport.gui.GuiEmzuliPipe;
 import buildcraft.transport.gui.GuiFilteredBuffer;
 import dev.bagel.btb.emi.fluid.FluidEmiStack;
 import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
+import dev.bagel.btb.emi.recipes.IntegrationTableEMIRecipe;
 import dev.bagel.btb.emi.recipes.RefineryEMIRecipe;
 import emi.dev.emi.emi.api.EmiPlugin;
 import emi.dev.emi.emi.api.EmiRegistry;
@@ -43,8 +44,11 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         EmiUtils.addExclusion(GuiIntegrationTable.class, reg);
 
         reg.addCategory(ASSEMBLY_TABLE);
-
         reg.addWorkstation(ASSEMBLY_TABLE, EmiStack.of(BuildCraftSilicon.assemblyTableBlock));
+        reg.addCategory(INTEGRATION_TABLE);
+        reg.addWorkstation(INTEGRATION_TABLE, EmiStack.of(BuildCraftSilicon.integrationTableBlock));
+        reg.addCategory(REFINERY);
+        reg.addWorkstation(REFINERY, EmiStack.of(BuildCraftFactory.refineryBlock));
 
         EmiUtils.addClickStackHandler(GuiDiamondPipe.class, reg);
         EmiUtils.addClickStackHandler(GuiEmeraldPipe.class, reg);
@@ -64,7 +68,7 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         }
 
         for (IIntegrationRecipeManager.IIntegrationRecipe recipe : IntegrationRecipeManager.INSTANCE.getRecipes()) {
-//            EmiUtils.addRecipeSafe(reg, () -> new AssemblyTableEMIRecipe(recipe));
+            EmiUtils.addRecipeSafe(reg, () -> new IntegrationTableEMIRecipe(recipe));
         }
 
     }

@@ -8,6 +8,8 @@
  */
 package buildcraft.api.recipes;
 
+import dev.bagel.btb.IdentifiableRecipe;
+import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.SortedSet;
@@ -18,15 +20,15 @@ import java.util.SortedSet;
  */
 public interface IRefineryRecipeManager {
 
-	void addRecipe(FluidStack ingredient, FluidStack result, int energy, int delay);
+	void addRecipe(FluidStack ingredient, FluidStack result, int energy, int delay, ResourceLocation id);
 
-	void addRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay);
+	void addRecipe(FluidStack ingredient1, FluidStack ingredient2, FluidStack result, int energy, int delay, ResourceLocation id);
 
 	SortedSet<? extends IRefineryRecipe> getRecipes();
 
 	IRefineryRecipe findRefineryRecipe(FluidStack ingredient1, FluidStack ingredient2);
 
-	public static interface IRefineryRecipe {
+	public static interface IRefineryRecipe extends IdentifiableRecipe {
 
 		FluidStack getIngredient1();
 

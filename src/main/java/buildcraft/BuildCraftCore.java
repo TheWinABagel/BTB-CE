@@ -292,4 +292,8 @@ public class BuildCraftCore implements IBuildCraftModule {
 		Thread thr = Thread.currentThread();
 		return !(thr instanceof ThreadMinecraftServer) && !(thr instanceof ServerListenThread) ? EnvType.CLIENT : EnvType.SERVER;
 	}
+
+	public static ResourceLocation loc(String id) {
+		return new ResourceLocation(id);
+	}
 }

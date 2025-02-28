@@ -1,19 +1,17 @@
 package dev.bagel.btb.emi.recipes;
 
-import dev.bagel.btb.emi.BuildcraftEmiCompat;
 import buildcraft.api.recipes.IAssemblyRecipeManager;
 import buildcraft.core.recipes.AssemblyRecipeManager;
+import dev.bagel.btb.emi.BuildcraftEmiCompat;
 import emi.dev.emi.emi.api.recipe.EmiRecipe;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
 import emi.dev.emi.emi.api.stack.EmiIngredient;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.api.widget.WidgetHolder;
 import emi.shims.java.com.unascribed.retroemi.RetroEMI;
-import emi.shims.java.net.minecraft.util.SyntheticIdentifier;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +33,8 @@ public class AssemblyTableEMIRecipe implements EmiRecipe {
     }
 
     @Override
-    public @Nullable ResourceLocation getId() {
-        return new SyntheticIdentifier(recipe);
+    public ResourceLocation getId() {
+        return recipe.getId();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class AssemblyTableEMIRecipe implements EmiRecipe {
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        widgets.addSlot(output, 80, 0);
+        widgets.addSlot(output, 80, 0).recipeContext(this);
         int i = 0;
         for (EmiIngredient ingredient : this.inputs) {
             widgets.addSlot(ingredient, 20 * i, 25);

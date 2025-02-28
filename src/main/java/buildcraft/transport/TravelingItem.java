@@ -10,15 +10,14 @@ package buildcraft.transport;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.Position;
 import buildcraft.core.inventory.StackHelper;
-import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.EnumColor;
 import com.google.common.collect.MapMaker;
-import java.util.EnumSet;
-import java.util.Map;
-
 import net.fabricmc.api.EnvType;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
+
+import java.util.EnumSet;
+import java.util.Map;
 
 public final class TravelingItem {
 
@@ -180,7 +179,7 @@ public final class TravelingItem {
 	}
 
 	public EntityItem toEntityItem() {
-		if (container != null && !CoreProxy.getProxy().isClientWorld(container.worldObj)) {
+		if (container != null && !container.worldObj.isRemote) {
 			if (getItemStack().stackSize <= 0)
 				return null;
 
@@ -191,11 +190,22 @@ public final class TravelingItem {
 
 			entity.age = BuildCraftCore.itemLifespan;
 			entity.delayBeforeCanPickup = 10;
-
 			float f3 = 0.00F + container.worldObj.rand.nextFloat() * 0.04F - 0.02F;
 			entity.motionX = (float) container.worldObj.rand.nextGaussian() * f3 + motion.x;
 			entity.motionY = (float) container.worldObj.rand.nextGaussian() * f3 + motion.y;
-			entity.motionZ = (float) container.worldObj.rand.nextGaussian() * f3 + +motion.z;
+			entity.motionZ = (float) container.worldObj.rand.nextGaussian() * f3 + motion.z;
+			//Should only happen when there is no target inventory
+			if (output == ForgeDirection.UNKNOWN) {
+				double amount = 0.25D;
+				switch (input) {
+					case UP -> entity.motionY += amount + 0.05f;
+					case DOWN -> entity.motionY -= amount;
+					case WEST -> entity.motionX -= amount;
+					case EAST -> entity.motionX += amount;
+					case NORTH -> entity.motionZ -= amount;
+					case SOUTH -> entity.motionZ += amount;
+				}
+			}
 			return entity;
 		}
 		return null;
@@ -268,7 +278,7 @@ public final class TravelingItem {
 
 	@Override
 	public String toString() {
-		return "TravelingItem: " + id;
+		return "TravelingItem(ID: " + id + ", Pos: [" + this.xCoord + ", " + this.yCoord + ", " + this.zCoord + "], Stack:" + itemStack + ", input: " + input + ", output: " + output + ")";
 	}
 
 	public static class InsertionHandler {

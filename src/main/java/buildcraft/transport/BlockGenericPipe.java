@@ -7,7 +7,6 @@
  */
 package buildcraft.transport;
 
-import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.gates.GateExpansions;
 import buildcraft.api.gates.IGateExpansion;
@@ -23,31 +22,17 @@ import buildcraft.core.utils.Utils;
 import buildcraft.transport.gates.GateDefinition;
 import buildcraft.transport.gates.GateFactory;
 import buildcraft.transport.gates.ItemGate;
+import dev.bagel.btb.injected.CustomDestroyEffectsBlock;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
-import net.minecraft.src.Minecraft;
-import net.minecraft.src.EffectRenderer;
-import net.minecraft.src.EntityDiggingFX;
-import net.minecraft.src.IconRegister;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLivingBase;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Icon;
-import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Vec3;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
+import java.util.Locale;
 import java.util.*;
 
-public class BlockGenericPipe extends BlockBuildCraft {
+public class BlockGenericPipe extends BlockBuildCraft implements CustomDestroyEffectsBlock {
 
 	static enum Part {
 
@@ -84,14 +69,15 @@ public class BlockGenericPipe extends BlockBuildCraft {
 		super(i, Material.glass);
 		setRenderAllSides();
 		this.initBlockBounds(CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MIN_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS, CoreConstants.PIPE_MAX_POS);
-
+		//todo pipe hardness is too high?
+		setHardness(BuildCraftTransport.pipeDurability);
 //		setCreativeTab(null);
 	}
 
-	@Override
-	public float getBlockHardness(World par1World, int par2, int par3, int par4) {
-		return BuildCraftTransport.pipeDurability;
-	}
+//	@Override
+//	public float getBlockHardness(World par1World, int par2, int par3, int par4) {
+//		return BuildCraftTransport.pipeDurability;
+//	}
 
 	@Override
 	public int getRenderType() {
@@ -1049,9 +1035,8 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @param effectRenderer A reference to the current effect renderer.
 	 * @return True to prevent vanilla digging particles form spawning.
 	 */
-	//todotransport low prio, block hit effects, block destroy effects (down)
 	@Environment(EnvType.CLIENT)
-//	@Override
+	@Override
 	public boolean addBlockHitEffects(World world, MovingObjectPosition target, EffectRenderer effectRenderer) {
 		int x = target.blockX;
 		int y = target.blockY;
@@ -1116,7 +1101,7 @@ public class BlockGenericPipe extends BlockBuildCraft {
 	 * @return True to prevent vanilla break particles from spawning.
 	 */
 	@Environment(EnvType.CLIENT)
-//	@Override
+	@Override
 	public boolean addBlockDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
 		Pipe pipe = getPipe(world, x, y, z);
 		if (pipe == null)

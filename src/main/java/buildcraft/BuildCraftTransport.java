@@ -335,7 +335,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 		//Facade turning helper
 		CraftingManager.getInstance().getRecipes().add(facadeItem.new FacadeRecipe());
 
-		BuildcraftRecipes.assemblyTable.addRecipe(1000, new ItemStack(plugItem, 8), new ItemStack(pipeStructureCobblestone));
+		BuildcraftRecipes.assemblyTable.addRecipe(1000, new ItemStack(plugItem, 8), BuildCraftCore.loc("structure_pipe"), new ItemStack(pipeStructureCobblestone));
 	}
 
 	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {

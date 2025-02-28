@@ -9,6 +9,7 @@ import emi.shims.java.net.minecraft.client.gui.DrawContext;
 import emi.shims.java.net.minecraft.client.gui.tooltip.TooltipComponent;
 import emi.shims.java.net.minecraft.text.Text;
 import emi.shims.java.net.minecraft.util.Formatting;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.ResourceLocation;
 import net.minecraftforge.fluids.Fluid;
@@ -63,6 +64,12 @@ public class FluidEmiStack extends EmiStack {
     }
 
     @Override
+    public ItemStack getItemStack() {
+        int id = fluid.getBlockID() == -1 ? 0 : fluid.getBlockID();
+        return new ItemStack(id, 0, 32767);
+    }
+
+    @Override
     public ResourceLocation getId() {
         return new ResourceLocation("fluid", fluid.getName());
     }
@@ -93,7 +100,7 @@ public class FluidEmiStack extends EmiStack {
             String mod = "error";
             try {
                 mod = RetroEMI.getMod(fluid);
-            } catch (NullPointerException e) {}
+            } catch (NullPointerException ignored) {}
             list.add(TooltipComponent.of(EmiPort.ordered(EmiPort.literal(mod, Formatting.BLUE, Formatting.ITALIC))));
         }
         list.addAll(super.getTooltip());
@@ -105,18 +112,25 @@ public class FluidEmiStack extends EmiStack {
         return EmiFluidHelper.getFluidName(fluid, nbt);
     }
 
-    public static FluidEmiStack of(FluidStack fs) {
-        return new FluidEmiStack(fs.getFluid(), fs.tag, fs.amount);
+    public static EmiStack of(FluidStack fs) {
+        if (fs == null) {
+            return EmiStack.EMPTY;
+        }
+        return of(fs.getFluid(), fs.tag, fs.amount);
     }
 
-    public static FluidEmiStack of(Fluid fluid) {
-        return new FluidEmiStack(fluid);
+    public static EmiStack of(Fluid fluid) {
+        return of(fluid, 0);
     }
 
-    public static FluidEmiStack of(Fluid fluid, long amount) {
-        return new FluidEmiStack(fluid, null, amount);
+    public static EmiStack of(Fluid fluid, long amount) {
+        return of(fluid, null, amount);
     }
 
-    static class FluidEntry {
+    public static EmiStack of(Fluid fluid, @Nullable NBTTagCompound nbt, long amount) {
+        if (fluid == null) {
+            return EmiStack.EMPTY;
+        }
+        return new FluidEmiStack(fluid, nbt, amount);
     }
 }

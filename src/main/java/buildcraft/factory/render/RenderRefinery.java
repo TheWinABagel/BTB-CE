@@ -13,12 +13,7 @@ import buildcraft.core.fluids.Tank;
 import buildcraft.core.render.FluidRenderer;
 import buildcraft.core.render.RenderUtils;
 import buildcraft.factory.TileRefinery;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
-import net.minecraft.src.TileEntityRenderer;
-import net.minecraft.src.TileEntitySpecialRenderer;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.*;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.opengl.GL11;
 
@@ -65,7 +60,6 @@ public class RenderRefinery extends TileEntitySpecialRenderer implements IInvent
 
 	@Override
 	public void renderTileEntityAt(TileEntity tileentity, double x, double y, double z, float f) {
-
 		render((TileRefinery) tileentity, x, y, z);
 	}
 

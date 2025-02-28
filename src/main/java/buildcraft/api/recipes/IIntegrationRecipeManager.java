@@ -8,6 +8,7 @@
  */
 package buildcraft.api.recipes;
 
+import dev.bagel.btb.IdentifiableRecipe;
 import net.minecraft.src.ItemStack;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public interface IIntegrationRecipeManager {
 
-	public static interface IIntegrationRecipe {
+	public static interface IIntegrationRecipe extends IdentifiableRecipe {
 
 		double getEnergyCost();
 

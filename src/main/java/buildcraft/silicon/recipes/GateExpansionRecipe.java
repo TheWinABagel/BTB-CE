@@ -13,6 +13,7 @@ import buildcraft.api.recipes.IIntegrationRecipeManager.IIntegrationRecipe;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.transport.gates.ItemGate;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.ResourceLocation;
 
 /**
  *
@@ -24,12 +25,14 @@ public class GateExpansionRecipe implements IIntegrationRecipe {
 	private final ItemStack chipset;
 	private final ItemStack[] exampleA;
 	private final ItemStack[] exampleB;
+	private final ResourceLocation id;
 
-	public GateExpansionRecipe(IGateExpansion expansion, ItemStack chipset) {
+	public GateExpansionRecipe(IGateExpansion expansion, ItemStack chipset, ResourceLocation id) {
 		this.expansion = expansion;
 		this.chipset = chipset.copy();
 		exampleA = ItemGate.getGateVarients();
 		exampleB = new ItemStack[]{chipset};
+		this.id = id;
 	}
 
 	@Override
@@ -71,5 +74,10 @@ public class GateExpansionRecipe implements IIntegrationRecipe {
 	@Override
 	public ItemStack[] getExampleInputsB() {
 		return exampleB;
+	}
+
+	@Override
+	public ResourceLocation getId() {
+		return id;
 	}
 }

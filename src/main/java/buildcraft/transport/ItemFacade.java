@@ -1,23 +1,22 @@
 package buildcraft.transport;
 
+import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.Position;
 import buildcraft.api.recipes.BuildcraftRecipes;
-import buildcraft.core.CreativeTabBuildCraft;
 import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
-import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.src.*;
+import net.minecraftforge.common.ForgeDirection;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import net.minecraft.src.*;
-import net.minecraftforge.common.ForgeDirection;
 
 public class ItemFacade extends ItemBuildCraft {
 
@@ -154,7 +153,7 @@ public class ItemFacade extends ItemBuildCraft {
 		facade6.stackSize = 6;
 
 		// 3 Structurepipes + this block makes 6 facades
-		BuildcraftRecipes.assemblyTable.addRecipe(8000, facade6, new ItemStack(BuildCraftTransport.pipeStructureCobblestone, 3), itemStack);
+		BuildcraftRecipes.assemblyTable.addRecipe(8000, facade6, BuildCraftCore.loc(itemStack.getUnlocalizedName().replace("item.", "")), new ItemStack(BuildCraftTransport.pipeStructureCobblestone, 3), itemStack);
 		if (itemStack.itemID < Block.blocksList.length && Block.blocksList[itemStack.itemID] != null) {
 			Block bl = Block.blocksList[itemStack.itemID];
 

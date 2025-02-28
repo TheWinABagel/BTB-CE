@@ -9,12 +9,13 @@
 package buildcraft.silicon.recipes;
 
 import buildcraft.api.recipes.IIntegrationRecipeManager.IIntegrationRecipe;
-import buildcraft.silicon.ItemRedstoneChipset;
 import buildcraft.core.inventory.StackHelper;
+import buildcraft.silicon.ItemRedstoneChipset;
 import buildcraft.transport.gates.GateDefinition.GateLogic;
 import buildcraft.transport.gates.GateDefinition.GateMaterial;
 import buildcraft.transport.gates.ItemGate;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.ResourceLocation;
 
 /**
  *
@@ -27,14 +28,16 @@ public class GateLogicSwapRecipe implements IIntegrationRecipe {
 	private final ItemStack chipset;
 	private final ItemStack[] exampleA;
 	private final ItemStack[] exampleB;
+	private final ResourceLocation id;
 
-	public GateLogicSwapRecipe(GateMaterial material, GateLogic logicIn, GateLogic logicOut) {
+	public GateLogicSwapRecipe(GateMaterial material, GateLogic logicIn, GateLogic logicOut, ResourceLocation id) {
 		this.material = material;
 		this.logicIn = logicIn;
 		this.logicOut = logicOut;
 		this.chipset = ItemRedstoneChipset.Chipset.RED.getStack();
 		exampleA = new ItemStack[]{ItemGate.makeGateItem(material, logicIn)};
 		exampleB = new ItemStack[]{chipset};
+		this.id = id;
 	}
 
 	@Override
@@ -80,5 +83,10 @@ public class GateLogicSwapRecipe implements IIntegrationRecipe {
 	@Override
 	public ItemStack[] getExampleInputsB() {
 		return exampleB;
+	}
+
+	@Override
+	public ResourceLocation getId() {
+		return id;
 	}
 }
