@@ -26,6 +26,7 @@ public abstract class BlockEngine extends BlockBuildCraft implements CustomBound
     protected static Icon woodTexture;
     protected static Icon stoneTexture;
     protected static Icon ironTexture;
+    protected static Icon creativeTexture;
 
     public static final EngineModel model = new EngineModel();
 
@@ -49,6 +50,7 @@ public abstract class BlockEngine extends BlockBuildCraft implements CustomBound
         woodTexture = par1IconRegister.registerIcon("buildcraft:engineWoodBottom");
         stoneTexture = par1IconRegister.registerIcon("buildcraft:engineStoneBottom");
         ironTexture = par1IconRegister.registerIcon("buildcraft:engineIronBottom");
+        creativeTexture = par1IconRegister.registerIcon("buildcraft:engineCreativeBottom");
     }
 
     @Override

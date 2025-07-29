@@ -1,5 +1,7 @@
 package buildcraft;
 
+import buildcraft.config.Config;
+import buildcraft.config.PropSupplier;
 import buildcraft.core.utils.BCLog;
 import net.minecraft.src.MathHelper;
 import org.jetbrains.annotations.Nullable;
@@ -9,8 +11,10 @@ import java.util.Map;
 
 public class BuildcraftConfig {
     private static final Map<String, String> propertyValues = new HashMap<>();
+    public static final Config config = new Config(propertyValues, BuildCraftAddon.INSTANCE);
 
     //Core
+    public static PropSupplier wrenchId = config.getItemId("WrenchItemId");
     public static int wrenchItemId;
     public static int gearWoodItemId;
     public static int gearStoneItemId;

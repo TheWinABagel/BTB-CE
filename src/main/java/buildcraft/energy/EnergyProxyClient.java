@@ -24,5 +24,6 @@ public class EnergyProxyClient extends EnergyProxy {
 		RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftEnergy.woodEngineBlock, 0), new RenderEngine(TileEngine.WOOD_TEXTURE));
 		RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftEnergy.stoneEngineBlock, 0), new RenderEngine(TileEngine.STONE_TEXTURE));
 		RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftEnergy.ironEngineBlock, 0), new RenderEngine(TileEngine.IRON_TEXTURE));
+		RenderingEntityBlocks.blockByEntityRenders.put(new EntityRenderIndex(BuildCraftEnergy.creativeEngineBlock, 0), new RenderEngine(TileEngine.CREATIVE_TEXTURE));
 	}
 }

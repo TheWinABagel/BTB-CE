@@ -20,6 +20,6 @@ public class BlockEngineCreative extends BlockEngine {
     @Override
     @Environment(EnvType.CLIENT)
     public Icon getIcon(int side, int meta) {
-        return ironTexture;
+        return creativeTexture;
     }
 }

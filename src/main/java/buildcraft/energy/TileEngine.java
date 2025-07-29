@@ -26,11 +26,7 @@ import buildcraft.core.TileBuildCraft;
 import buildcraft.core.network.TileNetworkData;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.energy.gui.ContainerEngine;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ICrafting;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.LinkedList;
@@ -40,7 +36,7 @@ public abstract class TileEngine extends TileBuildCraft implements IPowerRecepto
 	public static final ResourceLocation WOOD_TEXTURE = new ResourceLocation(DefaultProps.TEXTURE_PATH_BLOCKS + "/base_wood.png");
 	public static final ResourceLocation STONE_TEXTURE = new ResourceLocation(DefaultProps.TEXTURE_PATH_BLOCKS + "/base_stone.png");
 	public static final ResourceLocation IRON_TEXTURE = new ResourceLocation(DefaultProps.TEXTURE_PATH_BLOCKS + "/base_iron.png");
-
+	public static final ResourceLocation CREATIVE_TEXTURE = new ResourceLocation(DefaultProps.TEXTURE_PATH_BLOCKS + "/base_creative.png");
 	public enum EnergyStage {
 
 		BLUE, GREEN, YELLOW, RED, OVERHEAT;

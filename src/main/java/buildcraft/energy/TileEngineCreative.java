@@ -10,7 +10,7 @@ public class TileEngineCreative extends TileEngine {
 
     @Override
     public ResourceLocation getTextureFile() {
-        return STONE_TEXTURE;
+        return CREATIVE_TEXTURE;
     }
 
     @Override
