@@ -122,13 +122,6 @@ loom {
 //	runConfigs.named("client").get().vmArgs()
 }
 
-runClient {
-	dependsOn(jar)
-}
-
-runServer {
-	dependsOn(jar)
-}
 
 class BTWJarReplacer implements MinecraftJarProcessor<Spec> {
 	String path;
