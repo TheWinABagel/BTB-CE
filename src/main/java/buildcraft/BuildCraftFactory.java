@@ -129,6 +129,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		}
 		if (BuildcraftConfig.plainPipeId > 0) {
 			plainPipeBlock = new BlockPlainPipe(BuildcraftConfig.plainPipeId);
+			plainPipeBlock.hideFromEMI();
 			CoreProxy.getProxy().registerBlock(plainPipeBlock.setUnlocalizedName("plainPipeBlock"));
 			CoreProxy.getProxy().addName(plainPipeBlock, "Mining Pipe");
 		}
@@ -139,6 +140,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		}
 		if (BuildcraftConfig.frameId > 0) {
 			frameBlock = new BlockFrame(BuildcraftConfig.frameId);
+			frameBlock.hideFromEMI();
 			CoreProxy.getProxy().registerBlock(frameBlock.setUnlocalizedName("frameBlock"));
 			CoreProxy.getProxy().addName(frameBlock, "Frame");
 		}
@@ -159,6 +161,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		}
 		if (BuildcraftConfig.floodGateId > 0) {
 			floodGateBlock = new BlockFloodGate(BuildcraftConfig.floodGateId);
+			floodGateBlock.hideFromEMI();
 			CoreProxy.getProxy().registerBlock(floodGateBlock.setUnlocalizedName("floodGateBlock"));
 			CoreProxy.getProxy().addName(floodGateBlock, "Flood Gate");
 		}
@@ -169,6 +172,7 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		}
 		if (BuildcraftConfig.hopperId > 0) {
 			hopperBlock = new BlockHopper(BuildcraftConfig.hopperId);
+			hopperBlock.hideFromEMI();
 			CoreProxy.getProxy().registerBlock(hopperBlock.setUnlocalizedName("blockHopper"));
 			CoreProxy.getProxy().addName(hopperBlock, "Hopper");
 		}
@@ -282,24 +286,24 @@ public class BuildCraftFactory implements IBuildCraftModule {
 					'G', BuildCraftCore.diamondGearItem,
 					'R', Block.torchRedstoneActive);
 
-		if (hopperBlock != null)
-			CoreProxy.getProxy().addCraftingRecipe(new ItemStack(hopperBlock),
-					"ICI",
-					"IGI",
-					" I ",
-					'I', Item.ingotIron,
-					'C', Block.chest,
-					'G', BuildCraftCore.stoneGearItem);
+//		if (hopperBlock != null)
+//			CoreProxy.getProxy().addCraftingRecipe(new ItemStack(hopperBlock),
+//					"ICI",
+//					"IGI",
+//					" I ",
+//					'I', Item.ingotIron,
+//					'C', Block.chest,
+//					'G', BuildCraftCore.stoneGearItem);
 
-		if (floodGateBlock != null)
-			CoreProxy.getProxy().addCraftingRecipe(new ItemStack(floodGateBlock),
-					"IGI",
-					"FTF",
-					"IFI",
-					'I', Item.ingotIron,
-					'T', tankBlock != null ? tankBlock : Block.glass,
-					'G', BuildCraftCore.ironGearItem,
-					'F', new ItemStack(Block.fenceIron));
+//		if (floodGateBlock != null)
+//			CoreProxy.getProxy().addCraftingRecipe(new ItemStack(floodGateBlock),
+//					"IGI",
+//					"FTF",
+//					"IFI",
+//					'I', Item.ingotIron,
+//					'T', tankBlock != null ? tankBlock : Block.glass,
+//					'G', BuildCraftCore.ironGearItem,
+//					'F', new ItemStack(Block.fenceIron));
 	}
 
 	@Environment(EnvType.CLIENT)

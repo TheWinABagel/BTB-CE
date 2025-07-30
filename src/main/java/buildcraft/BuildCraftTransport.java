@@ -8,6 +8,8 @@
 package buildcraft;
 
 import btw.crafting.recipe.RecipeManager;
+import btw.item.tag.BTWTags;
+import btw.item.tag.TagInstance;
 import btw.util.color.Color;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -186,7 +188,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 			genericPipeBlock = new BlockGenericPipe(BuildcraftConfig.genericPipeBlockId);
 			CoreProxy.getProxy().registerBlock(genericPipeBlock.setUnlocalizedName("pipeBlock"), ItemBlock.class);
 
-			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", Block.planks, Block.glass, Block.planks);
+			pipeItemsWood = buildPipe(DefaultProps.PIPE_ITEMS_WOOD_ID, PipeItemsWood.class, "Wooden Transport Pipe", TagInstance.of(BTWTags.woodMouldings), Block.glass, TagInstance.of(BTWTags.woodMouldings));
 			pipeItemsEmerald = buildPipe(DefaultProps.PIPE_ITEMS_EMERALD_ID, PipeItemsEmerald.class, "Emerald Transport Pipe", Item.emerald, Block.glass, Item.emerald);
 			pipeItemsCobblestone = buildPipe(DefaultProps.PIPE_ITEMS_COBBLESTONE_ID, PipeItemsCobblestone.class, "Cobblestone Transport Pipe", Block.cobblestone, Block.glass, Block.cobblestone);
 			pipeItemsStone = buildPipe(DefaultProps.PIPE_ITEMS_STONE_ID, PipeItemsStone.class, "Stone Transport Pipe", Block.stone, Block.glass, Block.stone);

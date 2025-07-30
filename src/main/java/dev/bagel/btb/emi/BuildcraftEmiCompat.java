@@ -3,6 +3,7 @@ package dev.bagel.btb.emi;
 import buildcraft.BuildCraftEnergy;
 import buildcraft.BuildCraftFactory;
 import buildcraft.BuildCraftSilicon;
+import buildcraft.BuildCraftTransport;
 import buildcraft.api.recipes.IAssemblyRecipeManager;
 import buildcraft.api.recipes.IIntegrationRecipeManager;
 import buildcraft.core.recipes.AssemblyRecipeManager;
@@ -14,6 +15,7 @@ import buildcraft.energy.gui.GuiStoneEngine;
 import buildcraft.silicon.gui.GuiAdvancedCraftingTable;
 import buildcraft.silicon.gui.GuiAssemblyTable;
 import buildcraft.silicon.gui.GuiIntegrationTable;
+import buildcraft.transport.ItemFacade;
 import buildcraft.transport.gui.GuiDiamondPipe;
 import buildcraft.transport.gui.GuiEmeraldPipe;
 import buildcraft.transport.gui.GuiEmzuliPipe;
@@ -25,9 +27,15 @@ import dev.bagel.btb.emi.recipes.RefineryEMIRecipe;
 import emi.dev.emi.emi.api.EmiPlugin;
 import emi.dev.emi.emi.api.EmiRegistry;
 import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
+import emi.dev.emi.emi.api.stack.Comparison;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import emi.dev.emi.emi.data.IndexStackData;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.NBTBase;
+import net.minecraft.src.NBTTagCompound;
+
+import java.util.*;
 
 public class BuildcraftEmiCompat implements EmiPlugin {
     public static EmiRecipeCategory ASSEMBLY_TABLE = EmiUtils.category("asssembly_table", EmiStack.of(BuildCraftSilicon.assemblyTableBlock));
@@ -42,6 +50,31 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         EmiUtils.addExclusion(GuiStoneEngine.class, reg);
         EmiUtils.addExclusion(GuiAdvancedCraftingTable.class, reg);
         EmiUtils.addExclusion(GuiIntegrationTable.class, reg);
+        var comp = Comparison.of((a, b) -> {
+            NBTTagCompound an = a.getNbt();
+            NBTTagCompound bn = b.getNbt();
+            if (an == null || bn == null) {
+                return an == bn;
+            }
+            return an.equals(bn);
+        });
+        reg.setDefaultComparison(EmiStack.of(BuildCraftTransport.facadeItem), comp);
+        EmiStack normalFacade = EmiStack.of(BuildCraftTransport.facadeItem);
+        var facades = new LinkedList<>(ItemFacade.allFacades);
+        Collections.reverse(facades);
+        facades.removeLast();
+        facades.forEach(itemStack -> {
+            reg.addEmiStackAfter(EmiStack.of(itemStack).comparison(comp), normalFacade);
+        });
+
+        List<ItemStack> gates = new ArrayList<>();
+        BuildCraftTransport.pipeGate.getSubItems(0, null, gates);
+        EmiStack normalGate = EmiStack.of(BuildCraftTransport.pipeGate);
+        Collections.reverse(gates);
+        gates.remove(gates.size() - 1);
+        gates.forEach(itemStack -> {
+            reg.addEmiStackAfter(EmiStack.of(itemStack).comparison(comp), normalGate);
+        });
 
         reg.addCategory(ASSEMBLY_TABLE);
         reg.addWorkstation(ASSEMBLY_TABLE, EmiStack.of(BuildCraftSilicon.assemblyTableBlock));

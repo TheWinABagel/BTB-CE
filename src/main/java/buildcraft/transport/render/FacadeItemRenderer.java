@@ -1,17 +1,12 @@
 package buildcraft.transport.render;
 
-import dev.bagel.btb.mixin.accessors.BlockAccessor;
 import buildcraft.BuildCraftTransport;
 import buildcraft.core.CoreConstants;
 import buildcraft.core.render.RenderUtils;
 import buildcraft.transport.ItemFacade;
 import buildcraft.transport.PipeIconProvider;
-import net.minecraft.src.Block;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.Tessellator;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Icon;
+import dev.bagel.btb.mixin.accessors.BlockAccessor;
+import net.minecraft.src.*;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
@@ -38,6 +33,9 @@ public class FacadeItemRenderer implements IItemRenderer {
 			return;
 
 		// Render Facade
+		try {
+
+
 		GL11.glPushMatrix();
 		((BlockAccessor) block).getFixedBlockBounds().setBounds(0F, 0F, 1F - 1F / 16F, 1F, 1F, 1F);
 		render.setRenderBoundsFromBlock(block);
@@ -105,6 +103,10 @@ public class FacadeItemRenderer implements IItemRenderer {
 		tessellator.draw();
 		GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		}
+		catch (Throwable error) {
+			System.out.println("FUCK " + error + block.getUnlocalizedName());
+		}
 	}
 
 	@Override

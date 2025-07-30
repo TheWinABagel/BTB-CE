@@ -25,7 +25,6 @@ public class EntityEnergyLaser extends EntityLaser {
 
 	public EntityEnergyLaser(World world, Position head, Position tail) {
 		super(world, head, tail);
-		System.out.println("LASER constructor called");
 	}
 
 	public void pushPower(double received) {

@@ -10,8 +10,8 @@ package buildcraft.core;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.Entity;
-import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Icon;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
 public class EntityBlock extends Entity {
@@ -71,6 +71,7 @@ public class EntityBlock extends Entity {
 
 	@Override
 	protected void entityInit() {
+		System.out.println("initialized entity" + this);
 		// TODO Auto-generated method stub
 	}
 

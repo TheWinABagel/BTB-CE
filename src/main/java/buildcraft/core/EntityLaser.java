@@ -41,8 +41,9 @@ public abstract class EntityLaser extends Entity {
 
 		this.head = head;
 		this.tail = tail;
-
+		System.out.println("LASER constructor called");
 		setPositionAndRotation(head.x, head.y, head.z, 0, 0);
+		System.out.println("position is" + this.posX + ", " + this.posY + ", " + this.posZ);
 		setSize(10, 10);
 	}
 

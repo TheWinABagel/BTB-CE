@@ -8,6 +8,7 @@
 package buildcraft;
 
 import btw.client.network.packet.handler.CustomEntityPacketHandler;
+import btw.item.BTWItems;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.ActionManager;
@@ -250,23 +251,24 @@ public class BuildCraftCore implements IBuildCraftModule {
 
 	public void loadRecipes() {
 		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(wrenchItem),
-				"I I",
+				"i i",
 				" G ",
 				" I ",
+				'i', BTWItems.ironNugget,
 				'I', Item.ingotIron,
 				'G', stoneGearItem);
 
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodenGearItem),
-				" S ",
-				"S S",
-				" S ",
-				'S', Item.stick);
+//		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodenGearItem),
+//				" S ",
+//				"S S",
+//				" S ",
+//				'S', Item.stick);
 		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneGearItem),
 				" I ",
 				"IGI",
 				" I ",
 				'I', Block.cobblestone,
-				'G', woodenGearItem);
+				'G', BTWItems.gear);
 		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironGearItem),
 				" I ",
 				"IGI",
@@ -283,7 +285,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 				" I ",
 				"IGI",
 				" I ",
-				'I', Item.diamond,
+				'I', BTWItems.diamondIngot,
 				'G', goldGearItem);
 	}
 

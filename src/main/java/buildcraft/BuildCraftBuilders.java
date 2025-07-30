@@ -26,7 +26,6 @@ import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.src.*;
 
-
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.TreeMap;
@@ -59,10 +58,12 @@ public class BuildCraftBuilders implements IBuildCraftModule {
         NetworkRegistry.instance().registerGuiHandler(getModId(), new GuiHandlerBuilders());
 
 		templateItem = new ItemBptTemplate(BuildcraftConfig.templateItemId);
+		templateItem.hideFromEMI();
 		templateItem.setUnlocalizedName("templateItem");
 		CoreProxy.getProxy().registerItem(templateItem);
 
 		blueprintItem = new ItemBptBluePrint(BuildcraftConfig.blueprintItemId);
+		blueprintItem.hideFromEMI();
 		blueprintItem.setUnlocalizedName("blueprintItem");
 		CoreProxy.getProxy().registerItem(blueprintItem);
 
@@ -71,6 +72,7 @@ public class BuildCraftBuilders implements IBuildCraftModule {
 		CoreProxy.getProxy().addName(markerBlock, "Land Mark");
 
 		pathMarkerBlock = new BlockPathMarker(BuildcraftConfig.pathMarkerBlockId);
+		pathMarkerBlock.hideFromEMI();
 		CoreProxy.getProxy().registerBlock(pathMarkerBlock.setUnlocalizedName("pathMarkerBlock"));
 		CoreProxy.getProxy().addName(pathMarkerBlock, "Path Mark");
 
@@ -79,14 +81,17 @@ public class BuildCraftBuilders implements IBuildCraftModule {
 		CoreProxy.getProxy().addName(fillerBlock, "Filler");
 
 		builderBlock = new BlockBuilder(BuildcraftConfig.builderBlockId);
+		builderBlock.hideFromEMI();
 		CoreProxy.getProxy().registerBlock(builderBlock.setUnlocalizedName("builderBlock"));
 		CoreProxy.getProxy().addName(builderBlock, "Builder");
 
 		architectBlock = new BlockArchitect(BuildcraftConfig.architectBlockId);
+		architectBlock.hideFromEMI();
 		CoreProxy.getProxy().registerBlock(architectBlock.setUnlocalizedName("architectBlock"));
 		CoreProxy.getProxy().addName(architectBlock, "Architect Table");
 
 		libraryBlock = new BlockBlueprintLibrary(BuildcraftConfig.blueprintLibraryBlockId);
+		libraryBlock.hideFromEMI();
 		CoreProxy.getProxy().registerBlock(libraryBlock.setUnlocalizedName("libraryBlock"));
 		CoreProxy.getProxy().addName(libraryBlock, "Blueprint Library");
 

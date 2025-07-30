@@ -1,0 +1,43 @@
+# Progression
+## [Ages](https://wiki.btwce.com/index.php?title=Ages)
+- Era of Survival
+  - Age of Wood
+    - Loose stone
+    - String
+    - Clay
+    - Stone tools
+  - Age of Brick
+    - Brick oven
+    - Wicker
+    - Small bits of iron
+  - Age of Iron
+    - Work Stump
+    - Access to Iron
+    - Start of Mechanical Power
+    - Millstone
+    - Cauldron
+    - Saw
+    - Tanned Leather
+  - Age of Flame
+    - Soul Sand, Netherrack, Blaze rods, Ghast tears
+    - Nether Coal
+- Era of Automation
+  - Age of Pottery
+    - Bellows
+    - Crucible
+    - Soul Urns
+  - Age of Commerce
+    - Villager Trading
+  - Age of Domination
+    - Nether Star
+    - Soulforge
+    - Beacons
+- A New Era
+  - Age of Steel
+    - Soulforged Steel
+    - Infernal Enchanter
+
+### Where to start progression?
+- Age of iron
+  - Wooden Engine
+  - Basic Pipes

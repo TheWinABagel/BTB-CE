@@ -7,6 +7,10 @@
  */
 package buildcraft;
 
+import btw.block.BTWBlocks;
+import btw.item.BTWItems;
+import btw.item.tag.BTWTags;
+import btw.item.tag.TagInstance;
 import buildcraft.api.fuels.IronEngineCoolant;
 import buildcraft.api.fuels.IronEngineFuel;
 import buildcraft.api.recipes.BuildcraftRecipes;
@@ -232,12 +236,24 @@ public class BuildCraftEnergy implements IBuildCraftModule {
 
 	public static void loadRecipes() {
 		//todoenergy recipes
-/*		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodEngineBlock),
-                "www", " g ", "GpG", 'w', "plankWood", 'g', Block.glass, 'G',
-                BuildCraftCore.woodenGearItem, 'p', Block.pistonBase);
-		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneEngineBlock), "www", " g ", "GpG", 'w', Block.cobblestone,
-                'g', Block.glass, 'G', BuildCraftCore.stoneGearItem, 'p', Block.pistonBase);
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(woodEngineBlock),
+				"www",
+                " g ",
+                "GpG",
+                'w', TagInstance.of(BTWTags.woodSidings),
+                'g', Block.glass,
+				'G', BTWItems.gear,
+                'p', BTWBlocks.gearBox);
+
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(stoneEngineBlock),
+				"www",
+				" g ",
+				"GpG",
+				'w', Block.cobblestone,
+                'g', Block.glass,
+				'G', BuildCraftCore.stoneGearItem,
+				'p', BTWBlocks.gearBox);
 		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(ironEngineBlock), "www", " g ", "GpG", 'w', Item.ingotIron,
-                'g', Block.glass, 'G', BuildCraftCore.ironGearItem, 'p', Block.pistonBase);*/
+                'g', Block.glass, 'G', BuildCraftCore.ironGearItem, 'p', Block.pistonBase);
 	}
 }

@@ -1,17 +1,20 @@
 package buildcraft.transport;
 
+import btw.block.BTWBlocks;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.Position;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.ItemBuildCraft;
 import buildcraft.core.proxy.CoreProxy;
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.LinkedList;
@@ -85,12 +88,27 @@ public class ItemFacade extends ItemBuildCraft {
 		return false;
 	}
 
+	public static  <T> T[] concatenate(T[] a, T[] b) {
+		int aLen = a.length;
+		int bLen = b.length;
+
+		@SuppressWarnings("unchecked")
+		T[] c = (T[]) Array.newInstance(a.getClass().getComponentType(), aLen + bLen);
+		System.arraycopy(a, 0, c, 0, aLen);
+		System.arraycopy(b, 0, c, aLen, bLen);
+
+		return c;
+	}
+
 	public static void initialize() {
-		for (Field f : Block.class.getDeclaredFields()) {
+		var fields = concatenate(Block.class.getDeclaredFields(), BTWBlocks.class.getDeclaredFields());
+		outer:
+		for (Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers()) && Block.class.isAssignableFrom(f.getType())) {
 				Block b;
 				try {
 					b = (Block) f.get(null);
+					if(b == null) continue;
 				} catch (Exception e) {
 					continue;
 				}
@@ -103,9 +121,25 @@ public class ItemFacade extends ItemBuildCraft {
 							|| b.blockID == 95 //Locked chest
 							|| b.blockID == Block.redstoneLampIdle.blockID
 							|| b.blockID == Block.redstoneLampActive.blockID
+							|| b.blockID == Block.oreRedstoneGlowing.blockID
 							|| b.blockID == Block.pumpkinLantern.blockID) {
 						continue;
 					}
+					//btw
+					if (b instanceof BlockHalfSlab
+							|| b.blockID == Block.workbench.blockID
+							|| b.blockID == Block.mushroomCapBrown.blockID
+							|| b.blockID == Block.mushroomCapRed.blockID
+							|| b.blockID == BTWBlocks.brownMushroomCap.blockID
+							|| b.blockID == BTWBlocks.redMushroomCap.blockID
+							|| b.blockID == BTWBlocks.looseSparseGrass.blockID
+							|| b.blockID == BTWBlocks.fallingNetherrack.blockID
+							|| b.blockID == BTWBlocks.upperStrataRoughStone.blockID
+							|| b.blockID == BTWBlocks.midStrataRoughStone.blockID
+							|| b.blockID == BTWBlocks.deepStrataRoughStone.blockID) {
+						continue;
+					}
+
 					if (!b.isOpaqueCube() || b.hasTileEntity() || !b.renderAsNormalBlock()) {
 						continue;
 					}
@@ -113,13 +147,16 @@ public class ItemFacade extends ItemBuildCraft {
 				ItemStack base = new ItemStack(b, 1);
 				if (base.getHasSubtypes()) {
 					Set<String> names = Sets.newHashSet();
-					//todotransport temp disable as it caused crash
-/*					for (int meta = 0; meta <= 15; meta++) {
-						ItemStack is = new ItemStack(b, 1, meta);
-						if (!Strings.isNullOrEmpty(is.getUnlocalizedName()) && names.add(is.getUnlocalizedName())) {
-							ItemFacade.addFacade(is);
+					for (int meta = 0; meta <= 15; meta++) {
+						try {
+							ItemStack is = new ItemStack(b, 1, meta);
+							if (!Strings.isNullOrEmpty(is.getUnlocalizedName()) && names.add(is.getUnlocalizedName())) {
+								ItemFacade.addFacade(is);
+							}
+						} catch (Exception e) {
+							continue outer;
 						}
-					}*/
+					}
 				} else {
 					ItemFacade.addFacade(base);
 				}
@@ -153,7 +190,7 @@ public class ItemFacade extends ItemBuildCraft {
 		facade6.stackSize = 6;
 
 		// 3 Structurepipes + this block makes 6 facades
-		BuildcraftRecipes.assemblyTable.addRecipe(8000, facade6, BuildCraftCore.loc(itemStack.getUnlocalizedName().replace("item.", "")), new ItemStack(BuildCraftTransport.pipeStructureCobblestone, 3), itemStack);
+		BuildcraftRecipes.assemblyTable.addRecipe(8000, facade6, BuildCraftCore.loc(itemStack.getUnlocalizedName().replace("item.", "") + "." + itemStack.getItemDamage()), new ItemStack(BuildCraftTransport.pipeStructureCobblestone, 3), itemStack);
 		if (itemStack.itemID < Block.blocksList.length && Block.blocksList[itemStack.itemID] != null) {
 			Block bl = Block.blocksList[itemStack.itemID];
 
@@ -231,9 +268,9 @@ public class ItemFacade extends ItemBuildCraft {
 
 		@Override
 		public boolean matches(IRecipe recipe) {
-			//todotransport facade recipe
-/*			if (recipe instanceof FacadeRecipe facadeRecipe) {
-                if (this.recipeOutput.getItem().itemID == facadeRecipe.recipeOutput.getItem().itemID && this.recipeOutput.stackSize == facadeRecipe.recipeOutput.stackSize && this.recipeOutput.getItemDamage() == facadeRecipe.recipeOutput.getItemDamage() && this.recipeItems.size() == facadeRecipe.recipeItems.size()) {
+			//todotransport Allow for recipe removal...
+			/*if (recipe instanceof FacadeRecipe facadeRecipe) {
+                if (this.getRecipeOutput().getItem().itemID == facadeRecipe.getRecipeOutput().getItem().itemID && this.recipeOutput.stackSize == facadeRecipe.recipeOutput.stackSize && this.recipeOutput.getItemDamage() == facadeRecipe.recipeOutput.getItemDamage() && this.recipeItems.size() == facadeRecipe.recipeItems.size()) {
 					for (int iTempIndex = 0; iTempIndex < this.recipeItems.size(); ++iTempIndex) {
 						ItemStack item1 = (ItemStack)this.recipeItems.get(iTempIndex);
 						ItemStack item2 = (ItemStack)facadeRecipe.recipeItems.get(iTempIndex);
@@ -260,7 +297,7 @@ public class ItemFacade extends ItemBuildCraft {
 			}
 
 			return false;*/
-			return true;
+			return false;
 		}
 
 		@Override

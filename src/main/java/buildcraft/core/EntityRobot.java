@@ -9,25 +9,25 @@
 
 package buildcraft.core;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import btw.entity.EntityWithCustomPacket;
 import btw.network.packet.BTWPacketManager;
-import buildcraft.core.network.EntityIds;
-import net.minecraft.src.*;
 import buildcraft.api.blueprints.BptSlotInfo;
 import buildcraft.api.core.Position;
 import buildcraft.core.blueprints.BptBuilderBase;
 import buildcraft.core.blueprints.BptContext;
 import buildcraft.core.blueprints.BptSlot;
 import buildcraft.core.blueprints.BptSlot.Mode;
+import buildcraft.core.network.EntityIds;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import buildcraft.core.utils.BlockUtil;
+import net.minecraft.src.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class EntityRobot extends Entity implements EntityWithCustomPacket {
 
@@ -79,7 +79,7 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 		setLocationAndAngles(destX, destY, destZ, 0, 0);
 
 		laser = new EntityEnergyLaser(worldObj, new Position(posX, posY, posZ), new Position(posX, posY, posZ));
-//		System.out.println("creating new laser at " + new Position(posX, posY, posZ) + " in world " + worldObj);
+		//		System.out.println("creating new laser at " + new Position(posX, posY, posZ) + " in world " + worldObj);
 		worldObj.spawnEntityInWorld(laser);
 	}
 

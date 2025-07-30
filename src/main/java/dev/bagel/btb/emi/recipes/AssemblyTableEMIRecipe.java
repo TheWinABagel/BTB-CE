@@ -1,5 +1,6 @@
 package dev.bagel.btb.emi.recipes;
 
+import btw.item.tag.TagOrStack;
 import buildcraft.api.recipes.IAssemblyRecipeManager;
 import buildcraft.core.recipes.AssemblyRecipeManager;
 import dev.bagel.btb.emi.BuildcraftEmiCompat;
@@ -8,7 +9,9 @@ import emi.dev.emi.emi.api.recipe.EmiRecipeCategory;
 import emi.dev.emi.emi.api.stack.EmiIngredient;
 import emi.dev.emi.emi.api.stack.EmiStack;
 import emi.dev.emi.emi.api.widget.WidgetHolder;
+import emi.shims.java.com.unascribed.retroemi.ItemStacks;
 import emi.shims.java.com.unascribed.retroemi.RetroEMI;
+import emi.shims.java.net.minecraft.text.Text;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ResourceLocation;
@@ -49,29 +52,33 @@ public class AssemblyTableEMIRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayWidth() {
-        return 120;
+        return 130;
     }
 
     @Override
     public int getDisplayHeight() {
-        return 50;
+        return 46;
     }
 
     @Override
     public void addWidgets(WidgetHolder widgets) {
-        widgets.addSlot(output, 80, 0).recipeContext(this);
-        int i = 0;
-        for (EmiIngredient ingredient : this.inputs) {
-            widgets.addSlot(ingredient, 20 * i, 25);
-            i++;
+        widgets.addSlot(output, 107, 14).recipeContext(this);
+        widgets.addFillingArrow(77, 15, (int) recipe.getEnergyCost() * 3).tooltipText(List.of(Text.literal("todo replace, cost: " + recipe.getEnergyCost())));
+        for (int i = 0; i < Math.max(this.inputs.size(), 8); ++i) {
+            if (i < this.inputs.size()) {
+                widgets.addSlot(this.inputs.get(i), i % 4 * 18, 4 + i / 4 * 18);
+            }
+            else {
+                widgets.addSlot(EmiStack.of(ItemStacks.EMPTY), i % 4 * 18, 4 + i / 4 * 18);
+            }
         }
     }
     private static List<EmiIngredient> fixIngredients(Object[] inputs) {
 
         List<EmiIngredient> list = Arrays.stream(inputs).filter(Objects::nonNull)
                 .map(o -> {
-                    if (o instanceof ItemStack stack) {
-                        return stack;
+                    if (o instanceof TagOrStack tagOrStack) {
+                        return tagOrStack;
                     }
                     else if (o instanceof Integer integer) {
                         return new ItemStack(Item.itemsList[integer]);
