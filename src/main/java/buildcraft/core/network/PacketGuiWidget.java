@@ -9,11 +9,15 @@
 package buildcraft.core.network;
 
 import buildcraft.core.gui.BuildCraftContainer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.src.EntityClientPlayerMP;
+import net.minecraft.src.Minecraft;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import net.minecraft.src.EntityClientPlayerMP;
-import net.minecraft.src.Minecraft;
 
 /**
  *
@@ -46,6 +50,13 @@ public class PacketGuiWidget extends BuildCraftPacket {
         windowId = data.readByte();
         widgetId = data.readByte();
 
+        if (!MinecraftServer.getIsServer()) {
+            clientHandle(data);
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void clientHandle(DataInputStream data) throws IOException{
         EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 
         if (player.openContainer instanceof BuildCraftContainer && player.openContainer.windowId == windowId)

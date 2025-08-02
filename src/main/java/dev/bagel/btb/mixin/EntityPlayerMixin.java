@@ -1,12 +1,14 @@
 package dev.bagel.btb.mixin;
 
+import buildcraft.core.utils.BCLog;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.network.IGuiHandler;
-import dev.bagel.btb.injected.EntityPlayerExtension;
-import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import dev.bagel.btb.injected.EntityPlayerExtension;
 import dev.bagel.btb.mixin.accessors.EntityPlayerMPAccessor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -23,6 +25,7 @@ public class EntityPlayerMixin implements EntityPlayerExtension {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     private void btb$openLocalGui(String modId, EntityPlayer player, int modGuiId, World world, int x, int y, int z) {
         IGuiHandler handler = NetworkRegistry.instance().clientGuiHandlers.get(modId);
 

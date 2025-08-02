@@ -2,15 +2,10 @@ package cpw.mods.fml.client.registry;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.src.*;
 
 import java.util.List;
 import java.util.Map;
-import net.minecraft.src.Block;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.Render;
-import net.minecraft.src.RenderManager;
-import net.minecraft.src.Entity;
-import net.minecraft.src.IBlockAccess;
 
 public class RenderingRegistry {
     private static final RenderingRegistry INSTANCE = new RenderingRegistry();
@@ -19,7 +14,9 @@ public class RenderingRegistry {
     private final List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
 
     public static void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer) {
-        instance().entityRenderers.add(new RenderingRegistry.EntityRendererInfo(entityClass, renderer));
+        renderer.setRenderManager(RenderManager.instance);
+        RenderManager.addEntityRenderer(entityClass, renderer);
+//        instance().entityRenderers.add(new RenderingRegistry.EntityRendererInfo(entityClass, renderer));
     }
 
     public static void registerBlockHandler(ISimpleBlockRenderingHandler handler) {
@@ -61,13 +58,13 @@ public class RenderingRegistry {
         return bri != null && bri.shouldRender3DInInventory();
     }
 
-    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
-        for (EntityRendererInfo info : this.entityRenderers) {
-            rendererMap.put(info.target, info.renderer);
-            info.renderer.setRenderManager(RenderManager.instance);
-        }
-
-    }
+//    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
+//        for (EntityRendererInfo info : this.entityRenderers) {
+//            rendererMap.put(info.target, info.renderer);
+//            info.renderer.setRenderManager(RenderManager.instance);
+//        }
+//
+//    }
 
     private static class EntityRendererInfo {
         private Class<? extends Entity> target;

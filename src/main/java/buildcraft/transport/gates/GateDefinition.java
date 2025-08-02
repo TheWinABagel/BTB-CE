@@ -10,6 +10,8 @@ package buildcraft.transport.gates;
 
 import buildcraft.core.DefaultProps;
 import buildcraft.core.utils.StringUtils;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Icon;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.ResourceLocation;
@@ -42,13 +44,17 @@ public final class GateDefinition {
 		public final int guiHeight;
 		public final int numSlots;
 		public final boolean hasParameterSlot;
+		@Environment(EnvType.CLIENT)
 		private Icon iconBlock;
+		@Environment(EnvType.CLIENT)
 		private Icon iconItem;
 
+		@Environment(EnvType.CLIENT)
 		public Icon getIconBlock() {
 			return iconBlock;
 		}
 
+		@Environment(EnvType.CLIENT)
 		public Icon getIconItem() {
 			return iconItem;
 		}
@@ -57,11 +63,13 @@ public final class GateDefinition {
 			return name().toLowerCase(Locale.ENGLISH);
 		}
 
+		@Environment(EnvType.CLIENT)
 		public void registerBlockIcon(IconRegister iconRegister) {
 			if (this != REDSTONE)
 				iconBlock = iconRegister.registerIcon("buildcraft:gates/gate_material_" + getTag());
 		}
 
+		@Environment(EnvType.CLIENT)
 		public void registerItemIcon(IconRegister iconRegister) {
 			if (this != REDSTONE)
 				iconItem = iconRegister.registerIcon("buildcraft:gates/gate_material_" + getTag());

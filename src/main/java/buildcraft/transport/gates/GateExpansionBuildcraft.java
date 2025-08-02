@@ -10,8 +10,10 @@ package buildcraft.transport.gates;
 
 import buildcraft.api.gates.IGateExpansion;
 import buildcraft.core.utils.StringUtils;
-import net.minecraft.src.IconRegister;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.Icon;
+import net.minecraft.src.IconRegister;
 
 /**
  *
@@ -38,11 +40,13 @@ public abstract class GateExpansionBuildcraft implements IGateExpansion {
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public void registerBlockOverlay(IconRegister iconRegister) {
 		iconBlock = iconRegister.registerIcon("buildcraft:gates/gate_expansion_" + tag);
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
 	public void registerItemOverlay(IconRegister iconRegister) {
 		iconItem = iconRegister.registerIcon("buildcraft:gates/gate_expansion_" + tag);
 	}

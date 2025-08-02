@@ -8,9 +8,11 @@
  */
 package buildcraft.api.gates;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.Icon;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
 
 /**
  *
@@ -24,8 +26,10 @@ public interface IGateExpansion {
 
 	GateExpansionController makeController(TileEntity pipeTile);
 
+	@Environment(EnvType.CLIENT)
 	void registerBlockOverlay(IconRegister iconRegister);
 
+	@Environment(EnvType.CLIENT)
 	void registerItemOverlay(IconRegister iconRegister);
 
 	Icon getOverlayBlock();

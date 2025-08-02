@@ -8,9 +8,11 @@
  */
 package buildcraft.api.transport;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.src.Icon;
 import net.minecraft.src.IconRegister;
 import net.minecraft.src.TileEntity;
-import net.minecraft.src.Icon;
 
 /**
  *
@@ -20,6 +22,7 @@ public interface IPipeDefinition {
 
 	String getUniqueTag();
 
+	@Environment(EnvType.CLIENT)
 	void registerIcons(IconRegister iconRegister);
 
 	Icon getIcon(int index);

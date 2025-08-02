@@ -1,11 +1,7 @@
 package net.minecraftforge.fluids;
 
 import com.google.common.collect.Maps;
-import net.minecraft.src.Block;
-import net.minecraft.src.EnumRarity;
-import net.minecraft.src.Icon;
-import net.minecraft.src.StatCollector;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,7 +30,7 @@ public class Fluid {
    private static Map<String, String> legacyNames = Maps.newHashMap();
 
    public Fluid(String fluidName) {
-      this.rarity = EnumRarity.common;
+//      this.rarity = EnumRarity.common;
       this.blockID = -1;
       this.fluidName = fluidName.toLowerCase(Locale.ENGLISH);
       this.unlocalizedName = fluidName;

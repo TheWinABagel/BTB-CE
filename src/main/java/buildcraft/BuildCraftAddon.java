@@ -6,6 +6,8 @@ import buildcraft.core.ItemBlockBuildCraft;
 import buildcraft.core.utils.BCLog;
 import buildcraft.transport.network.PacketGateExpansionMap;
 import dev.bagel.btb.extensions.BuildcraftCustomPacketHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 
 import java.io.ByteArrayInputStream;
@@ -117,6 +119,7 @@ public class BuildCraftAddon extends BTWAddon {
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public boolean clientCustomPacketReceived(Minecraft mcInstance, Packet250CustomPayload packet) {
         try {
             if (BuildCraftAddon.BCPacketHandlers.get(packet.channel) != null) {

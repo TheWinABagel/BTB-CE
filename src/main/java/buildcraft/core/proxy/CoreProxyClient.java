@@ -9,38 +9,19 @@
 
 package buildcraft.core.proxy;
 
-import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
 import buildcraft.core.EntityEnergyLaser;
 import buildcraft.core.EntityPowerLaser;
 import buildcraft.core.EntityRobot;
-import buildcraft.core.render.RenderEnergyLaser;
-import buildcraft.core.render.RenderEntityBlock;
-import buildcraft.core.render.RenderLaser;
-import buildcraft.core.render.RenderRobot;
-import buildcraft.core.render.RenderingEntityBlocks;
-import buildcraft.core.render.RenderingMarkers;
-import buildcraft.core.render.RenderingOil;
+import buildcraft.core.render.*;
+import buildcraft.transport.render.TileEntityPickupFX;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
+import net.minecraft.src.*;
 
 import java.util.List;
-
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import net.minecraft.src.Block;
-import net.minecraft.src.Minecraft;
-import net.minecraft.src.WorldClient;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Packet;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.ChatMessageComponent;
-import net.minecraft.src.ChunkCoordinates;
-import net.minecraft.src.World;
 
 public class CoreProxyClient extends CoreProxy {
 
@@ -103,7 +84,8 @@ public class CoreProxyClient extends CoreProxy {
 	/* GFX */
 	@Override
 	public void obsidianPipePickup(World world, EntityItem item, TileEntity tile) {
-		/*FMLClientHandler.instance().getClient().effectRenderer.addEffect(new TileEntityPickupFX(world, item, tile));*/
+		Minecraft.getMinecraft().effectRenderer.addEffect(new TileEntityPickupFX(world, item, tile));
+//		FMLClientHandler.instance().getClient().effectRenderer.addEffect(new TileEntityPickupFX(world, item, tile));
 	}
 
 	@Override

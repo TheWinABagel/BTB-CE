@@ -24,6 +24,8 @@ import buildcraft.core.blueprints.BptRootIndex;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.src.*;
 
 import java.io.IOException;
@@ -339,6 +341,7 @@ public class BuildCraftBuilders implements IBuildCraftModule {
 	}*/
 
     @Override
+	@Environment(EnvType.CLIENT)
     public void textureHook(TextureMap map) {
         if (map.getTextureType() == 0) {
             for (FillerPattern pattern : FillerPattern.patterns) {
