@@ -2,11 +2,7 @@ package buildcraft.core.render;
 
 import buildcraft.core.DefaultProps;
 import buildcraft.core.EntityRobot;
-import net.minecraft.src.ModelBase;
-import net.minecraft.src.ModelRenderer;
-import net.minecraft.src.Render;
-import net.minecraft.src.Entity;
-import net.minecraft.src.ResourceLocation;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
 public class RenderRobot extends Render {
@@ -30,7 +26,6 @@ public class RenderRobot extends Render {
 	}
 
 	private void doRender(EntityRobot laser, double x, double y, double z, float f, float f1) {
-
 		GL11.glPushMatrix();
 		GL11.glDisable(2896 /* GL_LIGHTING */);
 		GL11.glTranslated(x, y, z);

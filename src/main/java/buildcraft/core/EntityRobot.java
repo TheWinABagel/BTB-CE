@@ -17,7 +17,6 @@ import buildcraft.core.blueprints.BptBuilderBase;
 import buildcraft.core.blueprints.BptContext;
 import buildcraft.core.blueprints.BptSlot;
 import buildcraft.core.blueprints.BptSlot.Mode;
-import buildcraft.core.network.EntityIds;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BCLog;
 import buildcraft.core.utils.BlockUtil;
@@ -88,18 +87,18 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(byteStream);
 		try {
-			if (this.box == null) {
-				int i = 5;
+			data.writeInt(CoreConstants.ROBOT_PACKET_ID);
+			data.writeInt(entityId);
+			if (box == null) {
+				box = new Box();
 			}
-			data.writeInt(EntityIds.ROBOT);
-			data.writeInt(this.entityId);
+
 			data.writeInt(box.xMin);
 			data.writeInt(box.yMin);
 			data.writeInt(box.zMin);
 			data.writeInt(box.xMax);
 			data.writeInt(box.yMax);
 			data.writeInt(box.zMax);
-			System.out.println("making a new entity robot spawn packet");
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
@@ -113,7 +112,7 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 
 	@Override
 	public int getTrackerUpdateFrequency() {
-		return 1;
+		return 3;
 	}
 
 	@Override
@@ -216,7 +215,7 @@ public class EntityRobot extends Entity implements EntityWithCustomPacket {
 			if (a.slot != null) {
 
 				BptSlot target = a.slot;
-				//System.out.printf("RobotChanging %d %d %d %s\n",target.x, target.y, target.z, target.mode);
+				System.out.printf("RobotChanging %d %d %d %s\n",target.x, target.y, target.z, target.mode);
 				if (wait <= 0 && BlockUtil.canChangeBlock(worldObj, target.x, target.y, target.z)) {
 
 					if (!CoreProxy.getProxy().isClientWorld(worldObj)) {

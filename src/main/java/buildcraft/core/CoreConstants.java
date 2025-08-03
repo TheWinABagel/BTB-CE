@@ -16,4 +16,7 @@ public class CoreConstants {
 
 	public static final float PIPE_MIN_POS = 0.25F;
 	public static final float PIPE_MAX_POS = 0.75F;
+
+	public static final int LASER_PACKET_ID = 162;
+	public static final int ROBOT_PACKET_ID = 163;
 }

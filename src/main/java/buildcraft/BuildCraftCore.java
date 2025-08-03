@@ -11,6 +11,7 @@ import btw.client.network.packet.handler.CustomEntityPacketHandler;
 import btw.item.BTWItems;
 import buildcraft.api.core.BuildCraftAPI;
 import buildcraft.api.core.IIconProvider;
+import buildcraft.api.core.Position;
 import buildcraft.api.gates.ActionManager;
 import buildcraft.api.recipes.BuildcraftRecipes;
 import buildcraft.core.*;
@@ -174,6 +175,31 @@ public class BuildCraftCore implements IBuildCraftModule {
 		ActionManager.registerActionProvider(new DefaultActionProvider());
 
 		initPackets();
+
+		CustomEntityPacketHandler.entryMap.put(CoreConstants.LASER_PACKET_ID, (world, dataStream, packet) -> {
+			short type = dataStream.readShort();
+			Position head = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+			Position tail = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+
+			return switch (type) {
+				case 0 -> new EntityEnergyLaser(world, head, tail);
+				case 1 -> new EntityPowerLaser(world, head, tail);
+                default -> throw new IllegalStateException("Unexpected value: " + type);
+            };
+		});
+
+		CustomEntityPacketHandler.entryMap.put(CoreConstants.ROBOT_PACKET_ID, (world, data, packet) -> {
+
+			Box box = new Box();
+			box.xMin = data.readInt();
+			box.yMin = data.readInt();
+			box.zMin = data.readInt();
+			box.xMax = data.readInt();
+			box.yMax = data.readInt();
+			box.zMax = data.readInt();
+			System.out.println("Creating robot with box " + box + " on world " + world);
+			return new EntityRobot(world, box);
+		});
 
 		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
 		EntityList.addMapping(EntityPowerLaser.class, "bcLaser", EntityIds.LASER);

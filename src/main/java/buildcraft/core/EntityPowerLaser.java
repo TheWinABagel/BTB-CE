@@ -27,6 +27,11 @@ public class EntityPowerLaser extends EntityLaser {
 		return LASER_TEXTURES[texture];
 	}
 
+	@Override
+	short getType() {
+		return 1;
+	}
+
 	public void setTexture(int texture) {
 		this.texture = (byte) texture;
 		needsUpdate = true;

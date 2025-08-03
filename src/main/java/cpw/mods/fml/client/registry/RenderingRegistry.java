@@ -1,20 +1,16 @@
 package cpw.mods.fml.client.registry;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.src.*;
 
-import java.util.List;
 import java.util.Map;
 
 public class RenderingRegistry {
     private static final RenderingRegistry INSTANCE = new RenderingRegistry();
     private int nextRenderId = 40;
     public Map<Integer, ISimpleBlockRenderingHandler> blockRenderers = Maps.newHashMap();
-    private final List<RenderingRegistry.EntityRendererInfo> entityRenderers = Lists.newArrayList();
 
     public static void registerEntityRenderingHandler(Class<? extends Entity> entityClass, Render renderer) {
-        renderer.setRenderManager(RenderManager.instance);
         RenderManager.addEntityRenderer(entityClass, renderer);
 //        instance().entityRenderers.add(new RenderingRegistry.EntityRendererInfo(entityClass, renderer));
     }
@@ -58,21 +54,11 @@ public class RenderingRegistry {
         return bri != null && bri.shouldRender3DInInventory();
     }
 
-//    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
-//        for (EntityRendererInfo info : this.entityRenderers) {
-//            rendererMap.put(info.target, info.renderer);
-//            info.renderer.setRenderManager(RenderManager.instance);
-//        }
-//
-//    }
+    public void loadEntityRenderers() {
+        //NOOP
+    }
 
-    private static class EntityRendererInfo {
-        private Class<? extends Entity> target;
-        private Render renderer;
-
-        public EntityRendererInfo(Class<? extends Entity> target, Render renderer) {
-            this.target = target;
-            this.renderer = renderer;
-        }
+    public void loadEntityRenderers(Map<Class<? extends Entity>, Render> rendererMap) {
+        //NOOP
     }
 }

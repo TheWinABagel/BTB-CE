@@ -96,7 +96,6 @@ public class BuildCraftAddon extends BTWAddon {
     @Override
     public void serverPlayerConnectionInitialized(NetServerHandler serverHandler, EntityPlayerMP playerMP) {
         PacketGateExpansionMap pkt = new PacketGateExpansionMap();
-        System.out.println("Sending packet gate expansion map to " + playerMP.getEntityName());
         playerMP.playerNetServerHandler.sendPacketToPlayer(pkt.getPacket());
     }
 
@@ -107,7 +106,7 @@ public class BuildCraftAddon extends BTWAddon {
                 DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
                 int packetID = data.read();
                 for (BuildcraftCustomPacketHandler packetHandler : BuildCraftAddon.BCPacketHandlers.values()) {
-//                    packetHandler.onPacketData(handler.playerEntity, packet, data, packetID);
+                    packetHandler.onPacketData(handler.playerEntity, packet, data, packetID);
                 }
                 return true;
             }

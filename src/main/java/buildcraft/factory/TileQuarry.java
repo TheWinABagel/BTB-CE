@@ -7,13 +7,6 @@
  */
 package buildcraft.factory;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import dev.bagel.btb.extensions.BlockUnloadExtension;
-import net.minecraft.src.*;
-import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftCore;
 import buildcraft.BuildCraftFactory;
 import buildcraft.api.core.IAreaProvider;
@@ -22,13 +15,7 @@ import buildcraft.api.gates.IAction;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.api.power.PowerHandler;
 import buildcraft.api.power.PowerHandler.PowerReceiver;
-import buildcraft.core.Box;
-import buildcraft.core.CoreConstants;
-import buildcraft.core.DefaultAreaProvider;
-import buildcraft.core.EntityRobot;
-import buildcraft.core.IBuilderInventory;
-import buildcraft.core.IMachine;
-import buildcraft.core.TileBuildCraft;
+import buildcraft.core.*;
 import buildcraft.core.blueprints.BptBlueprint;
 import buildcraft.core.blueprints.BptBuilderBase;
 import buildcraft.core.blueprints.BptBuilderBlueprint;
@@ -37,9 +24,15 @@ import buildcraft.core.network.TileNetworkData;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.BlockUtil;
 import buildcraft.core.utils.Utils;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import dev.bagel.btb.extensions.BlockUnloadExtension;
+import net.minecraft.src.*;
+import net.minecraftforge.common.ForgeDirection;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class TileQuarry extends TileBuildCraft implements IMachine, IPowerReceptor, IBuilderInventory, BlockUnloadExtension {
 
@@ -129,18 +122,15 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	@Override
 	public void updateEntity() {
 		if (!isAlive && CoreProxy.getProxy().isServerWorld(worldObj)) {
-//			System.out.println("is not alive, and is server world");
 			super.updateEntity();
 			return;
 		}
 		if (!CoreProxy.getProxy().isServerWorld(worldObj) && isAlive) {
-//			System.out.println("is alive, and is client world");
 			super.updateEntity();
 			return;
 		}
 		super.updateEntity();
 		if (inProcess) {
-			//todo
 			double energyToUse = 2 + powerHandler.getEnergyStored() / 500;
 
 			double energy = powerHandler.useEnergy(energyToUse, energyToUse, true);
@@ -153,27 +143,21 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		if (CoreProxy.getProxy().isServerWorld(worldObj) && inProcess) {
 			sendNetworkUpdate();
 		}
-//		System.out.println("1 world is " +worldObj);
 		if (inProcess || !isDigging)
 			return;
 
 		createUtilsIfNeeded();
-//		System.out.println("2 world is " +worldObj);
-		/*System.out.printf("bluePrintBuilder != null %b%n", bluePrintBuilder != null);*/
 
 		if (bluePrintBuilder != null) {
 
 			builderDone = bluePrintBuilder.done;
 			if (!builderDone) {
-//				System.out.println("building frame!");
+
 				buildFrame();
 				return;
 
 			} else {
-				boolean test1, test2 = false;
-				test1 = builder != null;
-				if (test1) test2 =builder.done();
-//				System.out.printf("builder != null %b, builder.done() %b%n", test1, test2);
+
 				if (builder != null && builder.done()) {
 
 					box.deleteLasers();
@@ -184,10 +168,8 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 		}
 
 		if (builder == null) {
-//			System.out.println("DIGGING");
 			dig();
 		}
-
 	}
 
 	@Override
@@ -195,19 +177,14 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 	}
 
 	protected void buildFrame() {
-//		float mj = 25 * BuildCraftFactory.miningMultiplier;
-		float mj = 1;
+		float mj = 25 * BuildCraftFactory.miningMultiplier;
 		powerHandler.configure(50 * BuildCraftFactory.miningMultiplier, 100 * BuildCraftFactory.miningMultiplier, mj, MAX_ENERGY * BuildCraftFactory.miningMultiplier);
-		if (powerHandler.useEnergy(mj, mj, true) != mj) {
-//			System.out.println("use energy failed " + worldObj);
+		if (powerHandler.useEnergy(mj, mj, true) != mj)
 			return;
-		}
 
-//		System.out.println("builder is null on world " + worldObj + ": " + (builder == null));
 		if (builder == null) {
 			builder = new EntityRobot(worldObj, box);
 			worldObj.spawnEntityInWorld(builder);
-//			System.out.printf("robot is at %s %s %s \n", builder.posX, builder.posY, builder.posZ);
 		}
 
 		if (builder.readyToBuild()) {
@@ -224,7 +201,7 @@ public class TileQuarry extends TileBuildCraft implements IMachine, IPowerRecept
 
 		if (!findTarget(true)) {
 
-			// I believe the issue is box going null becuase of bad chunkloader positioning
+			// I believe the issue is box going null because of bad chunkloader positioning
 			if (arm != null && box != null) {
 				setTarget(box.xMin + 1, yCoord + 2, box.zMin + 1);
 			}

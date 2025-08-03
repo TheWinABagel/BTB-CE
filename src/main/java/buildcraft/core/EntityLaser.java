@@ -7,14 +7,16 @@
  */
 package buildcraft.core;
 
+import btw.entity.EntityWithCustomPacket;
+import btw.network.packet.BTWPacketManager;
 import buildcraft.api.core.Position;
 import buildcraft.core.proxy.CoreProxy;
-import net.minecraft.src.Entity;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.ResourceLocation;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 
-public abstract class EntityLaser extends Entity {
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
+public abstract class EntityLaser extends Entity implements EntityWithCustomPacket {
 
 	public static final ResourceLocation[] LASER_TEXTURES = new ResourceLocation[]{
 		new ResourceLocation("buildcraft", DefaultProps.TEXTURE_PATH_ENTITIES + "/laser_1.png"),
@@ -41,9 +43,8 @@ public abstract class EntityLaser extends Entity {
 
 		this.head = head;
 		this.tail = tail;
-		System.out.println("LASER constructor called");
+
 		setPositionAndRotation(head.x, head.y, head.z, 0, 0);
-		System.out.println("position is" + this.posX + ", " + this.posY + ", " + this.posZ);
 		setSize(10, 10);
 	}
 
@@ -53,14 +54,14 @@ public abstract class EntityLaser extends Entity {
 		noClip = true;
 		isImmuneToFire = true;
 
-		dataWatcher.addObject(8, Integer.valueOf(0));
-		dataWatcher.addObject(9, Integer.valueOf(0));
-		dataWatcher.addObject(10, Integer.valueOf(0));
-		dataWatcher.addObject(11, Integer.valueOf(0));
-		dataWatcher.addObject(12, Integer.valueOf(0));
-		dataWatcher.addObject(13, Integer.valueOf(0));
+		dataWatcher.addObject(8, 0);
+		dataWatcher.addObject(9, 0);
+		dataWatcher.addObject(10, 0);
+		dataWatcher.addObject(11, 0);
+		dataWatcher.addObject(12, 0);
+		dataWatcher.addObject(13, 0);
 
-		dataWatcher.addObject(14, Byte.valueOf((byte) 0));
+		dataWatcher.addObject(14, (byte) 0);
 	}
 
 	@Override
@@ -116,14 +117,14 @@ public abstract class EntityLaser extends Entity {
 	}
 
 	protected void updateDataServer() {
-		dataWatcher.updateObject(8, Integer.valueOf(encodeDouble(head.x)));
-		dataWatcher.updateObject(9, Integer.valueOf(encodeDouble(head.y)));
-		dataWatcher.updateObject(10, Integer.valueOf(encodeDouble(head.z)));
-		dataWatcher.updateObject(11, Integer.valueOf(encodeDouble(tail.x)));
-		dataWatcher.updateObject(12, Integer.valueOf(encodeDouble(tail.y)));
-		dataWatcher.updateObject(13, Integer.valueOf(encodeDouble(tail.z)));
+		dataWatcher.updateObject(8, encodeDouble(head.x));
+		dataWatcher.updateObject(9, encodeDouble(head.y));
+		dataWatcher.updateObject(10, encodeDouble(head.z));
+		dataWatcher.updateObject(11, encodeDouble(tail.x));
+		dataWatcher.updateObject(12, encodeDouble(tail.y));
+		dataWatcher.updateObject(13, encodeDouble(tail.z));
 
-		dataWatcher.updateObject(14, Byte.valueOf((byte) (isVisible ? 1 : 0)));
+		dataWatcher.updateObject(14, (byte) (isVisible ? 1 : 0));
 	}
 
 	public void setPositions(Position head, Position tail) {
@@ -194,5 +195,49 @@ public abstract class EntityLaser extends Entity {
 	@Override
 	public int getBrightnessForRender(float par1) {
 		return 210;
+	}
+
+
+	@Override
+	public boolean getTrackMotion() {
+		return true;
+	}
+
+	@Override
+	public boolean shouldServerTreatAsOversized() {
+		return false;
+	}
+
+	/** 0 for energy laser, 1 for power laser*/
+	abstract short getType();
+
+	@Override
+	public Packet getSpawnPacketForThisEntity() {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream dataStream = new DataOutputStream(byteStream);
+		try {
+			dataStream.writeInt(CoreConstants.LASER_PACKET_ID);
+			dataStream.writeInt(entityId);
+			dataStream.writeShort(getType());
+			dataStream.writeDouble(head.x);
+			dataStream.writeDouble(head.y);
+			dataStream.writeDouble(head.z);
+			dataStream.writeDouble(tail.x);
+			dataStream.writeDouble(tail.y);
+			dataStream.writeDouble(tail.z);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		return new Packet250CustomPayload(BTWPacketManager.SPAWN_CUSTOM_ENTITY_PACKET_CHANNEL, byteStream.toByteArray());
+	}
+
+	@Override
+	public int getTrackerViewDistance() {
+		return 50;
+	}
+
+	@Override
+	public int getTrackerUpdateFrequency() {
+		return 3;
 	}
 }

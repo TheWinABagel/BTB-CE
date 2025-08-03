@@ -70,10 +70,7 @@ public class EntityBlock extends Entity {
 	}
 
 	@Override
-	protected void entityInit() {
-		System.out.println("initialized entity" + this);
-		// TODO Auto-generated method stub
-	}
+	protected void entityInit() {}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound data) {

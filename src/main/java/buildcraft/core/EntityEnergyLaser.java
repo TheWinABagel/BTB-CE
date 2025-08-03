@@ -56,6 +56,11 @@ public class EntityEnergyLaser extends EntityLaser {
 	}
 
 	@Override
+	short getType() {
+		return 0;
+	}
+
+	@Override
 	protected void updateDataClient() {
 		super.updateDataClient();
 		powerAverage = (float) decodeDouble(dataWatcher.getWatchableObjectInt(15));

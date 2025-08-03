@@ -28,7 +28,6 @@
     "accessors.NBTTagCompoundAccessor",
     "accessors.NBTTagListAccessor",
     "accessors.RenderBlocksAccessor",
-    "accessors.RenderManagerAccessor",
     "accessors.TessellatorAccessor",
     "client.EffectRendererMixin",
     "client.ItemRendererMixin",

@@ -225,3 +225,8 @@ tip.PipeItemsEmzuli=Gate controlled extraction pipe
 tip.PipePowerWood=Power Input Pipe
 tip.PipePowerIron=Selectable Limiter Pipe
 tip.PipeStructureCobblestone=Support pipe
+
+#EMI
+emi.category.buildcraft.assembly_table=Assembly Table
+emi.category.buildcraft.refinery=Refinery
+emi.category.buildcraft.integration_table=Integration Table
