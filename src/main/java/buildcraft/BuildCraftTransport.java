@@ -7,6 +7,7 @@
  */
 package buildcraft;
 
+import btw.block.BTWBlocks;
 import btw.crafting.recipe.RecipeManager;
 import btw.item.tag.BTWTags;
 import btw.item.tag.TagInstance;
@@ -63,6 +64,8 @@ public class BuildCraftTransport implements IBuildCraftModule {
 	public static Item pipeItemsVoid;
 	public static Item pipeItemsSandstone;
 	public static Item pipeItemsEmzuli;
+	public static Item pipeItemsClay;
+
 	public static Item pipeFluidsWood;
 	public static Item pipeFluidsCobblestone;
 	public static Item pipeFluidsStone;
@@ -202,6 +205,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 			pipeItemsSandstone = buildPipe(DefaultProps.PIPE_ITEMS_SANDSTONE_ID, PipeItemsSandstone.class, "Sandstone Transport Pipe", Block.sandStone, Block.glass, Block.sandStone);
 			pipeItemsVoid = buildPipe(DefaultProps.PIPE_ITEMS_VOID_ID, PipeItemsVoid.class, "Void Transport Pipe", new ItemStack(Item.dyePowder, 1, Color.BLACK.colorID), Block.glass, Item.redstone);
 			pipeItemsEmzuli = buildPipe(DefaultProps.PIPE_ITEMS_EMZULI_ID, PipeItemsEmzuli.class, "Emzuli Transport Pipe", Block.blockLapis, Block.glass, Item.emerald);
+			pipeItemsClay = buildPipe(DefaultProps.PIPE_ITEMS_CLAY_ID, PipeItemsClay.class, "Clay Transport Pipe", BTWBlocks.unfiredClay, Block.glass, BTWBlocks.unfiredClay);
 
 			pipeFluidsWood = buildPipe(DefaultProps.PIPE_LIQUIDS_WOOD_ID, PipeFluidsWood.class, "Wooden Waterproof Pipe", pipeWaterproof, pipeItemsWood);
 			pipeFluidsCobblestone = buildPipe(DefaultProps.PIPE_LIQUIDS_COBBLESTONE_ID, PipeFluidsCobblestone.class, "Cobblestone Waterproof Pipe", pipeWaterproof, pipeItemsCobblestone);

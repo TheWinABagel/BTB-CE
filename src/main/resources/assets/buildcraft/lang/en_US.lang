@@ -222,6 +222,7 @@ tip.PipeItemsStone=Basic pipe, medium drag\nWon't connect to Cobblestone or Quar
 tip.PipeItemsVoid=Destroys items
 tip.PipeItemsWood=Extraction pipe
 tip.PipeItemsEmzuli=Gate controlled extraction pipe
+tip.PipeItemsClay=Insertion Pipe
 tip.PipePowerWood=Power Input Pipe
 tip.PipePowerIron=Selectable Limiter Pipe
 tip.PipeStructureCobblestone=Support pipe
