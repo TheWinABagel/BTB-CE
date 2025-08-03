@@ -7,19 +7,15 @@
  */
 package buildcraft.transport.pipes;
 
-import net.minecraft.src.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
-import buildcraft.transport.IPipeConnectionForced;
-import buildcraft.transport.Pipe;
-import buildcraft.transport.PipeIconProvider;
-import buildcraft.transport.PipeTransportItems;
-import buildcraft.transport.TileGenericPipe;
+import buildcraft.transport.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.src.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 
-public class PipeItemsSandstone extends Pipe implements IPipeConnectionForced {
+public class PipeItemsSandstone extends Pipe<PipeTransportItems> implements IPipeConnectionForced {
 
 	public PipeItemsSandstone(int itemID) {
 		super(new PipeTransportItems(), itemID);

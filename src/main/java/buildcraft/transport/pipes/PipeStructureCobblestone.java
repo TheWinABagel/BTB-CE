@@ -9,7 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
-public class PipeStructureCobblestone extends Pipe {
+public class PipeStructureCobblestone extends Pipe<PipeTransportStructure> {
 
 	public PipeStructureCobblestone(int itemID) {
 		super(new PipeTransportStructure(), itemID);

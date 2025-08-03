@@ -7,9 +7,6 @@
  */
 package buildcraft.transport.pipes;
 
-import java.util.LinkedList;
-import java.util.Map;
-
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
 import buildcraft.api.gates.IAction;
@@ -25,6 +22,9 @@ import net.minecraft.src.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 public class PipeFluidsIron extends Pipe<PipeTransportFluids> {
 
 	protected int standardIconIndex = PipeIconProvider.TYPE.PipeFluidsIron_Standard.ordinal();
@@ -33,7 +33,7 @@ public class PipeFluidsIron extends Pipe<PipeTransportFluids> {
 		@Override
 		protected boolean isValidConnectingTile(TileEntity tile) {
 			if (tile instanceof TileGenericPipe) {
-				Pipe otherPipe = ((TileGenericPipe) tile).pipe;
+				Pipe<?> otherPipe = ((TileGenericPipe) tile).pipe;
 				if (otherPipe instanceof PipeFluidsWood || otherPipe instanceof PipeStructureCobblestone)
 					return false;
 				if (otherPipe.transport instanceof PipeTransportFluids)

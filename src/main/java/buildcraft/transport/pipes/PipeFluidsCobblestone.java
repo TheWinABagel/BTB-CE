@@ -16,7 +16,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
-public class PipeFluidsCobblestone extends Pipe {
+public class PipeFluidsCobblestone extends Pipe<PipeTransportFluids> {
 
 	public PipeFluidsCobblestone(int itemID) {
 		super(new PipeTransportFluids(), itemID);

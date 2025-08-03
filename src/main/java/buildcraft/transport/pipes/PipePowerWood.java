@@ -25,10 +25,10 @@ import net.minecraftforge.common.ForgeDirection;
 
 public class PipePowerWood extends Pipe<PipeTransportPower> implements IPowerReceptor, IPipeTransportPowerHook {
 
-	private PowerHandler powerHandler;
+	private final PowerHandler powerHandler;
 	protected int standardIconIndex = PipeIconProvider.TYPE.PipePowerWood_Standard.ordinal();
 	protected int solidIconIndex = PipeIconProvider.TYPE.PipeAllWood_Solid.ordinal();
-	private boolean[] powerSources = new boolean[6];
+	private final boolean[] powerSources = new boolean[6];
 	private boolean full;
 
 	public PipePowerWood(int itemID) {

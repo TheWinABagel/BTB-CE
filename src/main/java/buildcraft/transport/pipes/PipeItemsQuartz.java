@@ -15,7 +15,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
-public class PipeItemsQuartz extends Pipe {
+public class PipeItemsQuartz extends Pipe<PipeTransportItems> {
 
 	public PipeItemsQuartz(int itemID) {
 		super(new PipeTransportItems(), itemID);

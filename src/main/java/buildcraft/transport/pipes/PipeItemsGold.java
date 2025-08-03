@@ -16,7 +16,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
-public class PipeItemsGold extends Pipe {
+public class PipeItemsGold extends Pipe<PipeTransportItems> {
 
 	public PipeItemsGold(int itemID) {
 		super(new PipeTransportItems(), itemID);

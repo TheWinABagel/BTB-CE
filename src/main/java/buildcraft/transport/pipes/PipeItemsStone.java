@@ -9,17 +9,13 @@ package buildcraft.transport.pipes;
 
 import buildcraft.BuildCraftTransport;
 import buildcraft.api.core.IIconProvider;
-import buildcraft.transport.Pipe;
-import buildcraft.transport.PipeIconProvider;
-import buildcraft.transport.PipeTransportItems;
-import buildcraft.transport.TransportConstants;
-import buildcraft.transport.TravelingItem;
+import buildcraft.transport.*;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 
-public class PipeItemsStone extends Pipe {
+public class PipeItemsStone extends Pipe<PipeTransportItems> {
 
 	public PipeItemsStone(int itemID) {
 		super(new PipeTransportItems(), itemID);

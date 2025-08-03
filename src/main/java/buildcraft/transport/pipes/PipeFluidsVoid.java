@@ -18,7 +18,7 @@ import net.fabricmc.api.Environment;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
-public class PipeFluidsVoid extends Pipe implements IPipeTransportFluidsHook {
+public class PipeFluidsVoid extends Pipe<PipeTransportFluids> implements IPipeTransportFluidsHook {
 
 	public PipeFluidsVoid(int itemID) {
 		super(new PipeTransportFluids(), itemID);

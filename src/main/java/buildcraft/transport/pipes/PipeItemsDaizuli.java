@@ -13,26 +13,18 @@ import buildcraft.api.gates.IAction;
 import buildcraft.api.tools.IToolWrench;
 import buildcraft.core.network.TileNetworkData;
 import buildcraft.core.utils.EnumColor;
-import buildcraft.transport.Pipe;
-import buildcraft.transport.PipeIconProvider;
-import buildcraft.transport.PipeTransportItems;
-import buildcraft.transport.TileGenericPipe;
-import buildcraft.transport.TransportConstants;
-import buildcraft.transport.TravelingItem;
+import buildcraft.transport.*;
 import buildcraft.transport.pipes.events.PipeEventItem;
 import buildcraft.transport.triggers.ActionPipeColor;
 import buildcraft.transport.triggers.ActionPipeDirection;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.src.*;
+import net.minecraftforge.common.ForgeDirection;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
 
 public class PipeItemsDaizuli extends Pipe<PipeTransportItems> {
 
@@ -40,11 +32,11 @@ public class PipeItemsDaizuli extends Pipe<PipeTransportItems> {
 	private int solidIconIndex = PipeIconProvider.TYPE.PipeAllDaizuli_Solid.ordinal();
 	@TileNetworkData
 	private int color = EnumColor.BLACK.ordinal();
-	private PipeLogicIron logic = new PipeLogicIron(this) {
+	private final PipeLogicIron logic = new PipeLogicIron(this) {
 		@Override
 		protected boolean isValidConnectingTile(TileEntity tile) {
 			if (tile instanceof TileGenericPipe) {
-				Pipe otherPipe = ((TileGenericPipe) tile).pipe;
+				Pipe<?> otherPipe = ((TileGenericPipe) tile).pipe;
 				if (otherPipe instanceof PipeItemsWood)
 					return false;
 				if (otherPipe.transport instanceof PipeTransportItems)

@@ -38,7 +38,7 @@ public class PipeFluidsWood extends Pipe<PipeTransportFluids> implements IPowerR
 	protected int solidIconIndex = PipeIconProvider.TYPE.PipeAllWood_Solid.ordinal();
 	long lastMining = 0;
 	boolean lastPower = false;
-	private PipeLogicWood logic = new PipeLogicWood(this) {
+	private final PipeLogicWood logic = new PipeLogicWood(this) {
 		@Override
 		protected boolean isValidConnectingTile(TileEntity tile) {
 			if(tile instanceof IPipeTile)
