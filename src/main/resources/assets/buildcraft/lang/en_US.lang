@@ -158,6 +158,7 @@ item.PipeItemsSandstone=Sandstone Transport Pipe
 item.PipeFluidsSandstone=Sandstone Fluid Pipe
 item.Facade=Facade
 item.PipePlug=Pipe Plug
+item.PipeItemsClay=Clay Transport Pipe
 
 tab.machines=Buildcraft Machines
 tab.facades=Buildcraft Facades

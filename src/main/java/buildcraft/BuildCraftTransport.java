@@ -38,10 +38,13 @@ import buildcraft.transport.triggers.*;
 import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import dev.bagel.btb.BTBTags;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class BuildCraftTransport implements IBuildCraftModule {
 
@@ -275,7 +278,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 	@Override
 	public void postInit() {
 		ItemFacade.initialize();
-
+		BTBTags.init();
 		for (PipeContents kind : PipeContents.values()) {
 			triggerPipe[kind.ordinal()] = new TriggerPipeContents(kind);
 		}
@@ -343,8 +346,11 @@ public class BuildCraftTransport implements IBuildCraftModule {
 
 		BuildcraftRecipes.assemblyTable.addRecipe(1000, new ItemStack(plugItem, 8), BuildCraftCore.loc("structure_pipe"), new ItemStack(pipeStructureCobblestone));
 	}
+	public static List<ItemPipe> itemPipes = new ArrayList<>();
+	public static List<ItemPipe> fluidPipes = new ArrayList<>();
+	public static List<ItemPipe> energyPipes = new ArrayList<>();
 
-	public static Item buildPipe(int defaultID, Class<? extends Pipe> clas, String descr, Object... ingredients) {
+	public static Item buildPipe(int defaultID, Class<? extends Pipe<?>> clas, String descr, Object... ingredients) {
 		String name = Character.toLowerCase(clas.getSimpleName().charAt(0)) + clas.getSimpleName().substring(1);
 
 /*		Property prop = BuildCraftCore.mainConfiguration.getItem(name + ".id", defaultID);
@@ -376,6 +382,14 @@ public class BuildCraftTransport implements IBuildCraftModule {
 				uncraft.result = new ItemStack((Item) ingredients[1]);
 				pipeRecipes.add(uncraft);
 			}
+		}
+		if (name.contains("Power")) {
+			energyPipes.add(res);
+		}
+		else if (name.contains("Fluids")) {
+			fluidPipes.add(res);
+		} else if (name.contains("Items")) {
+			itemPipes.add(res);
 		}
 
 		return res;

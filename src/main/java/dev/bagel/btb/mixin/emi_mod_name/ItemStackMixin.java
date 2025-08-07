@@ -26,14 +26,14 @@ public class ItemStackMixin {
     private static String get(NBTBase nbt) {
         return switch (nbt.getId()) {
             case 0 -> nbt.getName();
-            case 1 -> nbt.getName() + ": " + ((NBTTagByte) nbt).data;
-            case 2 -> nbt.getName() + ": " + ((NBTTagShort) nbt).data;
-            case 3 -> nbt.getName() + ": " + ((NBTTagInt) nbt).data;
-            case 4 -> nbt.getName() + ": " + ((NBTTagLong) nbt).data;
-            case 5 -> nbt.getName() + ": " + ((NBTTagFloat) nbt).data;
-            case 6 -> nbt.getName() + ": " + ((NBTTagDouble) nbt).data;
-            case 7 -> nbt.getName() + ": " + Arrays.toString(((NBTTagByteArray) nbt).byteArray);
-            case 8 -> nbt.getName() + ": " + ((NBTTagString) nbt).data;
+            case 1 -> nbt.getName() + ":bt " + ((NBTTagByte) nbt).data;
+            case 2 -> nbt.getName() + ":s " + ((NBTTagShort) nbt).data;
+            case 3 -> nbt.getName() + ":i " + ((NBTTagInt) nbt).data;
+            case 4 -> nbt.getName() + ":l " + ((NBTTagLong) nbt).data;
+            case 5 -> nbt.getName() + ":f " + ((NBTTagFloat) nbt).data;
+            case 6 -> nbt.getName() + ":d " + ((NBTTagDouble) nbt).data;
+            case 7 -> nbt.getName() + ":ba " + Arrays.toString(((NBTTagByteArray) nbt).byteArray);
+            case 8 -> nbt.getName() + ":s " + ((NBTTagString) nbt).data;
             case 9 -> {
                 String str = "List " + nbt.getName() + ": { ";
                 for (int i = 0; i < ((NBTTagList) nbt).tagCount(); i++) {
@@ -42,8 +42,8 @@ public class ItemStackMixin {
                 }
                 yield str + " }";
             }
-            case 10 -> nbt.getName() + ": " + ((NBTTagCompound) nbt).getTags().stream().map(o -> get((NBTBase) o));
-            case 11 -> nbt.getName() + ": " + Arrays.toString(((NBTTagIntArray) nbt).intArray);
+            case 10 -> nbt.getName() + ":c " + ((NBTTagCompound) nbt).getTags().stream().map(o -> get((NBTBase) o));
+            case 11 -> nbt.getName() + ":ia " + Arrays.toString(((NBTTagIntArray) nbt).intArray);
             default -> throw new IllegalStateException("Unexpected value: " + nbt.getId());
         };
     }
