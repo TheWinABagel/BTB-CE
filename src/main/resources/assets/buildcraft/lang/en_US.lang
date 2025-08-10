@@ -228,6 +228,19 @@ tip.PipePowerWood=Power Input Pipe
 tip.PipePowerIron=Selectable Limiter Pipe
 tip.PipeStructureCobblestone=Support pipe
 
+#Gate Copier
+item.gateCopier=Gate Copier
+chat.gateCopier.clear=Gate information cleared.
+chat.gateCopier.gateCopied=Copied gate information to copier.
+chat.gateCopier.gatePasted=Pasted copied data to gate.
+chat.gateCopier.noGate=No gate found on this side!
+chat.gateCopier.noInformation=No gate information stored!
+chat.gateCopier.warning.actionParameters=§6Warning: Target has less action parameters!
+chat.gateCopier.warning.logic=§6Warning: Target has different logic type!
+chat.gateCopier.warning.load=§6Warning: Gate triggers/actions might be missing!
+chat.gateCopier.warning.slots=§6Warning: Target has less slots!
+chat.gateCopier.warning.triggerParameters=§6Warning: Target has less trigger parameters!
+
 #EMI
 emi.category.buildcraft.assembly_table=Assembly Table
 emi.category.buildcraft.refinery=Refinery

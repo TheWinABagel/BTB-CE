@@ -34,6 +34,7 @@ public class BuildcraftConfig {
     public static int pipeGateItemId;
     public static int pipeFacadeItemId;
     public static int pipePlugItemId;
+    public static int gateCopierItemId;
 
     //Factory
     public static int miningWellId;

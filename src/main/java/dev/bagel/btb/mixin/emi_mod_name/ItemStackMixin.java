@@ -23,8 +23,9 @@ public class ItemStackMixin {
         }
     }
 
-    private static String get(NBTBase nbt) {
-        return switch (nbt.getId()) {
+    private static String get(NBTBase nbt, int indentLevel) {
+        var spaces = " ".repeat(indentLevel + 1);
+        return "|" + spaces + switch (nbt.getId()) {
             case 0 -> nbt.getName();
             case 1 -> nbt.getName() + ":bt " + ((NBTTagByte) nbt).data;
             case 2 -> nbt.getName() + ":s " + ((NBTTagShort) nbt).data;
@@ -38,11 +39,11 @@ public class ItemStackMixin {
                 String str = "List " + nbt.getName() + ": { ";
                 for (int i = 0; i < ((NBTTagList) nbt).tagCount(); i++) {
                     if(i != 0) str +=", ";
-                    str += get(((NBTTagList) nbt).tagAt(i));
+                    str += get(((NBTTagList) nbt).tagAt(i), indentLevel + 1);
                 }
                 yield str + " }";
             }
-            case 10 -> nbt.getName() + ":c " + ((NBTTagCompound) nbt).getTags().stream().map(o -> get((NBTBase) o));
+            case 10 -> nbt.getName() + ":c " + ((NBTTagCompound) nbt).getTags().stream().map(o -> get((NBTBase) o,indentLevel + 1)).toList();
             case 11 -> nbt.getName() + ":ia " + Arrays.toString(((NBTTagIntArray) nbt).intArray);
             default -> throw new IllegalStateException("Unexpected value: " + nbt.getId());
         };
@@ -56,8 +57,9 @@ public class ItemStackMixin {
             var tag = stack.getTagCompound();
             ret.add("");
             ret.add("Tags: ");
-            ((Collection<NBTBase>) tag.getTags()).stream().map(nbt -> get(nbt)).toList().forEach(str ->{
-                ret.add(str);
+            ((Collection<NBTBase>) tag.getTags()).stream().map(nbt -> get(nbt, 0)).toList().forEach(str -> {
+//                ret.add(str);
+                ret.addAll(Arrays.stream(str.split("\\|")).filter(s -> !s.isBlank()).toList());
             });
 //            ret.add(((Collection<NBTBase>) tag.getTags()).stream().map(nbt -> get(nbt)).toList().toString());
 //            ret.add(stack.getTagCompound().toString());

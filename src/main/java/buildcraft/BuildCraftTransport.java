@@ -86,6 +86,8 @@ public class BuildCraftTransport implements IBuildCraftModule {
 	public static Item pipePowerDiamond;
 	public static ItemFacade facadeItem;
 	public static Item plugItem;
+	public static Item gateCopier;
+
 	public static BlockFilteredBuffer filteredBufferBlock;
 	// public static Item pipeItemsStipes;
 	public static Item pipeStructureCobblestone;
@@ -155,6 +157,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 		BuildcraftConfig.pipeGateItemId = BuildcraftConfig.getInt("PipeGateItemId");
 		BuildcraftConfig.pipeFacadeItemId = BuildcraftConfig.getInt("PipeFacadeItemId");
 		BuildcraftConfig.pipePlugItemId = BuildcraftConfig.getInt("PipePlugItemId");
+		BuildcraftConfig.gateCopierItemId = BuildcraftConfig.getInt("GateCopierItemId");
 
 		groupItemsTrigger = BuildcraftConfig.getInt("GroupItemsTriggerAmount");
 
@@ -244,6 +247,9 @@ public class BuildCraftTransport implements IBuildCraftModule {
 			plugItem = new ItemPlug(BuildcraftConfig.pipePlugItemId);
 			plugItem.setUnlocalizedName("pipePlug");
 			CoreProxy.getProxy().registerItem(plugItem);
+
+			gateCopier = new ItemGateCopier(BuildcraftConfig.gateCopierItemId);
+			CoreProxy.getProxy().registerItem(facadeItem);
 
 		}
 		catch (Throwable e){
