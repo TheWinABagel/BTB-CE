@@ -40,7 +40,7 @@ import net.minecraftforge.common.ForgeDirection;
 
 public final class Gate {
 
-	public final Pipe pipe;
+	public final Pipe<?> pipe;
 	public final GateMaterial material;
 	public final GateLogic logic;
 	public final BiMap<IGateExpansion, GateExpansionController> expansions = HashBiMap.create();

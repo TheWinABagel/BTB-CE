@@ -80,7 +80,7 @@ public class ItemGate extends ItemBuildCraft {
 				if (ex.data.equals(expansion.getUniqueIdentifier()))
 					return true;
 			}
-		} catch (RuntimeException error) {
+		} catch (RuntimeException ignored) {
 		}
 		return false;
 	}
@@ -98,7 +98,7 @@ public class ItemGate extends ItemBuildCraft {
 				if (ex != null)
 					expansions.add(ex);
 			}
-		} catch (RuntimeException error) {
+		} catch (RuntimeException ignored) {
 		}
 		return expansions;
 	}

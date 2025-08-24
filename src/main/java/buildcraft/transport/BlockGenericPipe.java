@@ -34,7 +34,7 @@ import java.util.*;
 
 public class BlockGenericPipe extends BlockBuildCraft implements CustomDestroyEffectsBlock {
 
-	static enum Part {
+	public enum Part {
 
 		Pipe,
 		Gate,
@@ -42,7 +42,7 @@ public class BlockGenericPipe extends BlockBuildCraft implements CustomDestroyEf
 		Plug
 	}
 
-	static class RaytraceResult {
+	public static class RaytraceResult {
 
 		RaytraceResult(Part hitPart, MovingObjectPosition movingObjectPosition, AxisAlignedBB boundingBox, ForgeDirection side) {
 			this.hitPart = hitPart;
@@ -245,7 +245,7 @@ public class BlockGenericPipe extends BlockBuildCraft implements CustomDestroyEf
 		}
 	}
 
-	private RaytraceResult doRayTrace(World world, int x, int y, int z, EntityPlayer player) {
+	public RaytraceResult doRayTrace(World world, int x, int y, int z, EntityPlayer player) {
 		double reachDistance = 5;
 
 /*		if (player instanceof EntityPlayerMP) {
