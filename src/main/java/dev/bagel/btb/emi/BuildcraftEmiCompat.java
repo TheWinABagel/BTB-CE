@@ -15,9 +15,7 @@ import buildcraft.energy.gui.GuiStoneEngine;
 import buildcraft.silicon.gui.GuiAdvancedCraftingTable;
 import buildcraft.silicon.gui.GuiAssemblyTable;
 import buildcraft.silicon.gui.GuiIntegrationTable;
-import buildcraft.transport.BlockGenericPipe;
 import buildcraft.transport.ItemFacade;
-import buildcraft.transport.gates.ItemGate;
 import buildcraft.transport.gui.GuiDiamondPipe;
 import buildcraft.transport.gui.GuiEmeraldPipe;
 import buildcraft.transport.gui.GuiEmzuliPipe;
@@ -37,7 +35,6 @@ import emi.dev.emi.emi.data.EmiData;
 import emi.dev.emi.emi.data.EmiRemoveFromIndex;
 import emi.dev.emi.emi.data.IndexStackData;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTBase;
 import net.minecraft.src.NBTTagCompound;
 
 import java.util.*;
@@ -120,10 +117,10 @@ public class BuildcraftEmiCompat implements EmiPlugin {
             EmiUtils.addRecipeSafe(reg, () -> new IntegrationTableEMIRecipe(recipe));
         }
 
-        EmiData.addAliases(BTBTags.itemPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Item Pipe");
-        EmiData.addAliases(BTBTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Fluid Pipe");
-        EmiData.addAliases(BTBTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Liquid Pipe");
-        EmiData.addAliases(BTBTags.energyPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Energy Pipe");
+        EmiData.addAliases(BuildcraftTags.itemPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Item Pipe");
+        EmiData.addAliases(BuildcraftTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Fluid Pipe");
+        EmiData.addAliases(BuildcraftTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Liquid Pipe");
+        EmiData.addAliases(BuildcraftTags.energyPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Energy Pipe");
 
     }
 

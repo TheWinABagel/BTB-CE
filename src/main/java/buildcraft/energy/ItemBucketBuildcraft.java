@@ -23,6 +23,11 @@ public class ItemBucketBuildcraft extends ItemBucket implements BCItem {
 		setContainerItem(Item.bucketEmpty);
 	}
 
+    @Override
+    public String getModId() {
+        return "buildcraft";
+    }
+
 	@Override
 	public String getItemDisplayName(ItemStack itemstack) {
 		return StringUtils.localize(getUnlocalizedName(itemstack));

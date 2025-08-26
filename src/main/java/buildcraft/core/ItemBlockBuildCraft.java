@@ -12,6 +12,11 @@ public class ItemBlockBuildCraft extends ItemBlock implements BCItem {
 		this.setFull3D();
 	}
 
+    @Override
+    public String getModId() {
+        return "buildcraft";
+    }
+
 	@Override
 	public int getMetadata(int i) {
 		return i;

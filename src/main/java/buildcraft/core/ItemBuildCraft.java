@@ -49,7 +49,12 @@ public class ItemBuildCraft extends Item implements BCItem {
 		return this;
 	}
 
-	public boolean shouldPassSneakingClickToBlock(World par2World, int par4, int par5, int par6) {
+    @Override
+    public String getModId() {
+        return "buildcraft";
+    }
+
+    public boolean shouldPassSneakingClickToBlock(World par2World, int par4, int par5, int par6) {
 		return passSneakClick;
 	}
 
