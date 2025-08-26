@@ -1,5 +1,7 @@
 package buildcraft.silicon;
 
+import btw.world.util.data.DataEntry;
+import btw.world.util.data.DataStorage;
 import buildcraft.api.power.ILaserTarget;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.gates.IAction;
@@ -133,6 +135,13 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	}
 
 	private final class InternalPlayer extends EntityPlayer {
+        @Override
+        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
+            return null;
+        }
+
+        @Override
+        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {}
 
 		public InternalPlayer() {
 			super(TileAdvancedCraftingTable.this.worldObj, "[BuildCraft]");

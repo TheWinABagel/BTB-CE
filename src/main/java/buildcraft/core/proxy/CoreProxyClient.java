@@ -9,6 +9,8 @@
 
 package buildcraft.core.proxy;
 
+import btw.world.util.data.DataEntry;
+import btw.world.util.data.DataStorage;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
@@ -123,7 +125,17 @@ public class CoreProxyClient extends CoreProxy {
 
 	private EntityPlayer createNewPlayer(World world) {
 		EntityPlayer player = new EntityPlayer(world, "[BuildCraft]") {
-			@Override
+            private final DataStorage dataStorage = new DataStorage();
+            @Override
+            public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
+                return dataStorage.getData(var1);
+            }
+
+            @Override
+            public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
+                dataStorage.setData(var1, var2);
+            }
+            @Override
 			public void sendChatToPlayer(ChatMessageComponent var1) {
 			}
 

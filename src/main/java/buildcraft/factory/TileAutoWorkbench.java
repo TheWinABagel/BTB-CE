@@ -7,6 +7,8 @@
  */
 package buildcraft.factory;
 
+import btw.world.util.data.DataEntry;
+import btw.world.util.data.DataStorage;
 import buildcraft.core.TileBuildCraft;
 import buildcraft.core.inventory.InvUtils;
 import buildcraft.core.inventory.InventoryConcatenator;
@@ -60,8 +62,16 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 	}
 
 	private final class InternalPlayer extends EntityPlayer {
+        @Override
+        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
+            return null;
+        }
 
-		public InternalPlayer() {
+        @Override
+        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {}
+
+
+        public InternalPlayer() {
 			super(TileAutoWorkbench.this.worldObj, "[BuildCraft]");
 			posX = TileAutoWorkbench.this.xCoord;
 			posY = TileAutoWorkbench.this.yCoord + 1;
