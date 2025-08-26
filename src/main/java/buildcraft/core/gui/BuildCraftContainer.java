@@ -147,7 +147,7 @@ public abstract class BuildCraftContainer extends Container {
 		}
 		ItemStack phantomStack = stackHeld.copy();
 		phantomStack.stackSize = stackSize;
-		System.out.println("stack is " +phantomStack);
+//		System.out.println("stack is " +phantomStack);
 		slot.putStack(phantomStack);
 	}
 

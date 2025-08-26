@@ -73,8 +73,7 @@ public class ItemGateCopier extends ItemBuildCraft {
 //                    pluggable = ((TileGenericPipe) tile).getPipePluggable(rayTraceResult.sideHit);
                 }
             } else {
-                System.out.println("Tile is not a pipe somehow");
-//                pluggable = ((IPipeTile) tile).getPipePluggable(ForgeDirection.getOrientation(side));
+                System.err.println("Tile is not a pipe somehow");
             }
         }
 

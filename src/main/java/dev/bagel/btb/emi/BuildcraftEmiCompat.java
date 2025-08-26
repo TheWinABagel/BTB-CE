@@ -137,7 +137,6 @@ public class BuildcraftEmiCompat implements EmiPlugin {
         reg.setDefaultComparison(EmiStack.of(BuildCraftTransport.pipeGate), gateNbtCompare);
         List<ItemStack> gates = new ArrayList<>();
         BuildCraftTransport.pipeGate.getSubItems(0, null, gates);
-        System.out.println("Gates are currently "+gates);
         EmiStack.of(gates.remove(0));
 
         gates.forEach(itemStack -> {

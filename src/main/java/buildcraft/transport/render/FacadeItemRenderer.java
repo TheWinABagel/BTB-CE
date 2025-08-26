@@ -105,7 +105,7 @@ public class FacadeItemRenderer implements IItemRenderer {
 		((BlockAccessor) block).getFixedBlockBounds().setBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
 		catch (Throwable error) {
-			System.out.println("FUCK " + error + block.getUnlocalizedName());
+            // Huh
 		}
 	}
 

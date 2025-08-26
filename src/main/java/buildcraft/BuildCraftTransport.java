@@ -253,8 +253,8 @@ public class BuildCraftTransport implements IBuildCraftModule {
 
 		}
 		catch (Throwable e){
+            System.err.println("Something broke");
 			e.printStackTrace();
-			System.out.println("idk what happened but something broke");
 		}
 
 		TransportProxy.getProxy().registerTileEntities();

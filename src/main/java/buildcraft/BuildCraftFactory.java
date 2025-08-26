@@ -152,7 +152,6 @@ public class BuildCraftFactory implements IBuildCraftModule {
 		if (BuildcraftConfig.tankId > 0) {
 			tankBlock = new BlockTank(BuildcraftConfig.tankId);
 			tankBlock.setUnlocalizedName("tankBlock");
-			System.out.println("tank " + tankBlock);
 		}
 		if (BuildcraftConfig.pumpId > 0) {
 			pumpBlock = new BlockPump(BuildcraftConfig.pumpId);

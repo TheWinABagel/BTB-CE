@@ -122,7 +122,6 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateActions(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-		System.out.println("GATE ACTION ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 
@@ -136,7 +135,6 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateTriggers(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-		System.out.println("GATE TRIGGERS ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 
@@ -150,7 +148,6 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 	 */
 	private void onGateSelection(EntityPlayer player, PacketUpdate packet) {
 		Container container = player.openContainer;
-		System.out.println("GATE SELECTION ");
 		if (!(container instanceof ContainerGateInterface))
 			return;
 
@@ -166,18 +163,15 @@ public class PacketHandlerTransport implements BuildcraftCustomPacketHandler {
 		World world = player.worldObj;
 
 		if (!world.blockExists(packet.posX, packet.posY, packet.posZ)) {
-			System.out.println("block does not exist at " + packet.posX + ", " + packet.posY + ", " + packet.posZ);
 			return;
 		}
 
 		TileEntity entity = world.getBlockTileEntity(packet.posX, packet.posY, packet.posZ);
 		if (!(entity instanceof TileGenericPipe pipe)) {
-			System.out.println("tile entity not instance of pipe " + entity);
 			return;
 		}
 
         if (pipe.pipe == null) {
-			System.out.println("pipe.pipe is null");
 			return;
 		}
 

@@ -55,7 +55,6 @@ public class BuildCraftAddon extends BTWAddon {
     }
 
     public static void registerBCPacketHandler(String channel, BuildcraftCustomPacketHandler handler) {
-        System.out.println("CHANNEL " + channel);
         INSTANCE.registerPacketHandler(channel, handler);
         BuildcraftCustomPacketHandler.ID_MAP.add(handler);
     }

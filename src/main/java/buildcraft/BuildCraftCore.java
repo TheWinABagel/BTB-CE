@@ -197,7 +197,6 @@ public class BuildCraftCore implements IBuildCraftModule {
 			box.xMax = data.readInt();
 			box.yMax = data.readInt();
 			box.zMax = data.readInt();
-			System.out.println("Creating robot with box " + box + " on world " + world);
 			return new EntityRobot(world, box);
 		});
 
