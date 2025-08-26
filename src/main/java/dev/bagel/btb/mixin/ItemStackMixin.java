@@ -1,13 +1,11 @@
-package dev.bagel.btb.mixin.emi_mod_name;
+package dev.bagel.btb.mixin;
 
-import buildcraft.core.utils.BCItem;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,13 +14,7 @@ import java.util.List;
 @Mixin(ItemStack.class)
 public class ItemStackMixin {
 
-    @ModifyArgs(method = "getTooltip", at = @At(value = "INVOKE", target = "Lemi/dev/emi/emi/EmiUtil;getModName(Ljava/lang/String;)Ljava/lang/String;", remap = false))
-    private void btb$makeBcItemsHaveName(Args args) {
-        if (((ItemStack)(Object) this).getItem() instanceof BCItem) {
-            args.set(0, "buildcraft");
-        }
-    }
-
+    @Unique
     private static String get(NBTBase nbt, int indentLevel) {
         var spaces = " ".repeat(indentLevel + 1);
         return "|" + spaces + switch (nbt.getId()) {

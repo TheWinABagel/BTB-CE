@@ -63,7 +63,8 @@ public class AssemblyTableEMIRecipe implements EmiRecipe {
     @Override
     public void addWidgets(WidgetHolder widgets) {
         widgets.addSlot(output, 107, 14).recipeContext(this);
-        widgets.addFillingArrow(77, 15, (int) recipe.getEnergyCost() * 3).tooltipText(List.of(Text.literal("todo replace, cost: " + recipe.getEnergyCost())));
+        widgets.addFillingArrow(77, 15, (int) recipe.getEnergyCost() * 3)
+                .tooltipText(List.of(Text.translatable("emi.tooltip.cost.energy", ((int) recipe.getEnergyCost()))));
         for (int i = 0; i < Math.max(this.inputs.size(), 8); ++i) {
             if (i < this.inputs.size()) {
                 widgets.addSlot(this.inputs.get(i), i % 4 * 18, 4 + i / 4 * 18);

@@ -245,3 +245,5 @@ chat.gateCopier.warning.triggerParameters=§6Warning: Target has less trigger pa
 emi.category.buildcraft.assembly_table=Assembly Table
 emi.category.buildcraft.refinery=Refinery
 emi.category.buildcraft.integration_table=Integration Table
+
+emi.tooltip.cost.energy=Costs: %d

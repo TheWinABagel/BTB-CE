@@ -10,6 +10,7 @@
     "IntegratedServerMixin",
     "ItemBucketMixin",
     "ItemInWorldManagerMixin",
+    "ItemStackMixin",
     "MinecraftServerMixin",
     "PlayerControllerMPMixin",
     "ScrewPumpBlockMixin",
