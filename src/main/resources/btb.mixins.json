@@ -13,7 +13,6 @@
     "MinecraftServerMixin",
     "PlayerControllerMPMixin",
     "ScrewPumpBlockMixin",
-    "test",
     "WorldChunkManagerMixin",
     "WorldMixin",
     "accessors.AddonHandlerAccessor",

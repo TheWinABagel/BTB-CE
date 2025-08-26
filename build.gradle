@@ -111,7 +111,7 @@ jar {
 	from sourceSets.main.output.resourcesDir
 	from sourceSets.main.output.classesDirs
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${archivesBaseName}"}
 	}
 }
 

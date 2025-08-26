@@ -38,7 +38,7 @@ import buildcraft.transport.triggers.*;
 import buildcraft.transport.triggers.TriggerClockTimer.Time;
 import buildcraft.transport.triggers.TriggerPipeContents.PipeContents;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import dev.bagel.btb.BTBTags;
+import dev.bagel.btb.BuildcraftTags;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -284,7 +284,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 	@Override
 	public void postInit() {
 		ItemFacade.initialize();
-		BTBTags.init();
+		BuildcraftTags.init();
 		for (PipeContents kind : PipeContents.values()) {
 			triggerPipe[kind.ordinal()] = new TriggerPipeContents(kind);
 		}

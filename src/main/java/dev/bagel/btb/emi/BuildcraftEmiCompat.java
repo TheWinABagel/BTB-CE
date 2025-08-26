@@ -22,7 +22,7 @@ import buildcraft.transport.gui.GuiDiamondPipe;
 import buildcraft.transport.gui.GuiEmeraldPipe;
 import buildcraft.transport.gui.GuiEmzuliPipe;
 import buildcraft.transport.gui.GuiFilteredBuffer;
-import dev.bagel.btb.BTBTags;
+import dev.bagel.btb.BuildcraftTags;
 import dev.bagel.btb.emi.fluid.FluidEmiStack;
 import dev.bagel.btb.emi.recipes.AssemblyTableEMIRecipe;
 import dev.bagel.btb.emi.recipes.IntegrationTableEMIRecipe;

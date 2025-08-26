@@ -3,12 +3,11 @@ package dev.bagel.btb;
 import btw.item.tag.Tag;
 import buildcraft.BuildCraftTransport;
 import buildcraft.transport.ItemPipe;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.ResourceLocation;
 
-public class BTBTags {
+public class BuildcraftTags {
     static {
-        System.out.println("Loaded BTBTags");
+        System.out.println("Loaded Buildcraft Tags");
     }
     public static void init(){}
 
