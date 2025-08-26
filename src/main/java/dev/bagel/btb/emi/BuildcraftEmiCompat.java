@@ -117,10 +117,9 @@ public class BuildcraftEmiCompat implements EmiPlugin {
             EmiUtils.addRecipeSafe(reg, () -> new IntegrationTableEMIRecipe(recipe));
         }
 
-        EmiData.addAliases(BuildcraftTags.itemPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Item Pipe");
-        EmiData.addAliases(BuildcraftTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Fluid Pipe");
-        EmiData.addAliases(BuildcraftTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Liquid Pipe");
-        EmiData.addAliases(BuildcraftTags.energyPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "Energy Pipe");
+        EmiData.addAliases(BuildcraftTags.itemPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "alias.emi.item");
+        EmiData.addAliases(BuildcraftTags.fluidPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), List.of("alias.emi.fluid", "alias.emi.liquid"));
+        EmiData.addAliases(BuildcraftTags.energyPipes.getItems().stream().map(stack -> (EmiIngredient) EmiStack.of(stack)).toList(), "alias.emi.energy");
 
     }
 

@@ -247,3 +247,13 @@ emi.category.buildcraft.refinery=Refinery
 emi.category.buildcraft.integration_table=Integration Table
 
 emi.tooltip.cost.energy=Costs: %d
+
+alias.emi.item=Item Pipe
+alias.emi.liquid=Liquid Pipe
+alias.emi.fluid=Fluid Pipe
+alias.emi.energy=Energy Pipe
+alias.emi.generator=Energy Generator
+
+tag.buildcraft.fluid_pipes=Fluid Pipes
+tag.buildcraft.energy_pipes=Energy Pipes
+tag.buildcraft.item_pipes=Item Pipes
