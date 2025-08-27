@@ -28,19 +28,8 @@ import buildcraft.core.utils.Utils;
 import com.google.common.collect.Lists;
 import java.util.EnumSet;
 import java.util.List;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Container;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ISidedInventory;
-import net.minecraft.src.InventoryCraftResult;
-import net.minecraft.src.InventoryCrafting;
-import net.minecraft.src.SlotCrafting;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.IRecipe;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.ChatMessageComponent;
-import net.minecraft.src.ChunkCoordinates;
+
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 import static net.minecraftforge.common.ForgeDirection.DOWN;
 import static net.minecraftforge.common.ForgeDirection.EAST;
@@ -135,14 +124,21 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	}
 
 	private final class InternalPlayer extends EntityPlayer {
+        private final DataStorage dataStorage = new DataStorage();
+
         @Override
-        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
-            return null;
+        public void triggerAchievement(StatBase par1StatBase) {
         }
 
         @Override
-        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {}
+        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
+            return dataStorage.getData(var1);
+        }
 
+        @Override
+        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
+            dataStorage.setData(var1, var2);
+        }
 		public InternalPlayer() {
 			super(TileAdvancedCraftingTable.this.worldObj, "[BuildCraft]");
 			posX = TileAdvancedCraftingTable.this.xCoord;

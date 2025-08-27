@@ -30,6 +30,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import dev.bagel.btb.mixin.accessors.EntityListAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.*;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -176,29 +177,9 @@ public class BuildCraftCore implements IBuildCraftModule {
 
 		initPackets();
 
-		CustomEntityPacketHandler.entryMap.put(CoreConstants.LASER_PACKET_ID, (world, dataStream, packet) -> {
-			short type = dataStream.readShort();
-			Position head = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
-			Position tail = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
-
-			return switch (type) {
-				case 0 -> new EntityEnergyLaser(world, head, tail);
-				case 1 -> new EntityPowerLaser(world, head, tail);
-                default -> throw new IllegalStateException("Unexpected value: " + type);
-            };
-		});
-
-		CustomEntityPacketHandler.entryMap.put(CoreConstants.ROBOT_PACKET_ID, (world, data, packet) -> {
-
-			Box box = new Box();
-			box.xMin = data.readInt();
-			box.yMin = data.readInt();
-			box.zMin = data.readInt();
-			box.xMax = data.readInt();
-			box.yMax = data.readInt();
-			box.zMax = data.readInt();
-			return new EntityRobot(world, box);
-		});
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+            initClientEntityPackets();
+        }
 
 		EntityList.addMapping(EntityRobot.class, "bcRobot", EntityIds.ROBOT);
 		EntityList.addMapping(EntityPowerLaser.class, "bcLaser", EntityIds.LASER);
@@ -225,6 +206,34 @@ public class BuildCraftCore implements IBuildCraftModule {
 			}));
 		}
 	}
+
+    @Environment(EnvType.CLIENT)
+    public void initClientEntityPackets() {
+
+        CustomEntityPacketHandler.entryMap.put(CoreConstants.LASER_PACKET_ID, (world, dataStream, packet) -> {
+            short type = dataStream.readShort();
+            Position head = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+            Position tail = new Position(dataStream.readDouble(), dataStream.readDouble(), dataStream.readDouble());
+
+            return switch (type) {
+                case 0 -> new EntityEnergyLaser(world, head, tail);
+                case 1 -> new EntityPowerLaser(world, head, tail);
+                default -> throw new IllegalStateException("Unexpected value: " + type);
+            };
+        });
+
+        CustomEntityPacketHandler.entryMap.put(CoreConstants.ROBOT_PACKET_ID, (world, data, packet) -> {
+
+            Box box = new Box();
+            box.xMin = data.readInt();
+            box.yMin = data.readInt();
+            box.zMin = data.readInt();
+            box.xMax = data.readInt();
+            box.yMax = data.readInt();
+            box.zMax = data.readInt();
+            return new EntityRobot(world, box);
+        });
+    }
 
 	@Override
 	public void initRecipes() {

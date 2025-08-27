@@ -19,18 +19,7 @@ import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.CraftingHelper;
 import buildcraft.core.utils.Utils;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Container;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ISidedInventory;
-import net.minecraft.src.InventoryCraftResult;
-import net.minecraft.src.InventoryCrafting;
-import net.minecraft.src.SlotCrafting;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.IRecipe;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.ChatMessageComponent;
-import net.minecraft.src.ChunkCoordinates;
+import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
 
 public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory {
@@ -62,14 +51,21 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 	}
 
 	private final class InternalPlayer extends EntityPlayer {
+        private final DataStorage dataStorage = new DataStorage();
+
         @Override
-        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
-            return null;
+        public void triggerAchievement(StatBase par1StatBase) {
         }
 
         @Override
-        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {}
+        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
+            return dataStorage.getData(var1);
+        }
 
+        @Override
+        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
+            dataStorage.setData(var1, var2);
+        }
 
         public InternalPlayer() {
 			super(TileAutoWorkbench.this.worldObj, "[BuildCraft]");
