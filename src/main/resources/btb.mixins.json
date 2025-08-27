@@ -20,7 +20,6 @@
     "accessors.ChunkTrackerAccessor",
     "accessors.ChunkTrackerEntryAccessor",
     "accessors.EntityListAccessor",
-    "accessors.EntityPlayerAccessor",
     "accessors.EntityPlayerMPAccessor",
     "accessors.ItemStackAccessor",
     "accessors.NBTTagCompoundAccessor",

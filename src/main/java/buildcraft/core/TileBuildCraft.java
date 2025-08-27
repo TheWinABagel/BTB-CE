@@ -7,7 +7,6 @@
  */
 package buildcraft.core;
 
-import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
 import buildcraft.api.power.IPowerReceptor;
 import buildcraft.core.network.ISynchronizedTile;
 import buildcraft.core.network.PacketPayload;
@@ -81,7 +80,7 @@ public abstract class TileBuildCraft extends TileEntity implements ISynchronized
 
 	public void onBlockPlacedBy(EntityLivingBase entity, ItemStack stack) {
 		if (entity instanceof EntityPlayer player)
-			owner = ((EntityPlayerAccessor) player).getUsername();
+			owner = player.username;
 	}
 
 	public void destroy() {

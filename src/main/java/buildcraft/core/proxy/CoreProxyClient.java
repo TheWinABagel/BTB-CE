@@ -120,7 +120,7 @@ public class CoreProxyClient extends CoreProxy {
 	/* BUILDCRAFT PLAYER */
 	@Override
 	public String playerName() {
-		return ((EntityPlayerAccessor) Minecraft.getMinecraft().thePlayer).getUsername();
+		return Minecraft.getMinecraft().thePlayer.username;
 	}
 
 	private EntityPlayer createNewPlayer(World world) {
