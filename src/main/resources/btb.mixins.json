@@ -7,7 +7,6 @@
     "BlockMixin",
     "ChunkProviderGenerateMixin",
     "EntityPlayerMixin",
-    "IntegratedServerMixin",
     "ItemBucketMixin",
     "ItemInWorldManagerMixin",
     "ItemStackMixin",
