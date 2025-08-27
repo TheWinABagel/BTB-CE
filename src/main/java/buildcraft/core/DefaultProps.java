@@ -52,6 +52,7 @@ public class DefaultProps {
 	public static int GATE_AUTARCHIC_ID = 3140;
 	public static int PIPE_FACADE_ID = 3141;
 	public static int PIPE_PLUG_ID = 3142;
+    public static int GATE_COPIER_ID = 3143;
 
 	public static int PIPE_ITEMS_WOOD_ID = 3160;
 	public static int PIPE_ITEMS_COBBLESTONE_ID = 3161;

@@ -143,7 +143,7 @@ public class BuildCraftTransport implements IBuildCraftModule {
 		addon.registerProp("PipeGateItemId", String.valueOf(DefaultProps.GATE_ID));
 		addon.registerProp("PipeFacadeItemId", String.valueOf(DefaultProps.PIPE_FACADE_ID));
 		addon.registerProp("PipePlugItemId", String.valueOf(DefaultProps.PIPE_PLUG_ID));
-
+        addon.registerProp("GateCopierItemId", String.valueOf(DefaultProps.GATE_COPIER_ID));
 	}
 
 	@Override
