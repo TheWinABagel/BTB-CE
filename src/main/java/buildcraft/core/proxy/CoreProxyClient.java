@@ -9,8 +9,6 @@
 
 package buildcraft.core.proxy;
 
-import btw.world.util.data.DataEntry;
-import btw.world.util.data.DataStorage;
 import buildcraft.BuildCraftCore;
 import buildcraft.api.core.LaserKind;
 import buildcraft.core.EntityBlock;
@@ -18,9 +16,9 @@ import buildcraft.core.EntityEnergyLaser;
 import buildcraft.core.EntityPowerLaser;
 import buildcraft.core.EntityRobot;
 import buildcraft.core.render.*;
+import buildcraft.core.utils.FakePlayer;
 import buildcraft.transport.render.TileEntityPickupFX;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import dev.bagel.btb.mixin.accessors.EntityPlayerAccessor;
 import net.minecraft.src.*;
 
 import java.util.List;
@@ -124,32 +122,7 @@ public class CoreProxyClient extends CoreProxy {
 	}
 
 	private EntityPlayer createNewPlayer(World world) {
-		EntityPlayer player = new EntityPlayer(world, "[BuildCraft]") {
-            private final DataStorage dataStorage = new DataStorage();
-            @Override
-            public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
-                return dataStorage.getData(var1);
-            }
-
-            @Override
-            public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
-                dataStorage.setData(var1, var2);
-            }
-            @Override
-			public void sendChatToPlayer(ChatMessageComponent var1) {
-			}
-
-			@Override
-			public boolean canCommandSenderUseCommand(int var1, String var2) {
-				return false;
-			}
-
-			@Override
-			public ChunkCoordinates getPlayerCoordinates() {
-				return null;
-			}
-		};
-		return player;
+		return new FakePlayer(world);
 	}
 
 	@Override

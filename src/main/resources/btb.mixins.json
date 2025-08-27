@@ -4,11 +4,13 @@
   "package": "dev.bagel.btb.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AchievementEventDispatcherMixin",
     "BlockMixin",
     "ChunkProviderGenerateMixin",
     "EntityPlayerMixin",
     "ItemBucketMixin",
     "ItemInWorldManagerMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "MinecraftServerMixin",
     "PlayerControllerMPMixin",

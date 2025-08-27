@@ -7,8 +7,6 @@
  */
 package buildcraft.factory;
 
-import btw.world.util.data.DataEntry;
-import btw.world.util.data.DataStorage;
 import buildcraft.core.TileBuildCraft;
 import buildcraft.core.inventory.InvUtils;
 import buildcraft.core.inventory.InventoryConcatenator;
@@ -18,6 +16,7 @@ import buildcraft.core.inventory.SimpleInventory;
 import buildcraft.core.inventory.StackHelper;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.utils.CraftingHelper;
+import buildcraft.core.utils.FakePlayer;
 import buildcraft.core.utils.Utils;
 import net.minecraft.src.*;
 import net.minecraftforge.common.ForgeDirection;
@@ -38,7 +37,7 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 	public int progress;
 	private int update = Utils.RANDOM.nextInt();
 
-	private class LocalInventoryCrafting extends InventoryCrafting {
+	private static class LocalInventoryCrafting extends InventoryCrafting {
 
 		public LocalInventoryCrafting() {
 			super(new Container() {
@@ -47,45 +46,6 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 					return false;
 				}
 			}, 3, 3);
-		}
-	}
-
-	private final class InternalPlayer extends EntityPlayer {
-        private final DataStorage dataStorage = new DataStorage();
-
-        @Override
-        public void triggerAchievement(StatBase par1StatBase) {
-        }
-
-        @Override
-        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
-            return dataStorage.getData(var1);
-        }
-
-        @Override
-        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
-            dataStorage.setData(var1, var2);
-        }
-
-        public InternalPlayer() {
-			super(TileAutoWorkbench.this.worldObj, "[BuildCraft]");
-			posX = TileAutoWorkbench.this.xCoord;
-			posY = TileAutoWorkbench.this.yCoord + 1;
-			posZ = TileAutoWorkbench.this.zCoord;
-		}
-
-		@Override
-		public void sendChatToPlayer(ChatMessageComponent var1) {
-		}
-
-		@Override
-		public boolean canCommandSenderUseCommand(int var1, String var2) {
-			return false;
-		}
-
-		@Override
-		public ChunkCoordinates getPlayerCoordinates() {
-			return null;
 		}
 	}
 
@@ -191,7 +151,7 @@ public class TileAutoWorkbench extends TileBuildCraft implements ISidedInventory
 		balanceSlots();
 
 		if (craftSlot == null) {
-			internalPlayer = new InternalPlayer();
+			internalPlayer = new FakePlayer(worldObj, xCoord, yCoord + 1, zCoord);
 			craftSlot = new SlotCrafting(internalPlayer, craftMatrix, craftResult, 0, 0, 0);
 		}
 		if (resultInv.getStackInSlot(SLOT_RESULT) != null) {

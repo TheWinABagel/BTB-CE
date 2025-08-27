@@ -23,6 +23,7 @@ import buildcraft.core.network.PacketSlotChange;
 import buildcraft.core.proxy.CoreProxy;
 import buildcraft.core.triggers.ActionMachineControl;
 import buildcraft.core.utils.CraftingHelper;
+import buildcraft.core.utils.FakePlayer;
 import buildcraft.core.utils.StringUtils;
 import buildcraft.core.utils.Utils;
 import com.google.common.collect.Lists;
@@ -123,43 +124,6 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 		}
 	}
 
-	private final class InternalPlayer extends EntityPlayer {
-        private final DataStorage dataStorage = new DataStorage();
-
-        @Override
-        public void triggerAchievement(StatBase par1StatBase) {
-        }
-
-        @Override
-        public <T> T getData(DataEntry.PlayerDataEntry<T> var1) {
-            return dataStorage.getData(var1);
-        }
-
-        @Override
-        public <T> void setData(DataEntry.PlayerDataEntry<T> var1, T var2) {
-            dataStorage.setData(var1, var2);
-        }
-		public InternalPlayer() {
-			super(TileAdvancedCraftingTable.this.worldObj, "[BuildCraft]");
-			posX = TileAdvancedCraftingTable.this.xCoord;
-			posY = TileAdvancedCraftingTable.this.yCoord + 1;
-			posZ = TileAdvancedCraftingTable.this.zCoord;
-		}
-
-		@Override
-		public void sendChatToPlayer(ChatMessageComponent var1) {
-		}
-
-		@Override
-		public boolean canCommandSenderUseCommand(int var1, String var2) {
-			return false;
-		}
-
-		@Override
-		public ChunkCoordinates getPlayerCoordinates() {
-			return null;
-		}
-	}
 	public InventoryCraftResult craftResult;
 	private InternalInventoryCrafting internalInventoryCrafting;
 
@@ -179,7 +143,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	private SlotCrafting craftSlot;
 	private boolean craftable;
 	private boolean justCrafted;
-	private InternalPlayer internalPlayer;
+	private FakePlayer internalPlayer;
 	private IRecipe currentRecipe;
 	private ActionMachineControl.Mode lastMode = ActionMachineControl.Mode.Unknown;
 	private TileBuffer[] cache;
@@ -237,7 +201,7 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 	public void updateEntity() {
 		if (internalPlayer == null) {
 			internalInventoryCrafting = new InternalInventoryCrafting();
-			internalPlayer = new InternalPlayer();
+			internalPlayer = new FakePlayer(worldObj, xCoord, yCoord + 1, zCoord);
 			craftSlot = new SlotCrafting(internalPlayer, internalInventoryCrafting, craftResult, 0, 0, 0);
 			updateRecipe();
 		}
