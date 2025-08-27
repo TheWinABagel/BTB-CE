@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AchievementEventDispatcher.class)
 public class AchievementEventDispatcherMixin {
     @Inject(method = "handleEvent", at = @At("HEAD"), cancellable = true)
-    private static <T> void method(AchievementEventDispatcher.AchievementEvent<T> type, EntityPlayer player, T data, CallbackInfo ci) {
+    private static <T> void buildcraft$noFakePlayerAchievement(AchievementEventDispatcher.AchievementEvent<T> type, EntityPlayer player, T data, CallbackInfo ci) {
         if (data instanceof FakePlayer) {
             ci.cancel();
         }

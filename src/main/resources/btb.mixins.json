@@ -28,18 +28,18 @@
     "accessors.NBTTagListAccessor",
     "accessors.RenderBlocksAccessor",
     "accessors.TessellatorAccessor",
+    "emi_fluid.EmiAgnosMixin"
+  ],
+  "client": [
+    "client.MinecraftMixin",
+    "client.TextureMapMixin",
     "client.EffectRendererMixin",
     "client.ItemRendererMixin",
     "client.RenderBipedMixin",
     "client.RenderBlocksMixin",
     "client.RendererPlayerMixin",
     "client.RenderGlobalMixin",
-    "client.RenderItemMixin",
-    "emi_fluid.EmiAgnosMixin"
-  ],
-  "client": [
-    "MinecraftMixin",
-    "client.TextureMapMixin"
+    "client.RenderItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

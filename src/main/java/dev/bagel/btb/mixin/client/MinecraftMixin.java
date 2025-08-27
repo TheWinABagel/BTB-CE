@@ -1,4 +1,4 @@
-package dev.bagel.btb.mixin;
+package dev.bagel.btb.mixin.client;
 
 import dev.bagel.btb.injected.CustomDestroyEffectsBlock;
 import net.minecraft.src.Block;
