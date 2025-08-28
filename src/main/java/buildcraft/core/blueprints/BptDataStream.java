@@ -43,8 +43,7 @@ public class BptDataStream implements DataInput, DataOutput {
 
 	@Override
 	public void readFully(byte[] b, int off, int len) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -148,7 +147,6 @@ public class BptDataStream implements DataInput, DataOutput {
 
 	@Override
 	public String readLine() throws IOException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -199,20 +197,17 @@ public class BptDataStream implements DataInput, DataOutput {
 
 	@Override
 	public void write(int b) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void write(byte[] b) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

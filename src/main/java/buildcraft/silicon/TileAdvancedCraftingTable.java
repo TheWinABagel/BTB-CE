@@ -408,7 +408,6 @@ public class TileAdvancedCraftingTable extends TileLaserTableBase implements IIn
 
 	@Override
 	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
