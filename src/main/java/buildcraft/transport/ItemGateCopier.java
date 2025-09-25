@@ -24,6 +24,7 @@ public class ItemGateCopier extends ItemBuildCraft {
         if (icons != null && icons.length > 0) {
             return icons[meta % icons.length];
         } else {
+            System.err.println("Attempting to access texture before it's registered. This is not a Buildcraft bug!");
             return null;
         }
     }
