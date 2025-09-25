@@ -117,8 +117,8 @@ public class BlockLaser extends BlockContainer implements CustomBoundingBoxBlock
 	}
 
 	@Override
-	public int getFacing(World world, int x, int y, int z) {
-		return world.getBlockMetadata(x, y, z);
+	public int getFacing(IBlockAccess blockAccess, int x, int y, int z) {
+		return blockAccess.getBlockMetadata(x, y, z);
 	}
 
 	/*

@@ -189,7 +189,7 @@ public abstract class BlockEngine extends BlockBuildCraft implements CustomBound
     }
 
     @Override
-    public int getFacing(World world, int x, int y, int z) {
+    public int getFacing(IBlockAccess world, int x, int y, int z) {
         if (world.getBlockTileEntity(x, y, z) instanceof TileEngine te) {
             return te.orientation.ordinal();
         }

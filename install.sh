@@ -1,5 +1,5 @@
 MAPPINGS_VERSION=1.0.3
-INTERMEDIARY_FILE_NAME=BTW-CE-Intermediary-Distribution.zip
+INTERMEDIARY_FILE_NAME=BTW-CE-Intermediary-DistributionSnap5.zip
 cd "$PWD"
 rm -rdf "build/BTW_dev"
 rm -rdf "build/tmp/BTW_dev"
