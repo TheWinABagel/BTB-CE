@@ -111,6 +111,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 		addon.registerProp("DiamondGearItemId", DefaultProps.DIAMOND_GEAR_ID);
 
 		addon.registerProp("SpringBlockId", DefaultProps.SPRING_ID);
+		addon.registerProp("EnableTooltipDebug", false);
 	}
 
 	@Override
@@ -147,6 +148,7 @@ public class BuildCraftCore implements IBuildCraftModule {
 
 		BuildcraftConfig.wrenchItemId = BuildcraftConfig.getInt("WrenchItemId");
 		BuildcraftConfig.springBlockId = BuildcraftConfig.getInt("SpringBlockId");
+		BuildcraftConfig.enableTooltipDebug = BuildcraftConfig.getBoolean("EnableTooltipDebug");
 	}
 
 	@Override

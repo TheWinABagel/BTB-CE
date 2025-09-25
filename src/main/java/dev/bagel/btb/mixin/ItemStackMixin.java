@@ -45,17 +45,14 @@ public class ItemStackMixin {
     private void btb$testGetNbt(EntityPlayer par1EntityPlayer, boolean par2, CallbackInfoReturnable<List> cir){
         ItemStack stack = (ItemStack) (Object) this;
         if (stack.hasTagCompound()) {
-            var ret = cir.getReturnValue();
+            var tooltipList = cir.getReturnValue();
             var tag = stack.getTagCompound();
-            ret.add("");
-            ret.add("Tags: ");
+            tooltipList.add("");
+            tooltipList.add("Tags: ");
             ((Collection<NBTBase>) tag.getTags()).stream().map(nbt -> get(nbt, 0)).toList().forEach(str -> {
-//                ret.add(str);
-                ret.addAll(Arrays.stream(str.split("\\|")).filter(s -> !s.isBlank()).toList());
+                tooltipList.addAll(Arrays.stream(str.split("\\|")).filter(s -> !s.isBlank()).toList());
             });
-//            ret.add(((Collection<NBTBase>) tag.getTags()).stream().map(nbt -> get(nbt)).toList().toString());
-//            ret.add(stack.getTagCompound().toString());
-            cir.setReturnValue(ret);
+            cir.setReturnValue(tooltipList);
         }
     }
 }

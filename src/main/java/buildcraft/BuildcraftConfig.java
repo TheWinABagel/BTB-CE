@@ -18,6 +18,7 @@ public class BuildcraftConfig {
     public static int gearGoldItemId;
     public static int gearDiamondItemId;
     public static int springBlockId;
+    public static boolean enableTooltipDebug = false;
 
     //Silicon
     public static int laserId;
