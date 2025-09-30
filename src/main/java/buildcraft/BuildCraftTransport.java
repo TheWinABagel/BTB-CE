@@ -342,9 +342,18 @@ public class BuildCraftTransport implements IBuildCraftModule {
 				"wdw",
 				"wcw",
 				"wpw",
-				'w', Block.planks,
+				'w', BTWTags.planks,
 				'd', BuildCraftTransport.pipeItemsDiamond,
-				'c', Block.chest,
+				'c', BTWBlocks.chest,
+				'p', Block.pistonBase);
+
+		CoreProxy.getProxy().addCraftingRecipe(new ItemStack(filteredBufferBlock),
+				"wdw",
+				"wcw",
+				"wpw",
+				'w', BTWTags.planks,
+				'd', BuildCraftTransport.pipeItemsDiamond,
+				'c', BTWBlocks.chest,
 				'p', Block.pistonBase);
 
 		//Facade turning helper

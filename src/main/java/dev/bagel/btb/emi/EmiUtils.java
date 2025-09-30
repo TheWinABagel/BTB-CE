@@ -46,7 +46,8 @@ public class EmiUtils {
             Slot slot = gui.getSlotAtPosition(x, y);
             if (slot instanceof SlotPhantom phantom) {
 
-                Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new PacketSetPhantomSlot(stack.getEmiStacks().get(0).getItemStack(), phantom.slotNumber, Minecraft.getMinecraft().thePlayer.openContainer.windowId).getPacket());
+                Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(
+                        new PacketSetPhantomSlot(stack.getEmiStacks().get(0).getItemStack(), phantom.slotNumber, Minecraft.getMinecraft().thePlayer.openContainer.windowId).getPacket());
 
                 return true;
             }

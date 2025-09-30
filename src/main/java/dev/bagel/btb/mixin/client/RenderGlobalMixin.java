@@ -15,7 +15,7 @@ public abstract class RenderGlobalMixin {
     @Shadow private WorldClient theWorld;
 
     @Redirect(method = "drawSelectionBox", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderGlobal;drawOutlinedBoundingBox(Lnet/minecraft/src/AxisAlignedBB;)V"))
-    private void test(RenderGlobal instance, AxisAlignedBB aabb, EntityPlayer player, MovingObjectPosition pos, int par3, float par4) {
+    private void drawCustomSelectionBox(RenderGlobal instance, AxisAlignedBB aabb, EntityPlayer player, MovingObjectPosition pos, int par3, float par4) {
         int blockId = this.theWorld.getBlockId(pos.blockX, pos.blockY, pos.blockZ);
         Block block = Block.blocksList[blockId];
         if (block instanceof CustomBoundingBoxBlock cbbb) {
@@ -26,7 +26,7 @@ public abstract class RenderGlobalMixin {
             for (AxisAlignedBB bb : cbbb.getCustomSelectionBoxes(this.theWorld, pos.blockX, pos.blockY, pos.blockZ)) {
                 bb = bb.makeTemporaryCopy();
 
-                int facing = cbbb.getFacing(theWorld, pos.blockX, pos.blockY, pos.blockZ);
+                int facing = block.getFacing(theWorld, pos.blockX, pos.blockY, pos.blockZ);
                 bb.rotateAroundYToFacing(facing);
                 bb.tiltToFacingAlongY(facing);
                 bb = bb.offset(pos.blockX, pos.blockY, pos.blockZ).expand(expand, expand, expand).getOffsetBoundingBox(-posX, -posY, -posZ);

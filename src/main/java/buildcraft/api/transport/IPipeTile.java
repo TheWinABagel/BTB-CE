@@ -34,7 +34,7 @@ public interface IPipeTile {
 	/**
 	 * True if the pipe is connected to the block/pipe in the specific direction
 	 *
-	 * @param wire
+	 * @param with the direction to check
 	 * @return true if connect
 	 */
 	boolean isPipeConnected(ForgeDirection with);
